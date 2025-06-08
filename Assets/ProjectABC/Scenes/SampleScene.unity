@@ -355,24 +355,24 @@ MonoBehaviour:
   - _id: 4
     _power: 4
     _material: {fileID: 2100000, guid: c5697af09e1fe544ebbdb28e6beb31ed, type: 2}
-    _sprite: {fileID: 21300000, guid: 3badd2e35bda8ac4ca50f6084f372ce5, type: 3}
+    _sprite: {fileID: 21300000, guid: 8225f729aab122b49b02f739b24956ef, type: 3}
     _name: Malfurion
   - _id: 5
     _power: 4
     _material: {fileID: 2100000, guid: 510756fadf7ffc544ae7f7d36437fc29, type: 2}
-    _sprite: {fileID: 21300000, guid: 6ef6faf2483c8144e88fcc6fedd3225f, type: 3}
+    _sprite: {fileID: 21300000, guid: 94db5a7f5a836bd43bc55d1fe012f715, type: 3}
     _name: Rexxar
   - _id: 6
     _power: 4
     _material: {fileID: 2100000, guid: bf97f329c4790dd48b57662575e654fc, type: 2}
-    _sprite: {fileID: 21300000, guid: 14186acca3138ec4dab07b5772473c1e, type: 3}
+    _sprite: {fileID: 21300000, guid: 8067b26bb8c4a28459cf1255a65d7796, type: 3}
     _name: Anduin
   - _id: 7
     _power: 4
     _material: {fileID: 2100000, guid: 66212d51e66b7fc4cb3fe1748878799a, type: 2}
-    _sprite: {fileID: 21300000, guid: d4cef74a79aa41e4f92dc74e441d3bfe, type: 3}
+    _sprite: {fileID: 21300000, guid: 5bcfe050a6f8de74da597c1172206305, type: 3}
     _name: Thrall
-  _debugGameBoardController: {fileID: 1858388026}
+  _gameBoardController: {fileID: 1858388026}
   _currentPlayer: 1
 --- !u!4 &972964377
 Transform:

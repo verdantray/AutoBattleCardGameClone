@@ -16,7 +16,7 @@ namespace ProjectABC.Core
     {
         public List<CardData> DEBUGCardDataList;
         public List<CardData> DEBUGCardDataListA;
-        public GameBoardController _debugGameBoardController;
+        public GameBoardController _gameBoardController;
 
         private readonly List<Card> _playerDeckCards = new();
         private readonly List<Card> _enemyDeckCards = new();
@@ -37,14 +37,20 @@ namespace ProjectABC.Core
         private Action<Card, PlayerType> OnDrawCardAttack;
         private Action<PlayerType> OnFinishTurn;
         private Action<PlayerType> OnEndRound;
+        private Action<List<CardData>> OnStartSelectCards;
 
+        
         public void Start()
         {
-            OnDrawCardDefence += _debugGameBoardController.OnDrawCardDefence;
-            OnDrawCardAttack += _debugGameBoardController.OnDrawCardAttack;
-            OnFinishTurn += _debugGameBoardController.OnFinishTurn;
-            OnEndRound += _debugGameBoardController.OnEndRound;
+            OnDrawCardDefence += _gameBoardController.OnDrawCardDefence;
+            OnDrawCardAttack += _gameBoardController.OnDrawCardAttack;
+            OnFinishTurn += _gameBoardController.OnFinishTurn;
+            OnEndRound += _gameBoardController.OnEndRound;
+            
             OnEndRound += UIManager.Instance.DEBUGLayoutInGame.OnEndRound;
+            OnStartSelectCards += UIManager.Instance.DEBUGLayoutInGame.OnStartSelectCards;
+            
+            UIManager.Instance.DEBUGLayoutInGame.OnFinishSelectCard += FinishSelectCard;
 
             SetCards();
             Shuffle();
@@ -78,10 +84,28 @@ namespace ProjectABC.Core
             Common.Shuffle(_playerDeckCards);
             Common.Shuffle(_enemyDeckCards);
         }
+        private void FinishSelectCard(CardData cardData)
+        {
+            var playerCard = new Card
+            {
+                Data = cardData
+            };
+            _playerDeckCards.Add(playerCard);
+            
+            // DEBUG
+            var i = Random.Range(0, DEBUGCardDataListA.Count);
+            var enemyCard = new Card
+            {
+                Data = DEBUGCardDataListA[i]
+            };
+            _enemyDeckCards.Add(enemyCard);
+            
+            StartCoroutine(StartGame());
+        }
 
         private IEnumerator StartGame()
         {
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
             StartCoroutine(DrawCardDefence());
         }
         private IEnumerator DrawCardDefence()
@@ -109,7 +133,6 @@ namespace ProjectABC.Core
             yield return new WaitForSeconds(0.5f);
             FinishTurn();
         }
-
         private IEnumerator DrawCardOffense()
         {
             var isEnemyTurn = (_currentPlayer == PlayerType.Enemy);
@@ -171,6 +194,11 @@ namespace ProjectABC.Core
             yield return new WaitForSeconds(0.5f);
             FinishTurn();
         }
+        private IEnumerator StartSelectCards(List<CardData> cards)
+        {
+            yield return new WaitForSeconds(2f);
+            OnStartSelectCards(cards);
+        }
 
         private void FinishTurn()
         {
@@ -192,7 +220,6 @@ namespace ProjectABC.Core
                 }
             }
         }
-
         private void EndRound()
         {
             switch (_currentPlayer)
@@ -212,7 +239,7 @@ namespace ProjectABC.Core
             }
             
             ClearCards();
-            StartCoroutine(StartGame());
+            StartCoroutine(StartSelectCards(DEBUGCardDataListA));
         }
 
         private void ClearCards()
