@@ -351,7 +351,27 @@ MonoBehaviour:
     _material: {fileID: 2100000, guid: c7a931ff87731484a8fce466e1b8dabd, type: 2}
     _sprite: {fileID: 21300000, guid: d4cef74a79aa41e4f92dc74e441d3bfe, type: 3}
     _name: P3Card01
-  DEBUGCardDataListA: []
+  DEBUGCardDataListA:
+  - _id: 4
+    _power: 4
+    _material: {fileID: 2100000, guid: c5697af09e1fe544ebbdb28e6beb31ed, type: 2}
+    _sprite: {fileID: 21300000, guid: 3badd2e35bda8ac4ca50f6084f372ce5, type: 3}
+    _name: Malfurion
+  - _id: 5
+    _power: 4
+    _material: {fileID: 2100000, guid: 510756fadf7ffc544ae7f7d36437fc29, type: 2}
+    _sprite: {fileID: 21300000, guid: 6ef6faf2483c8144e88fcc6fedd3225f, type: 3}
+    _name: Rexxar
+  - _id: 6
+    _power: 4
+    _material: {fileID: 2100000, guid: bf97f329c4790dd48b57662575e654fc, type: 2}
+    _sprite: {fileID: 21300000, guid: 14186acca3138ec4dab07b5772473c1e, type: 3}
+    _name: Anduin
+  - _id: 7
+    _power: 4
+    _material: {fileID: 2100000, guid: 66212d51e66b7fc4cb3fe1748878799a, type: 2}
+    _sprite: {fileID: 21300000, guid: d4cef74a79aa41e4f92dc74e441d3bfe, type: 3}
+    _name: Thrall
   _debugGameBoardController: {fileID: 1858388026}
   _currentPlayer: 1
 --- !u!4 &972964377
