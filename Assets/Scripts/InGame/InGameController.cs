@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace ProjectABC.Core
+namespace ProjectABC.InGame
 {
     public enum PlayerType
     {
@@ -81,8 +81,8 @@ namespace ProjectABC.Core
         }
         private void Shuffle()
         {
-            Common.Shuffle(_playerDeckCards);
-            Common.Shuffle(_enemyDeckCards);
+            Utils.CollectionExtensions.Shuffle(_playerDeckCards);
+            Utils.CollectionExtensions.Shuffle(_enemyDeckCards);
         }
         private void FinishSelectCard(CardData cardData)
         {

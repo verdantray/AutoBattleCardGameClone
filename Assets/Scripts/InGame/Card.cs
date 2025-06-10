@@ -1,4 +1,4 @@
-namespace ProjectABC.Core
+namespace ProjectABC.InGame
 {
     public class Card
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectABC.Core
+namespace ProjectABC.Utils
 {
-    public class Common
+    public static class CollectionExtensions
     {
         public static void Shuffle<T>(IList<T> list)
         {

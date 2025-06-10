@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ProjectABC.Core
+namespace ProjectABC.InGame
 {
     public class LayoutBase : MonoBehaviour
     {

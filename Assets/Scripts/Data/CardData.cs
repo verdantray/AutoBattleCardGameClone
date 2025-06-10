@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ProjectABC.Core
+namespace ProjectABC.InGame
 {
     [Serializable]
     public class CardData

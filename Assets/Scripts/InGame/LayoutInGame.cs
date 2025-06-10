@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace ProjectABC.Core
+namespace ProjectABC.InGame
 {
     public class LayoutInGame : LayoutBase
     {
