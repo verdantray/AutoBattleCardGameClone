@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 14a71962475b51247a7db8ea4f48ef24
   m_SerializeEntries:
   - m_GUID: db5eab6a4102fc54e8d53fa21519e8e2
-    m_Address: Assets/Bundles/DataAssets/GameDataAsset.asset
+    m_Address: GameDataAsset
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

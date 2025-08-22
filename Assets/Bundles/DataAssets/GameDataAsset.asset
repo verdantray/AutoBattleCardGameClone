@@ -12,8 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15ce30f21e4d57e4ba5cdef0727e877c, type: 3}
   m_Name: GameDataAsset
   m_EditorClassIdentifier: 
-  sheetAddress: 
-  dataUpdaters: []
+  sheetAddress: 1wQ5OPEu1YpF1723OPkDaGFzqRKUCNSB9A2mby1ybu8E
+  dataUpdaters:
+  - updateFieldName: Card Data
+    sheetReader:
+      sheetName: 00. card_data_origin
+      startCell: A02
+      endCell: I77
+  - updateFieldName: Recruit Data
+    sheetReader:
+      sheetName: 00. recruit_data_origin
+      startCell: A02
+      endCell: C12
+  - updateFieldName: Win Point Data
+    sheetReader:
+      sheetName: 00. win_point_data_origin
+      startCell: A02
+      endCell: C16
   cardData: []
   recruitData: []
   winPointData: []
