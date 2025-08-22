@@ -14,18 +14,18 @@ namespace ProjectABC.InGame
 
     public class InGameController : MonoBehaviour
     {
-        public List<CardData> DEBUGCardDataList;
-        public List<CardData> DEBUGCardDataListA;
+        public List<CardDataOld> DEBUGCardDataList;
+        public List<CardDataOld> DEBUGCardDataListA;
         public GameBoardController _gameBoardController;
 
-        private readonly List<Card> _playerDeckCards = new();
-        private readonly List<Card> _enemyDeckCards = new();
+        private readonly List<CardOld> _playerDeckCards = new();
+        private readonly List<CardOld> _enemyDeckCards = new();
 
-        private readonly List<Card> _playerActiveCards = new();
-        private readonly List<Card> _enemyActiveCards = new();
+        private readonly List<CardOld> _playerActiveCards = new();
+        private readonly List<CardOld> _enemyActiveCards = new();
 
-        private readonly Dictionary<int, List<Card>> _playerBenchCards = new();
-        private readonly Dictionary<int, List<Card>> _enemyBenchCards = new();
+        private readonly Dictionary<int, List<CardOld>> _playerBenchCards = new();
+        private readonly Dictionary<int, List<CardOld>> _enemyBenchCards = new();
 
         private int RoundCount;
         private int TurnCount;
@@ -33,11 +33,11 @@ namespace ProjectABC.InGame
         [SerializeField] private PlayerType _currentPlayer = PlayerType.Enemy;
 
 
-        private Action<Card, PlayerType> OnDrawCardDefence;
-        private Action<Card, PlayerType> OnDrawCardAttack;
+        private Action<CardOld, PlayerType> OnDrawCardDefence;
+        private Action<CardOld, PlayerType> OnDrawCardAttack;
         private Action<PlayerType> OnFinishTurn;
         private Action<PlayerType> OnEndRound;
-        private Action<List<CardData>> OnStartSelectCards;
+        private Action<List<CardDataOld>> OnStartSelectCards;
 
         
         public void Start()
@@ -62,7 +62,7 @@ namespace ProjectABC.InGame
             for (var i = 0; i < 6; i++)
             {
                 var j = Random.Range(0, DEBUGCardDataList.Count);
-                var card = new Card()
+                var card = new CardOld()
                 {
                     Data = DEBUGCardDataList[j]
                 };
@@ -72,7 +72,7 @@ namespace ProjectABC.InGame
             for (var i = 0; i < 6; i++)
             {
                 var j = Random.Range(0, DEBUGCardDataList.Count);
-                var card = new Card()
+                var card = new CardOld()
                 {
                     Data = DEBUGCardDataList[j]
                 };
@@ -84,9 +84,9 @@ namespace ProjectABC.InGame
             Utils.CollectionExtensions.Shuffle(_playerDeckCards);
             Utils.CollectionExtensions.Shuffle(_enemyDeckCards);
         }
-        private void FinishSelectCard(CardData cardData)
+        private void FinishSelectCard(CardDataOld cardData)
         {
-            var playerCard = new Card
+            var playerCard = new CardOld
             {
                 Data = cardData
             };
@@ -94,7 +94,7 @@ namespace ProjectABC.InGame
             
             // DEBUG
             var i = Random.Range(0, DEBUGCardDataListA.Count);
-            var enemyCard = new Card
+            var enemyCard = new CardOld
             {
                 Data = DEBUGCardDataListA[i]
             };
@@ -184,7 +184,7 @@ namespace ProjectABC.InGame
                         yield break;
                     }
 
-                    var cards = new List<Card> { card };
+                    var cards = new List<CardOld> { card };
                     targetBenchCards.Add(id, cards);
                     targetActiveCards.Remove(card);
                 }
@@ -194,7 +194,7 @@ namespace ProjectABC.InGame
             yield return new WaitForSeconds(0.5f);
             FinishTurn();
         }
-        private IEnumerator StartSelectCards(List<CardData> cards)
+        private IEnumerator StartSelectCards(List<CardDataOld> cards)
         {
             yield return new WaitForSeconds(2f);
             OnStartSelectCards(cards);

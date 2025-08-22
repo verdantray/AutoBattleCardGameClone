@@ -22,15 +22,15 @@ namespace ProjectABC.InGame
         private readonly List<CardInGame> _inactiveCards = new();
         private readonly Dictionary<int, List<CardInGame>> _benchCards = new();
 
-        public void OnDrawCardDefence(Card card)
+        public void OnDrawCardDefence(CardOld card)
         {
             OnDrawCard(card);
         }
-        public void OnDrawCardAttack(Card card)
+        public void OnDrawCardAttack(CardOld card)
         {
             OnDrawCard(card);
         }
-        private void OnDrawCard(Card card)
+        private void OnDrawCard(CardOld card)
         {
             if (_inactiveCards.Count > 0)
             {

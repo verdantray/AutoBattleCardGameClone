@@ -30,9 +30,9 @@ namespace ProjectABC.InGame
 
         private int _selectedCardIndex = -1;
         
-        public Action<CardData> OnFinishSelectCard;
+        public Action<CardDataOld> OnFinishSelectCard;
 
-        private readonly List<CardData> _targetCardDataPool = new();
+        private readonly List<CardDataOld> _targetCardDataPool = new();
 
         private void Start()
         {
@@ -47,7 +47,7 @@ namespace ProjectABC.InGame
             }
         }
 
-        public void OnStartSelectCards(List<CardData> cards)
+        public void OnStartSelectCards(List<CardDataOld> cards)
         {
             _targetCardDataPool.Clear();
             _targetCardDataPool.AddRange(cards);

@@ -10,7 +10,7 @@ namespace ProjectABC.InGame
 
         [SerializeField] private Transform _defenceIndicator;
 
-        public void OnDrawCardDefence(Card card, PlayerType playerType)
+        public void OnDrawCardDefence(CardOld card, PlayerType playerType)
         {
             switch (playerType)
             {
@@ -24,7 +24,7 @@ namespace ProjectABC.InGame
             }
         }
 
-        public void OnDrawCardAttack(Card card, PlayerType playerType)
+        public void OnDrawCardAttack(CardOld card, PlayerType playerType)
         {
             switch (playerType)
             {

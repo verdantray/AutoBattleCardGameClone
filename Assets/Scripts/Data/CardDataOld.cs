@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ProjectABC.InGame
 {
     [Serializable]
-    public class CardData
+    public class CardDataOld
     {
         [SerializeField] private int _id;
         public int ID => _id;

@@ -12,7 +12,7 @@ namespace ProjectABC.InGame
         [SerializeField] private TextMeshPro _power;
         [SerializeField] private MeshRenderer _meshRenderer;
 
-        private Card _card;
+        private CardOld _card;
 
         private Animator _animator;
 
@@ -21,7 +21,7 @@ namespace ProjectABC.InGame
             _animator = GetComponent<Animator>();
         }
 
-        public void SetCard(Card card)
+        public void SetCard(CardOld card)
         {
             _card = card;
 

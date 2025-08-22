@@ -15,7 +15,7 @@ namespace ProjectABC.InGame
         [SerializeField] private Button _btnReroll;
         
         private int _index;
-        private CardData _data;
+        private CardDataOld _data;
         
         public Action<int> OnRerollCard;
         public Action<int> OnSelectCard;
@@ -30,7 +30,7 @@ namespace ProjectABC.InGame
         {
             _index = index;
         }
-        public void SetCard(CardData card)
+        public void SetCard(CardDataOld card)
         {
             _data = card;
 
