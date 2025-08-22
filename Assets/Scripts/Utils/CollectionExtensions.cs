@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace ProjectABC.Utils
 {
     public static class CollectionExtensions
     {
-        public static void Shuffle<T>(IList<T> list)
+        public static void Shuffle(IList list)
         {
             var count = list.Count;
             var last = count - 1;
