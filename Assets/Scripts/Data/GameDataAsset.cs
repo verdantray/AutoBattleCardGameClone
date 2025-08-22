@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using ProjectABC.Data.Editor;
 using UnityEngine;
 
+#if UNITY_EDITOR
+
+using UnityEditor;
+
+#endif
+
 namespace ProjectABC.Data
 {
     [CreateAssetMenu(fileName = "GameDataAsset", menuName = "Scripting/ScriptableObject Script Menu/DataAssets/GameDataAsset")]
@@ -22,6 +28,10 @@ namespace ProjectABC.Data
             UpdateData(nameof(cardData), cardData);
             UpdateData(nameof(recruitData), recruitData);
             UpdateData(nameof(winPointData), winPointData);
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 #endif
     }

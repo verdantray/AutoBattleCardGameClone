@@ -40,8 +40,6 @@ namespace ProjectABC.Data.Editor
         private void OnDataUpdated(string fieldName)
         {
             Undo.RecordObject(this, $"Update {name}.{fieldName}");
-            EditorUtility.SetDirty(this);
-            AssetDatabase.SaveAssetIfDirty(this);
         }
 #endif
     }
