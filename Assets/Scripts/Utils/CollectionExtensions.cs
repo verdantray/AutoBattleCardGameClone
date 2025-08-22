@@ -1,18 +1,19 @@
 using System.Collections;
-using UnityEngine;
 
 namespace ProjectABC.Utils
 {
     public static class CollectionExtensions
     {
-        public static void Shuffle(IList list)
+        public static void Shuffle(this IList list, int? seed = null)
         {
-            var count = list.Count;
-            var last = count - 1;
-            for (var i = 0; i < last; ++i)
+            System.Random random = seed != null
+                ? new System.Random(seed.Value)
+                : new System.Random();
+
+            for (int i = list.Count - 1; i > 0; i--)
             {
-                var r = Random.Range(i, count);
-                (list[i], list[r]) = (list[r], list[i]);
+                int j = random.Next(i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
             }
         }
     }

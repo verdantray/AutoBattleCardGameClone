@@ -2,34 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ProjectABC.Data;
+using ProjectABC.Utils;
 
 namespace ProjectABC.Core
 {
     public class CardPile : IReadOnlyList<Card>
     {
-        private readonly List<Card> cardList = new List<Card>();
+        private readonly List<Card> _cardList = new List<Card>();
 
         #region inherits of IReadOnlyList
 
-        public int Count => cardList.Count;
+        public int Count => _cardList.Count;
 
-        public Card this[int index] => cardList[index];
-        public IEnumerator<Card> GetEnumerator() => cardList.GetEnumerator();
+        public Card this[int index] => _cardList[index];
+        public IEnumerator<Card> GetEnumerator() => _cardList.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => cardList.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _cardList.GetEnumerator();
 
         #endregion
         
-        public void AddToTop(Card card) => cardList.Insert(0, card);
-        public void AddToTopRange(IEnumerable<Card> cards) => cardList.InsertRange(0, cards);
+        public void AddToTop(Card card) => _cardList.Insert(0, card);
+        public void AddToTopRange(IEnumerable<Card> cards) => _cardList.InsertRange(0, cards);
         
-        public void Add(Card card) => cardList.Add(card);
-        public void AddRange(IEnumerable<Card> cards) => cardList.AddRange(cards);
-        public void Clear() => cardList.Clear();
+        public void Add(Card card) => _cardList.Add(card);
+        public void AddRange(IEnumerable<Card> cards) => _cardList.AddRange(cards);
+        public void Clear() => _cardList.Clear();
 
         public bool TryDraw(out Card card)
         {
-            bool isSuccess = cardList.Count > 0;
+            bool isSuccess = _cardList.Count > 0;
 
             card = isSuccess ? DrawCards(1).First() : null;
             return isSuccess;
@@ -37,44 +38,40 @@ namespace ProjectABC.Core
 
         public IEnumerable<Card> DrawCards(int amount)
         {
-            IEnumerable<Card> toDraw = cardList.GetRange(0, amount);
-            cardList.RemoveRange(0, amount);
+            IEnumerable<Card> toDraw = _cardList.GetRange(0, amount);
+            _cardList.RemoveRange(0, amount);
 
             return toDraw;
         }
 
-        public void Shuffle(int seed = 0)
+        public void Shuffle(int? seed = null)
         {
-            System.Random random = seed != 0 ? new System.Random(seed) : new System.Random();
-            List<Card> randomizedList = cardList.OrderBy(_ => random.Next()).ToList();
-            
-            cardList.Clear();
-            AddRange(randomizedList);
+            _cardList.Shuffle(seed);
         }
     }
 
     public class Bench : IReadOnlyDictionary<string, CardPile>
     {
-        private readonly Dictionary<string, CardPile> cardMap = new Dictionary<string, CardPile>();
-        private readonly Dictionary<string, int> keyOrderMap = new Dictionary<string, int>(); // order starts at 1
+        private readonly Dictionary<string, CardPile> _cardMap = new Dictionary<string, CardPile>();
+        private readonly Dictionary<string, int> _keyOrderMap = new Dictionary<string, int>(); // order starts at 1
         
         public int BenchLimit { get; private set; } = GameConst.GameOption.DEFAULT_BENCH_LIMIT;
-        public int RemainBenchSlots => BenchLimit - cardMap.Count;
+        public int RemainBenchSlots => BenchLimit - _cardMap.Count;
 
         #region inherits of IReadOnlyDictionary
 
-        public int Count => cardMap.Count;
+        public int Count => _cardMap.Count;
         
-        public CardPile this[string key] => cardMap[key];
+        public CardPile this[string key] => _cardMap[key];
 
-        public IEnumerable<string> Keys => cardMap.Keys;
-        public IEnumerable<CardPile> Values => cardMap.Values;
+        public IEnumerable<string> Keys => _cardMap.Keys;
+        public IEnumerable<CardPile> Values => _cardMap.Values;
         
-        public IEnumerator<KeyValuePair<string, CardPile>> GetEnumerator() => cardMap.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => cardMap.GetEnumerator();
-        public bool ContainsKey(string key) => cardMap.ContainsKey(key);
+        public IEnumerator<KeyValuePair<string, CardPile>> GetEnumerator() => _cardMap.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _cardMap.GetEnumerator();
+        public bool ContainsKey(string key) => _cardMap.ContainsKey(key);
 
-        public bool TryGetValue(string key, out CardPile value) => cardMap.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out CardPile value) => _cardMap.TryGetValue(key, out value);
 
         #endregion
 
@@ -82,8 +79,8 @@ namespace ProjectABC.Core
 
         public void Clear()
         {
-            cardMap.Clear();
-            keyOrderMap.Clear();
+            _cardMap.Clear();
+            _keyOrderMap.Clear();
         }
 
         // Regardless success or failure, cards that comes as arg are put on the bench
@@ -91,13 +88,13 @@ namespace ProjectABC.Core
         {
             foreach (var card in cards)
             {
-                if (keyOrderMap.ContainsKey(card.Name))
+                if (_keyOrderMap.ContainsKey(card.Name))
                 {
-                    cardMap[card.Name].Add(card);
+                    _cardMap[card.Name].Add(card);
                     continue;
                 }
 
-                var existingOrders = keyOrderMap.Values;
+                var existingOrders = _keyOrderMap.Values;
                 int latestOrder = existingOrders.Count > 0 ? existingOrders.Max() : 0;
 
                 HashSet<int> missingOrders = new HashSet<int>(Enumerable.Range(1, latestOrder));
@@ -111,10 +108,10 @@ namespace ProjectABC.Core
                     ? missingOrders.Min()
                     : latestOrder + 1;
                 
-                keyOrderMap.Add(card.Name, newlyPuttingOrder);
+                _keyOrderMap.Add(card.Name, newlyPuttingOrder);
 
                 CardPile cardPile = new CardPile { card };
-                cardMap.Add(card.Name, cardPile);
+                _cardMap.Add(card.Name, cardPile);
             }
 
             remainBenchSlots = RemainBenchSlots;
@@ -123,13 +120,13 @@ namespace ProjectABC.Core
 
         public void PutCard(Card card)
         {
-            if (keyOrderMap.ContainsKey(card.Name))
+            if (_keyOrderMap.ContainsKey(card.Name))
             {
-                cardMap[card.Name].Add(card);
+                _cardMap[card.Name].Add(card);
                 return;
             }
             
-            var existingOrders = keyOrderMap.Values;
+            var existingOrders = _keyOrderMap.Values;
             int latestOrder = existingOrders.Max(); // if existingOrders is empty, then Max will return 0
 
             HashSet<int> missingOrders = new HashSet<int>(Enumerable.Range(1, latestOrder));
@@ -143,10 +140,10 @@ namespace ProjectABC.Core
                 ? missingOrders.Min()
                 : latestOrder + 1;
                 
-            keyOrderMap.Add(card.Name, newlyPuttingOrder);
+            _keyOrderMap.Add(card.Name, newlyPuttingOrder);
                 
             CardPile cardPile = new CardPile { card };
-            cardMap.Add(card.Name, cardPile);
+            _cardMap.Add(card.Name, cardPile);
         }
 
         public bool TryDrawCards(out CardPile cardPile)
@@ -157,36 +154,36 @@ namespace ProjectABC.Core
                 return false;
             }
 
-            var earliestBenchSlotKey = keyOrderMap.OrderBy(kvPair => kvPair.Value).First().Key;
+            var earliestBenchSlotKey = _keyOrderMap.OrderBy(kvPair => kvPair.Value).First().Key;
 
-            return cardMap.Remove(earliestBenchSlotKey, out cardPile);
+            return _cardMap.Remove(earliestBenchSlotKey, out cardPile);
         }
         
-        public IEnumerable<Card> GetAllCards() => cardMap.Values.SelectMany(cardPile => cardPile);
+        public IEnumerable<Card> GetAllCards() => _cardMap.Values.SelectMany(cardPile => cardPile);
     }
 
     public class Card
     {
-        public string Id => cardData.id;
-        public int BasePower => cardData.basePower;
+        public string Id => _cardData.id;
+        public int BasePower => _cardData.basePower;
         
         public SetType SetType { get; private set; }
         public LevelType LevelType { get; private set; }
         public int Power { get; private set; }
 
         // TODO : Use localization system after implements
-        public string Name => cardData.nameKey;
-        public string Description => cardData.descKey;
+        public string Name => _cardData.nameKey;
+        public string Description => _cardData.descKey;
         
-        private readonly CardData cardData;
+        private readonly CardData _cardData;
 
         public Card(CardData cardData)
         {
-            this.cardData = cardData;
+            _cardData = cardData;
 
-            SetType = this.cardData.setType;
-            LevelType = this.cardData.levelType;
-            Power = this.cardData.basePower;
+            SetType = _cardData.setType;
+            LevelType = _cardData.levelType;
+            Power = _cardData.basePower;
         }
 
         public override string ToString()

@@ -6,19 +6,19 @@ namespace ProjectABC.Core
 {
     public class PreparationPhase : IGamePhase
     {
-        private readonly int round;
+        private readonly int _round;
         
         public PreparationPhase(int round)
         {
-            this.round = round;
+            _round = round;
         }
         
         public Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             try
             {
-                simulationContext.CurrentState.SetRound(round);
-                simulationContext.CollectedEvents.Add(new CommonConsoleEvent($"{round} 라운드 준비"));
+                simulationContext.CurrentState.SetRound(_round);
+                simulationContext.CollectedEvents.Add(new CommonConsoleEvent($"{_round} 라운드 준비"));
                 
                 return Task.CompletedTask;
             }

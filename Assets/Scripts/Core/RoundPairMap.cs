@@ -6,11 +6,11 @@ namespace ProjectABC.Core
 {
     public class RoundPairMap
     {
-        private readonly RoundPairs[] roundPairMap;
+        private readonly RoundPairs[] _roundPairMap;
 
         public RoundPairMap(int rounds, int playerAmount)
         {
-            roundPairMap = new RoundPairs[rounds];
+            _roundPairMap = new RoundPairs[rounds];
 
             List<int> playerIndexes = Enumerable.Range(0, playerAmount).ToList();
             int pairAmount = playerAmount / 2;
@@ -40,30 +40,30 @@ namespace ProjectABC.Core
                     playerIndexes = tail;
                 }
 
-                roundPairMap[r] = new RoundPairs(roundPairs.ToArray());
+                _roundPairMap[r] = new RoundPairs(roundPairs.ToArray());
             }
         }
 
         public RoundPairs GetRoundPairs(int round)
         {
-            return roundPairMap[round - 1];
+            return _roundPairMap[round - 1];
         }
     }
 
     public readonly struct RoundPairs
     {
-        private readonly RoundPair[] roundPairs;
+        private readonly RoundPair[] _roundPairs;
 
         public RoundPairs(RoundPair[] roundPairs)
         {
-            this.roundPairs = roundPairs;
+            _roundPairs = roundPairs;
         }
 
         public List<(PlayerState a, PlayerState b)> GetMatchingPlayerPairs(IList<PlayerState> playerStates)
         {
             List<(PlayerState a, PlayerState b)> list = new List<(PlayerState a, PlayerState b)>();
 
-            foreach (RoundPair roundPair in roundPairs)
+            foreach (RoundPair roundPair in _roundPairs)
             {
                 var (a, b) = roundPair;
                 

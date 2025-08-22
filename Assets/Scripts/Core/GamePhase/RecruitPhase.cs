@@ -51,11 +51,11 @@ namespace ProjectABC.Core
 
     public class RecruitOnRound
     {
-        private readonly List<Tuple<LevelType, int>> recruitLevelAndAmounts;
+        private readonly List<Tuple<LevelType, int>> _recruitLevelAndAmounts;
         
         public RecruitOnRound(int round)
         {
-            recruitLevelAndAmounts = Storage.Instance.RecruitData
+            _recruitLevelAndAmounts = Storage.Instance.RecruitData
                 .Where(data => data.round == round)
                 .Select(ElementSelector)
                 .ToList();
@@ -68,7 +68,7 @@ namespace ProjectABC.Core
 
         public IReadOnlyList<Tuple<LevelType, int>> GetRecruitLevelAmountPairs()
         {
-            return recruitLevelAndAmounts;
+            return _recruitLevelAndAmounts;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ProjectABC.Core
 {
     public class LevelCardPiles : IReadOnlyDictionary<LevelType, ConcurrentCardPile>
     {
-        private readonly Dictionary<LevelType, ConcurrentCardPile> levelCardPiles = new Dictionary<LevelType, ConcurrentCardPile>
+        private readonly Dictionary<LevelType, ConcurrentCardPile> _levelCardPiles = new Dictionary<LevelType, ConcurrentCardPile>
         {
             { LevelType.A, new ConcurrentCardPile() },
             { LevelType.B, new ConcurrentCardPile() },
@@ -20,45 +20,45 @@ namespace ProjectABC.Core
 
         #region inheritances of IDictionary
 
-        public IEnumerator<KeyValuePair<LevelType, ConcurrentCardPile>> GetEnumerator() => levelCardPiles.GetEnumerator();
+        public IEnumerator<KeyValuePair<LevelType, ConcurrentCardPile>> GetEnumerator() => _levelCardPiles.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => levelCardPiles.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _levelCardPiles.GetEnumerator();
 
-        public int Count => levelCardPiles.Count;
-        public bool ContainsKey(LevelType key) => levelCardPiles.ContainsKey(key);
+        public int Count => _levelCardPiles.Count;
+        public bool ContainsKey(LevelType key) => _levelCardPiles.ContainsKey(key);
 
-        public bool TryGetValue(LevelType key, out ConcurrentCardPile value) => levelCardPiles.TryGetValue(key, out value);
+        public bool TryGetValue(LevelType key, out ConcurrentCardPile value) => _levelCardPiles.TryGetValue(key, out value);
 
-        public ConcurrentCardPile this[LevelType key] => levelCardPiles[key];
+        public ConcurrentCardPile this[LevelType key] => _levelCardPiles[key];
 
-        public IEnumerable<LevelType> Keys => levelCardPiles.Keys;
-        public IEnumerable<ConcurrentCardPile> Values => levelCardPiles.Values;
+        public IEnumerable<LevelType> Keys => _levelCardPiles.Keys;
+        public IEnumerable<ConcurrentCardPile> Values => _levelCardPiles.Values;
 
         #endregion
     }
 
     public class ConcurrentCardPile
     {
-        private readonly List<Card> cardList = new List<Card>();
-        private readonly SemaphoreSlim gate = new SemaphoreSlim(1, 1);
+        private readonly List<Card> _cardList = new List<Card>();
+        private readonly SemaphoreSlim _gate = new SemaphoreSlim(1, 1);
 
         public async Task AddRangeAsync(IEnumerable<Card> cards, CancellationToken token = default)
         {
-            await gate.WaitAsync(token);
+            await _gate.WaitAsync(token);
 
             try
             {
-                cardList.AddRange(cards);
+                _cardList.AddRange(cards);
             }
             finally
             {
-                gate.Release();
+                _gate.Release();
             }
         }
 
         public async Task<List<Card>> DrawCardsAsync(int count, CancellationToken token = default)
         {
-            await gate.WaitAsync(token);
+            await _gate.WaitAsync(token);
             
             try
             {
@@ -70,51 +70,51 @@ namespace ProjectABC.Core
                     return drawCards;
                 }
 
-                if (cardList.Count < count)
+                if (_cardList.Count < count)
                 {
-                    throw new InvalidOperationException($"Trying to draw {count} cards, but remains {cardList.Count} only...");
+                    throw new InvalidOperationException($"Trying to draw {count} cards, but remains {_cardList.Count} only...");
                 }
 
-                drawCards.AddRange(cardList.GetRange(0, count));
-                cardList.RemoveRange(0, count);
+                drawCards.AddRange(_cardList.GetRange(0, count));
+                _cardList.RemoveRange(0, count);
                 
                 return drawCards;
             }
             finally
             {
-                gate.Release();
+                _gate.Release();
             }
         }
 
         public async Task ShuffleAsync(int seed = 0, CancellationToken token = default)
         {
-            await gate.WaitAsync(token);
+            await _gate.WaitAsync(token);
 
             try
             {
                 System.Random random = seed != 0 ?  new System.Random(seed) : new System.Random();
-                List<Card> randomized = cardList.OrderBy(_ => random.Next()).ToList();
+                List<Card> randomized = _cardList.OrderBy(_ => random.Next()).ToList();
                 
-                cardList.Clear();
-                cardList.AddRange(randomized);
+                _cardList.Clear();
+                _cardList.AddRange(randomized);
             }
             finally
             {
-                gate.Release();
+                _gate.Release();
             }
         }
 
         public async Task<int> CountAsync(CancellationToken token = default)
         {
-            await gate.WaitAsync(token);
+            await _gate.WaitAsync(token);
 
             try
             {
-                return cardList.Count;
+                return _cardList.Count;
             }
             finally
             {
-                gate.Release();
+                _gate.Release();
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectABC.Utils;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -81,9 +82,10 @@ namespace ProjectABC.InGame
         }
         private void Shuffle()
         {
-            Utils.CollectionExtensions.Shuffle(_playerDeckCards);
-            Utils.CollectionExtensions.Shuffle(_enemyDeckCards);
+            _playerDeckCards.Shuffle();
+            _enemyDeckCards.Shuffle();
         }
+        
         private void FinishSelectCard(CardDataOld cardData)
         {
             var playerCard = new CardOld

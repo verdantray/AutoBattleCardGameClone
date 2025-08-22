@@ -123,11 +123,11 @@ namespace ProjectABC.Core
     
     public class WinPointOnRound
     {
-        private readonly List<Tuple<int, float>> pointAndWeights;
+        private readonly List<Tuple<int, float>> _pointAndWeights;
         
         public WinPointOnRound(int round)
         {
-            pointAndWeights = Storage.Instance.WinPointData
+            _pointAndWeights = Storage.Instance.WinPointData
                 .Where(data => data.round == round)
                 .Select(ElementSelector)
                 .ToList();
@@ -140,26 +140,26 @@ namespace ProjectABC.Core
 
         public int GetWinPoint()
         {
-            if (pointAndWeights.Count == 0)
+            if (_pointAndWeights.Count == 0)
             {
                 throw new InvalidOperationException("No win point data available");
             }
             
             float pivot = UnityEngine.Random.Range(0.0f, 1.0f);
 
-            float totalWeight = pointAndWeights.Sum(tuple => tuple.Item2);
+            float totalWeight = _pointAndWeights.Sum(tuple => tuple.Item2);
             bool isTotalWeightLessThanZero = totalWeight <= 0;
 
             if (isTotalWeightLessThanZero)
             {
-                var (firstWinPoint, _) = pointAndWeights.First();
+                var (firstWinPoint, _) = _pointAndWeights.First();
                 
                 return firstWinPoint;
             }
             
             float sumOfRatio = 0.0f;
 
-            foreach (var (winPoint, weight) in pointAndWeights)
+            foreach (var (winPoint, weight) in _pointAndWeights)
             {
                 float weightRatio = weight / totalWeight;
                 sumOfRatio += weightRatio;
@@ -170,7 +170,7 @@ namespace ProjectABC.Core
                 }
             }
 
-            var (lastWinPoint, _) = pointAndWeights.Last();
+            var (lastWinPoint, _) = _pointAndWeights.Last();
             
             return lastWinPoint;
         }

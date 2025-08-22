@@ -7,8 +7,8 @@ namespace ProjectABC.Core
 {
     public class Simulation
     {
-        private readonly SimulationContext simulationContext;
-        private readonly Queue<IGamePhase> gamePhases = new Queue<IGamePhase>();
+        private readonly SimulationContext _simulationContext;
+        private readonly Queue<IGamePhase> _gamePhases = new Queue<IGamePhase>();
         
         public Simulation(params IPlayer[] players)
         {
@@ -27,33 +27,33 @@ namespace ProjectABC.Core
                 playerList.Add(new ScriptedPlayer("Scripted Player"));
             }
 
-            simulationContext = new SimulationContext(playerList);
+            _simulationContext = new SimulationContext(playerList);
             InitializeGamePhases();
         }
 
         private void InitializeGamePhases()
         {
-            gamePhases.Clear();
-            gamePhases.Enqueue(new DeckConstructionPhase());
+            _gamePhases.Clear();
+            _gamePhases.Enqueue(new DeckConstructionPhase());
 
             for (int round = 1; round <= GameConst.GameOption.MAX_ROUND; round++)
             {
-                gamePhases.Enqueue(new PreparationPhase(round));
-                gamePhases.Enqueue(new RecruitPhase());
-                gamePhases.Enqueue(new BattlePhase());
+                _gamePhases.Enqueue(new PreparationPhase(round));
+                _gamePhases.Enqueue(new RecruitPhase());
+                _gamePhases.Enqueue(new BattlePhase());
             }
             
-            gamePhases.Enqueue(new SettlementPhase());
+            _gamePhases.Enqueue(new SettlementPhase());
         }
 
         public async Task RunAsync()
         {
             try
             {
-                while (gamePhases.Count > 0)
+                while (_gamePhases.Count > 0)
                 {
-                    var phase = gamePhases.Dequeue();
-                    await phase.ExecutePhaseAsync(simulationContext);
+                    var phase = _gamePhases.Dequeue();
+                    await phase.ExecutePhaseAsync(_simulationContext);
                 }
             }
             catch (Exception e)
@@ -62,7 +62,7 @@ namespace ProjectABC.Core
             }
             finally
             {
-                foreach (var contextEvent in simulationContext.CollectedEvents)
+                foreach (var contextEvent in _simulationContext.CollectedEvents)
                 {
                     contextEvent.Trigger();
                 }
