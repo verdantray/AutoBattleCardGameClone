@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using UnityEditor.Build;
 #if GSTU_Legacy
 GoogleSheetsToUnity.Legacy
 #endif
@@ -164,9 +165,15 @@ namespace GoogleSheetsToUnity.Editor
                         GUILayout.Label("This is the legacy version of GSTU and will be removed at a future date, if you wish to use it please press the button below");
                         if(GUILayout.Button("Use Legacy Version"))
                         {
+                            // BuildTargetGroup buildTargetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
+                            // string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
+                            // PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, (defines + ";" + "GSTU_Legacy"));
+                            
                             BuildTargetGroup buildTargetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-                            string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-                            PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, (defines + ";" + "GSTU_Legacy"));
+                            NamedBuildTarget namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(buildTargetGroup);
+                            string defines = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+
+                            PlayerSettings.SetScriptingDefineSymbols(namedBuildTarget, (defines + ";" + "GSTU_Legacy"));
                         }
 #endif
                         break;
