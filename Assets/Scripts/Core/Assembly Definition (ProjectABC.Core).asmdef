@@ -1,0 +1,19 @@
+{
+    "name": "ProjectABC.Core",
+    "rootNamespace": "",
+    "references": [
+        "ProjectABC.Data",
+        "ProjectABC.Utils"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "PCG32RNG.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
