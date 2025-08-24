@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace ProjectABC.Core
 {
@@ -56,15 +55,11 @@ namespace ProjectABC.Core
                     await phase.ExecutePhaseAsync(_simulationContext);
                 }
             }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"Simulation has an error occured : {e}");
-            }
             finally
             {
                 foreach (var contextEvent in _simulationContext.CollectedEvents)
                 {
-                    contextEvent.Trigger();
+                    contextEvent.TriggerEvent();
                 }
             }
         }

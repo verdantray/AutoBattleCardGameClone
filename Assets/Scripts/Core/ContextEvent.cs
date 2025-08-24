@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ProjectABC.Data;
-using UnityEngine;
 
 namespace ProjectABC.Core
 {
+    public interface IContextEvent
+    {
+        
+    }
+    
     /// <summary>
     /// base ContextEvent class for testing simulation
     /// </summary>
     public abstract class ConsoleContextEventBase : IContextEvent
     {
         protected string Message;
-
-        public void Trigger()
-        {
-            Debug.Log(this);
-        }
 
         public override string ToString()
         {

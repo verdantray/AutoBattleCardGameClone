@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Data;
-using UnityEngine;
 
 namespace ProjectABC.Core
 {
@@ -66,7 +65,6 @@ namespace ProjectABC.Core
                 
                 if (count < 0)
                 {
-                    Debug.LogWarning($"{nameof(ConcurrentCardPile)} : Trying to draw empty cards");
                     return drawCards;
                 }
 

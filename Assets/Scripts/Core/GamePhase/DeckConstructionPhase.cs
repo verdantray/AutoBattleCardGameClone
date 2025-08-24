@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Data;
-using UnityEngine;
 
 namespace ProjectABC.Core
 {
@@ -11,60 +10,52 @@ namespace ProjectABC.Core
     {
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
-            try
+            LevelType defaultDeckType = Enum.Parse<LevelType>(GameConst.GameOption.DEFAULT_LEVEL_TYPE);
+            GameState currentState = simulationContext.CurrentState;
+            
+            SetType randomSelectedSetTypeFlag = GetRandomSelectedSetTypeFlag();
+            CardData[] cardDataForPiles = Storage.Instance.CardData
+                .Where(data => randomSelectedSetTypeFlag.HasFlag(data.setType) && data.levelType != defaultDeckType)
+                .ToArray();
+
+            List<Card> cardsForPutToFiles = new List<Card>();
+
+            foreach (CardData cardData in cardDataForPiles)
             {
-                LevelType defaultDeckType = Enum.Parse<LevelType>(GameConst.GameOption.DEFAULT_LEVEL_TYPE);
-                GameState currentState = simulationContext.CurrentState;
-                
-                SetType randomSelectedSetTypeFlag = GetRandomSelectedSetTypeFlag();
-                CardData[] cardDataForPiles = Storage.Instance.CardData
-                    .Where(data => randomSelectedSetTypeFlag.HasFlag(data.setType) && data.levelType != defaultDeckType)
-                    .ToArray();
+                for (int i = 0; i < cardData.amount; i++)
+                {
+                    Card card = new Card(cardData);
+                    cardsForPutToFiles.Add(card);
+                }
+            }
 
-                List<Card> cardsForPutToFiles = new List<Card>();
+            foreach (var levelGroup in cardsForPutToFiles.GroupBy(card => card.LevelType))
+            {
+                var cardPile = currentState.LevelCardPiles[levelGroup.Key];
+                await cardPile.AddRangeAsync(levelGroup);
+                await cardPile.ShuffleAsync();
+            }
 
-                foreach (CardData cardData in cardDataForPiles)
+            var cardPilesConstructionEvent = new CardPilesConstructionConsoleEvent(randomSelectedSetTypeFlag, cardsForPutToFiles);
+            simulationContext.CollectedEvents.Add(cardPilesConstructionEvent);
+
+            CardData[] startingCardData = Storage.Instance.CardData
+                .Where(data => data.levelType == defaultDeckType)
+                .ToArray();
+            
+            foreach (PlayerState playerState in currentState.PlayerStates)
+            {
+                foreach (CardData cardData in startingCardData)
                 {
                     for (int i = 0; i < cardData.amount; i++)
                     {
                         Card card = new Card(cardData);
-                        cardsForPutToFiles.Add(card);
+                        playerState.Deck.Add(card);
                     }
                 }
-
-                foreach (var levelGroup in cardsForPutToFiles.GroupBy(card => card.LevelType))
-                {
-                    var cardPile = currentState.LevelCardPiles[levelGroup.Key];
-                    await cardPile.AddRangeAsync(levelGroup);
-                    await cardPile.ShuffleAsync();
-                }
-
-                var cardPilesConstructionEvent = new CardPilesConstructionConsoleEvent(randomSelectedSetTypeFlag, cardsForPutToFiles);
-                simulationContext.CollectedEvents.Add(cardPilesConstructionEvent);
-
-                CardData[] startingCardData = Storage.Instance.CardData
-                    .Where(data => data.levelType == defaultDeckType)
-                    .ToArray();
                 
-                foreach (PlayerState playerState in currentState.PlayerStates)
-                {
-                    foreach (CardData cardData in startingCardData)
-                    {
-                        for (int i = 0; i < cardData.amount; i++)
-                        {
-                            Card card = new Card(cardData);
-                            playerState.Deck.Add(card);
-                        }
-                    }
-                    
-                    var deckConstructionEvent = new DeckConstructionConsoleEvent(playerState.Player, playerState.Deck);
-                    simulationContext.CollectedEvents.Add(deckConstructionEvent);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"{nameof(DeckConstructionPhase)} exception : {e}");
-                throw;
+                var deckConstructionEvent = new DeckConstructionConsoleEvent(playerState.Player, playerState.Deck);
+                simulationContext.CollectedEvents.Add(deckConstructionEvent);
             }
         }
 
