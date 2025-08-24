@@ -12,18 +12,15 @@ namespace ProjectABC.InGame
         [SerializeField] private Image _icon;
         [SerializeField] private Image _shadow;
         [SerializeField] private Button _btnSelect;
-        [SerializeField] private Button _btnReroll;
         
         private int _index;
         private CardDataOld _data;
         
-        public Action<int> OnRerollCard;
         public Action<int> OnSelectCard;
 
         private void Awake()
         {
             _btnSelect.onClick.AddListener(OnSelectClicked);
-            _btnReroll.onClick.AddListener(OnRerollClicked);
         }
 
         public void SetIndex(int index)
@@ -51,10 +48,6 @@ namespace ProjectABC.InGame
         private void OnSelectClicked()
         {
             OnSelectCard.Invoke(_index);
-        }
-        private void OnRerollClicked()
-        {
-            OnRerollCard.Invoke(_index);
         }
     }
 }

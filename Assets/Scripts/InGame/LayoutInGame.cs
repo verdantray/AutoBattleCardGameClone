@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectABC.Data;
+using ProjectABC.InGame.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,17 +21,24 @@ namespace ProjectABC.InGame
         public CanvasGroup _splashWin;
         public CanvasGroup _splashLose;
         
-        public CanvasGroup _panelCardSelect;
-
+        
+        [Header("Select Card Pool")] 
+        public CanvasGroup _panelCardPoolSelect;
+        public List<ButtonCardPool> _buttonCardPools;
+        
         [Header("Select Card")] 
+        public CanvasGroup _panelCardSelect;
         public List<CardInGameSelect> _cardInGameSelects;
         public Button _btnSelectCard;
-
+        public Button _btnRerollCard;
+        
         private int _debugWinCount;
         private int _debugLoseCount;
-
+        
+        private int _selectedCardPoolIndex = -1;
         private int _selectedCardIndex = -1;
         
+        public Action<int> OnFinishRecruitLevelAmount;
         public Action<CardDataOld> OnFinishSelectCard;
 
         private readonly List<CardDataOld> _targetCardDataPool = new();
@@ -37,16 +46,69 @@ namespace ProjectABC.InGame
         private void Start()
         {
             _btnSelectCard.onClick.AddListener(FinishSelectCards);
+            _btnRerollCard.onClick.AddListener(RerollCards);
 
             for (var i = 0; i < _cardInGameSelects.Count; i++)
             {
                 var cardSelect = _cardInGameSelects[i];
                 cardSelect.SetIndex(i);
                 cardSelect.OnSelectCard += OnSelectCard;
-                cardSelect.OnRerollCard += OnRerollCard;
+            }
+            
+            for (var i = 0; i < _buttonCardPools.Count; i++)
+            {
+                var cardSelect = _buttonCardPools[i];
+                cardSelect.SetIndex(i);
+                cardSelect.OnSelectCardPool += OnSelectCardPool;
             }
         }
 
+        #region Recruit Level Amount
+        public void OnStartRecruitLevelAmount(IReadOnlyList<Tuple<LevelType, int>> pair)
+        {
+            for (var i = 0; i < _buttonCardPools.Count; i++)
+            {
+                var (levelType, count) = pair[i];
+                var button = _buttonCardPools[i];
+                button.SetCardPool(levelType, count);
+            }
+            
+            StartCoroutine(ShowPanelCardPoolSelect());
+        }
+        public void FinishRecruitLevelAmount()
+        {
+            OnFinishRecruitLevelAmount.Invoke(_selectedCardPoolIndex);
+            StartCoroutine(HidePanelCardPoolSelect());
+        }
+        public void OnSelectCardPool(int index)
+        {
+            _selectedCardPoolIndex = index;
+            FinishRecruitLevelAmount();
+        }
+        private IEnumerator ShowPanelCardPoolSelect()
+        {
+            for (var t = 0f; t <= 1f; t += Time.deltaTime / TimeToShowSplash)
+            {
+                _panelCardPoolSelect.alpha = t;
+                yield return null;
+            }
+            _panelCardPoolSelect.alpha = 1f;
+            _panelCardPoolSelect.interactable = true;
+            _panelCardPoolSelect.blocksRaycasts = true;
+        }
+        private IEnumerator HidePanelCardPoolSelect()
+        {
+            _panelCardPoolSelect.interactable = false;
+            _panelCardPoolSelect.blocksRaycasts = false;
+            for (var t = 0f; t <= 1f; t += Time.deltaTime / TimeToHideSplash)
+            {
+                _panelCardPoolSelect.alpha = 1f - t;
+                yield return null;
+            }
+            _panelCardPoolSelect.alpha = 0f;
+        }
+        #endregion
+        
         public void OnStartSelectCards(List<CardDataOld> cards)
         {
             _targetCardDataPool.Clear();
@@ -71,6 +133,10 @@ namespace ProjectABC.InGame
             
             StartCoroutine(HidePanelCardSelect());
         }
+        public void RerollCards()
+        {
+            
+        }
         public void OnSelectCard(int index)
         {
             foreach (var cardSelect in _cardInGameSelects)
@@ -81,20 +147,6 @@ namespace ProjectABC.InGame
             
             _selectedCardIndex = index;
             _btnSelectCard.interactable = index >= 0;
-        }
-        public void OnRerollCard(int index)
-        {
-            var targetCardSelect = _cardInGameSelects[index];
-            var j = Random.Range(0, _targetCardDataPool.Count);
-            var cardData = _targetCardDataPool[j];
-            targetCardSelect.SetCard(cardData);
-            targetCardSelect.SetSelected(false);
-
-            if (_selectedCardIndex == index)
-            {
-                _selectedCardIndex = -1;
-                _btnSelectCard.interactable = false;
-            }
         }
         
         
