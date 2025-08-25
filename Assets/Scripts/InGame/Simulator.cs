@@ -1,9 +1,10 @@
 using System;
+using ProjectABC.Core;
 using ProjectABC.Data;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace ProjectABC.Core
+namespace ProjectABC.InGame
 {
     public class Simulator : MonoBehaviour
     {
