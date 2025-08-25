@@ -36,9 +36,9 @@ namespace ProjectABC.Core
             return isSuccess;
         }
 
-        public IEnumerable<Card> DrawCards(int amount)
+        public List<Card> DrawCards(int amount)
         {
-            IEnumerable<Card> toDraw = _cardList.GetRange(0, amount);
+            List<Card> toDraw = _cardList.GetRange(0, amount);
             _cardList.RemoveRange(0, amount);
 
             return toDraw;
@@ -75,7 +75,7 @@ namespace ProjectABC.Core
 
         #endregion
 
-        public void SetBenchLimit(int benchLimit) => SlotLimit = benchLimit;
+        public void SetSlotLimit(int slotLimit) => SlotLimit = slotLimit;
 
         public void Clear()
         {
@@ -171,7 +171,7 @@ namespace ProjectABC.Core
         public GradeType GradeType { get; private set; }
         public int Power { get; private set; }
 
-        // TODO : Use localization system after implements
+        public string Title => _cardData.titleKey;
         public string Name => _cardData.nameKey;
         public string Description => _cardData.descKey;
         
@@ -188,7 +188,7 @@ namespace ProjectABC.Core
 
         public override string ToString()
         {
-            return $"Card {Name} / {Power} / {GradeType}";
+            return $"(Card Id : {Id} / Power : {Power} / Club : {ClubType} / Grade : {GradeType})";
         }
     }
 }

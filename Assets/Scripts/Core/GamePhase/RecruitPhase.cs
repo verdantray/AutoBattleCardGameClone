@@ -14,27 +14,23 @@ namespace ProjectABC.Core
             RecruitOnRound recruitOnRound = new RecruitOnRound(currentState.Round);
                 
             List<PlayerState> allPlayerStates = currentState.PlayerStates;
-            List<Task<DrawCardsFromPilesAction>> tasks = new List<Task<DrawCardsFromPilesAction>>();
+            List<Task<RecruitCardsAction>> tasks = new List<Task<RecruitCardsAction>>();
 
             foreach (PlayerState playerState in allPlayerStates)
             {
                 IPlayer player = playerState.Player;
-                var playerActionTask = player.DrawCardsFromPilesAsync(
-                    playerState.MulliganChances,
-                    recruitOnRound,
-                    currentState.LevelCardPiles
-                );
+                var playerActionTask = player.RecruitCardsAsync(playerState, recruitOnRound);
                     
                 tasks.Add(playerActionTask);
             }
                 
             await Task.WhenAll(tasks);
 
-            foreach (DrawCardsFromPilesAction action in tasks.Select(task => task.Result))
+            foreach (RecruitCardsAction action in tasks.Select(task => task.Result))
             {
                 action.ApplyState(currentState);
-                    
-                RecruitConsoleEvent contextEvent = new RecruitConsoleEvent(action.Player, action.SelectedGrade, action.DrawnCards);
+
+                RecruitConsoleEvent contextEvent = action.GetContextEvent();
                 simulationContext.CollectedEvents.Add(contextEvent);
             }
         }

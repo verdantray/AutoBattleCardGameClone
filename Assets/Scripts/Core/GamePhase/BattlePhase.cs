@@ -71,13 +71,13 @@ namespace ProjectABC.Core
                     matchResult.AddEvent(new DrawCardConsoleEvent(attacker));
                 }
                 
-                matchResult.AddEvent(new TryPutCardBenchConsoleEvent(defender));
+                matchResult.AddEvent(new TryPutCardInfirmaryConsoleEvent(defender));
                 
-                if (!defender.TryPutCardFieldToBench(out int _))
+                if (!defender.TryPutCardFieldToInfirmary(out int _))
                 {
                     // set attacker winner and return events
                     matchResult.SetWinner(attacker.Player);
-                    matchResult.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfBench));
+                    matchResult.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfInfirmary));
                     
                     return matchResult;
                 }

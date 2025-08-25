@@ -87,14 +87,14 @@ namespace ProjectABC.Core
         }
     }
 
-    public class TryPutCardBenchConsoleEvent : MatchConsoleEvent
+    public class TryPutCardInfirmaryConsoleEvent : MatchConsoleEvent
     {
-        public TryPutCardBenchConsoleEvent(MatchSide defendingSide)
+        public TryPutCardInfirmaryConsoleEvent(MatchSide defendingSide)
         {
             string playerName = defendingSide.Player.Name;
             List<Card> cardsToPut = defendingSide.Field;
 
-            Message = $"플레이어 '{playerName}' 가 수비에 실패하여 다음 카드들을 벤치로 보냄\n"
+            Message = $"플레이어 '{playerName}' 가 수비에 실패하여 다음 카드들을 양호실로 보냄\n"
                       + string.Join('\n', cardsToPut);
         }
     }
@@ -114,7 +114,7 @@ namespace ProjectABC.Core
         public enum MatchEndReason
         {
             EndByEmptyHand,
-            EndByFullOfBench
+            EndByFullOfInfirmary
         }
         
         public MatchFinishConsoleEvent(MatchSide winningSide, MatchSide losingSide, MatchEndReason reason)
@@ -124,7 +124,7 @@ namespace ProjectABC.Core
             string matchEndReason = reason switch
             {
                 MatchEndReason.EndByEmptyHand => $"플레이어 '{otherName}'의 덱이 모두 소진되었습니다.",
-                MatchEndReason.EndByFullOfBench => $"플레이어 '{otherName}'의 벤치 슬롯이 모두 찼습니다.",
+                MatchEndReason.EndByFullOfInfirmary => $"플레이어 '{otherName}'의 양호실 슬롯이 모두 찼습니다.",
                 _ => throw new ArgumentOutOfRangeException(nameof(reason), reason, null)
             };
             

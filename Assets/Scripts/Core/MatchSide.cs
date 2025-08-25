@@ -33,7 +33,7 @@ namespace ProjectABC.Core
             return isSuccessToDraw;
         }
 
-        public bool TryPutCardFieldToBench(out int remainSlots)
+        public bool TryPutCardFieldToInfirmary(out int remainSlots)
         {
             bool isSuccessToPut = Infirmary.TryPut(Field, out remainSlots);
             Field.Clear();

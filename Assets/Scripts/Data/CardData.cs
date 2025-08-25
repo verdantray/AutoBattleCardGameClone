@@ -33,6 +33,7 @@ namespace ProjectABC.Data
         public GradeType gradeType;
         public int basePower;
         public int amount;
+        public string titleKey;
         public string nameKey;
         public string descKey;
         public string imagePath;
@@ -57,6 +58,9 @@ namespace ProjectABC.Data
                         break;
                     case "amount":
                         int.TryParse(cell.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out amount);
+                        break;
+                    case "title_key":
+                        titleKey = cell.value;
                         break;
                     case "name_key":
                         nameKey = cell.value;

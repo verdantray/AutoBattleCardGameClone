@@ -8,34 +8,35 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class LevelCardPiles : IReadOnlyDictionary<GradeType, ConcurrentCardPile>
+    public class GradeCardPiles : IReadOnlyDictionary<GradeType, CardPile>
     {
-        private readonly Dictionary<GradeType, ConcurrentCardPile> _levelCardPiles = new Dictionary<GradeType, ConcurrentCardPile>
+        private readonly Dictionary<GradeType, CardPile> _levelCardPiles = new Dictionary<GradeType, CardPile>
         {
-            { GradeType.First, new ConcurrentCardPile() },
-            { GradeType.Second, new ConcurrentCardPile() },
-            { GradeType.Third, new ConcurrentCardPile() },
+            { GradeType.First, new CardPile() },
+            { GradeType.Second, new CardPile() },
+            { GradeType.Third, new CardPile() },
         };
 
         #region inheritances of IDictionary
 
-        public IEnumerator<KeyValuePair<GradeType, ConcurrentCardPile>> GetEnumerator() => _levelCardPiles.GetEnumerator();
+        public IEnumerator<KeyValuePair<GradeType, CardPile>> GetEnumerator() => _levelCardPiles.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _levelCardPiles.GetEnumerator();
 
         public int Count => _levelCardPiles.Count;
         public bool ContainsKey(GradeType key) => _levelCardPiles.ContainsKey(key);
 
-        public bool TryGetValue(GradeType key, out ConcurrentCardPile value) => _levelCardPiles.TryGetValue(key, out value);
+        public bool TryGetValue(GradeType key, out CardPile value) => _levelCardPiles.TryGetValue(key, out value);
 
-        public ConcurrentCardPile this[GradeType key] => _levelCardPiles[key];
+        public CardPile this[GradeType key] => _levelCardPiles[key];
 
         public IEnumerable<GradeType> Keys => _levelCardPiles.Keys;
-        public IEnumerable<ConcurrentCardPile> Values => _levelCardPiles.Values;
+        public IEnumerable<CardPile> Values => _levelCardPiles.Values;
 
         #endregion
     }
 
+    [Obsolete("Not used anymore thread safe version of CardPile... Use CardPile instead.")]
     public class ConcurrentCardPile
     {
         private readonly List<Card> _cardList = new List<Card>();
