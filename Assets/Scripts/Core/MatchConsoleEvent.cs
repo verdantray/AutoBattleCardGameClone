@@ -103,7 +103,7 @@ namespace ProjectABC.Core
     {
         public SwitchPositionConsoleEvent(IPlayer defendingPlayer, IPlayer attackingPlayer)
         {
-            Message = "플래그 이동으로 인한 공수 교대\n"
+            Message = "공수 교대\n"
                       + $"수비 : {defendingPlayer.Name}\n"
                       + $"공격 : {attackingPlayer.Name}";
         }
