@@ -29,6 +29,678 @@ MonoBehaviour:
       sheetName: 00. win_point_data_origin
       startCell: A02
       endCell: C16
-  cardData: []
-  recruitData: []
-  winPointData: []
+  cardData:
+  - id: card_s_newbie
+    setType: 2
+    levelType: 0
+    basePower: 1
+    amount: 3
+    nameKey: name_card_newbie
+    descKey: 
+    imagePath: 
+  - id: card_s_talent
+    setType: 2
+    levelType: 0
+    basePower: 2
+    amount: 1
+    nameKey: name_card_talent
+    descKey: 
+    imagePath: 
+  - id: card_s_dog
+    setType: 2
+    levelType: 0
+    basePower: 3
+    amount: 1
+    nameKey: name_card_dog
+    descKey: 
+    imagePath: 
+  - id: card_s_champion
+    setType: 2
+    levelType: 0
+    basePower: 4
+    amount: 1
+    nameKey: name_card_champion
+    descKey: 
+    imagePath: 
+  - id: card_a_reporter
+    setType: 2
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_reporter
+    descKey: desc_skill_reporter
+    imagePath: 
+  - id: card_a_talent
+    setType: 2
+    levelType: 1
+    basePower: 2
+    amount: 3
+    nameKey: name_card_talent
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_mascot
+    setType: 2
+    levelType: 2
+    basePower: 2
+    amount: 4
+    nameKey: name_card_mascot
+    descKey: desc_skill_mascot
+    imagePath: 
+  - id: card_b_dog
+    setType: 2
+    levelType: 2
+    basePower: 3
+    amount: 3
+    nameKey: name_card_dog
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_champion
+    setType: 2
+    levelType: 3
+    basePower: 4
+    amount: 2
+    nameKey: name_card_champion
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_fan_bus
+    setType: 1
+    levelType: 3
+    basePower: 6
+    amount: 4
+    nameKey: name_card_fan_bus
+    descKey: desc_skill_fan_bus
+    imagePath: 
+  - id: card_a_jester
+    setType: 3
+    levelType: 1
+    basePower: 1
+    amount: 4
+    nameKey: name_card_jester
+    descKey: desc_skill_jester
+    imagePath: 
+  - id: card_a_hermit
+    setType: 3
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_hermit
+    descKey: desc_skill_hermit
+    imagePath: 
+  - id: card_a_stablehand
+    setType: 3
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_stablehand
+    descKey: desc_skill_stablehand
+    imagePath: 
+  - id: card_a_pig
+    setType: 3
+    levelType: 1
+    basePower: 3
+    amount: 3
+    nameKey: name_card_pig
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_knight
+    setType: 3
+    levelType: 2
+    basePower: 3
+    amount: 4
+    nameKey: name_card_knight
+    descKey: desc_skill_knight
+    imagePath: 
+  - id: card_b_blacksmith
+    setType: 3
+    levelType: 2
+    basePower: 3
+    amount: 4
+    nameKey: name_card_blacksmith
+    descKey: desc_skill_balcksmith
+    imagePath: 
+  - id: card_b_wizard
+    setType: 3
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_wizard
+    descKey: desc_skill_wizard
+    imagePath: 
+  - id: card_b_horse
+    setType: 3
+    levelType: 2
+    basePower: 5
+    amount: 3
+    nameKey: name_card_horse
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_bard
+    setType: 3
+    levelType: 3
+    basePower: 4
+    amount: 4
+    nameKey: name_card_bard
+    descKey: desc_skill_bard
+    imagePath: 
+  - id: card_c_prince
+    setType: 3
+    levelType: 3
+    basePower: 5
+    amount: 4
+    nameKey: name_card_prince
+    descKey: desc_skill_prince
+    imagePath: 
+  - id: carfd_c_dragon
+    setType: 3
+    levelType: 3
+    basePower: 7
+    amount: 2
+    nameKey: name_card_dragon
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_a_clown
+    setType: 0
+    levelType: 1
+    basePower: 1
+    amount: 4
+    nameKey: name_card_clown
+    descKey: desc_skill_clown
+    imagePath: 
+  - id: card_a_juggling_master
+    setType: 0
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_juggling_master
+    descKey: desc_skill_juggling_master
+    imagePath: 
+  - id: card_a_street_vendor
+    setType: 0
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_street_vendor
+    descKey: desc_skill_street_vendor
+    imagePath: 
+  - id: card_a_pony
+    setType: 0
+    levelType: 1
+    basePower: 3
+    amount: 3
+    nameKey: name_card_pony
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_mime_artist
+    setType: 0
+    levelType: 2
+    basePower: 1
+    amount: 4
+    nameKey: name_card_mime_artist
+    descKey: desc_skill_mime_artist
+    imagePath: 
+  - id: card_b_fortune_teller
+    setType: 0
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_fortune_teller
+    descKey: desc_skill_fortune_teller
+    imagePath: 
+  - id: card_b_fireworks_expert
+    setType: 0
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_fireworks_expert
+    descKey: desc_skill_fireworks_expert
+    imagePath: 
+  - id: card_b_rubber_duck
+    setType: 0
+    levelType: 2
+    basePower: 5
+    amount: 3
+    nameKey: name_card_Rubber_duck
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_magician
+    setType: 0
+    levelType: 3
+    basePower: 5
+    amount: 4
+    nameKey: name_card_magician
+    descKey: desc_skill_magician
+    imagePath: 
+  - id: card_c_bumper_car
+    setType: 0
+    levelType: 3
+    basePower: 6
+    amount: 4
+    nameKey: name_card_bumper_car
+    descKey: desc_skill_bumper_car
+    imagePath: 
+  - id: card_c_teddy_bear
+    setType: 0
+    levelType: 3
+    basePower: 7
+    amount: 2
+    nameKey: name_card_teddy_bear
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_a_escape_pod
+    setType: 1
+    levelType: 1
+    basePower: 1
+    amount: 4
+    nameKey: name_card_escape_pod
+    descKey: desc_skill_escape_pod
+    imagePath: 
+  - id: card_a_shapeshifter
+    setType: 1
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_shapeshifter
+    descKey: desc_skill_shapeshifter
+    imagePath: 
+  - id: card_a_ai
+    setType: 1
+    levelType: 1
+    basePower: 2
+    amount: 3
+    nameKey: name_card_ai
+    descKey: desc_skill_ai
+    imagePath: 
+  - id: card_a_cow
+    setType: 1
+    levelType: 1
+    basePower: 3
+    amount: 3
+    nameKey: name_card_cow
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_band
+    setType: 1
+    levelType: 2
+    basePower: 3
+    amount: 4
+    nameKey: name_card_band
+    descKey: desc_skill_band
+    imagePath: 
+  - id: card_b_ufo
+    setType: 1
+    levelType: 2
+    basePower: 3
+    amount: 4
+    nameKey: name_card_ufo
+    descKey: desc_skill_ufo
+    imagePath: 
+  - id: card_b_clone
+    setType: 1
+    levelType: 2
+    basePower: 4
+    amount: 5
+    nameKey: name_card_clone
+    descKey: desc_skill_clone
+    imagePath: 
+  - id: card_b_alien
+    setType: 1
+    levelType: 2
+    basePower: 5
+    amount: 3
+    nameKey: name_card_alien
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_hologram
+    setType: 1
+    levelType: 3
+    basePower: 4
+    amount: 4
+    nameKey: name_card_hologram
+    descKey: desc_skill_hologram
+    imagePath: 
+  - id: card_c_sf_mania
+    setType: 1
+    levelType: 3
+    basePower: 6
+    amount: 4
+    nameKey: name_card_sf_mania
+    descKey: desc_skill_sf_mania
+    imagePath: 
+  - id: card_c_slime
+    setType: 1
+    levelType: 3
+    basePower: 7
+    amount: 2
+    nameKey: name_card_slime
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_a_makeup_artist
+    setType: 6
+    levelType: 1
+    basePower: 1
+    amount: 4
+    nameKey: name_card_makeup_artist
+    descKey: desc_skill_makeup_artist
+    imagePath: 
+  - id: card_a_famous_actor
+    setType: 6
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_famous_actor
+    descKey: desc_skill_famous_actor
+    imagePath: 
+  - id: card_a_gangster
+    setType: 6
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_gangster
+    descKey: desc_skill_gangster
+    imagePath: 
+  - id: card_a_cat
+    setType: 6
+    levelType: 1
+    basePower: 3
+    amount: 3
+    nameKey: name_card_cat
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_cowboy
+    setType: 6
+    levelType: 2
+    basePower: 3
+    amount: 4
+    nameKey: name_card_cowboy
+    descKey: desc_skill_cowboy
+    imagePath: 
+  - id: card_b_cartoon_character
+    setType: 6
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_cartoon_character
+    descKey: desc_skill_cartoon_character
+    imagePath: 
+  - id: card_b_director
+    setType: 6
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_director
+    descKey: desc_skill_director
+    imagePath: 
+  - id: card_b_lion
+    setType: 6
+    levelType: 2
+    basePower: 5
+    amount: 3
+    nameKey: name_card_lion
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_hero
+    setType: 6
+    levelType: 3
+    basePower: 5
+    amount: 4
+    nameKey: name_card_hero
+    descKey: desc_skill_hero
+    imagePath: 
+  - id: card_c_villian
+    setType: 6
+    levelType: 3
+    basePower: 10
+    amount: 4
+    nameKey: name_card_villian
+    descKey: desc_skill_villian
+    imagePath: 
+  - id: card_c_tyrannosaurus
+    setType: 6
+    levelType: 3
+    basePower: 7
+    amount: 0
+    nameKey: name_card_tyrannosaurus
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_a_mermaid
+    setType: 7
+    levelType: 1
+    basePower: 1
+    amount: 4
+    nameKey: name_card_mermaid
+    descKey: desc_skill_mermaid
+    imagePath: 
+  - id: card_a_treasure
+    setType: 7
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_treasure
+    descKey: desc_skill_treasure
+    imagePath: 
+  - id: card_a_sailor
+    setType: 7
+    levelType: 1
+    basePower: 2
+    amount: 4
+    nameKey: name_card_sailor
+    descKey: desc_skill_sailor
+    imagePath: 
+  - id: card_a_parrot
+    setType: 7
+    levelType: 1
+    basePower: 3
+    amount: 3
+    nameKey: name_card_parrot
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_chef
+    setType: 7
+    levelType: 2
+    basePower: 2
+    amount: 4
+    nameKey: name_card_chef
+    descKey: desc_skill_chef
+    imagePath: 
+  - id: card_b_safety_guard
+    setType: 7
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_safety_guard
+    descKey: desc_skill_safety_guard
+    imagePath: 
+  - id: card_b_navigator
+    setType: 7
+    levelType: 2
+    basePower: 4
+    amount: 4
+    nameKey: name_card_navigator
+    descKey: desc_skill_navigator
+    imagePath: 
+  - id: card_b_shark
+    setType: 7
+    levelType: 2
+    basePower: 5
+    amount: 3
+    nameKey: name_card_shark
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_siren
+    setType: 7
+    levelType: 3
+    basePower: 6
+    amount: 4
+    nameKey: name_card_siren
+    descKey: desc_skill_siren
+    imagePath: 
+  - id: card_c_submarine
+    setType: 7
+    levelType: 3
+    basePower: 9
+    amount: 4
+    nameKey: name_card_submarine
+    descKey: desc_skill_submarine
+    imagePath: 
+  - id: card_c_kraken
+    setType: 7
+    levelType: 3
+    basePower: 7
+    amount: 2
+    nameKey: name_card_kraken
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_a_butler
+    setType: 4
+    levelType: 1
+    basePower: 1
+    amount: 4
+    nameKey: name_card_butler
+    descKey: desc_skill_butler
+    imagePath: 
+  - id: card_a_skeleton
+    setType: 4
+    levelType: 1
+    basePower: 2
+    amount: 8
+    nameKey: name_card_skeleton
+    descKey: desc_skill_skeleton
+    imagePath: 
+  - id: card_a_spider
+    setType: 4
+    levelType: 1
+    basePower: 3
+    amount: 3
+    nameKey: name_card_spider
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_b_ghost
+    setType: 4
+    levelType: 2
+    basePower: 1
+    amount: 4
+    nameKey: name_card_ghost
+    descKey: desc_skill_ghost
+    imagePath: 
+  - id: card_b_teenager
+    setType: 4
+    levelType: 2
+    basePower: 2
+    amount: 4
+    nameKey: name_card_teenager
+    descKey: desc_skill_teenager
+    imagePath: 
+  - id: card_b_necromancer
+    setType: 4
+    levelType: 2
+    basePower: 3
+    amount: 4
+    nameKey: name_card_necromancer
+    descKey: desc_skill_necromancer
+    imagePath: 
+  - id: card_b_bat
+    setType: 4
+    levelType: 2
+    basePower: 5
+    amount: 3
+    nameKey: name_card_bat
+    descKey: desc_skill_rare
+    imagePath: 
+  - id: card_c_vampire
+    setType: 4
+    levelType: 3
+    basePower: 4
+    amount: 4
+    nameKey: name_card_vampire
+    descKey: desc_skill_vampire
+    imagePath: 
+  - id: card_c_vacuum_cleaner
+    setType: 4
+    levelType: 3
+    basePower: 5
+    amount: 4
+    nameKey: name_card_vacuum_cleaner
+    descKey: desc_skill_vacuum_cleaner
+    imagePath: 
+  - id: card_c_werewolf
+    setType: 4
+    levelType: 3
+    basePower: 7
+    amount: 2
+    nameKey: name_card_werewolf
+    descKey: desc_skill_rare
+    imagePath: 
+  recruitData:
+  - round: 1
+    recruitLevelType: 1
+    amount: 1
+  - round: 2
+    recruitLevelType: 1
+    amount: 2
+  - round: 3
+    recruitLevelType: 1
+    amount: 2
+  - round: 3
+    recruitLevelType: 2
+    amount: 1
+  - round: 4
+    recruitLevelType: 1
+    amount: 2
+  - round: 4
+    recruitLevelType: 2
+    amount: 2
+  - round: 5
+    recruitLevelType: 2
+    amount: 2
+  - round: 6
+    recruitLevelType: 2
+    amount: 2
+  - round: 6
+    recruitLevelType: 3
+    amount: 1
+  - round: 7
+    recruitLevelType: 3
+    amount: 2
+  winPointData:
+  - round: 1
+    winPoint: 2
+    weight: 3
+  - round: 1
+    winPoint: 3
+    weight: 1
+  - round: 2
+    winPoint: 2
+    weight: 2
+  - round: 2
+    winPoint: 3
+    weight: 2
+  - round: 3
+    winPoint: 3
+    weight: 2
+  - round: 3
+    winPoint: 4
+    weight: 2
+  - round: 4
+    winPoint: 5
+    weight: 2
+  - round: 4
+    winPoint: 6
+    weight: 2
+  - round: 5
+    winPoint: 6
+    weight: 3
+  - round: 5
+    winPoint: 7
+    weight: 1
+  - round: 6
+    winPoint: 7
+    weight: 3
+  - round: 6
+    winPoint: 8
+    weight: 1
+  - round: 7
+    winPoint: 9
+    weight: 2
+  - round: 7
+    winPoint: 10
+    weight: 2

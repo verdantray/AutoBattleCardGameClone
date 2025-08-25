@@ -59,7 +59,7 @@ namespace ProjectABC.Core
             {
                 foreach (var contextEvent in _simulationContext.CollectedEvents)
                 {
-                    contextEvent.TriggerEvent();
+                    contextEvent.Publish();
                 }
             }
         }

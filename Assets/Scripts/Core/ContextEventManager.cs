@@ -1,79 +1,99 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ProjectABC.Core
 {
     public static class ContextEventManager
     {
-        private static readonly Dictionary<Type, List<IContextEventListener>> SubscribersMap = new Dictionary<Type, List<IContextEventListener>>();
+        public static readonly Dictionary<Type, List<HandlerEntry>> HandlerEntries = new Dictionary<Type, List<HandlerEntry>>();
 
-        public static void Subscribe<T>(IContextEventListener listener) where T : class, IContextEvent
+        public class HandlerEntry
         {
-            Type contextEventType = typeof(T);
+            public readonly object Target;
+            private readonly Action<IContextEvent> _callback;
 
-            if (!SubscribersMap.ContainsKey(contextEventType))
+            private HandlerEntry(object target, Action<IContextEvent> callback)
             {
-                SubscribersMap[contextEventType] = new List<IContextEventListener>();
+                Target = target;
+                _callback = callback;
             }
 
-            if (SubscriberExists(contextEventType, listener))
+            public static HandlerEntry GetSubscriberHandle<T>(IContextEventListener<T> subscriber) where T : class, IContextEvent
             {
-                return;
-            }
-            
-            SubscribersMap[contextEventType].Add(listener);
-        }
-
-        public static void Unsubscribe<T>(IContextEventListener listener) where T : class, IContextEvent
-        {
-            Type contextEventType = typeof(T);
-
-            if (!SubscriberExists(contextEventType, listener))
-            {
-                return;
-            }
-            
-            SubscribersMap[contextEventType].Remove(listener);
-        }
-
-        private static bool SubscriberExists(Type contextEventType, IContextEventListener listener)
-        {
-            return SubscribersMap.TryGetValue(contextEventType, out var subscribers)
-                   && subscribers.Contains(listener);
-        }
-
-        public static void TriggerEvent<T>(this T contextEvent) where T : class, IContextEvent
-        {
-            if (!SubscribersMap.TryGetValue(typeof(T), out var subscribers))
-            {
-                return;
+                return new HandlerEntry(subscriber, e => subscriber.OnEvent((T)e));
             }
 
-            foreach (var listener in subscribers.Cast<IContextEventListener<T>>())
+            public void Publish(IContextEvent contextEvent)
             {
-                listener.OnEvent(contextEvent);
+                _callback.Invoke(contextEvent);
             }
         }
-    }
-
-    public interface IContextEventListener
-    {
         
+        public static void Subscribe<T>(IContextEventListener<T> listener) where T : class, IContextEvent
+        {
+            Type contextEventType = typeof(T);
+
+            if (!HandlerEntries.ContainsKey(contextEventType))
+            {
+                HandlerEntries.Add(contextEventType, new List<HandlerEntry>());
+            }
+
+            if (HandlerEntries[contextEventType].Exists(entry => ReferenceEquals(entry.Target, listener)))
+            {
+                return;
+            }
+            
+            HandlerEntry entry = HandlerEntry.GetSubscriberHandle(listener);
+            HandlerEntries[contextEventType].Add(entry);
+        }
+
+        public static void Unsubscribe<T>(IContextEventListener<T> listener) where T : class, IContextEvent
+        {
+            Type contextEventType = typeof(T);
+
+            if (!HandlerEntries.TryGetValue(contextEventType, out var entries))
+            {
+                return;
+            }
+
+            entries.RemoveAll(entry => ReferenceEquals(entry.Target, listener));
+            if (entries.Count == 0)
+            {
+                HandlerEntries.Remove(contextEventType);
+            }
+        }
+
+        public static void Publish<T>(this T contextEvent) where T : class, IContextEvent
+        {
+            Type eventContextType = contextEvent.GetType();
+            
+            if (!HandlerEntries.TryGetValue(eventContextType, out var entries))
+            {
+                return;
+            }
+
+            foreach (HandlerEntry entry in entries)
+            {
+                entry.Publish(contextEvent);
+            }
+        }
     }
 
-    public interface IContextEventListener<in T> : IContextEventListener where T : class, IContextEvent
+    public static class ContextEventRegister
     {
-        public void RegisterHandler()
+        public static void StartListening<T>(this IContextEventListener<T> caller) where T : class, IContextEvent
         {
-            ContextEventManager.Subscribe<T>(this);
+            ContextEventManager.Subscribe(caller);
         }
 
-        public void UnregisterHandler()
+        public static void StopListening<T>(this IContextEventListener<T> caller) where T : class, IContextEvent
         {
-            ContextEventManager.Unsubscribe<T>(this);
+            ContextEventManager.Unsubscribe(caller);
         }
+    }
 
+    public interface IContextEventListener<in T> where T : class, IContextEvent
+    {
         public void OnEvent(T contextEvent);
     }
 }
