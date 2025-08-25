@@ -17,7 +17,7 @@ namespace ProjectABC.Core
             public const string DEFAULT_LEVEL_TYPE = "S";
             public const int MULLIGAN_DEFAULT_AMOUNT = 2;
             public const int RECRUIT_HAND_AMOUNT = 5;
-            public const int DEFAULT_BENCH_LIMIT = 6;
+            public const int DEFAULT_INFIRMARY_SLOT_LIMIT = 6;
         }
     }
 }

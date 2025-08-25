@@ -10,7 +10,7 @@ namespace ProjectABC.Data
     public record RecruitData : IFieldUpdatable
     {
         public int round;
-        public LevelType recruitLevelType;
+        public GradeType recruitGradeType;
         public int amount;
         
         public void UpdateFields(List<GSTU_Cell> cells)
@@ -22,8 +22,8 @@ namespace ProjectABC.Data
                     case "round":
                         int.TryParse(cell.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out round);
                         break;
-                    case "recruit_level_type":
-                        Enum.TryParse(cell.value, true, out recruitLevelType);
+                    case "recruit_grade_type":
+                        recruitGradeType = cell.value.ParseGradeType();
                         break;
                     case "amount":
                         int.TryParse(cell.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out amount);

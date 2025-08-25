@@ -8,29 +8,29 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class LevelCardPiles : IReadOnlyDictionary<LevelType, ConcurrentCardPile>
+    public class LevelCardPiles : IReadOnlyDictionary<GradeType, ConcurrentCardPile>
     {
-        private readonly Dictionary<LevelType, ConcurrentCardPile> _levelCardPiles = new Dictionary<LevelType, ConcurrentCardPile>
+        private readonly Dictionary<GradeType, ConcurrentCardPile> _levelCardPiles = new Dictionary<GradeType, ConcurrentCardPile>
         {
-            { LevelType.A, new ConcurrentCardPile() },
-            { LevelType.B, new ConcurrentCardPile() },
-            { LevelType.C, new ConcurrentCardPile() },
+            { GradeType.First, new ConcurrentCardPile() },
+            { GradeType.Second, new ConcurrentCardPile() },
+            { GradeType.Third, new ConcurrentCardPile() },
         };
 
         #region inheritances of IDictionary
 
-        public IEnumerator<KeyValuePair<LevelType, ConcurrentCardPile>> GetEnumerator() => _levelCardPiles.GetEnumerator();
+        public IEnumerator<KeyValuePair<GradeType, ConcurrentCardPile>> GetEnumerator() => _levelCardPiles.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _levelCardPiles.GetEnumerator();
 
         public int Count => _levelCardPiles.Count;
-        public bool ContainsKey(LevelType key) => _levelCardPiles.ContainsKey(key);
+        public bool ContainsKey(GradeType key) => _levelCardPiles.ContainsKey(key);
 
-        public bool TryGetValue(LevelType key, out ConcurrentCardPile value) => _levelCardPiles.TryGetValue(key, out value);
+        public bool TryGetValue(GradeType key, out ConcurrentCardPile value) => _levelCardPiles.TryGetValue(key, out value);
 
-        public ConcurrentCardPile this[LevelType key] => _levelCardPiles[key];
+        public ConcurrentCardPile this[GradeType key] => _levelCardPiles[key];
 
-        public IEnumerable<LevelType> Keys => _levelCardPiles.Keys;
+        public IEnumerable<GradeType> Keys => _levelCardPiles.Keys;
         public IEnumerable<ConcurrentCardPile> Values => _levelCardPiles.Values;
 
         #endregion

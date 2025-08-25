@@ -7,13 +7,13 @@ namespace ProjectABC.Core
     {
         public IPlayer Player { get; private set; }
 
-        public readonly LevelType SelectedLevel;
+        public readonly GradeType SelectedGrade;
         public readonly List<Card> DrawnCards;
 
-        public DrawCardsFromPilesAction(IPlayer player, LevelType selectedLevel, List<Card> drawnCards)
+        public DrawCardsFromPilesAction(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
         {
             Player = player;
-            SelectedLevel = selectedLevel;
+            SelectedGrade = selectedGrade;
             DrawnCards = drawnCards;
         }
         

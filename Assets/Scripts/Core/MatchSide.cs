@@ -6,7 +6,7 @@ namespace ProjectABC.Core
     public class MatchSide
     {
         public readonly CardPile Hands = new CardPile();
-        public readonly Bench Bench = new Bench();
+        public readonly Infirmary Infirmary = new Infirmary();
 
         public readonly List<Card> Field = new List<Card>();
 
@@ -33,9 +33,9 @@ namespace ProjectABC.Core
             return isSuccessToDraw;
         }
 
-        public bool TryPutCardFieldToBench(out int remainBenchSlots)
+        public bool TryPutCardFieldToBench(out int remainSlots)
         {
-            bool isSuccessToPut = Bench.TryPut(Field, out remainBenchSlots);
+            bool isSuccessToPut = Infirmary.TryPut(Field, out remainSlots);
             Field.Clear();
             
             if (isSuccessToPut)

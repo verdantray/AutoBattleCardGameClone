@@ -10,12 +10,12 @@ namespace ProjectABC.Core
     {
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
-            LevelType defaultDeckType = Enum.Parse<LevelType>(GameConst.GameOption.DEFAULT_LEVEL_TYPE);
+            GradeType defaultDeckType = Enum.Parse<GradeType>(GameConst.GameOption.DEFAULT_LEVEL_TYPE);
             GameState currentState = simulationContext.CurrentState;
             
-            SetType randomSelectedSetTypeFlag = GetRandomSelectedSetTypeFlag();
+            ClubType randomSelectedClubTypeFlag = GetRandomSelectedSetTypeFlag();
             CardData[] cardDataForPiles = Storage.Instance.CardData
-                .Where(data => randomSelectedSetTypeFlag.HasFlag(data.setType) && data.levelType != defaultDeckType)
+                .Where(data => randomSelectedClubTypeFlag.HasFlag(data.clubType) && data.gradeType != defaultDeckType)
                 .ToArray();
 
             List<Card> cardsForPutToFiles = new List<Card>();
@@ -29,18 +29,18 @@ namespace ProjectABC.Core
                 }
             }
 
-            foreach (var levelGroup in cardsForPutToFiles.GroupBy(card => card.LevelType))
+            foreach (var levelGroup in cardsForPutToFiles.GroupBy(card => card.GradeType))
             {
                 var cardPile = currentState.LevelCardPiles[levelGroup.Key];
                 await cardPile.AddRangeAsync(levelGroup);
                 await cardPile.ShuffleAsync();
             }
 
-            var cardPilesConstructionEvent = new CardPilesConstructionConsoleEvent(randomSelectedSetTypeFlag, cardsForPutToFiles);
+            var cardPilesConstructionEvent = new CardPilesConstructionConsoleEvent(randomSelectedClubTypeFlag, cardsForPutToFiles);
             simulationContext.CollectedEvents.Add(cardPilesConstructionEvent);
 
             CardData[] startingCardData = Storage.Instance.CardData
-                .Where(data => data.levelType == defaultDeckType)
+                .Where(data => data.gradeType == defaultDeckType)
                 .ToArray();
             
             foreach (PlayerState playerState in currentState.PlayerStates)
@@ -59,27 +59,27 @@ namespace ProjectABC.Core
             }
         }
 
-        private SetType GetRandomSelectedSetTypeFlag()
+        private ClubType GetRandomSelectedSetTypeFlag()
         {
-            SetType mustIncludeSetType = Enum.Parse<SetType>(GameConst.GameOption.DEFAULT_SET_TYPE, true);
+            ClubType mustIncludeClubType = Enum.Parse<ClubType>(GameConst.GameOption.DEFAULT_SET_TYPE, true);
 
-            List<SetType> allSetTypes = new List<SetType>(Enum.GetValues(typeof(SetType)).Cast<SetType>());
-            allSetTypes.Remove(mustIncludeSetType);
+            List<ClubType> allSetTypes = new List<ClubType>(Enum.GetValues(typeof(ClubType)).Cast<ClubType>());
+            allSetTypes.Remove(mustIncludeClubType);
 
             System.Random random = new System.Random();
-            ReadOnlySpan<SetType> selectedSetTypes = allSetTypes
+            ReadOnlySpan<ClubType> selectedSetTypes = allSetTypes
                 .OrderBy(_ => random.Next())
                 .Take(GameConst.GameOption.SELECT_SET_TYPES_AMOUNT - 1)
                 .ToArray();
 
-            SetType selectedSetTypeFlag = mustIncludeSetType;
+            ClubType selectedClubTypeFlag = mustIncludeClubType;
 
-            foreach (SetType selectedSetType in selectedSetTypes)
+            foreach (ClubType selectedSetType in selectedSetTypes)
             {
-                selectedSetTypeFlag |= selectedSetType;
+                selectedClubTypeFlag |= selectedSetType;
             }
 
-            return selectedSetTypeFlag;
+            return selectedClubTypeFlag;
         }
     }
 }

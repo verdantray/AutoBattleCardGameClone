@@ -15,7 +15,7 @@ namespace ProjectABC.Core
         {
             Instance = new Storage();
             
-            Instance.CardData.AddRange(gameDataAsset.CardData);
+            Instance.CardData.AddRange(gameDataAsset.CardDataForPiles);
             Instance.RecruitData.AddRange(gameDataAsset.RecruitData);
             Instance.WinPointData.AddRange(gameDataAsset.WinPointData);
         }

@@ -34,7 +34,7 @@ namespace ProjectABC.Core
             {
                 action.ApplyState(currentState);
                     
-                RecruitConsoleEvent contextEvent = new RecruitConsoleEvent(action.Player, action.SelectedLevel, action.DrawnCards);
+                RecruitConsoleEvent contextEvent = new RecruitConsoleEvent(action.Player, action.SelectedGrade, action.DrawnCards);
                 simulationContext.CollectedEvents.Add(contextEvent);
             }
         }
@@ -42,7 +42,7 @@ namespace ProjectABC.Core
 
     public class RecruitOnRound
     {
-        private readonly List<Tuple<LevelType, int>> _recruitLevelAndAmounts;
+        private readonly List<Tuple<GradeType, int>> _recruitLevelAndAmounts;
         
         public RecruitOnRound(int round)
         {
@@ -52,12 +52,12 @@ namespace ProjectABC.Core
                 .ToList();
         }
 
-        private static Tuple<LevelType, int> ElementSelector(RecruitData recruitData)
+        private static Tuple<GradeType, int> ElementSelector(RecruitData recruitData)
         {
-            return new Tuple<LevelType, int>(recruitData.recruitLevelType, recruitData.amount);
+            return new Tuple<GradeType, int>(recruitData.recruitGradeType, recruitData.amount);
         }
 
-        public IReadOnlyList<Tuple<LevelType, int>> GetRecruitLevelAmountPairs()
+        public IReadOnlyList<Tuple<GradeType, int>> GetRecruitLevelAmountPairs()
         {
             return _recruitLevelAndAmounts;
         }

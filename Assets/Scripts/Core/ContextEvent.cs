@@ -34,13 +34,13 @@ namespace ProjectABC.Core
 
     public class CardPilesConstructionConsoleEvent : ConsoleContextEventBase
     {
-        public CardPilesConstructionConsoleEvent(SetType selectedSetTypeFlag, IEnumerable<Card> cards)
+        public CardPilesConstructionConsoleEvent(ClubType selectedClubTypeFlag, IEnumerable<Card> cards)
         {
             StringBuilder stringBuilder = new StringBuilder();
             
-            SetType[] setTypes = Enum.GetValues(typeof(SetType)) as SetType[];
+            ClubType[] setTypes = Enum.GetValues(typeof(ClubType)) as ClubType[];
             var selectedSetNames = setTypes!
-                .Where(element => selectedSetTypeFlag.HasFlag(element))
+                .Where(element => selectedClubTypeFlag.HasFlag(element))
                 .Select(element => element.ToString());
 
             stringBuilder.AppendLine($"다음과 같은 카드 세트가 선택되었습니다. '{string.Join(", ", selectedSetNames)}'");
@@ -58,7 +58,7 @@ namespace ProjectABC.Core
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"초기 덱을 구성합니다.");
-            stringBuilder.AppendLine($"영입한 챌린저들:\n{string.Join('\n', startingCards)}");
+            stringBuilder.AppendLine($"영입한 부원들:\n{string.Join('\n', startingCards)}");
 
             Message = $"플레이어 {player.Name} : {stringBuilder}";
         }
@@ -66,11 +66,11 @@ namespace ProjectABC.Core
 
     public class RecruitConsoleEvent : ConsoleContextEventBase
     {
-        public RecruitConsoleEvent(IPlayer player, LevelType selectedLevel, List<Card> drawnCards)
+        public RecruitConsoleEvent(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
         {
             StringBuilder stringBuilder = new StringBuilder();
             
-            stringBuilder.AppendLine($"{selectedLevel} 레벨의 챌린저 {drawnCards.Count}명을 영입합니다.");
+            stringBuilder.AppendLine($"{selectedGrade} 학년의 부원 {drawnCards.Count}명을 영입합니다.");
             stringBuilder.AppendLine($"영입한 챌린저들:\n{string.Join('\n', drawnCards)}");
 
             Message = $"플레이어 {player.Name} : {stringBuilder}";
