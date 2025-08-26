@@ -14,7 +14,7 @@ namespace ProjectABC.Editor
         [MenuItem("ABC Utility/Google Client Setting Loader")]
         private static void Open()
         {
-            GoogleClientSecretLoader window = GetWindow<GoogleClientSecretLoader>("Google Client Setting Loader");
+            GoogleClientSecretLoader window = GetWindow<GoogleClientSecretLoader>(true, "Google Client Setting Loader");
             window._setting = Setting.LoadSetting();
         }
 

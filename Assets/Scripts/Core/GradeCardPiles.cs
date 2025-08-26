@@ -36,7 +36,7 @@ namespace ProjectABC.Core
         #endregion
     }
 
-    [Obsolete("Not used anymore thread safe version of CardPile... Use CardPile instead.")]
+    [Obsolete("Not use anymore thread safe version of CardPile... Use CardPile instead.")]
     public class ConcurrentCardPile
     {
         private readonly List<Card> _cardList = new List<Card>();

@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     {
         public string Name { get; }
 
-        // temporary implements, DeckConstructAsync will implement each inherits after add club type more...
+        // temporary implements, DeckConstructAsync will implement each inherits after add more club types
         public Task<DeckConstructAction> DecKConstructAsync()
         {
             ReadOnlySpan<ClubType> gradeTypes = Enum.GetValues(typeof(ClubType)) as ClubType[];
