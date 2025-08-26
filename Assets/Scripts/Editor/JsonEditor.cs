@@ -14,7 +14,6 @@ namespace ProjectABC.Editor
         private JsonValue _root = new JsonValue(JsonType.Object);
         private Vector2 _scroll;
         
-        
         [MenuItem("ABC Utility/Json Editor")]
         private static void Open()
         {
@@ -25,13 +24,13 @@ namespace ProjectABC.Editor
         {
             DrawToolBar();
             
-            EditorGUILayout.Space(EditorGUIUtility.singleLineHeight);
+            EditorGUILayout.Space(EditorGUIUtility.singleLineHeight * 0.5f);
             
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
             EditorGUI.indentLevel = 0;
             DrawRootSelector();
             
-            EditorGUILayout.Space(EditorGUIUtility.singleLineHeight);
+            EditorGUILayout.Space(EditorGUIUtility.singleLineHeight * 0.5f);
             DrawValue("JSON Root", _root);
             EditorGUILayout.EndScrollView();
         }
