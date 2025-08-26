@@ -5,7 +5,6 @@ using System.Text;
 using ProjectABC.Data;
 using UnityEditor;
 using UnityEngine;
-using Newtonsoft.Json;
 
 namespace ProjectABC.Editor
 {
