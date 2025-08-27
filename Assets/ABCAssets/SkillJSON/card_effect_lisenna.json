@@ -1,0 +1,6 @@
+{
+  "card_effect_id": "card_effect_lisenna",
+  "card_effect_type": "card_effect_lowest_power_cards_to_top_of_deck",
+  "card_effect_desc_key": "card_effect_desc_lowest_power_cards_to_top_of_deck",
+  "cards_amount": 2
+}

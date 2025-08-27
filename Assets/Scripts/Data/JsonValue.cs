@@ -24,8 +24,8 @@ namespace ProjectABC.Data
     {
         public JsonType type = JsonType.Object;
         public string strValue;
-        public long intValue;
-        public double floatValue;
+        public int intValue;
+        public float floatValue;
         public bool boolValue;
         public JsonObject obj = new JsonObject();
         public List<JsonValue> arr = new List<JsonValue>();
@@ -49,7 +49,7 @@ namespace ProjectABC.Data
                     intValue = 0;
                     break;
                 case JsonType.Float:
-                    floatValue = 0.0;
+                    floatValue = 0.0f;
                     break;
                 case JsonType.Bool:
                     boolValue = false;
@@ -262,9 +262,9 @@ namespace ProjectABC.Data
                 case JTokenType.String:
                     return new JsonValue(JsonType.String) { strValue = token.Value<string>() };
                 case JTokenType.Integer:
-                    return new JsonValue(JsonType.Integer) { intValue = token.Value<long>() };
+                    return new JsonValue(JsonType.Integer) { intValue = token.Value<int>() };
                 case JTokenType.Float:
-                    return new JsonValue(JsonType.Float) { floatValue = token.Value<double>() };
+                    return new JsonValue(JsonType.Float) { floatValue = token.Value<float>() };
                 case JTokenType.Boolean:
                     return new JsonValue(JsonType.Bool) { boolValue = token.Value<bool>() };
                 case JTokenType.Null:

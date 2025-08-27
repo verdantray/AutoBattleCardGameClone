@@ -7,6 +7,13 @@ namespace ProjectABC.Core
         {
             public const string GAME_DATA_ASSET = "GameDataAsset";
         }
+        
+        public static class AssetPath
+        {
+            public const string CARD_BACK_PATH = "material_card_back";
+            public const string CARD_FRONT_FALLBACK_PATH = "material_card_fallback";
+
+        }
 
         public static class GameOption
         {
@@ -19,10 +26,11 @@ namespace ProjectABC.Core
             public const int DEFAULT_INFIRMARY_SLOT_LIMIT = 6;
         }
 
-        public static class AssetPath
+        public static class CardEffect
         {
-            public const string CARD_BACK_PATH = "material_card_back";
-            public const string CARD_FRONT_FALLBACK_PATH = "material_card_fallback";
+            public const string EFFECT_ID = "card_effect_id";
+            public const string EFFECT_TYPE = "card_effect_type";
+            public const string EFFECT_DESCRIPTION_KEY = "card_effect_desc_key";
         }
     }
 }

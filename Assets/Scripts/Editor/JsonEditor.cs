@@ -106,10 +106,10 @@ namespace ProjectABC.Editor
                         value.strValue = EditorGUILayout.TextField("Value", value.strValue ?? string.Empty);
                         break;
                     case JsonType.Integer:
-                        value.intValue = EditorGUILayout.LongField("Value", value.intValue);
+                        value.intValue = EditorGUILayout.IntField("Value", value.intValue);
                         break;
                     case JsonType.Float:
-                        value.floatValue = EditorGUILayout.DoubleField("Value", value.floatValue);
+                        value.floatValue = EditorGUILayout.FloatField("Value", value.floatValue);
                         break;
                     case JsonType.Bool:
                         value.boolValue = EditorGUILayout.Toggle("Value", value.boolValue);
@@ -146,21 +146,21 @@ namespace ProjectABC.Editor
             
             for (int i = 0; i < obj.fields.Count; i++)
             {
-                var f = obj.fields[i];
+                var field = obj.fields[i];
 
                 using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
                 {
                     using (new EditorGUILayout.HorizontalScope())
                     {
-                        f.key = EditorGUILayout.TextField(f.key ?? string.Empty);
+                        field.key = EditorGUILayout.TextField(field.key ?? string.Empty);
                         
                         if (GUILayout.Button("▲")) Move(obj.fields, i, i-1);
                         if (GUILayout.Button("▼")) Move(obj.fields, i, i+1);
-                        if (GUILayout.Button("⎘")) obj.fields.Insert(i+1, CloneField(f));
+                        if (GUILayout.Button("⎘")) obj.fields.Insert(i+1, CloneField(field));
                         if (GUILayout.Button("✕")) { obj.fields.RemoveAt(i); break; }
                     }
                     
-                    DrawValue(null, f.value);
+                    DrawValue(null, field.value);
                 }
             }
             
@@ -216,7 +216,7 @@ namespace ProjectABC.Editor
             {
                 case JsonType.String: value.strValue ??= string.Empty; break;
                 case JsonType.Integer: value.intValue = 0; break;
-                case JsonType.Float: value.floatValue = 0.0; break;
+                case JsonType.Float: value.floatValue = 0.0f; break;
                 case JsonType.Bool: value.boolValue = false; break;
                 case JsonType.Object: value.obj ??= new JsonObject(); break;
                 case JsonType.Array: value.arr ??= new List<JsonValue>(); break;
