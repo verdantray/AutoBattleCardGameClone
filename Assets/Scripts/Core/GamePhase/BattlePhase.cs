@@ -8,20 +8,21 @@ namespace ProjectABC.Core
 {
     public class BattlePhase : IGamePhase
     {
-        public async Task ExecutePhaseAsync(SimulationContext simulationContext)
+        public Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;
             var matchingPairs = currentState.GetMatchingPairs();
 
             foreach (var (playerAState, playerBState) in matchingPairs)
             {
-                MatchResult matchResult = RunMatch(playerAState, playerBState);
-                var matchFlowContextEvent = new MatchFlowConsoleEvent(matchResult.MatchEvents);
+                MatchInfo matchInfo = RunMatch(playerAState, playerBState);
+                
+                var matchFlowContextEvent = new MatchFlowConsoleEvent(matchInfo.MatchEvents);
                 matchFlowContextEvent.Publish();
                 
                 simulationContext.CollectedEvents.Add(matchFlowContextEvent);
                     
-                PlayerState winnerState = simulationContext.CurrentState.GetPlayerState(matchResult.Winner);
+                PlayerState winnerState = simulationContext.CurrentState.GetPlayerState(matchInfo.Winner);
                 WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
                 int winPoints = winPointOnRound.GetWinPoint();
                     
@@ -31,69 +32,72 @@ namespace ProjectABC.Core
                                  + $"총점 : {winnerState.WinPoints}";
                 var gainWinPointContextEvent = new CommonConsoleEvent(message);
                 gainWinPointContextEvent.Publish();
-
+                
                 simulationContext.CollectedEvents.Add(gainWinPointContextEvent);
             }
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
+            return Task.CompletedTask;
         }
 
-        private static MatchResult RunMatch(PlayerState playerAState, PlayerState playerBState)
+        private static MatchInfo RunMatch(PlayerState playerAState, PlayerState playerBState)
         {
-            MatchResult matchResult = new MatchResult();
+            MatchInfo matchInfo = new MatchInfo(playerAState.Player, playerBState.Player);
             
             var (defender, attacker) = GetMatchSidesOnStart(playerAState, playerBState);
-            defender.HasFlag = true;
-            attacker.HasFlag = false;
+            defender.SetMatchState(MatchState.Defending);
+            attacker.SetMatchState(MatchState.Attacking);
             
-            matchResult.AddEvent(new MatchStartConsoleEvent(defender.Player, attacker.Player));
-
-            if (!defender.TryDraw())
-            {
-                // set attacker winner and return events
-                matchResult.SetWinner(attacker.Player);
-                matchResult.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByEmptyHand));
-                
-                return matchResult;
-            }
-            
-            matchResult.AddEvent(new DrawCardConsoleEvent(defender));
+            matchInfo.AddEvent(new MatchStartConsoleEvent(defender.Player, attacker.Player));
 
             while (true)
             {
-                matchResult.AddEvent(new ComparePowerConsoleEvent(defender, attacker));
-                
-                while (attacker.GetPower() < defender.GetPower())
+                if (!defender.TryDraw())
                 {
+                    // set attacker winner and return events
+                    matchInfo.SetWinner(attacker.Player);
+                    matchInfo.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByEmptyHand));
+                
+                    return matchInfo;
+                }
+            
+                matchInfo.AddEvent(new DrawCardConsoleEvent(defender));
+                
+                while (attacker.GetEffectivePower() < defender.GetEffectivePower())
+                {
+                    if (attacker.Field.Count > 0 && defender.Field.Count > 0)
+                    {
+                        matchInfo.AddEvent(new ComparePowerConsoleEvent(defender, attacker));
+                    }
+                    
                     if (!attacker.TryDraw())
                     {
                         // set defender winner and return events
-                        matchResult.SetWinner(defender.Player);
-                        matchResult.AddEvent(new MatchFinishConsoleEvent(defender, attacker, MatchFinishConsoleEvent.MatchEndReason.EndByEmptyHand));
+                        matchInfo.SetWinner(defender.Player);
+                        matchInfo.AddEvent(new MatchFinishConsoleEvent(defender, attacker, MatchFinishConsoleEvent.MatchEndReason.EndByEmptyHand));
                         
-                        return matchResult;
+                        return matchInfo;
                     }
                     
-                    matchResult.AddEvent(new DrawCardConsoleEvent(attacker));
+                    matchInfo.AddEvent(new DrawCardConsoleEvent(attacker));
                 }
                 
-                matchResult.AddEvent(new TryPutCardInfirmaryConsoleEvent(defender));
+                matchInfo.AddEvent(new TryPutCardInfirmaryConsoleEvent(defender));
                 
                 if (!defender.TryPutCardFieldToInfirmary(out int _))
                 {
                     // set attacker winner and return events
-                    matchResult.SetWinner(attacker.Player);
-                    matchResult.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfInfirmary));
+                    matchInfo.SetWinner(attacker.Player);
+                    matchInfo.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfInfirmary));
                     
-                    return matchResult;
+                    return matchInfo;
                 }
                 
                 // changes position between two players
                 (defender, attacker) = (attacker, defender);
-                defender.HasFlag = true;
-                attacker.HasFlag = false;
+                defender.SetMatchState(MatchState.Defending);
+                attacker.SetMatchState(MatchState.Attacking);
                 
-                matchResult.AddEvent(new SwitchPositionConsoleEvent(defender.Player, attacker.Player));
+                matchInfo.AddEvent(new SwitchPositionConsoleEvent(defender.Player, attacker.Player));
             }
         }
 

@@ -1,23 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjectABC.Core
 {
-    public interface IMatchEventSet
-    {
-        public List<IMatchEvent> MatchEvents { get; }
-        public void AddEvent(IMatchEvent matchEvent);
-    }
-    
     public interface IMatchEvent
     {
         
     }
 
-    public class MatchResult : IMatchEventSet
+    public class MatchInfo
     {
+        public readonly IPlayer[] Participants;
         public IPlayer Winner { get; private set; } = null;
         public List<IMatchEvent> MatchEvents { get; } = new List<IMatchEvent>();
+
+        public MatchInfo(params IPlayer[] participants)
+        {
+            Participants = participants;
+        }
+
+        public bool IsParticipants(IPlayer player)
+        {
+            return Participants.Contains(player);
+        }
 
         public void SetWinner(IPlayer player)
         {
@@ -48,6 +54,14 @@ namespace ProjectABC.Core
         }
     }
 
+    public class CommonMatchConsoleEvent : MatchConsoleEvent
+    {
+        public CommonMatchConsoleEvent(string message)
+        {
+            Message = message;
+        }
+    }
+
     public class MatchStartConsoleEvent : MatchConsoleEvent
     {
         public MatchStartConsoleEvent(IPlayer defendingPlayer, IPlayer attackingPlayer)
@@ -67,7 +81,7 @@ namespace ProjectABC.Core
 
             Message = $"플레이어 '{playerName}'가 {drawCard.Name}을 필드에 드로우\n"
                       + $"카드 : {drawCard}\n"
-                      + $"'{playerName}'의 필드 파워 총 합 : {drawSide.GetPower()}";
+                      + $"'{playerName}'의 필드 파워 총 합 : {drawSide.GetEffectivePower()}";
         }
     }
 
@@ -78,8 +92,8 @@ namespace ProjectABC.Core
             string defendingPlayerName = defendingSide.Player.Name;
             string attackingPlayerName = attackingSide.Player.Name;
 
-            int defendingPower = defendingSide.GetPower();
-            int attackingPower = attackingSide.GetPower();
+            int defendingPower = defendingSide.GetEffectivePower();
+            int attackingPower = attackingSide.GetEffectivePower();
 
             Message = $"수비 플레이어 '{defendingPlayerName}' 파워 : {defendingPower}\n"
                       + $"공격 플레이어 '{attackingPlayerName}' 파워 : {attackingPower}\n"
