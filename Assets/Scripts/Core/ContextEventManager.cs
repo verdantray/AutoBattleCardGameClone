@@ -5,9 +5,9 @@ namespace ProjectABC.Core
 {
     public static class ContextEventManager
     {
-        public static readonly Dictionary<Type, List<HandlerEntry>> HandlerEntries = new Dictionary<Type, List<HandlerEntry>>();
+        private static readonly Dictionary<Type, List<HandlerEntry>> HandlerEntries = new Dictionary<Type, List<HandlerEntry>>();
 
-        public class HandlerEntry
+        private class HandlerEntry
         {
             public readonly object Target;
             private readonly Action<IContextEvent> _callback;
