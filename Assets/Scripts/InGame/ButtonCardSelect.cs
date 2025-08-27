@@ -1,11 +1,12 @@
 using System;
+using ProjectABC.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ProjectABC.InGame
 {
-    public class CardInGameSelect : MonoBehaviour
+    public class ButtonCardSelect : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _power;
@@ -14,7 +15,7 @@ namespace ProjectABC.InGame
         [SerializeField] private Button _btnSelect;
         
         private int _index;
-        private CardDataOld _data;
+        private Card _card;
         
         public Action<int> OnSelectCard;
 
@@ -27,18 +28,15 @@ namespace ProjectABC.InGame
         {
             _index = index;
         }
-        public void SetCard(CardDataOld card)
+        public void SetCard(Card card)
         {
-            _data = card;
-
-            _name.text = card.Name;
-            _power.text = card.Power.ToString();
-            _icon.sprite = card.Sprite;
+            _card = card;
+            
+            _name.text = _card.Name;
+            _power.text = _card.Power.ToString();
+            // _icon.sprite = card.imagePath;
         }
-        public int GetCardID()
-        {
-            return _data.ID;
-        }
+        public Card GetCard() { return _card; }
 
         public void SetSelected(bool state)
         {

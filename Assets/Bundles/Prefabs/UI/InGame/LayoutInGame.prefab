@@ -404,7 +404,7 @@ MonoBehaviour:
   - {fileID: 6848360664101167888}
   - {fileID: 767246875663937421}
   _panelCardSelect: {fileID: 7744316364112059452}
-  _cardInGameSelects:
+  _buttonCardSelects:
   - {fileID: 2570278829288219658}
   - {fileID: 8673146517931590882}
   - {fileID: 9129039949619079044}

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ProjectABC.InGame
@@ -138,8 +137,7 @@ namespace ProjectABC.InGame
             activeCards.AddRange(_activeCards);
             _activeCards.Clear();
             
-            var benchCards = new Dictionary<int, List<CardInGame>>();
-            benchCards.AddRange(_benchCards);
+            var benchCards = _benchCards.Keys.ToDictionary(key => key, key => _benchCards[key]);
             _benchCards.Clear();
             
             foreach (var card in activeCards)

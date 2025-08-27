@@ -25,9 +25,9 @@ namespace ProjectABC.InGame.UI
         {
             _index = index;
         }
-        public void SetCardPool(LevelType levelType, int count)
+        public void SetCardPool(GradeType gradeType, int count)
         {
-            _textCardPool.text = levelType.ToString();
+            _textCardPool.text = gradeType.ToString();
             _textCardCount.text = $"x{count}";
         }
         

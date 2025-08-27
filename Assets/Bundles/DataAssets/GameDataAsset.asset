@@ -14,21 +14,675 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sheetAddress: 1wQ5OPEu1YpF1723OPkDaGFzqRKUCNSB9A2mby1ybu8E
   dataUpdaters:
-  - updateFieldName: Card Data
+  - updateFieldName: Card Data For Starting
     sheetReader:
-      sheetName: 00. card_data_origin
+      sheetName: 01. card_data_for_starting_deck
       startCell: A02
-      endCell: I77
+      endCell: K06
+  - updateFieldName: Card Data For Piles
+    sheetReader:
+      sheetName: 02. card_data_for_card_piles
+      startCell: A02
+      endCell: K62
   - updateFieldName: Recruit Data
     sheetReader:
-      sheetName: 00. recruit_data_origin
+      sheetName: 03. recruit_data
       startCell: A02
       endCell: C12
   - updateFieldName: Win Point Data
     sheetReader:
-      sheetName: 00. win_point_data_origin
+      sheetName: 04. win_point_data
       startCell: A02
       endCell: C16
-  cardData: []
-  recruitData: []
-  winPointData: []
+  cardDataForStarting:
+  - id: card_irian_co
+    clubType: 2
+    gradeType: 0
+    basePower: 1
+    amount: 3
+    titleKey: title_clerk
+    nameKey: name_Irian
+    descKey: 
+    imagePath: 
+  - id: card_elicia_co
+    clubType: 2
+    gradeType: 0
+    basePower: 2
+    amount: 1
+    titleKey: title_treasurer
+    nameKey: name_elicia
+    descKey: desc_elite
+    imagePath: 
+  - id: card_verde_co
+    clubType: 2
+    gradeType: 1
+    basePower: 3
+    amount: 1
+    titleKey: title_vice_president
+    nameKey: name_verde
+    descKey: desc_elite
+    imagePath: 
+  - id: card_etella_co
+    clubType: 2
+    gradeType: 2
+    basePower: 4
+    amount: 1
+    titleKey: title_student_council_president
+    nameKey: name_etella
+    descKey: desc_elite
+    imagePath: 
+  cardDataForPiles:
+  - id: card_elicia_co
+    clubType: 2
+    gradeType: 0
+    basePower: 2
+    amount: 2
+    titleKey: title_treasurer
+    nameKey: name_elicia
+    descKey: desc_elite
+    imagePath: 
+  - id: card_mirea_co
+    clubType: 2
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_event_planner
+    nameKey: name_mirea
+    descKey: desc_mirea
+    imagePath: 
+  - id: card_verde_co
+    clubType: 2
+    gradeType: 1
+    basePower: 3
+    amount: 2
+    titleKey: title_vice_president
+    nameKey: name_verde
+    descKey: desc_elite
+    imagePath: 
+  - id: card_lisenna_co
+    clubType: 2
+    gradeType: 1
+    basePower: 2
+    amount: 4
+    titleKey: title_disciplinary_officer
+    nameKey: name_lisenna
+    descKey: desc_lisenna
+    imagePath: 
+  - id: card_etella_co
+    clubType: 2
+    gradeType: 2
+    basePower: 4
+    amount: 2
+    titleKey: title_student_council_president
+    nameKey: name_etella
+    descKey: desc_elite
+    imagePath: 
+  - id: card_orphia_co
+    clubType: 2
+    gradeType: 2
+    basePower: 3
+    amount: 4
+    titleKey: title_publicist
+    nameKey: name_orphia
+    descKey: desc_orphia
+    imagePath: 
+  - id: card_yunette_cl
+    clubType: 3
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_deck_cleaner
+    nameKey: name_yunette
+    descKey: desc_yunette
+    imagePath: 
+  - id: card_pora_cl
+    clubType: 3
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_crew
+    nameKey: name_pora
+    descKey: desc_elite
+    imagePath: 
+  - id: card_selina_cl
+    clubType: 3
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_dispatched_member
+    nameKey: name_selina
+    descKey: desc_selina
+    imagePath: 
+  - id: card_silin_coastline
+    clubType: 3
+    gradeType: 1
+    basePower: 4
+    amount: 4
+    titleKey: title_fisher
+    nameKey: name_silin
+    descKey: desc_silin
+    imagePath: 
+  - id: card_navia_coastline
+    clubType: 3
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_rescuer
+    nameKey: name_navia
+    descKey: desc_elite
+    imagePath: 
+  - id: card_seredy_coastline
+    clubType: 3
+    gradeType: 1
+    basePower: 3
+    amount: 4
+    titleKey: title_navigator
+    nameKey: name_seredy
+    descKey: desc_seredy
+    imagePath: 
+  - id: card_ridone_coastline
+    clubType: 3
+    gradeType: 1
+    basePower: 1
+    amount: 4
+    titleKey: title_lighthouse_keeper
+    nameKey: name_ridone
+    descKey: desc_ridone
+    imagePath: 
+  - id: card_orca_coastline
+    clubType: 3
+    gradeType: 2
+    basePower: 5
+    amount: 4
+    titleKey: title_captain
+    nameKey: name_orca
+    descKey: desc_orca
+    imagePath: 
+  - id: card_mari_coastline
+    clubType: 3
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_marine_leisure_member
+    nameKey: name_mari
+    descKey: desc_elite
+    imagePath: 
+  - id: card_libre_coastline
+    clubType: 3
+    gradeType: 2
+    basePower: 4
+    amount: 4
+    titleKey: title_diver
+    nameKey: name_libre
+    descKey: desc_libre
+    imagePath: 
+  - id: card_elara_band
+    clubType: 0
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_manager
+    nameKey: name_elara
+    descKey: desc_elara
+    imagePath: 
+  - id: card_cordie_band
+    clubType: 0
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_staff
+    nameKey: name_cordie
+    descKey: desc_elite
+    imagePath: 
+  - id: card_cosmi_band
+    clubType: 0
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_pianist
+    nameKey: name_cosmi
+    descKey: desc_cosmi
+    imagePath: 
+  - id: card_melisa_band
+    clubType: 0
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_dj
+    nameKey: name_melisa
+    descKey: desc_melisa
+    imagePath: 
+  - id: card_stella_band
+    clubType: 0
+    gradeType: 1
+    basePower: 4
+    amount: 4
+    titleKey: title_guitarist
+    nameKey: name_stella
+    descKey: desc_stella
+    imagePath: 
+  - id: card_harmony_band
+    clubType: 0
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_castanets_player
+    nameKey: name_harmony
+    descKey: desc_elite
+    imagePath: 
+  - id: card_neria_band
+    clubType: 0
+    gradeType: 1
+    basePower: 2
+    amount: 4
+    titleKey: title_bassist
+    nameKey: name_neria
+    descKey: desc_neria
+    imagePath: 
+  - id: card_astra_band
+    clubType: 0
+    gradeType: 2
+    basePower: 4
+    amount: 4
+    titleKey: title_vocalist
+    nameKey: name_astra
+    descKey: desc_astra
+    imagePath: 
+  - id: card_ravian_band
+    clubType: 0
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_drummer
+    nameKey: name_ravian
+    descKey: desc_elite
+    imagePath: 
+  - id: card_flag_gd
+    clubType: 1
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_qa_tester
+    nameKey: name_flag
+    descKey: desc_flag
+    imagePath: 
+  - id: card_prim_gd
+    clubType: 1
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_scenario_writer
+    nameKey: name_prim
+    descKey: desc_elite
+    imagePath: 
+  - id: card_tibera_gd
+    clubType: 1
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_project_manager
+    nameKey: name_tibera
+    descKey: desc_tibera
+    imagePath: 
+  - id: card_erida_gd
+    clubType: 1
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_planner_designer
+    nameKey: name_erida
+    descKey: desc_erida
+    imagePath: 
+  - id: card_glitch_gd
+    clubType: 1
+    gradeType: 1
+    basePower: 4
+    amount: 4
+    titleKey: title_debugger
+    nameKey: name_glitch
+    descKey: desc_glitch
+    imagePath: 
+  - id: card_sketch_gd
+    clubType: 1
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_illustrator
+    nameKey: name_sketch
+    descKey: desc_elite
+    imagePath: 
+  - id: card_script_gd
+    clubType: 1
+    gradeType: 1
+    basePower: 5
+    amount: 4
+    titleKey: title_client_programmer
+    nameKey: name_script
+    descKey: desc_script
+    imagePath: 
+  - id: card_velvet_gd
+    clubType: 1
+    gradeType: 2
+    basePower: 5
+    amount: 4
+    titleKey: title_server_programmer
+    nameKey: name_velvet
+    descKey: desc_velvet
+    imagePath: 
+  - id: card_lucie_gd
+    clubType: 1
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_art_director
+    nameKey: name_lucie
+    descKey: desc_elite
+    imagePath: 
+  - id: card_cassia_gd
+    clubType: 1
+    gradeType: 2
+    basePower: 3
+    amount: 4
+    titleKey: title_director
+    nameKey: name_cassia
+    descKey: desc_cassia
+    imagePath: 
+  - id: card_moca_hc
+    clubType: 6
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_dessert_specialist
+    nameKey: name_moca
+    descKey: desc_moca
+    imagePath: 
+  - id: card_forette_hc
+    clubType: 6
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_apprentice
+    nameKey: name_forette
+    descKey: desc_elite
+    imagePath: 
+  - id: card_selina_hc
+    clubType: 6
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_dispatched_member
+    nameKey: name_selina
+    descKey: desc_selina
+    imagePath: 
+  - id: card_amelie_hc
+    clubType: 6
+    gradeType: 1
+    basePower: 3
+    amount: 4
+    titleKey: title_supply_manager
+    nameKey: name_amelie
+    descKey: desc_amelie
+    imagePath: 
+  - id: card_bagnie_hc
+    clubType: 6
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_fish_specialist
+    nameKey: name_bagnie
+    descKey: desc_elite
+    imagePath: 
+  - id: card_tarmotte_hc
+    clubType: 6
+    gradeType: 1
+    basePower: 3
+    amount: 4
+    titleKey: title_meat_specialist
+    nameKey: name_tarmotte
+    descKey: desc_tarmotte
+    imagePath: 
+  - id: card_brinie_hc
+    clubType: 6
+    gradeType: 2
+    basePower: 10
+    amount: 4
+    titleKey: title_appetizer_specialist
+    nameKey: name_brinie
+    descKey: desc_brinie
+    imagePath: 
+  - id: card_sophine_hc
+    clubType: 6
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_chef
+    nameKey: name_sophine
+    descKey: desc_elite
+    imagePath: 
+  - id: card_nirvel_ur
+    clubType: 7
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_downer
+    nameKey: name_nirvel
+    descKey: desc_nirvel
+    imagePath: 
+  - id: card_lucy_ur
+    clubType: 7
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_mascot
+    nameKey: name_lucy
+    descKey: desc_elite
+    imagePath: 
+  - id: card_serano_ur
+    clubType: 7
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_graffiti_artist
+    nameKey: name_serano
+    descKey: desc_serano
+    imagePath: 
+  - id: card_morras_ur
+    clubType: 7
+    gradeType: 1
+    basePower: 7
+    amount: 4
+    titleKey: title_goth_look
+    nameKey: name_morras
+    descKey: desc_morras
+    imagePath: 
+  - id: card_aspen_ur
+    clubType: 7
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_former_council_member
+    nameKey: name_aspen
+    descKey: desc_elite
+    imagePath: 
+  - id: card_exid_ur
+    clubType: 7
+    gradeType: 1
+    basePower: 6
+    amount: 4
+    titleKey: title_arsonist
+    nameKey: name_exid
+    descKey: desc_exid
+    imagePath: 
+  - id: card_creva_ur
+    clubType: 7
+    gradeType: 2
+    basePower: 11
+    amount: 4
+    titleKey: title_boss
+    nameKey: name_creva
+    descKey: desc_creva
+    imagePath: 
+  - id: card_corinth_ur
+    clubType: 7
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_drifter
+    nameKey: name_corinth
+    descKey: desc_elite
+    imagePath: 
+  - id: card_ayame_te
+    clubType: 4
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_deer_spirit
+    nameKey: name_ayame
+    descKey: desc_ayame
+    imagePath: 
+  - id: card_yukari_te
+    clubType: 4
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_fox_spirit
+    nameKey: name_yukari
+    descKey: desc_elite
+    imagePath: 
+  - id: card_kohane_te
+    clubType: 4
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_long-tailed_tit
+    nameKey: name_kohane
+    descKey: desc_kohane
+    imagePath: 
+  - id: card_hiyori_te
+    clubType: 4
+    gradeType: 1
+    basePower: 1
+    amount: 4
+    titleKey: title_squirrel_spirit
+    nameKey: name_hiyori
+    descKey: desc_hiyori
+    imagePath: 
+  - id: card_suzuho_te
+    clubType: 4
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_cat_spirit
+    nameKey: name_suzuho
+    descKey: desc_elite
+    imagePath: 
+  - id: card_kanade_te
+    clubType: 4
+    gradeType: 1
+    basePower: 1
+    amount: 4
+    titleKey: title_dog_spirit
+    nameKey: name_kanade
+    descKey: desc_kanade
+    imagePath: 
+  - id: card_suiren_te
+    clubType: 4
+    gradeType: 2
+    basePower: 1
+    amount: 4
+    titleKey: title_sheep_spirit
+    nameKey: name_suiren
+    descKey: desc_suiren
+    imagePath: 
+  - id: card_towa_te
+    clubType: 4
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_dragon_spirit
+    nameKey: name_towa
+    descKey: desc_elite
+    imagePath: 
+  - id: card_shirahane_te
+    clubType: 4
+    gradeType: 2
+    basePower: 1
+    amount: 4
+    titleKey: title_swan_spirit
+    nameKey: name_shirahane
+    descKey: desc_shirahane
+    imagePath: 
+  recruitData:
+  - round: 1
+    recruitGradeType: 0
+    amount: 1
+  - round: 2
+    recruitGradeType: 0
+    amount: 2
+  - round: 3
+    recruitGradeType: 0
+    amount: 2
+  - round: 3
+    recruitGradeType: 1
+    amount: 1
+  - round: 4
+    recruitGradeType: 0
+    amount: 2
+  - round: 4
+    recruitGradeType: 1
+    amount: 2
+  - round: 5
+    recruitGradeType: 1
+    amount: 2
+  - round: 6
+    recruitGradeType: 1
+    amount: 2
+  - round: 6
+    recruitGradeType: 2
+    amount: 1
+  - round: 7
+    recruitGradeType: 2
+    amount: 2
+  winPointData:
+  - round: 1
+    winPoint: 2
+    weight: 3
+  - round: 1
+    winPoint: 3
+    weight: 1
+  - round: 2
+    winPoint: 2
+    weight: 2
+  - round: 2
+    winPoint: 3
+    weight: 2
+  - round: 3
+    winPoint: 3
+    weight: 2
+  - round: 3
+    winPoint: 4
+    weight: 2
+  - round: 4
+    winPoint: 5
+    weight: 2
+  - round: 4
+    winPoint: 6
+    weight: 2
+  - round: 5
+    winPoint: 6
+    weight: 3
+  - round: 5
+    winPoint: 7
+    weight: 1
+  - round: 6
+    winPoint: 7
+    weight: 3
+  - round: 6
+    winPoint: 8
+    weight: 1
+  - round: 7
+    winPoint: 9
+    weight: 2
+  - round: 7
+    winPoint: 10
+    weight: 2

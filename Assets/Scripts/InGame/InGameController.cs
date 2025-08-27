@@ -16,10 +16,11 @@ namespace ProjectABC.InGame
         public int RecruitLevelAmountIndex => _recruitLevelAmountIndex;
         private int _recruitLevelAmountIndex = -1;
         
-        public List<int> DrawCardIndexes => _drawCardIndexes;
-        private readonly List<int> _drawCardIndexes = new();
+        public bool IsDrawCardFinished => _isDrawCardFinished;
+        private bool _isDrawCardFinished = false;
         
-        private List<int> _drawCards = new();
+        public List<Card> DrawCards => _drawCards;
+        private readonly List<Card> _drawCards = new();
 
         private void Awake()
         {
@@ -28,10 +29,12 @@ namespace ProjectABC.InGame
         private void Start()
         {
             UIManager.Instance.DEBUGLayoutInGame.OnFinishRecruitLevelAmount += OnFinishRecruitLevelAmount;
+            UIManager.Instance.DEBUGLayoutInGame.OnFinishDrawCard += OnFinishDrawCard;
         }
         
-        public void OnStartRecruitLevelAmount(IReadOnlyList<Tuple<LevelType, int>> pair)
+        public void OnStartRecruitLevelAmount(IReadOnlyList<Tuple<GradeType, int>> pair)
         {
+            _recruitLevelAmountIndex = -1;
             _isRecruitLevelAmountFinished = false;
             UIManager.Instance.DEBUGLayoutInGame.OnStartRecruitLevelAmount(pair);
         }
@@ -41,9 +44,17 @@ namespace ProjectABC.InGame
             _isRecruitLevelAmountFinished = true;
         }
 
-        public void OnStartDrawCard()
+        public void OnStartDrawCard(PlayerState state, GradeType gradeType, int amount)
         {
-            
+            DrawCards.Clear();
+            _isDrawCardFinished = false;
+            UIManager.Instance.DEBUGLayoutInGame.OnStartDrawCard(state, gradeType, amount);
+        }
+
+        public void OnFinishDrawCard(List<Card> drawCards)
+        {
+            DrawCards.AddRange(drawCards);
+            _isDrawCardFinished = true;
         }
     }
 }

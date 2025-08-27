@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Data;
-using UnityEngine;
 
 namespace ProjectABC.Core
 {
@@ -11,34 +10,26 @@ namespace ProjectABC.Core
     {
         public Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
-            try
-            {
-                GameState currentState = simulationContext.CurrentState;
-                var matchingPairs = currentState.GetMatchingPairs();
+            GameState currentState = simulationContext.CurrentState;
+            var matchingPairs = currentState.GetMatchingPairs();
 
-                foreach (var (playerAState, playerBState) in matchingPairs)
-                {
-                    MatchResult matchResult = RunMatch(playerAState, playerBState);
-                    simulationContext.CollectedEvents.Add(new MatchFlowConsoleEvent(matchResult.MatchEvents));
-                    
-                    PlayerState winnerState = simulationContext.CurrentState.GetPlayerState(matchResult.Winner);
-                    WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
-                    int winPoints = winPointOnRound.GetWinPoint();
-                    
-                    winnerState.WinPoints += winPoints;
-                    
-                    string message = $"플레이어 '{winnerState.Player.Name}'가 승리하여 {winPoints} 승점을 획득.\n"
-                                     + $"총점 : {winnerState.WinPoints}";
-                    simulationContext.CollectedEvents.Add(new CommonConsoleEvent(message));
-                }
-
-                return Task.CompletedTask;
-            }
-            catch (Exception e)
+            foreach (var (playerAState, playerBState) in matchingPairs)
             {
-                Debug.LogWarning($"{nameof(BattlePhase)} exception : {e}");
-                throw;
+                MatchResult matchResult = RunMatch(playerAState, playerBState);
+                simulationContext.CollectedEvents.Add(new MatchFlowConsoleEvent(matchResult.MatchEvents));
+                    
+                PlayerState winnerState = simulationContext.CurrentState.GetPlayerState(matchResult.Winner);
+                WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
+                int winPoints = winPointOnRound.GetWinPoint();
+                    
+                winnerState.WinPoints += winPoints;
+                    
+                string message = $"플레이어 '{winnerState.Player.Name}'가 승리하여 {winPoints} 승점을 획득.\n"
+                                 + $"총점 : {winnerState.WinPoints}";
+                simulationContext.CollectedEvents.Add(new CommonConsoleEvent(message));
             }
+
+            return Task.CompletedTask;
         }
 
         private static MatchResult RunMatch(PlayerState playerAState, PlayerState playerBState)
@@ -80,13 +71,13 @@ namespace ProjectABC.Core
                     matchResult.AddEvent(new DrawCardConsoleEvent(attacker));
                 }
                 
-                matchResult.AddEvent(new TryPutCardBenchConsoleEvent(defender));
+                matchResult.AddEvent(new TryPutCardInfirmaryConsoleEvent(defender));
                 
-                if (!defender.TryPutCardFieldToBench(out int _))
+                if (!defender.TryPutCardFieldToInfirmary(out int _))
                 {
                     // set attacker winner and return events
                     matchResult.SetWinner(attacker.Player);
-                    matchResult.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfBench));
+                    matchResult.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfInfirmary));
                     
                     return matchResult;
                 }
@@ -144,8 +135,9 @@ namespace ProjectABC.Core
             {
                 throw new InvalidOperationException("No win point data available");
             }
-            
-            float pivot = UnityEngine.Random.Range(0.0f, 1.0f);
+
+            // TODO : using PCG32RNG
+            float pivot = 0.5f; //UnityEngine.Random.Range(0.0f, 1.0f);
 
             float totalWeight = _pointAndWeights.Sum(tuple => tuple.Item2);
             bool isTotalWeightLessThanZero = totalWeight <= 0;

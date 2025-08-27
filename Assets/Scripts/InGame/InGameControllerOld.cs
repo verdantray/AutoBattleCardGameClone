@@ -49,9 +49,9 @@ namespace ProjectABC.InGame
             OnEndRound += _gameBoardController.OnEndRound;
             
             OnEndRound += UIManager.Instance.DEBUGLayoutInGame.OnEndRound;
-            OnStartSelectCards += UIManager.Instance.DEBUGLayoutInGame.OnStartSelectCards;
+            // OnStartSelectCards += UIManager.Instance.DEBUGLayoutInGame.OnStartDrawCard;
             
-            UIManager.Instance.DEBUGLayoutInGame.OnFinishSelectCard += FinishSelectCard;
+            // UIManager.Instance.DEBUGLayoutInGame.OnFinishSelectCard += FinishSelectCard;
 
             SetCards();
             Shuffle();

@@ -36,9 +36,9 @@ namespace ProjectABC.Core
             return isSuccess;
         }
 
-        public IEnumerable<Card> DrawCards(int amount)
+        public List<Card> DrawCards(int amount)
         {
-            IEnumerable<Card> toDraw = _cardList.GetRange(0, amount);
+            List<Card> toDraw = _cardList.GetRange(0, amount);
             _cardList.RemoveRange(0, amount);
 
             return toDraw;
@@ -50,13 +50,13 @@ namespace ProjectABC.Core
         }
     }
 
-    public class Bench : IReadOnlyDictionary<string, CardPile>
+    public class Infirmary : IReadOnlyDictionary<string, CardPile>
     {
         private readonly Dictionary<string, CardPile> _cardMap = new Dictionary<string, CardPile>();
         private readonly Dictionary<string, int> _keyOrderMap = new Dictionary<string, int>(); // order starts at 1
         
-        public int BenchLimit { get; private set; } = GameConst.GameOption.DEFAULT_BENCH_LIMIT;
-        public int RemainBenchSlots => BenchLimit - _cardMap.Count;
+        public int SlotLimit { get; private set; } = GameConst.GameOption.DEFAULT_INFIRMARY_SLOT_LIMIT;
+        public int RemainSlots => SlotLimit - _cardMap.Count;
 
         #region inherits of IReadOnlyDictionary
 
@@ -75,7 +75,7 @@ namespace ProjectABC.Core
 
         #endregion
 
-        public void SetBenchLimit(int benchLimit) => BenchLimit = benchLimit;
+        public void SetSlotLimit(int slotLimit) => SlotLimit = slotLimit;
 
         public void Clear()
         {
@@ -84,7 +84,7 @@ namespace ProjectABC.Core
         }
 
         // Regardless success or failure, cards that comes as arg are put on the bench
-        public bool TryPut(IEnumerable<Card> cards, out int remainBenchSlots)
+        public bool TryPut(IEnumerable<Card> cards, out int remainSlots)
         {
             foreach (var card in cards)
             {
@@ -114,8 +114,8 @@ namespace ProjectABC.Core
                 _cardMap.Add(card.Name, cardPile);
             }
 
-            remainBenchSlots = RemainBenchSlots;
-            return remainBenchSlots > 0;
+            remainSlots = RemainSlots;
+            return remainSlots > 0;
         }
 
         public void PutCard(Card card)
@@ -167,11 +167,11 @@ namespace ProjectABC.Core
         public string Id => _cardData.id;
         public int BasePower => _cardData.basePower;
         
-        public SetType SetType { get; private set; }
-        public LevelType LevelType { get; private set; }
+        public ClubType ClubType { get; private set; }
+        public GradeType GradeType { get; private set; }
         public int Power { get; private set; }
 
-        // TODO : Use localization system after implements
+        public string Title => _cardData.titleKey;
         public string Name => _cardData.nameKey;
         public string Description => _cardData.descKey;
         
@@ -181,14 +181,14 @@ namespace ProjectABC.Core
         {
             _cardData = cardData;
 
-            SetType = _cardData.setType;
-            LevelType = _cardData.levelType;
+            ClubType = _cardData.clubType;
+            GradeType = _cardData.gradeType;
             Power = _cardData.basePower;
         }
 
         public override string ToString()
         {
-            return $"Card {Name} / {Power} / {LevelType}";
+            return $"(Card Id : {Id} / Power : {Power} / Club : {ClubType} / Grade : {GradeType})";
         }
     }
 }

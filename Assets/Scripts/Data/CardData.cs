@@ -7,33 +7,33 @@ using ProjectABC.Data.Editor;
 namespace ProjectABC.Data
 {
     [Flags]
-    public enum SetType
+    public enum ClubType
     {
-        City = 2^0,
-        Castle = 2^1,
-        AmusementPark = 2^2,
-        OuterSpace = 2^3,
-        Studio = 2^4,
-        Sea = 2^5,
-        HauntedHouse = 2^6,
+        Council = 2^0,
+        Coastline = 2^1,
+        Band = 2^2,
+        GameDevelopment = 2^3,
+        HauteCuisine = 2^4,
+        Unregistered = 2^5,
+        TraditionExperience = 2^6,
     }
     
-    public enum LevelType
+    public enum GradeType
     {
-        S,
-        A,
-        B,
-        C,
+        First,
+        Second,
+        Third,
     }
     
     [Serializable]
     public record CardData : IFieldUpdatable
     {
         public string id;
-        public SetType setType;
-        public LevelType levelType;
+        public ClubType clubType;
+        public GradeType gradeType;
         public int basePower;
         public int amount;
+        public string titleKey;
         public string nameKey;
         public string descKey;
         public string imagePath;
@@ -47,17 +47,20 @@ namespace ProjectABC.Data
                     case "id":
                         id = cell.value;
                         break;
-                    case "set_type":
-                        Enum.TryParse(cell.value, true, out setType);
+                    case "club_type":
+                        Enum.TryParse(cell.value, true, out clubType);
                         break;
-                    case "level_type":
-                        Enum.TryParse(cell.value, true, out levelType);
+                    case "grade_type":
+                        gradeType = cell.value.ParseGradeType();
                         break;
                     case "base_power":
                         int.TryParse(cell.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out basePower);
                         break;
                     case "amount":
                         int.TryParse(cell.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out amount);
+                        break;
+                    case "title_key":
+                        titleKey = cell.value;
                         break;
                     case "name_key":
                         nameKey = cell.value;

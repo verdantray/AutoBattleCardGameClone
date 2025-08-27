@@ -15,7 +15,6 @@ namespace ProjectABC.Core
 
     public class GameState
     {
-        public readonly LevelCardPiles LevelCardPiles = new LevelCardPiles();
         public readonly List<PlayerState> PlayerStates = new List<PlayerState>();
         public readonly RoundPairMap RoundPairMap;
 
@@ -53,9 +52,10 @@ namespace ProjectABC.Core
     {
         public readonly IPlayer Player;
 
-        public int MulliganChances = GameConst.GameOption.MULLIGAN_DEFAULT_AMOUNT;
+        public int MulliganChances { get; private set; } = GameConst.GameOption.MULLIGAN_DEFAULT_AMOUNT;
         public int WinPoints = 0;
 
+        public readonly GradeCardPiles GradeCardPiles = new GradeCardPiles();
         public readonly List<Card> Deck = new List<Card>();
         public readonly List<Card> Deleted = new List<Card>();
 
