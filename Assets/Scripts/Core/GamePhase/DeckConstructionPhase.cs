@@ -24,8 +24,12 @@ namespace ProjectABC.Core
                 action.ApplyState(currentState);
 
                 DeckConstructionConsoleEvent contextEvent = action.GetContextEvent();
+                contextEvent.Publish();
+                
                 simulationContext.CollectedEvents.Add(contextEvent);
             }
+            
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
         }
     }
 }

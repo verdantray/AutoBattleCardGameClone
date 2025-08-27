@@ -47,21 +47,21 @@ namespace ProjectABC.Core
 
         public async Task RunAsync()
         {
-            try
-            {
+            // try
+            // {
                 while (_gamePhases.Count > 0)
                 {
                     var phase = _gamePhases.Dequeue();
                     await phase.ExecutePhaseAsync(_simulationContext);
                 }
-            }
-            finally
-            {
-                foreach (var contextEvent in _simulationContext.CollectedEvents)
-                {
-                    contextEvent.Publish();
-                }
-            }
+            // }
+            // finally
+            // {
+            //     foreach (var contextEvent in _simulationContext.CollectedEvents)
+            //     {
+            //         contextEvent.Publish();
+            //     }
+            // }
         }
     }
     

@@ -8,7 +8,7 @@ namespace ProjectABC.Core
 {
     public class BattlePhase : IGamePhase
     {
-        public Task ExecutePhaseAsync(SimulationContext simulationContext)
+        public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;
             var matchingPairs = currentState.GetMatchingPairs();
@@ -16,7 +16,10 @@ namespace ProjectABC.Core
             foreach (var (playerAState, playerBState) in matchingPairs)
             {
                 MatchResult matchResult = RunMatch(playerAState, playerBState);
-                simulationContext.CollectedEvents.Add(new MatchFlowConsoleEvent(matchResult.MatchEvents));
+                var matchFlowContextEvent = new MatchFlowConsoleEvent(matchResult.MatchEvents);
+                matchFlowContextEvent.Publish();
+                
+                simulationContext.CollectedEvents.Add(matchFlowContextEvent);
                     
                 PlayerState winnerState = simulationContext.CurrentState.GetPlayerState(matchResult.Winner);
                 WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
@@ -26,10 +29,13 @@ namespace ProjectABC.Core
                     
                 string message = $"플레이어 '{winnerState.Player.Name}'가 승리하여 {winPoints} 승점을 획득.\n"
                                  + $"총점 : {winnerState.WinPoints}";
-                simulationContext.CollectedEvents.Add(new CommonConsoleEvent(message));
+                var gainWinPointContextEvent = new CommonConsoleEvent(message);
+                gainWinPointContextEvent.Publish();
+
+                simulationContext.CollectedEvents.Add(gainWinPointContextEvent);
             }
 
-            return Task.CompletedTask;
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
         }
 
         private static MatchResult RunMatch(PlayerState playerAState, PlayerState playerBState)
