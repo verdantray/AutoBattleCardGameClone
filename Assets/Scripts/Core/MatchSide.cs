@@ -3,15 +3,23 @@ using System.Linq;
 
 namespace ProjectABC.Core
 {
+    public enum MatchState
+    {
+        Attacking,
+        Defending,
+    }
+    
     public class MatchSide
     {
         public readonly CardPile Hands = new CardPile();
         public readonly Infirmary Infirmary = new Infirmary();
 
         public readonly List<Card> Field = new List<Card>();
-
         public readonly IPlayer Player;
-        public bool HasFlag = false;
+        
+        public MatchState State { get; private set; } = MatchState.Attacking;
+        
+        private bool IsAttacking => State == MatchState.Attacking;
         
         public MatchSide(PlayerState playerState)
         {
@@ -20,6 +28,8 @@ namespace ProjectABC.Core
             Hands.AddRange(playerState.Deck);
             Hands.Shuffle();
         }
+
+        public void SetMatchState(MatchState state) => State = state;
 
         public bool TryDraw()
         {
@@ -46,16 +56,18 @@ namespace ProjectABC.Core
             return isSuccessToPut;
         }
 
-        public int GetPower()
+        public int GetEffectivePower()
         {
             if (Field.Count == 0)
             {
                 return 0;
             }
 
-            return HasFlag
-                ? Field[^1].Power
-                : Field.Sum(card => card.Power);
+            int effectivePower = IsAttacking
+                ? Field.Sum(card => card.Power)
+                : Field[^1].Power;
+            
+            return effectivePower;
         }
     }
 }

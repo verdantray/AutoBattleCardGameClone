@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
@@ -10,6 +12,11 @@ namespace ProjectABC.Core
         public SimulationContext(IEnumerable<IPlayer> players)
         {
             CurrentState = new GameState(players);
+        }
+        
+        public IEnumerable<Task> GetTasksOfAllPlayersConfirmToProceed()
+        {
+            return CurrentState.PlayerStates.Select(state => state.Player.WaitUntilConfirmToProceed());
         }
     }
 

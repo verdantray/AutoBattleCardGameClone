@@ -26,6 +26,7 @@ namespace ProjectABC.Core
         }
         
         public Task<RecruitCardsAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
+        public Task WaitUntilConfirmToProceed();
     }
 
     public interface IPlayerAction

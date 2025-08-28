@@ -31,6 +31,8 @@ namespace ProjectABC.Core
                 action.ApplyState(currentState);
 
                 RecruitConsoleEvent contextEvent = action.GetContextEvent();
+                contextEvent.Publish();
+                
                 simulationContext.CollectedEvents.Add(contextEvent);
             }
         }

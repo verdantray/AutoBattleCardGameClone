@@ -54,5 +54,10 @@ namespace ProjectABC.Core
             
             return task;
         }
+
+        public Task WaitUntilConfirmToProceed()
+        {
+            return Task.CompletedTask;
+        }
     }
 }
