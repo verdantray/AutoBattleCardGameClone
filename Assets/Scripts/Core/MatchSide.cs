@@ -63,9 +63,11 @@ namespace ProjectABC.Core
                 return 0;
             }
 
-            var effectiveCards = IsAttacking ? Field : Field.GetRange(Field.Count - 1, 1);
-
-            return effectiveCards.Sum(card => card.Power);
+            int effectivePower = IsAttacking
+                ? Field.Sum(card => card.Power)
+                : Field[^1].Power;
+            
+            return effectivePower;
         }
     }
 }

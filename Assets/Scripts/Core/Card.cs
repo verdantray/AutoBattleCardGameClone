@@ -52,11 +52,12 @@ namespace ProjectABC.Core
 
     public class Infirmary : IReadOnlyDictionary<string, CardPile>
     {
+        private readonly List<string> _nameKeyList = new List<string>();   // do not allow duplicates, change order
         private readonly Dictionary<string, CardPile> _cardMap = new Dictionary<string, CardPile>();
-        private readonly Dictionary<string, int> _keyOrderMap = new Dictionary<string, int>(); // order starts at 1
         
         public int SlotLimit { get; private set; } = GameConst.GameOption.DEFAULT_INFIRMARY_SLOT_LIMIT;
         public int RemainSlots => SlotLimit - _cardMap.Count;
+        public CardPile this[int index] => _cardMap[_nameKeyList[index]];
 
         #region inherits of IReadOnlyDictionary
 
@@ -64,7 +65,7 @@ namespace ProjectABC.Core
         
         public CardPile this[string key] => _cardMap[key];
 
-        public IEnumerable<string> Keys => _cardMap.Keys;
+        public IEnumerable<string> Keys => _nameKeyList;
         public IEnumerable<CardPile> Values => _cardMap.Values;
         
         public IEnumerator<KeyValuePair<string, CardPile>> GetEnumerator() => _cardMap.GetEnumerator();
@@ -79,8 +80,8 @@ namespace ProjectABC.Core
 
         public void Clear()
         {
+            _nameKeyList.Clear();
             _cardMap.Clear();
-            _keyOrderMap.Clear();
         }
 
         // Regardless success or failure, cards that comes as arg are put on the bench
@@ -88,102 +89,59 @@ namespace ProjectABC.Core
         {
             foreach (var card in cards)
             {
-                if (_keyOrderMap.ContainsKey(card.Name))
+                string cardNameKey = card.CardData.nameKey;
+                
+                if (_nameKeyList.Contains(cardNameKey))
                 {
-                    _cardMap[card.Name].Add(card);
+                    _cardMap[cardNameKey].Add(card);
                     continue;
                 }
 
-                var existingOrders = _keyOrderMap.Values;
-                int latestOrder = existingOrders.Count > 0 ? existingOrders.Max() : 0;
-
-                HashSet<int> missingOrders = new HashSet<int>(Enumerable.Range(1, latestOrder));
-
-                foreach (var existingOrder in existingOrders)
-                {
-                    missingOrders.Remove(existingOrder);
-                }
-
-                int newlyPuttingOrder = missingOrders.Count > 0
-                    ? missingOrders.Min()
-                    : latestOrder + 1;
-                
-                _keyOrderMap.Add(card.Name, newlyPuttingOrder);
-
-                CardPile cardPile = new CardPile { card };
-                _cardMap.Add(card.Name, cardPile);
+                _nameKeyList.Add(cardNameKey);
+                _cardMap[cardNameKey] = new CardPile { card };
             }
 
             remainSlots = RemainSlots;
             return remainSlots > 0;
         }
 
-        public void PutCard(Card card)
-        {
-            if (_keyOrderMap.ContainsKey(card.Name))
-            {
-                _cardMap[card.Name].Add(card);
-                return;
-            }
-            
-            var existingOrders = _keyOrderMap.Values;
-            int latestOrder = existingOrders.Max(); // if existingOrders is empty, then Max will return 0
-
-            HashSet<int> missingOrders = new HashSet<int>(Enumerable.Range(1, latestOrder));
-
-            foreach (var existingOrder in existingOrders)
-            {
-                missingOrders.Remove(existingOrder);
-            }
-
-            int newlyPuttingOrder = missingOrders.Count > 0
-                ? missingOrders.Min()
-                : latestOrder + 1;
-                
-            _keyOrderMap.Add(card.Name, newlyPuttingOrder);
-                
-            CardPile cardPile = new CardPile { card };
-            _cardMap.Add(card.Name, cardPile);
-        }
-
         public bool TryDrawCards(out CardPile cardPile)
         {
-            if (Count == 0)
-            {
-                cardPile = null;
-                return false;
-            }
+            string earliestName = _nameKeyList[0];
+            _nameKeyList.RemoveAt(0);
 
-            var earliestBenchSlotKey = _keyOrderMap.OrderBy(kvPair => kvPair.Value).First().Key;
+            cardPile = _cardMap[earliestName];
+            _cardMap.Remove(earliestName);
 
-            return _cardMap.Remove(earliestBenchSlotKey, out cardPile);
+            return true;
         }
         
         public IEnumerable<Card> GetAllCards() => _cardMap.Values.SelectMany(cardPile => cardPile);
+        public InfirmaryInstance GetSnapshotInstance => new InfirmaryInstance(_nameKeyList, _cardMap);
     }
 
     public class Card
     {
-        public string Id => _cardData.id;
-        public int BasePower => _cardData.basePower;
+        public string Id => CardData.id;
+        public int BasePower => CardData.basePower;
         
         public ClubType ClubType { get; private set; }
         public GradeType GradeType { get; private set; }
         public int Power { get; private set; }
 
-        public string Title => _cardData.titleKey;
-        public string Name => _cardData.nameKey;
-        public string Description => _cardData.descKey;
+        public string Title => CardData.titleKey;
+        public string Name => CardData.nameKey;
+        public string Description => CardData.descKey;
         
-        private readonly CardData _cardData;
+        public readonly CardData CardData;
 
         public Card(CardData cardData)
         {
-            _cardData = cardData;
+            CardData = cardData;
 
-            ClubType = _cardData.clubType;
-            GradeType = _cardData.gradeType;
-            Power = _cardData.basePower;
+            ClubType = CardData.clubType;
+            GradeType = CardData.gradeType;
+            Power = CardData.basePower;
         }
 
         public override string ToString()

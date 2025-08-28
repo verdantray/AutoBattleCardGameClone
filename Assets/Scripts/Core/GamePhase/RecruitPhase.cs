@@ -35,8 +35,6 @@ namespace ProjectABC.Core
                 
                 simulationContext.CollectedEvents.Add(contextEvent);
             }
-
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
         }
     }
 

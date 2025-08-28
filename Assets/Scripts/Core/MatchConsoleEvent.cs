@@ -6,16 +6,16 @@ namespace ProjectABC.Core
 {
     public interface IMatchEvent
     {
-        
+        public MatchFlowSnapshot Snapshot { get; }
     }
 
-    public class MatchInfo
+    public class MatchFlowContextEvent : IContextEvent
     {
         public readonly IPlayer[] Participants;
         public IPlayer Winner { get; private set; } = null;
         public List<IMatchEvent> MatchEvents { get; } = new List<IMatchEvent>();
 
-        public MatchInfo(params IPlayer[] participants)
+        public MatchFlowContextEvent(params IPlayer[] participants)
         {
             Participants = participants;
         }
@@ -46,17 +46,25 @@ namespace ProjectABC.Core
 
     public abstract class MatchConsoleEvent : IMatchEvent
     {
+        public MatchFlowSnapshot Snapshot { get; }
         protected string Message;
+
+        public MatchConsoleEvent(MatchFlowSnapshot snapshot)
+        {
+            Snapshot = snapshot;
+        }
         
         public override string ToString()
         {
             return Message;
         }
+
+        
     }
 
     public class CommonMatchConsoleEvent : MatchConsoleEvent
     {
-        public CommonMatchConsoleEvent(string message)
+        public CommonMatchConsoleEvent(string message, MatchFlowSnapshot snapshot) : base(snapshot)
         {
             Message = message;
         }
@@ -64,7 +72,7 @@ namespace ProjectABC.Core
 
     public class MatchStartConsoleEvent : MatchConsoleEvent
     {
-        public MatchStartConsoleEvent(IPlayer defendingPlayer, IPlayer attackingPlayer)
+        public MatchStartConsoleEvent(IPlayer defendingPlayer, IPlayer attackingPlayer, MatchFlowSnapshot snapshot) : base(snapshot)
         {
             Message = $"매치 시작 - {defendingPlayer.Name} vs {attackingPlayer.Name}\n"
                       + $"수비 : {defendingPlayer.Name}\n"
@@ -74,7 +82,7 @@ namespace ProjectABC.Core
     
     public class DrawCardConsoleEvent : MatchConsoleEvent
     {
-        public DrawCardConsoleEvent(MatchSide drawSide)
+        public DrawCardConsoleEvent(MatchSide drawSide, MatchFlowSnapshot snapshot) : base(snapshot)
         {
             string playerName = drawSide.Player.Name;
             Card drawCard = drawSide.Field[^1];
@@ -87,7 +95,7 @@ namespace ProjectABC.Core
 
     public class ComparePowerConsoleEvent : MatchConsoleEvent
     {
-        public ComparePowerConsoleEvent(MatchSide defendingSide, MatchSide attackingSide)
+        public ComparePowerConsoleEvent(MatchSide defendingSide, MatchSide attackingSide,  MatchFlowSnapshot snapshot) : base(snapshot)
         {
             string defendingPlayerName = defendingSide.Player.Name;
             string attackingPlayerName = attackingSide.Player.Name;
@@ -103,7 +111,7 @@ namespace ProjectABC.Core
 
     public class TryPutCardInfirmaryConsoleEvent : MatchConsoleEvent
     {
-        public TryPutCardInfirmaryConsoleEvent(MatchSide defendingSide)
+        public TryPutCardInfirmaryConsoleEvent(MatchSide defendingSide, MatchFlowSnapshot snapshot) : base(snapshot)
         {
             string playerName = defendingSide.Player.Name;
             List<Card> cardsToPut = defendingSide.Field;
@@ -115,7 +123,7 @@ namespace ProjectABC.Core
 
     public class SwitchPositionConsoleEvent : MatchConsoleEvent
     {
-        public SwitchPositionConsoleEvent(IPlayer defendingPlayer, IPlayer attackingPlayer)
+        public SwitchPositionConsoleEvent(IPlayer defendingPlayer, IPlayer attackingPlayer, MatchFlowSnapshot snapshot) : base(snapshot)
         {
             Message = "공수 교대\n"
                       + $"수비 : {defendingPlayer.Name}\n"
@@ -131,7 +139,7 @@ namespace ProjectABC.Core
             EndByFullOfInfirmary
         }
         
-        public MatchFinishConsoleEvent(MatchSide winningSide, MatchSide losingSide, MatchEndReason reason)
+        public MatchFinishConsoleEvent(MatchSide winningSide, MatchSide losingSide, MatchEndReason reason, MatchFlowSnapshot snapshot) : base(snapshot)
         {
             string winnerName = winningSide.Player.Name;
             string otherName = losingSide.Player.Name;
