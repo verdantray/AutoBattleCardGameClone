@@ -6,6 +6,7 @@ namespace ProjectABC.Core
     public class Storage
     {
         public static Storage Instance { get; private set; }
+        public static bool HasInstance => Instance != null;
 
         public readonly List<CardData> CardDataForStarting = new List<CardData>();
         public readonly List<CardData> CardDataForPiles = new List<CardData>();
