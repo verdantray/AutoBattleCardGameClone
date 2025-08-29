@@ -1,6 +1,7 @@
 using System;
 using ProjectABC.Core;
 using ProjectABC.Data;
+using ProjectABC.InGame;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -20,7 +21,8 @@ namespace ProjectABC.InGame
 
                 IPlayer[] players = new IPlayer[8];
 
-                for (int i = 0; i < players.Length; i++)
+                players[0] = new InGamePlayer("내 플레이어");
+                for (int i = 1; i < players.Length; i++)
                 {
                     players[i] = new ScriptedPlayer($"플레이어 {(char)('A' + i)}");
                 }

@@ -1,268 +1,214 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using ProjectABC.Utils;
+using System.Linq;
+using System.Threading.Tasks;
+using ProjectABC.Core;
+using ProjectABC.Data;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace ProjectABC.InGame
 {
-    public enum PlayerType
+    public class InGameController : MonoBehaviour,
+        IContextEventListener<MatchFlowContextEvent>
     {
-        Player,
-        Enemy
-    }
-
-    public class InGameController : MonoBehaviour
-    {
-        public List<CardDataOld> DEBUGCardDataList;
-        public List<CardDataOld> DEBUGCardDataListA;
-        public GameBoardController _gameBoardController;
-
-        private readonly List<CardOld> _playerDeckCards = new();
-        private readonly List<CardOld> _enemyDeckCards = new();
-
-        private readonly List<CardOld> _playerActiveCards = new();
-        private readonly List<CardOld> _enemyActiveCards = new();
-
-        private readonly Dictionary<int, List<CardOld>> _playerBenchCards = new();
-        private readonly Dictionary<int, List<CardOld>> _enemyBenchCards = new();
-
-        private int RoundCount;
-        private int TurnCount;
-
-        [SerializeField] private PlayerType _currentPlayer = PlayerType.Enemy;
-
-
-        private Action<CardOld, PlayerType> OnDrawCardDefence;
-        private Action<CardOld, PlayerType> OnDrawCardAttack;
-        private Action<PlayerType> OnFinishTurn;
-        private Action<PlayerType> OnEndRound;
-        private Action<List<CardDataOld>> OnStartSelectCards;
-
+        public static InGameController Instance;
         
-        public void Start()
-        {
-            OnDrawCardDefence += _gameBoardController.OnDrawCardDefence;
-            OnDrawCardAttack += _gameBoardController.OnDrawCardAttack;
-            OnFinishTurn += _gameBoardController.OnFinishTurn;
-            OnEndRound += _gameBoardController.OnEndRound;
-            
-            OnEndRound += UIManager.Instance.DEBUGLayoutInGame.OnEndRound;
-            OnStartSelectCards += UIManager.Instance.DEBUGLayoutInGame.OnStartSelectCards;
-            
-            UIManager.Instance.DEBUGLayoutInGame.OnFinishSelectCard += FinishSelectCard;
+        public bool IsRecruitLevelAmountFinished => _isRecruitLevelAmountFinished;
+        private bool _isRecruitLevelAmountFinished = false;
+        
+        public int RecruitLevelAmountIndex => _recruitLevelAmountIndex;
+        private int _recruitLevelAmountIndex = -1;
+        
+        public bool IsDrawCardFinished => _isDrawCardFinished;
+        private bool _isDrawCardFinished = false;
+        
+        public List<Card> DrawCards => _drawCards;
+        private readonly List<Card> _drawCards = new();
+        
+        public bool IsBattleFinished => _isBattleFinished;
+        private bool _isBattleFinished = false;
+        
+        [SerializeField]
+        private GameBoardController _gameBoardController;
 
-            SetCards();
-            Shuffle();
-            StartCoroutine(StartGame());
+        private IPlayer _player;
+        private IPlayer _enemy;
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+        private void Start()
+        {
+            this.StartListening<MatchFlowContextEvent>();
+            
+            UIManager.Instance.DEBUGLayoutInGame.OnFinishRecruitLevelAmount += OnFinishRecruitLevelAmount;
+            UIManager.Instance.DEBUGLayoutInGame.OnFinishDrawCard += OnFinishDrawCard;
+        }
+        private void OnDestroy()
+        {
+            this.StopListening<MatchFlowContextEvent>();
         }
 
-        private void SetCards()
+        public void OnStartRecruitLevelAmount(IReadOnlyList<Tuple<GradeType, int>> pair)
         {
-            for (var i = 0; i < 6; i++)
+            _recruitLevelAmountIndex = -1;
+            _isRecruitLevelAmountFinished = false;
+            _isBattleFinished = false;
+            UIManager.Instance.DEBUGLayoutInGame.OnStartRecruitLevelAmount(pair);
+        }
+        public void OnFinishRecruitLevelAmount(int index)
+        {
+            _recruitLevelAmountIndex = index;
+            _isRecruitLevelAmountFinished = true;
+        }
+
+        public void OnStartDrawCard(PlayerState state, GradeType gradeType, int amount)
+        {
+            DrawCards.Clear();
+            _isDrawCardFinished = false;
+            UIManager.Instance.DEBUGLayoutInGame.OnStartDrawCard(state, gradeType, amount);
+        }
+
+        public void OnFinishDrawCard(List<Card> drawCards)
+        {
+            DrawCards.AddRange(drawCards);
+            _isDrawCardFinished = true;
+        }
+
+        public void OnFinishBattle()
+        {
+            _isBattleFinished = true;
+        }
+
+        public void OnEvent(MatchFlowContextEvent contextEvent)
+        {
+            var participants = contextEvent.Participants;
+            var isPlayerGame = false;
+            foreach (var participant in participants)
             {
-                var j = Random.Range(0, DEBUGCardDataList.Count);
-                var card = new CardOld()
+                if (participant is InGamePlayer)
                 {
-                    Data = DEBUGCardDataList[j]
-                };
-                _playerDeckCards.Add(card);
+                    _player = participant;
+                    isPlayerGame = true;
+                }
             }
 
-            for (var i = 0; i < 6; i++)
+            var matchEvents = contextEvent.MatchEvents;
+            foreach (var matchEvent in matchEvents)
             {
-                var j = Random.Range(0, DEBUGCardDataList.Count);
-                var card = new CardOld()
+                if (!matchEvent.Snapshot.IsParticipants(_player)) 
+                    continue;
+                
+                var players = matchEvent.Snapshot.MatchSideSnapShots.Keys.ToList();
+                foreach (var player in players.OfType<ScriptedPlayer>())
                 {
-                    Data = DEBUGCardDataList[j]
-                };
-                _enemyDeckCards.Add(card);
+                    _enemy = player;
+                }
+            }
+
+            if (isPlayerGame)
+            {
+                OnStartBattleAsync(contextEvent);
             }
         }
-        private void Shuffle()
+
+        public async void OnStartBattleAsync(MatchFlowContextEvent contextEvent)
         {
-            _playerDeckCards.Shuffle();
-            _enemyDeckCards.Shuffle();
+            foreach (var matchEvent in contextEvent.MatchEvents)
+            {
+                switch (matchEvent)
+                {
+                    case MatchStartEvent matchStartEvent:
+                        await OnMatchStart(matchStartEvent);
+                        break;
+                    
+                    case DrawCardEvent drawCardEvent:
+                        await OnDrawCard(drawCardEvent);
+                        break;
+                    
+                    case SwitchPositionEvent switchPositionEvent:
+                        await OnSwitchPosition(switchPositionEvent);
+                        break;
+                    
+                    case TryPutCardInfirmaryEvent tryPutCardInfirmaryEvent:
+                        await OnTryPutCardInfirmary(tryPutCardInfirmaryEvent);
+                        break;
+                        
+                    case MatchFinishEvent matchFinishEvent:
+                        await OnMatchFinish(matchFinishEvent);
+                        break;
+                }
+            }
+            OnFinishBattle();
         }
         
-        private void FinishSelectCard(CardDataOld cardData)
+        private async Task OnMatchStart(MatchStartEvent matchStartEvent)
         {
-            var playerCard = new CardOld
+            if (matchStartEvent.Snapshot.TryGetMatchSideSnapshot(_player, out var snapshot))
             {
-                Data = cardData
-            };
-            _playerDeckCards.Add(playerCard);
+                MatchState matchState = snapshot.State;
+                _gameBoardController.OnFinishTurn(matchState);
+                
+                _gameBoardController.SetCardBackVisibility(MatchState.Attacking, true);
+                _gameBoardController.SetCardBackVisibility(MatchState.Defending, true);
+                
+                await Awaitable.WaitForSecondsAsync(0.5f);
+            }
+        }
+        private async Task OnDrawCard(DrawCardEvent drawCardEvent)
+        {
+            var drawPlayer = drawCardEvent.DrawPlayer;
+            var drawCard = drawCardEvent.DrawCard;
+            var playerSnapshot = drawCardEvent.Snapshot.MatchSideSnapShots[drawPlayer];
             
-            // DEBUG
-            var i = Random.Range(0, DEBUGCardDataListA.Count);
-            var enemyCard = new CardOld
+            if (drawPlayer == _player)
             {
-                Data = DEBUGCardDataListA[i]
-            };
-            _enemyDeckCards.Add(enemyCard);
-            
-            StartCoroutine(StartGame());
-        }
-
-        private IEnumerator StartGame()
-        {
-            yield return new WaitForSeconds(1f);
-            StartCoroutine(DrawCardDefence());
-        }
-        private IEnumerator DrawCardDefence()
-        {
-            switch (_currentPlayer)
-            {
-                case PlayerType.Enemy:
-                {
-                    var card = _enemyDeckCards[0];
-                    _enemyDeckCards.Remove(card);
-                    _enemyActiveCards.Add(card);
-                    OnDrawCardDefence.Invoke(card, PlayerType.Enemy);
-                    break;
-                }
-                case PlayerType.Player:
-                {
-                    var card = _playerDeckCards[0];
-                    _playerDeckCards.Remove(card);
-                    _playerActiveCards.Add(card);
-                    OnDrawCardDefence.Invoke(card, PlayerType.Player);
-                    break;
-                }
+                _gameBoardController.OnDrawCard(drawCard, MatchState.Attacking);
+                if (playerSnapshot.Deck.Count == 0)
+                    _gameBoardController.SetCardBackVisibility(MatchState.Attacking, false);
             }
-
-            yield return new WaitForSeconds(0.5f);
-            FinishTurn();
-        }
-        private IEnumerator DrawCardOffense()
-        {
-            var isEnemyTurn = (_currentPlayer == PlayerType.Enemy);
-            var targetPower = isEnemyTurn ? _playerActiveCards[^1].Data.Power : _enemyActiveCards[^1].Data.Power;
-            var currentPower = 0;
-
-            var offenseDeckCards = isEnemyTurn ? _enemyDeckCards : _playerDeckCards;
-            var offenseActiveCards = isEnemyTurn ? _enemyActiveCards : _playerActiveCards;
-
-            // DrawCard
-            while (currentPower < targetPower)
+            else if (drawPlayer == _enemy)
             {
-                if (offenseDeckCards.Count == 0)
-                {
-                    EndRound();
-                    yield break;
-                }
-
-                var card = offenseDeckCards[0];
-                currentPower += card.Data.Power;
-
-                offenseDeckCards.Remove(card);
-                offenseActiveCards.Add(card);
-                OnDrawCardAttack.Invoke(card, _currentPlayer);
-
-                yield return new WaitForSeconds(0.5f);
-            }
-
-            // Send Card to Bench
-            var targetActiveCards = isEnemyTurn ? _playerActiveCards : _enemyActiveCards;
-            var targetBenchCards = isEnemyTurn ? _playerBenchCards : _enemyBenchCards;
-
-            var cardCount = targetActiveCards.Count;
-            while (targetActiveCards.Count > 0)
-            {
-                var card = targetActiveCards[0];
-                var id = card.Data.ID;
-
-                if (targetBenchCards.ContainsKey(id))
-                {
-                    targetBenchCards[id].Add(card);
-                    targetActiveCards.Remove(card);
-                }
-                else
-                {
-                    if (targetBenchCards.Count >= 6)
-                    {
-                        EndRound();
-                        yield break;
-                    }
-
-                    var cards = new List<CardOld> { card };
-                    targetBenchCards.Add(id, cards);
-                    targetActiveCards.Remove(card);
-                }
-            }
-
-            yield return new WaitForSeconds(0.25f * cardCount);
-            yield return new WaitForSeconds(0.5f);
-            FinishTurn();
-        }
-        private IEnumerator StartSelectCards(List<CardDataOld> cards)
-        {
-            yield return new WaitForSeconds(2f);
-            OnStartSelectCards(cards);
-        }
-
-        private void FinishTurn()
-        {
-            switch (_currentPlayer)
-            {
-                case PlayerType.Enemy:
-                {
-                    _currentPlayer = PlayerType.Player;
-                    OnFinishTurn.Invoke(_currentPlayer);
-                    StartCoroutine(DrawCardOffense());
-                    break;
-                }
-                case PlayerType.Player:
-                {
-                    _currentPlayer = PlayerType.Enemy;
-                    OnFinishTurn.Invoke(_currentPlayer);
-                    StartCoroutine(DrawCardOffense());
-                    break;
-                }
-            }
-        }
-        private void EndRound()
-        {
-            switch (_currentPlayer)
-            {
-                case PlayerType.Enemy:
-                {
-                    _currentPlayer = PlayerType.Player;
-                    OnEndRound.Invoke(_currentPlayer);
-                    break;
-                }
-                case PlayerType.Player:
-                {
-                    _currentPlayer = PlayerType.Enemy;
-                    OnEndRound.Invoke(_currentPlayer);
-                    break;
-                }
+                _gameBoardController.OnDrawCard(drawCard, MatchState.Defending);
+                if (playerSnapshot.Deck.Count == 0)
+                    _gameBoardController.SetCardBackVisibility(MatchState.Defending, false);
             }
             
-            ClearCards();
-            StartCoroutine(StartSelectCards(DEBUGCardDataListA));
+            await Awaitable.WaitForSecondsAsync(1f);
         }
-
-        private void ClearCards()
+        private async Task OnSwitchPosition(SwitchPositionEvent switchPositionEvent)
         {
-            _playerDeckCards.AddRange(_playerActiveCards);
-            foreach (var (id, list) in _playerBenchCards)
+            if (switchPositionEvent.Snapshot.TryGetMatchSideSnapshot(_player, out var snapshot))
             {
-                _playerDeckCards.AddRange(list);
+                MatchState matchState = snapshot.State;
+                _gameBoardController.OnFinishTurn(matchState);
+                
+                await Awaitable.WaitForSecondsAsync(0.25f);
             }
-            
-            _enemyDeckCards.AddRange(_enemyActiveCards);
-            foreach (var (id, list) in _enemyBenchCards)
+        }
+        private async Task OnTryPutCardInfirmary(TryPutCardInfirmaryEvent tryPutCardInfirmaryEvent)
+        {
+            if (tryPutCardInfirmaryEvent.Snapshot.TryGetMatchSideSnapshot(_player, out var snapshot))
             {
-                _enemyDeckCards.AddRange(list);
+                MatchState matchState = snapshot.State;
+                _gameBoardController.OnTryPutCardInfirmary(matchState);
+                
+                await Awaitable.WaitForSecondsAsync(0.5f);
             }
-            
-            _playerActiveCards.Clear();
-            _playerBenchCards.Clear();
-            
-            _enemyActiveCards.Clear();
-            _enemyBenchCards.Clear();
+        }
+        private async Task OnMatchFinish(MatchFinishEvent matchFinishEvent)
+        {
+            if (matchFinishEvent.WinningPlayer == _player)
+            {
+                UIManager.Instance.DEBUGLayoutInGame.OnEndRound(MatchState.Attacking);
+            }
+            else if (matchFinishEvent.WinningPlayer == _enemy)
+            {
+                UIManager.Instance.DEBUGLayoutInGame.OnEndRound(MatchState.Defending);
+            }
+            _gameBoardController.OnEndRound();
+            await Awaitable.WaitForSecondsAsync(2f);
         }
     }
 }

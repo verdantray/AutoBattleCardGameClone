@@ -1,47 +1,42 @@
 using System;
+using ProjectABC.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ProjectABC.InGame
 {
-    public class CardInGameSelect : MonoBehaviour
+    public class ButtonCardSelect : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _power;
         [SerializeField] private Image _icon;
         [SerializeField] private Image _shadow;
         [SerializeField] private Button _btnSelect;
-        [SerializeField] private Button _btnReroll;
         
         private int _index;
-        private CardDataOld _data;
+        private Card _card;
         
-        public Action<int> OnRerollCard;
         public Action<int> OnSelectCard;
 
         private void Awake()
         {
             _btnSelect.onClick.AddListener(OnSelectClicked);
-            _btnReroll.onClick.AddListener(OnRerollClicked);
         }
 
         public void SetIndex(int index)
         {
             _index = index;
         }
-        public void SetCard(CardDataOld card)
+        public void SetCard(Card card)
         {
-            _data = card;
-
-            _name.text = card.Name;
-            _power.text = card.Power.ToString();
-            _icon.sprite = card.Sprite;
+            _card = card;
+            
+            _name.text = _card.Name;
+            _power.text = _card.Power.ToString();
+            // _icon.sprite = card.imagePath;
         }
-        public int GetCardID()
-        {
-            return _data.ID;
-        }
+        public Card GetCard() { return _card; }
 
         public void SetSelected(bool state)
         {
@@ -51,10 +46,6 @@ namespace ProjectABC.InGame
         private void OnSelectClicked()
         {
             OnSelectCard.Invoke(_index);
-        }
-        private void OnRerollClicked()
-        {
-            OnRerollCard.Invoke(_index);
         }
     }
 }
