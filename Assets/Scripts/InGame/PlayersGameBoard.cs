@@ -129,8 +129,10 @@ namespace ProjectABC.InGame
 
                 var keys = _benchCards.Keys.ToList();
                 var index = keys.IndexOf(cardID);
+                if (index >= _slotBenches.Length)
+                    index = _slotBenches.Length - 1;
                 var targetSlot = _slotBenches[index];
-
+                
                 var cardCount = _benchCards[cardID].Count - 1;
                 var cardSpace = targetSlot.GetCardSpace() * cardCount;
                 var cardOffset = new Vector3(0f, cardSpace, cardSpace);

@@ -27,7 +27,18 @@ namespace ProjectABC.InGame.UI
         }
         public void SetCardPool(GradeType gradeType, int count)
         {
-            _textCardPool.text = gradeType.ToString();
+            switch (gradeType)
+            {
+                case GradeType.First:
+                    _textCardPool.text = "1학년";
+                    break;
+                case GradeType.Second:
+                    _textCardPool.text = "2학년";
+                    break;
+                case GradeType.Third:
+                    _textCardPool.text = "3학년";
+                    break;
+            }
             _textCardCount.text = $"x{count}";
         }
         

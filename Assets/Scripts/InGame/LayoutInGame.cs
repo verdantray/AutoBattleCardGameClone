@@ -20,7 +20,12 @@ namespace ProjectABC.InGame
         
         public CanvasGroup _splashWin;
         public CanvasGroup _splashLose;
+        public TextMeshProUGUI _textMatchEndReasonWin;
+        public TextMeshProUGUI _textMatchEndReasonLose;
         
+        public CanvasGroup _splashStart;
+        public TextMeshProUGUI _textRound;
+        public TextMeshProUGUI _textMatch;
         
         [Header("Select Card Pool")] 
         public CanvasGroup _panelCardPoolSelect;
@@ -30,7 +35,9 @@ namespace ProjectABC.InGame
         public CanvasGroup _panelCardSelect;
         public List<ButtonCardSelect> _buttonCardSelects;
         public Button _btnSelectCard;
+        public TextMeshProUGUI _textSelectCard;
         public Button _btnRerollCard;
+        public TextMeshProUGUI _textRerollCard;
         
         private int _debugWinCount;
         private int _debugLoseCount;
@@ -216,24 +223,54 @@ namespace ProjectABC.InGame
             }
 
             var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            var leftMulliganChance = _state.MulliganChances - _mulliganChance;
             _btnRerollCard.interactable = hasMulliganChance;
+            _textRerollCard.text = $"Reroll({leftMulliganChance})";
+            
+            var leftCardCount = _amount - _cardSelected.Count;
             _btnSelectCard.interactable = false;
+            _textSelectCard.text = $"Select({leftCardCount})";
         }
         #endregion
 
-        public void OnEndRound(MatchState matchState)
+        public void OnStartRound(int round, string playerA, string playerB)
         {
+            _textRound.text = $"Round {round}";
+            _textMatch.text = $"{playerA} vs {playerB}";
+            StartCoroutine(ShowSplash(_splashStart));
+        }
+        
+        public void OnEndRound(MatchState matchState, MatchFinishEvent.MatchEndReason reason)
+        {
+            var stringReason = "";
+            switch (reason)
+            {
+                case MatchFinishEvent.MatchEndReason.EndByEmptyHand:
+                    stringReason = "덱의 모든 카드를 소진하였습니다.";
+                    break;
+                
+                case MatchFinishEvent.MatchEndReason.EndByFullOfInfirmary:
+                    stringReason = "양호실에 남은 슬롯이 없습니다.";
+                    break;
+            }
+            
             switch (matchState)
             {
                 case MatchState.Attacking:
+                {
                     _debugWinCount++;
+                    _textMatchEndReasonWin.text = stringReason;
                     StartCoroutine(ShowSplash(_splashWin));
-                    break;
+                }
+                break;
 
                 case MatchState.Defending:
+                {
                     _debugLoseCount++;
+                    _textMatchEndReasonLose.text = stringReason;
                     StartCoroutine(ShowSplash(_splashLose));
-                    break;
+                }
+                break;
             }
 
             _textScore.text = $"{_debugWinCount} : {_debugLoseCount}";
