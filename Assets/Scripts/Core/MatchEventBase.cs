@@ -35,14 +35,6 @@ namespace ProjectABC.Core
             MatchEvents.Add(matchEvent);
         }
     }
-    
-    public class MatchFlowConsoleEvent : ConsoleContextEventBase
-    {
-        public MatchFlowConsoleEvent(List<IMatchEvent> matchEvents)
-        {
-            Message = string.Join("\n\n", matchEvents);
-        }
-    }
 
     public abstract class MatchEventBase : IMatchEvent
     {
@@ -51,14 +43,6 @@ namespace ProjectABC.Core
         public MatchEventBase(MatchFlowSnapshot snapshot)
         {
             Snapshot = snapshot;
-        }
-    }
-
-    public class CommonMatchEvent : MatchEventBase
-    {
-        public CommonMatchEvent(string message, MatchFlowSnapshot snapshot) : base(snapshot)
-        {
-            
         }
     }
 
