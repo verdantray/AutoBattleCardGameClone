@@ -23,24 +23,26 @@ namespace ProjectABC.Core
                 {
                     int a = playerIndexes[i];
                     int b = playerIndexes[playerAmount - 1 - i];
-                
-                    roundPairs[i] = new RoundPair(a, b);
-                
-                    int head = playerIndexes[0];
-                    var tail = playerIndexes.Skip(1).ToList();
-                
-                    if (tail.Count > 0)
-                    {
-                        // move last element to first of tail
-                        tail.Insert(0, tail[^1]);
-                        tail.RemoveAt(tail.Count - 1);
-                    }
-                    
-                    tail.Insert(0, head);
-                    playerIndexes = tail;
+
+                    roundPairs[i] = b > a
+                        ? new RoundPair(a, b)
+                        : new RoundPair(b, a);
                 }
 
                 _roundPairMap[r] = new RoundPairs(roundPairs.ToArray());
+                
+                int head = playerIndexes[0];
+                var tail = playerIndexes.Skip(1).ToList();
+                
+                if (tail.Count > 0)
+                {
+                    // move last element to first of tail
+                    tail.Insert(0, tail[^1]);
+                    tail.RemoveAt(tail.Count - 1);
+                }
+                    
+                tail.Insert(0, head);
+                playerIndexes = tail;
             }
         }
 
