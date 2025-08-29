@@ -68,8 +68,8 @@ namespace ProjectABC.Core
     {
         public string Id => CardData.id;
         public int BasePower => CardData.basePower;
-        public ClubType  ClubType => CardData.clubType;
-        public GradeType  GradeType => CardData.gradeType;
+        public ClubType ClubType => CardData.clubType;
+        public GradeType GradeType => CardData.gradeType;
         
         public readonly int Power;
         public readonly CardData CardData;

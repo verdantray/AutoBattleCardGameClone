@@ -13,17 +13,20 @@ namespace ProjectABC.Core
     {
         public readonly CardPile Hands = new CardPile();
         public readonly Infirmary Infirmary = new Infirmary();
-
         public readonly List<Card> Field = new List<Card>();
+        
         public readonly IPlayer Player;
+        public readonly PlayerState PlayerState;
         
         public MatchState State { get; private set; } = MatchState.Attacking;
+        public int GainWinPoints = 0;
         
         private bool IsAttacking => State == MatchState.Attacking;
         
         public MatchSide(PlayerState playerState)
         {
             Player = playerState.Player;
+            PlayerState = playerState;
             
             Hands.AddRange(playerState.Deck);
             Hands.Shuffle();

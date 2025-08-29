@@ -24,6 +24,7 @@ namespace ProjectABC.Core
     {
         public readonly List<PlayerState> PlayerStates = new List<PlayerState>();
         public readonly RoundPairMap RoundPairMap;
+        public readonly ScoreBoard ScoreBoard;
 
         public int Round { get; private set; } = 0;
 
@@ -35,6 +36,7 @@ namespace ProjectABC.Core
             }
 
             RoundPairMap = new RoundPairMap(GameConst.GameOption.MAX_ROUND, PlayerStates.Count);
+            ScoreBoard = new ScoreBoard();
         }
 
         public PlayerState GetPlayerState(IPlayer player)
