@@ -16,11 +16,9 @@ namespace ProjectABC.Core
             foreach (var (playerAState, playerBState) in matchingPairs)
             {
                 MatchFlowContextEvent matchFlowContextEvent = RunMatch(playerAState, playerBState);
-                // matchFlowContextEvent.Publish();
-                MatchFlowConsoleEvent tempContextEvent = new MatchFlowConsoleEvent(matchFlowContextEvent.MatchEvents);
-                tempContextEvent.Publish();
+                matchFlowContextEvent.Publish();
                 
-                simulationContext.CollectedEvents.Add(tempContextEvent);
+                simulationContext.CollectedEvents.Add(matchFlowContextEvent);
                     
                 PlayerState winnerState = simulationContext.CurrentState.GetPlayerState(matchFlowContextEvent.Winner);
                 WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
@@ -48,30 +46,30 @@ namespace ProjectABC.Core
             attacker.SetMatchState(MatchState.Attacking);
             
             MatchFlowSnapshot startSnapShot = new MatchFlowSnapshot(defender, attacker);
-            matchFlowContextEvent.AddEvent(new MatchStartConsoleEvent(defender.Player, attacker.Player, startSnapShot));
+            matchFlowContextEvent.AddEvent(new MatchStartEvent(defender.Player, attacker.Player, startSnapShot));
 
+            if (!defender.TryDraw())
+            {
+                // set attacker winner and return events
+                matchFlowContextEvent.SetWinner(attacker.Player);
+                    
+                MatchFlowSnapshot finishSnapShot = new MatchFlowSnapshot(defender, attacker);
+                matchFlowContextEvent.AddEvent(new MatchFinishEvent(attacker.Player, defender.Player, MatchFinishEvent.MatchEndReason.EndByEmptyHand, finishSnapShot));
+                
+                return matchFlowContextEvent;
+            }
+            
+            MatchFlowSnapshot defenderDrawSnapshot = new MatchFlowSnapshot(defender, attacker);
+            matchFlowContextEvent.AddEvent(new DrawCardEvent(defender.Player, defenderDrawSnapshot));
+            
             while (true)
             {
-                if (!defender.TryDraw())
-                {
-                    // set attacker winner and return events
-                    matchFlowContextEvent.SetWinner(attacker.Player);
-                    
-                    MatchFlowSnapshot finishSnapShot = new MatchFlowSnapshot(defender, attacker);
-                    matchFlowContextEvent.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByEmptyHand, finishSnapShot));
-                
-                    return matchFlowContextEvent;
-                }
-            
-                MatchFlowSnapshot defenderDrawSnapshot = new MatchFlowSnapshot(defender, attacker);
-                matchFlowContextEvent.AddEvent(new DrawCardConsoleEvent(defender, defenderDrawSnapshot));
-                
                 while (attacker.GetEffectivePower() < defender.GetEffectivePower())
                 {
                     if (attacker.Field.Count > 0 && defender.Field.Count > 0)
                     {
                         MatchFlowSnapshot compareSnapshot = new MatchFlowSnapshot(defender, attacker);
-                        matchFlowContextEvent.AddEvent(new ComparePowerConsoleEvent(defender, attacker, compareSnapshot));
+                        matchFlowContextEvent.AddEvent(new ComparePowerEvent(defender, attacker, compareSnapshot));
                     }
                     
                     if (!attacker.TryDraw())
@@ -80,17 +78,17 @@ namespace ProjectABC.Core
                         matchFlowContextEvent.SetWinner(defender.Player);
                         
                         MatchFlowSnapshot finishSnapshot = new MatchFlowSnapshot(defender, attacker);
-                        matchFlowContextEvent.AddEvent(new MatchFinishConsoleEvent(defender, attacker, MatchFinishConsoleEvent.MatchEndReason.EndByEmptyHand, finishSnapshot));
+                        matchFlowContextEvent.AddEvent(new MatchFinishEvent(defender.Player, attacker.Player, MatchFinishEvent.MatchEndReason.EndByEmptyHand, finishSnapshot));
                         
                         return matchFlowContextEvent;
                     }
                     
                     MatchFlowSnapshot attacherDrawSnapshot = new MatchFlowSnapshot(defender, attacker);
-                    matchFlowContextEvent.AddEvent(new DrawCardConsoleEvent(attacker, attacherDrawSnapshot));
+                    matchFlowContextEvent.AddEvent(new DrawCardEvent(attacker.Player, attacherDrawSnapshot));
                 }
                 
                 MatchFlowSnapshot infirmarySnapshot = new MatchFlowSnapshot(defender, attacker);
-                matchFlowContextEvent.AddEvent(new TryPutCardInfirmaryConsoleEvent(defender, infirmarySnapshot));
+                matchFlowContextEvent.AddEvent(new TryPutCardInfirmaryEvent(defender, infirmarySnapshot));
                 
                 if (!defender.TryPutCardFieldToInfirmary(out int _))
                 {
@@ -98,7 +96,7 @@ namespace ProjectABC.Core
                     matchFlowContextEvent.SetWinner(attacker.Player);
                     
                     MatchFlowSnapshot finishSnapshot = new MatchFlowSnapshot(defender, attacker);
-                    matchFlowContextEvent.AddEvent(new MatchFinishConsoleEvent(attacker, defender, MatchFinishConsoleEvent.MatchEndReason.EndByFullOfInfirmary, finishSnapshot));
+                    matchFlowContextEvent.AddEvent(new MatchFinishEvent(attacker.Player, defender.Player, MatchFinishEvent.MatchEndReason.EndByFullOfInfirmary, finishSnapshot));
                     
                     return matchFlowContextEvent;
                 }
@@ -109,7 +107,7 @@ namespace ProjectABC.Core
                 attacker.SetMatchState(MatchState.Attacking);
                 
                 MatchFlowSnapshot switchSnapshot = new MatchFlowSnapshot(defender, attacker);
-                matchFlowContextEvent.AddEvent(new SwitchPositionConsoleEvent(defender.Player, attacker.Player, switchSnapshot));
+                matchFlowContextEvent.AddEvent(new SwitchPositionEvent(defender.Player, attacker.Player, switchSnapshot));
             }
         }
 

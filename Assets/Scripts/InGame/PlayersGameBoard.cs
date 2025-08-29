@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ProjectABC.Core;
 using UnityEngine;
 
 namespace ProjectABC.InGame
@@ -14,22 +15,23 @@ namespace ProjectABC.InGame
         [SerializeField] private SlotBench[] _slotBenches;
         [SerializeField] private Transform _deckSlot;
         [SerializeField] private Transform _activeCardSlot;
+        [SerializeField] private Transform _cardBack;
 
         [SerializeField] private GameObject _prefabCard;
 
         private readonly List<CardInGame> _activeCards = new();
         private readonly List<CardInGame> _inactiveCards = new();
-        private readonly Dictionary<int, List<CardInGame>> _benchCards = new();
+        private readonly Dictionary<string, List<CardInGame>> _benchCards = new();
 
-        public void OnDrawCardDefence(CardOld card)
+        public void OnDrawCardDefence(Card card)
         {
             OnDrawCard(card);
         }
-        public void OnDrawCardAttack(CardOld card)
+        public void OnDrawCardAttack(Card card)
         {
             OnDrawCard(card);
         }
-        private void OnDrawCard(CardOld card)
+        public void OnDrawCard(CardInstance card)
         {
             if (_inactiveCards.Count > 0)
             {
@@ -50,7 +52,32 @@ namespace ProjectABC.InGame
                 _activeCards.Add(cardInGame);
             }
         }
-        public void OnFinishTurn()
+        private void OnDrawCard(Card card)
+        {
+            if (_inactiveCards.Count > 0)
+            {
+                var cardInGame = _inactiveCards[0];
+                cardInGame.SetCard(card);
+                
+                StartCoroutine(DrawCard(cardInGame));
+                _activeCards.Add(cardInGame);
+                _inactiveCards.Remove(cardInGame);
+            }
+            else
+            {
+                var instance = Instantiate(_prefabCard, _deckSlot);
+                var cardInGame = instance.GetComponent<CardInGame>();
+                cardInGame.SetCard(card);
+                
+                StartCoroutine(DrawCard(cardInGame));
+                _activeCards.Add(cardInGame);
+            }
+        }
+        public void SetCardBackVisibility(bool state)
+        {
+            _cardBack.gameObject.SetActive(state);
+        }
+        public void OnTryPutCardInfirmary()
         {
             StartCoroutine(FinishTurn());
         }
@@ -86,25 +113,25 @@ namespace ProjectABC.InGame
             while (targetCards.Count > 0)
             {
                 var card = targetCards[^1];
-                var id = card.GetCardID();
+                var cardID = card.GetCardInstance().CardData.id;
 
-                if (_benchCards.ContainsKey(id))
+                if (_benchCards.ContainsKey(cardID))
                 {
-                    _benchCards[id].Add(card);
+                    _benchCards[cardID].Add(card);
                     targetCards.Remove(card);
                 }
                 else
                 {
                     var cards = new List<CardInGame> { card };
-                    _benchCards.Add(id, cards);
+                    _benchCards.Add(cardID, cards);
                     targetCards.Remove(card);
                 }
 
                 var keys = _benchCards.Keys.ToList();
-                var index = keys.IndexOf(id);
+                var index = keys.IndexOf(cardID);
                 var targetSlot = _slotBenches[index];
 
-                var cardCount = _benchCards[id].Count - 1;
+                var cardCount = _benchCards[cardID].Count - 1;
                 var cardSpace = targetSlot.GetCardSpace() * cardCount;
                 var cardOffset = new Vector3(0f, cardSpace, cardSpace);
 

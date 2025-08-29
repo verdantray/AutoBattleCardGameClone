@@ -1,4 +1,5 @@
 using System;
+using ProjectABC.Core;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ namespace ProjectABC.InGame
         [SerializeField] private TextMeshPro _power;
         [SerializeField] private MeshRenderer _meshRenderer;
 
-        private CardOld _card;
+        private Card _card;
+        private CardInstance _cardInstance;
 
         private Animator _animator;
 
@@ -21,18 +23,32 @@ namespace ProjectABC.InGame
             _animator = GetComponent<Animator>();
         }
 
-        public void SetCard(CardOld card)
+        public void SetCard(Card card)
         {
             _card = card;
 
-            _name.text = card.Data.Name;
-            _power.text = card.Data.Power.ToString();
-            _meshRenderer.material = card.Data.Material;
+            _name.text = card.CardData.nameKey;
+            _power.text = card.CardData.basePower.ToString();
+            // _meshRenderer.material = card.CardData.imagePath;
         }
 
-        public int GetCardID()
+        public void SetCard(CardInstance card)
         {
-            return _card.Data.ID;
+            _cardInstance = card;
+
+            _name.text = card.CardData.nameKey;
+            _power.text = card.CardData.basePower.ToString();
+            // _meshRenderer.material = card.CardData.imagePath;
+        }
+
+        public Card GetCard()
+        {
+            return _card;
+        }
+
+        public CardInstance GetCardInstance()
+        {
+            return _cardInstance;
         }
 
         public void FlipCard()

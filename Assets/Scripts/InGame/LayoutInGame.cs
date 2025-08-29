@@ -7,7 +7,6 @@ using ProjectABC.InGame.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 namespace ProjectABC.InGame
 {
@@ -43,6 +42,7 @@ namespace ProjectABC.InGame
         private GradeType _gradeType;
         private int _amount;
         private List<Card> _cardsInHand = new();
+        private List<Card> _cardsSelectedInHand = new();
         
         public Action<int> OnFinishRecruitLevelAmount;
         public Action<List<Card>> OnFinishDrawCard;
@@ -70,11 +70,16 @@ namespace ProjectABC.InGame
         #region Recruit Level Amount
         public void OnStartRecruitLevelAmount(IReadOnlyList<Tuple<GradeType, int>> pair)
         {
-            for (var i = 0; i < _buttonCardPools.Count; i++)
+            foreach (var button in _buttonCardPools)
+            {
+                button.gameObject.SetActive(false);
+            }
+            for (var i = 0; i < pair.Count; i++)
             {
                 var (gradeType, count) = pair[i];
                 var button = _buttonCardPools[i];
                 button.SetCardPool(gradeType, count);
+                button.gameObject.SetActive(true);
             }
             
             StartCoroutine(ShowPanelCardPoolSelect());
@@ -114,96 +119,118 @@ namespace ProjectABC.InGame
             _mulliganChance = 0;
             _cardSelected.Clear();
             _cardsInHand.Clear();
+            _cardsSelectedInHand.Clear();
             
             _state = state;
             _gradeType = gradeType;
             _amount = amount;
             
-            SetButtonCardSelects();
+            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            _btnRerollCard.gameObject.SetActive(hasMulliganChance);
+            _btnRerollCard.interactable = hasMulliganChance;
+            
+            CardPile targetCardPile = _state.GradeCardPiles[_gradeType];
+            int handAmount = GameConst.GameOption.RECRUIT_HAND_AMOUNT;
+            _cardsInHand = targetCardPile.DrawCards(handAmount);
+            
+            SetButtonCardSelects(_cardsInHand);
             StartCoroutine(ShowPanelCardSelect());
         }
         public void FinishDrawCard()
         {
-            OnFinishDrawCard.Invoke(_cardSelected);
-            StartCoroutine(HidePanelCardSelect());
+            _cardSelected.AddRange(_cardsSelectedInHand);
+            foreach (var card in _cardsSelectedInHand)
+            {
+                _cardsInHand.Remove(card);
+            }
+            _cardsSelectedInHand.Clear();
+            SetButtonCardSelects(_cardsInHand);
+            
+            if (_cardSelected.Count == _amount)
+            {
+                OnFinishDrawCard.Invoke(_cardSelected);
+                StartCoroutine(HidePanelCardSelect());
+            }
         }
         public void RerollCards()
         {
             _mulliganChance += 1;
             
+            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            _btnRerollCard.gameObject.SetActive(hasMulliganChance);
+            
             CardPile targetCardPile = _state.GradeCardPiles[_gradeType];
             targetCardPile.AddRange(_cardsInHand);
             
-            SetButtonCardSelects();
+            int handAmount = GameConst.GameOption.RECRUIT_HAND_AMOUNT - _cardSelected.Count;
+            _cardsInHand = targetCardPile.DrawCards(handAmount);
+            SetButtonCardSelects(_cardsInHand);
         }
         public void OnSelectCard(int index)
         {
+            int cardAmount = _amount - _cardSelected.Count;
+            
             Card card = _buttonCardSelects[index].GetCard();
-            if (_cardSelected.Contains(card))
+            if (_cardsSelectedInHand.Contains(card))
             {
-                _cardSelected.Remove(card);
+                _cardsSelectedInHand.Remove(card);
             }
             else
             {
-                if (_cardSelected.Count >= _amount)
+                if (_cardsSelectedInHand.Count >= cardAmount)
                     return;
                 
-                _cardSelected.Add(card);
+                _cardsSelectedInHand.Add(card);
             }
             
             for (int i = 0; i < _buttonCardSelects.Count; i++)
             {
                 var targetCard = _buttonCardSelects[i].GetCard();
-                var isSelected = _cardSelected.Contains(targetCard);
+                var isSelected = _cardsSelectedInHand.Contains(targetCard);
                 _buttonCardSelects[i].SetSelected(isSelected);
             }
-            
-            var hasMulliganChance = _mulliganChance == _state.MulliganChances;
-            if (hasMulliganChance)
-            {
-                _btnRerollCard.interactable = false;
-            }
-            else
-            {
-                _btnRerollCard.interactable = _cardSelected.Count == 0;
-            }
-            
-            var isCardSelectedAll = _cardSelected.Count == _amount;
-            _btnSelectCard.interactable = isCardSelectedAll;
+
+            var isCardSelected = _cardsSelectedInHand.Count > 0;
+            _btnSelectCard.interactable = isCardSelected;
+
+            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            _btnRerollCard.interactable = !isCardSelected && hasMulliganChance;
         }
-        private void SetButtonCardSelects()
+        private void SetButtonCardSelects(List<Card> cards)
         {
             // TODO: CardPile에서 뽑고 안쓴 카드 넣는 식으로
-            CardPile targetCardPile = _state.GradeCardPiles[_gradeType];
-            int handAmount = GameConst.GameOption.RECRUIT_HAND_AMOUNT;
-            _cardsInHand = targetCardPile.DrawCards(handAmount);
-
+            foreach (var button in _buttonCardSelects)
+            {
+                button.gameObject.SetActive(false);
+            }
+            
+            int handAmount = GameConst.GameOption.RECRUIT_HAND_AMOUNT - _cardSelected.Count;
             for (int i = 0; i < handAmount; i++)
             {
                 var button = _buttonCardSelects[i];
-                var cardData = _cardsInHand[i];
+                var cardData = cards[i];
                 
                 button.SetCard(cardData);
                 button.SetSelected(false);
+                button.gameObject.SetActive(true);
             }
 
-            var hasMulliganChance = _mulliganChance == _state.MulliganChances;
+            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
             _btnRerollCard.interactable = hasMulliganChance;
-            
             _btnSelectCard.interactable = false;
         }
         #endregion
 
-        public void OnEndRound(PlayerType playerType)
+        public void OnEndRound(MatchState matchState)
         {
-            switch (playerType)
+            switch (matchState)
             {
-                case PlayerType.Player:
+                case MatchState.Attacking:
                     _debugWinCount++;
                     StartCoroutine(ShowSplash(_splashWin));
                     break;
 
-                case PlayerType.Enemy:
+                case MatchState.Defending:
                     _debugLoseCount++;
                     StartCoroutine(ShowSplash(_splashLose));
                     break;

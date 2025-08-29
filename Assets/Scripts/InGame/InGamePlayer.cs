@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using UnityEngine;
-using Random = System.Random;
 
 namespace ProjectABC.InGame
 {
@@ -14,20 +12,17 @@ namespace ProjectABC.InGame
         public async Task<RecruitCardsAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
         {
             var pairs = recruitOnRound.GetRecruitLevelAmountPairs();
-            var (grade, amount) = pairs[0];
-            if (pairs.Count > 1)
-            {
-                InGameController.Instance.OnStartRecruitLevelAmount(pairs);
-                var taskWaitRecruit = WaitUntilRecruitLevelAmountAsync();
-                await Task.WhenAll(taskWaitRecruit);
+            
+            InGameController.Instance.OnStartRecruitLevelAmount(pairs);
+            var taskWaitRecruit = WaitUntilAsync(() => InGameController.Instance.IsRecruitLevelAmountFinished);
+            await Task.WhenAll(taskWaitRecruit);
 
-                var index = InGameController.Instance.RecruitLevelAmountIndex;
-                (grade, amount) = pairs[index];
-            }
+            var index = InGameController.Instance.RecruitLevelAmountIndex;
+            var (grade, amount) = pairs[index];
             
             // TODO : Use CardPile Codes
             InGameController.Instance.OnStartDrawCard(myState, grade, amount);
-            var taskWaitDrawCard = WaitUntilDrawCardAsync();
+            var taskWaitDrawCard = WaitUntilAsync(() => InGameController.Instance.IsDrawCardFinished);
             await Task.WhenAll(taskWaitDrawCard);
 
             List<Card> cardsToDraw = InGameController.Instance.DrawCards;
@@ -35,22 +30,22 @@ namespace ProjectABC.InGame
             return action;
         }
 
-        public InGamePlayer(string name)
+        public async Task WaitUntilConfirmToProceed()
         {
-            Name = name;
-        }
-
-        private async Task WaitUntilRecruitLevelAmountAsync()
-        {
-            while (InGameController.Instance.IsRecruitLevelAmountFinished == false)
+            while (InGameController.Instance.IsBattleFinished == false)
             {
                 await Awaitable.NextFrameAsync();
             }
         }
 
-        private async Task WaitUntilDrawCardAsync()
+        public InGamePlayer(string name)
         {
-            while (InGameController.Instance.IsDrawCardFinished == false)
+            Name = name;
+        }
+
+        private async Task WaitUntilAsync(Func<bool> waitUntil)
+        {
+            while (!waitUntil())
             {
                 await Awaitable.NextFrameAsync();
             }
