@@ -41,98 +41,98 @@ MonoBehaviour:
     basePower: 1
     amount: 3
     titleKey: title_clerk
-    nameKey: name_Irian
+    nameKey: card_name_Irian
     descKey: 
-    imagePath: 
-  - id: card_elicia_co
+    imagePath: material_card_irian_co
+  - id: card_mirea_co
     clubType: 2
     gradeType: 0
     basePower: 2
     amount: 1
     titleKey: title_treasurer
-    nameKey: name_elicia
+    nameKey: card_name_mirea
     descKey: desc_elite
-    imagePath: 
+    imagePath: material_card_mirea_co
   - id: card_verde_co
     clubType: 2
     gradeType: 1
     basePower: 3
     amount: 1
     titleKey: title_vice_president
-    nameKey: name_verde
+    nameKey: card_name_verde
     descKey: desc_elite
-    imagePath: 
+    imagePath: material_card_verde_co
   - id: card_etella_co
     clubType: 2
     gradeType: 2
     basePower: 4
     amount: 1
     titleKey: title_student_council_president
-    nameKey: name_etella
+    nameKey: card_name_etella
     descKey: desc_elite
-    imagePath: 
+    imagePath: meterial_card_etella_co
   cardDataForPiles:
-  - id: card_elicia_co
+  - id: card_mirea_co
     clubType: 2
     gradeType: 0
     basePower: 2
     amount: 2
     titleKey: title_treasurer
-    nameKey: name_elicia
+    nameKey: card_name_mirea
     descKey: desc_elite
-    imagePath: 
-  - id: card_mirea_co
+    imagePath: material_card_mirea_co
+  - id: card_elicia_co
     clubType: 2
     gradeType: 0
     basePower: 1
     amount: 4
     titleKey: title_event_planner
-    nameKey: name_mirea
-    descKey: desc_mirea
-    imagePath: 
+    nameKey: card_name_elicia
+    descKey: desc_elicia
+    imagePath: material_card_elicia_co
   - id: card_verde_co
     clubType: 2
     gradeType: 1
     basePower: 3
     amount: 2
     titleKey: title_vice_president
-    nameKey: name_verde
+    nameKey: card_name_verde
     descKey: desc_elite
-    imagePath: 
+    imagePath: material_card_verde_co
   - id: card_lisenna_co
     clubType: 2
     gradeType: 1
     basePower: 2
     amount: 4
     titleKey: title_disciplinary_officer
-    nameKey: name_lisenna
+    nameKey: card_name_lisenna
     descKey: desc_lisenna
-    imagePath: 
+    imagePath: material_card_lisenna_co
   - id: card_etella_co
     clubType: 2
     gradeType: 2
     basePower: 4
     amount: 2
     titleKey: title_student_council_president
-    nameKey: name_etella
+    nameKey: card_name_etella
     descKey: desc_elite
-    imagePath: 
+    imagePath: material_card_etella_co
   - id: card_orphia_co
     clubType: 2
     gradeType: 2
     basePower: 3
     amount: 4
     titleKey: title_publicist
-    nameKey: name_orphia
+    nameKey: card_name_orphia
     descKey: desc_orphia
-    imagePath: 
+    imagePath: material_card_orphia_co
   - id: card_yunette_cl
     clubType: 3
     gradeType: 0
     basePower: 2
     amount: 4
     titleKey: title_deck_cleaner
-    nameKey: name_yunette
+    nameKey: card_name_yunette
     descKey: desc_yunette
     imagePath: 
   - id: card_pora_cl
@@ -141,7 +141,7 @@ MonoBehaviour:
     basePower: 3
     amount: 2
     titleKey: title_crew
-    nameKey: name_pora
+    nameKey: card_name_pora
     descKey: desc_elite
     imagePath: 
   - id: card_selina_cl
@@ -150,7 +150,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_dispatched_member
-    nameKey: name_selina
+    nameKey: card_name_selina
     descKey: desc_selina
     imagePath: 
   - id: card_silin_coastline
@@ -159,7 +159,7 @@ MonoBehaviour:
     basePower: 4
     amount: 4
     titleKey: title_fisher
-    nameKey: name_silin
+    nameKey: card_name_silin
     descKey: desc_silin
     imagePath: 
   - id: card_navia_coastline
@@ -168,7 +168,7 @@ MonoBehaviour:
     basePower: 5
     amount: 2
     titleKey: title_rescuer
-    nameKey: name_navia
+    nameKey: card_name_navia
     descKey: desc_elite
     imagePath: 
   - id: card_seredy_coastline
@@ -177,7 +177,7 @@ MonoBehaviour:
     basePower: 3
     amount: 4
     titleKey: title_navigator
-    nameKey: name_seredy
+    nameKey: card_name_seredy
     descKey: desc_seredy
     imagePath: 
   - id: card_ridone_coastline
@@ -186,7 +186,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_lighthouse_keeper
-    nameKey: name_ridone
+    nameKey: card_name_ridone
     descKey: desc_ridone
     imagePath: 
   - id: card_orca_coastline
@@ -195,7 +195,7 @@ MonoBehaviour:
     basePower: 5
     amount: 4
     titleKey: title_captain
-    nameKey: name_orca
+    nameKey: card_name_orca
     descKey: desc_orca
     imagePath: 
   - id: card_mari_coastline
@@ -204,7 +204,7 @@ MonoBehaviour:
     basePower: 7
     amount: 2
     titleKey: title_marine_leisure_member
-    nameKey: name_mari
+    nameKey: card_name_mari
     descKey: desc_elite
     imagePath: 
   - id: card_libre_coastline
@@ -213,7 +213,7 @@ MonoBehaviour:
     basePower: 4
     amount: 4
     titleKey: title_diver
-    nameKey: name_libre
+    nameKey: card_name_libre
     descKey: desc_libre
     imagePath: 
   - id: card_elara_band
@@ -222,7 +222,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_manager
-    nameKey: name_elara
+    nameKey: card_name_elara
     descKey: desc_elara
     imagePath: 
   - id: card_cordie_band
@@ -231,7 +231,7 @@ MonoBehaviour:
     basePower: 3
     amount: 2
     titleKey: title_staff
-    nameKey: name_cordie
+    nameKey: card_name_cordie
     descKey: desc_elite
     imagePath: 
   - id: card_cosmi_band
@@ -240,7 +240,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_pianist
-    nameKey: name_cosmi
+    nameKey: card_name_cosmi
     descKey: desc_cosmi
     imagePath: 
   - id: card_melisa_band
@@ -249,7 +249,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_dj
-    nameKey: name_melisa
+    nameKey: card_name_melisa
     descKey: desc_melisa
     imagePath: 
   - id: card_stella_band
@@ -258,7 +258,7 @@ MonoBehaviour:
     basePower: 4
     amount: 4
     titleKey: title_guitarist
-    nameKey: name_stella
+    nameKey: card_name_stella
     descKey: desc_stella
     imagePath: 
   - id: card_harmony_band
@@ -267,7 +267,7 @@ MonoBehaviour:
     basePower: 5
     amount: 2
     titleKey: title_castanets_player
-    nameKey: name_harmony
+    nameKey: card_name_harmony
     descKey: desc_elite
     imagePath: 
   - id: card_neria_band
@@ -276,7 +276,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_bassist
-    nameKey: name_neria
+    nameKey: card_name_neria
     descKey: desc_neria
     imagePath: 
   - id: card_astra_band
@@ -285,7 +285,7 @@ MonoBehaviour:
     basePower: 4
     amount: 4
     titleKey: title_vocalist
-    nameKey: name_astra
+    nameKey: card_name_astra
     descKey: desc_astra
     imagePath: 
   - id: card_ravian_band
@@ -294,7 +294,7 @@ MonoBehaviour:
     basePower: 7
     amount: 2
     titleKey: title_drummer
-    nameKey: name_ravian
+    nameKey: card_name_ravian
     descKey: desc_elite
     imagePath: 
   - id: card_flag_gd
@@ -303,7 +303,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_qa_tester
-    nameKey: name_flag
+    nameKey: card_name_flag
     descKey: desc_flag
     imagePath: 
   - id: card_prim_gd
@@ -312,7 +312,7 @@ MonoBehaviour:
     basePower: 3
     amount: 2
     titleKey: title_scenario_writer
-    nameKey: name_prim
+    nameKey: card_name_prim
     descKey: desc_elite
     imagePath: 
   - id: card_tibera_gd
@@ -321,7 +321,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_project_manager
-    nameKey: name_tibera
+    nameKey: card_name_tibera
     descKey: desc_tibera
     imagePath: 
   - id: card_erida_gd
@@ -330,7 +330,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_planner_designer
-    nameKey: name_erida
+    nameKey: card_name_erida
     descKey: desc_erida
     imagePath: 
   - id: card_glitch_gd
@@ -339,7 +339,7 @@ MonoBehaviour:
     basePower: 4
     amount: 4
     titleKey: title_debugger
-    nameKey: name_glitch
+    nameKey: card_name_glitch
     descKey: desc_glitch
     imagePath: 
   - id: card_sketch_gd
@@ -348,7 +348,7 @@ MonoBehaviour:
     basePower: 5
     amount: 2
     titleKey: title_illustrator
-    nameKey: name_sketch
+    nameKey: card_name_sketch
     descKey: desc_elite
     imagePath: 
   - id: card_script_gd
@@ -357,7 +357,7 @@ MonoBehaviour:
     basePower: 5
     amount: 4
     titleKey: title_client_programmer
-    nameKey: name_script
+    nameKey: card_name_script
     descKey: desc_script
     imagePath: 
   - id: card_velvet_gd
@@ -366,7 +366,7 @@ MonoBehaviour:
     basePower: 5
     amount: 4
     titleKey: title_server_programmer
-    nameKey: name_velvet
+    nameKey: card_name_velvet
     descKey: desc_velvet
     imagePath: 
   - id: card_lucie_gd
@@ -375,7 +375,7 @@ MonoBehaviour:
     basePower: 7
     amount: 2
     titleKey: title_art_director
-    nameKey: name_lucie
+    nameKey: card_name_lucie
     descKey: desc_elite
     imagePath: 
   - id: card_cassia_gd
@@ -384,7 +384,7 @@ MonoBehaviour:
     basePower: 3
     amount: 4
     titleKey: title_director
-    nameKey: name_cassia
+    nameKey: card_name_cassia
     descKey: desc_cassia
     imagePath: 
   - id: card_moca_hc
@@ -393,7 +393,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_dessert_specialist
-    nameKey: name_moca
+    nameKey: card_name_moca
     descKey: desc_moca
     imagePath: 
   - id: card_forette_hc
@@ -402,7 +402,7 @@ MonoBehaviour:
     basePower: 3
     amount: 2
     titleKey: title_apprentice
-    nameKey: name_forette
+    nameKey: card_name_forette
     descKey: desc_elite
     imagePath: 
   - id: card_selina_hc
@@ -411,7 +411,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_dispatched_member
-    nameKey: name_selina
+    nameKey: card_name_selina
     descKey: desc_selina
     imagePath: 
   - id: card_amelie_hc
@@ -420,7 +420,7 @@ MonoBehaviour:
     basePower: 3
     amount: 4
     titleKey: title_supply_manager
-    nameKey: name_amelie
+    nameKey: card_name_amelie
     descKey: desc_amelie
     imagePath: 
   - id: card_bagnie_hc
@@ -429,7 +429,7 @@ MonoBehaviour:
     basePower: 5
     amount: 2
     titleKey: title_fish_specialist
-    nameKey: name_bagnie
+    nameKey: card_name_bagnie
     descKey: desc_elite
     imagePath: 
   - id: card_tarmotte_hc
@@ -438,7 +438,7 @@ MonoBehaviour:
     basePower: 3
     amount: 4
     titleKey: title_meat_specialist
-    nameKey: name_tarmotte
+    nameKey: card_name_tarmotte
     descKey: desc_tarmotte
     imagePath: 
   - id: card_brinie_hc
@@ -447,7 +447,7 @@ MonoBehaviour:
     basePower: 10
     amount: 4
     titleKey: title_appetizer_specialist
-    nameKey: name_brinie
+    nameKey: card_name_brinie
     descKey: desc_brinie
     imagePath: 
   - id: card_sophine_hc
@@ -456,7 +456,7 @@ MonoBehaviour:
     basePower: 7
     amount: 2
     titleKey: title_chef
-    nameKey: name_sophine
+    nameKey: card_name_sophine
     descKey: desc_elite
     imagePath: 
   - id: card_nirvel_ur
@@ -465,7 +465,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_downer
-    nameKey: name_nirvel
+    nameKey: card_name_nirvel
     descKey: desc_nirvel
     imagePath: 
   - id: card_lucy_ur
@@ -474,7 +474,7 @@ MonoBehaviour:
     basePower: 3
     amount: 2
     titleKey: title_mascot
-    nameKey: name_lucy
+    nameKey: card_name_lucy
     descKey: desc_elite
     imagePath: 
   - id: card_serano_ur
@@ -483,7 +483,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_graffiti_artist
-    nameKey: name_serano
+    nameKey: card_name_serano
     descKey: desc_serano
     imagePath: 
   - id: card_morras_ur
@@ -492,7 +492,7 @@ MonoBehaviour:
     basePower: 7
     amount: 4
     titleKey: title_goth_look
-    nameKey: name_morras
+    nameKey: card_name_morras
     descKey: desc_morras
     imagePath: 
   - id: card_aspen_ur
@@ -501,7 +501,7 @@ MonoBehaviour:
     basePower: 5
     amount: 2
     titleKey: title_former_council_member
-    nameKey: name_aspen
+    nameKey: card_name_aspen
     descKey: desc_elite
     imagePath: 
   - id: card_exid_ur
@@ -510,7 +510,7 @@ MonoBehaviour:
     basePower: 6
     amount: 4
     titleKey: title_arsonist
-    nameKey: name_exid
+    nameKey: card_name_exid
     descKey: desc_exid
     imagePath: 
   - id: card_creva_ur
@@ -519,7 +519,7 @@ MonoBehaviour:
     basePower: 11
     amount: 4
     titleKey: title_boss
-    nameKey: name_creva
+    nameKey: card_name_creva
     descKey: desc_creva
     imagePath: 
   - id: card_corinth_ur
@@ -528,7 +528,7 @@ MonoBehaviour:
     basePower: 7
     amount: 2
     titleKey: title_drifter
-    nameKey: name_corinth
+    nameKey: card_name_corinth
     descKey: desc_elite
     imagePath: 
   - id: card_ayame_te
@@ -537,7 +537,7 @@ MonoBehaviour:
     basePower: 2
     amount: 4
     titleKey: title_deer_spirit
-    nameKey: name_ayame
+    nameKey: card_name_ayame
     descKey: desc_ayame
     imagePath: 
   - id: card_yukari_te
@@ -546,7 +546,7 @@ MonoBehaviour:
     basePower: 3
     amount: 2
     titleKey: title_fox_spirit
-    nameKey: name_yukari
+    nameKey: card_name_yukari
     descKey: desc_elite
     imagePath: 
   - id: card_kohane_te
@@ -555,7 +555,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_long-tailed_tit
-    nameKey: name_kohane
+    nameKey: card_name_kohane
     descKey: desc_kohane
     imagePath: 
   - id: card_hiyori_te
@@ -564,7 +564,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_squirrel_spirit
-    nameKey: name_hiyori
+    nameKey: card_name_hiyori
     descKey: desc_hiyori
     imagePath: 
   - id: card_suzuho_te
@@ -573,7 +573,7 @@ MonoBehaviour:
     basePower: 5
     amount: 2
     titleKey: title_cat_spirit
-    nameKey: name_suzuho
+    nameKey: card_name_suzuho
     descKey: desc_elite
     imagePath: 
   - id: card_kanade_te
@@ -582,7 +582,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_dog_spirit
-    nameKey: name_kanade
+    nameKey: card_name_kanade
     descKey: desc_kanade
     imagePath: 
   - id: card_suiren_te
@@ -591,7 +591,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_sheep_spirit
-    nameKey: name_suiren
+    nameKey: card_name_suiren
     descKey: desc_suiren
     imagePath: 
   - id: card_towa_te
@@ -600,7 +600,7 @@ MonoBehaviour:
     basePower: 7
     amount: 2
     titleKey: title_dragon_spirit
-    nameKey: name_towa
+    nameKey: card_name_towa
     descKey: desc_elite
     imagePath: 
   - id: card_shirahane_te
@@ -609,7 +609,7 @@ MonoBehaviour:
     basePower: 1
     amount: 4
     titleKey: title_swan_spirit
-    nameKey: name_shirahane
+    nameKey: card_name_shirahane
     descKey: desc_shirahane
     imagePath: 
   recruitData:

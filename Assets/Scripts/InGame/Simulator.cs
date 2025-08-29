@@ -14,7 +14,33 @@ namespace ProjectABC.InGame
         {
             try
             {
-                await RunSimulation();
+                if (!Storage.HasInstance)
+                {
+                    var handle = Addressables.LoadAssetAsync<GameDataAsset>(GameConst.Address.GAME_DATA_ASSET);
+                    await handle.Task;
+
+                    Storage.CreateInstance(handle.Result);
+                    Addressables.Release(handle);
+                }
+
+                await CardMaterialLoader.LoadMaterials();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Simulator has error occured : {e}");
+                throw; // TODO 예외 처리
+            }
+            finally
+            {
+                Run();
+            }
+        }
+
+        public async void Run()
+        {
+            try
+            {
+                await RunSimulationAsync();
             }
             catch (Exception e)
             {
@@ -23,17 +49,8 @@ namespace ProjectABC.InGame
             }
         }
 
-        public async Task RunSimulation()
+        private async Task RunSimulationAsync()
         {
-            if (!Storage.HasInstance)
-            {
-                var handle = Addressables.LoadAssetAsync<GameDataAsset>(GameConst.Address.GAME_DATA_ASSET);
-                await handle.Task;
-                
-                Storage.CreateInstance(handle.Result);
-                Addressables.Release(handle);
-            }
-
             IPlayer[] players = new IPlayer[8];
 
             players[0] = new InGamePlayer("내 플레이어");

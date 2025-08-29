@@ -18,5 +18,11 @@ namespace ProjectABC.Core
             public const int RECRUIT_HAND_AMOUNT = 5;
             public const int DEFAULT_INFIRMARY_SLOT_LIMIT = 6;
         }
+
+        public static class AssetPath
+        {
+            public const string CARD_BACK_PATH = "material_card_back";
+            public const string CARD_FRONT_FALLBACK_PATH = "material_card_fallback";
+        }
     }
 }

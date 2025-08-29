@@ -29,7 +29,9 @@ namespace ProjectABC.InGame
 
             _name.text = card.CardData.nameKey;
             _power.text = card.CardData.basePower.ToString();
-            // _meshRenderer.material = card.CardData.imagePath;
+
+            var materials = CardMaterialLoader.Instance.GetCardMaterials(card.CardData.imagePath);
+            _meshRenderer.SetMaterials(materials);
         }
 
         public void SetCard(CardInstance card)
@@ -38,7 +40,9 @@ namespace ProjectABC.InGame
 
             _name.text = card.CardData.nameKey;
             _power.text = card.CardData.basePower.ToString();
-            // _meshRenderer.material = card.CardData.imagePath;
+            
+            var materials = CardMaterialLoader.Instance.GetCardMaterials(card.CardData.imagePath);
+            _meshRenderer.SetMaterials(materials);
         }
 
         public Card GetCard()
