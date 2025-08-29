@@ -33,6 +33,7 @@ namespace ProjectABC.InGame
 
         private IPlayer _player;
         private IPlayer _enemy;
+        private int _roundCount;
 
         private void Awake()
         {
@@ -48,6 +49,11 @@ namespace ProjectABC.InGame
         private void OnDestroy()
         {
             this.StopListening<MatchFlowContextEvent>();
+        }
+        
+        public void ClearGame()
+        {
+            _roundCount = 0;
         }
 
         public void OnStartRecruitLevelAmount(IReadOnlyList<Tuple<GradeType, int>> pair)
@@ -147,13 +153,17 @@ namespace ProjectABC.InGame
         {
             if (matchStartEvent.Snapshot.TryGetMatchSideSnapshot(_player, out var snapshot))
             {
+                _roundCount += 1;
+                
                 MatchState matchState = snapshot.State;
                 _gameBoardController.OnFinishTurn(matchState);
                 
                 _gameBoardController.SetCardBackVisibility(MatchState.Attacking, true);
                 _gameBoardController.SetCardBackVisibility(MatchState.Defending, true);
+
+                UIManager.Instance.DEBUGLayoutInGame.OnStartRound(_roundCount, _player.Name, _enemy.Name);
                 
-                await Awaitable.WaitForSecondsAsync(0.5f);
+                await Awaitable.WaitForSecondsAsync(2f);
             }
         }
         private async Task OnDrawCard(DrawCardEvent drawCardEvent)
@@ -201,11 +211,11 @@ namespace ProjectABC.InGame
         {
             if (matchFinishEvent.WinningPlayer == _player)
             {
-                UIManager.Instance.DEBUGLayoutInGame.OnEndRound(MatchState.Attacking);
+                UIManager.Instance.DEBUGLayoutInGame.OnEndRound(MatchState.Attacking, matchFinishEvent.Reason);
             }
             else if (matchFinishEvent.WinningPlayer == _enemy)
             {
-                UIManager.Instance.DEBUGLayoutInGame.OnEndRound(MatchState.Defending);
+                UIManager.Instance.DEBUGLayoutInGame.OnEndRound(MatchState.Defending, matchFinishEvent.Reason);
             }
             _gameBoardController.OnEndRound();
             await Awaitable.WaitForSecondsAsync(2f);
