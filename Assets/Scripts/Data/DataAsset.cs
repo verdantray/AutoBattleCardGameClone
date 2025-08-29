@@ -14,9 +14,11 @@ namespace ProjectABC.Data.Editor
 {
     public interface IFieldUpdatable
     {
+#if UNITY_EDITOR
         public void UpdateFields(List<GSTU_Cell> cells);
+#endif
     }
-    
+
     public abstract class DataAsset : ScriptableObject
     {
 #if UNITY_EDITOR

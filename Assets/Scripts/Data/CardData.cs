@@ -1,8 +1,13 @@
 using System;
+using ProjectABC.Data.Editor;
+
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.Globalization;
 using GoogleSheetsToUnity;
-using ProjectABC.Data.Editor;
+
+#endif
 
 namespace ProjectABC.Data
 {
@@ -37,7 +42,8 @@ namespace ProjectABC.Data
         public string nameKey;
         public string descKey;
         public string imagePath;
-        
+
+#if UNITY_EDITOR
         public void UpdateFields(List<GSTU_Cell> cells)
         {
             foreach (GSTU_Cell cell in cells)
@@ -74,5 +80,6 @@ namespace ProjectABC.Data
                 }
             }
         }
+#endif
     }
 }

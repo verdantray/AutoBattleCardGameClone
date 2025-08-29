@@ -1,8 +1,13 @@
 using System;
+using ProjectABC.Data.Editor;
+
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using System.Globalization;
 using GoogleSheetsToUnity;
-using ProjectABC.Data.Editor;
+
+#endif
 
 namespace ProjectABC.Data
 {
@@ -12,6 +17,8 @@ namespace ProjectABC.Data
         public int round;
         public GradeType recruitGradeType;
         public int amount;
+        
+#if UNITY_EDITOR
         
         public void UpdateFields(List<GSTU_Cell> cells)
         {
@@ -31,6 +38,8 @@ namespace ProjectABC.Data
                 }
             }
         }
+        
+#endif
     }
     
     [Serializable]
@@ -40,6 +49,7 @@ namespace ProjectABC.Data
         public int winPoint;
         public int weight;
         
+#if UNITY_EDITOR
         public void UpdateFields(List<GSTU_Cell> cells)
         {
             foreach (var cell in cells)
@@ -63,5 +73,6 @@ namespace ProjectABC.Data
         {
             return int.TryParse(toParse, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsed);
         }
+#endif
     }
 }
