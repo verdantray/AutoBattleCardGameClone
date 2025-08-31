@@ -11,7 +11,7 @@ namespace ProjectABC.InGame
 
         [SerializeField] private Transform _defenceIndicator;
         
-        public void OnDrawCard(CardInstance card, MatchState playerState)
+        public void OnDrawCard(CardSnapshot card, MatchState playerState)
         {
             switch (playerState)
             {

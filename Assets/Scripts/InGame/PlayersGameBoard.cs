@@ -31,7 +31,7 @@ namespace ProjectABC.InGame
         {
             OnDrawCard(card);
         }
-        public void OnDrawCard(CardInstance card)
+        public void OnDrawCard(CardSnapshot card)
         {
             if (_inactiveCards.Count > 0)
             {

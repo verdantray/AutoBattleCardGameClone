@@ -7,11 +7,11 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public record MatchFlowSnapshot
+    public record MatchSnapshot
     {
         public readonly IReadOnlyDictionary<IPlayer, MatchSideSnapshot> MatchSideSnapShots;
         
-        public MatchFlowSnapshot(params MatchSide[] matchSides)
+        public MatchSnapshot(params MatchSide[] matchSides)
         {
             MatchSideSnapShots =
                 new Dictionary<IPlayer, MatchSideSnapshot>(matchSides.ToDictionary(KeySelector, ValueSelector));
@@ -33,8 +33,8 @@ namespace ProjectABC.Core
         public readonly IPlayer Player;
         public readonly MatchState State;
         
-        public readonly IReadOnlyList<CardInstance> Deck;
-        public readonly IReadOnlyList<CardInstance> Field;
+        public readonly IReadOnlyList<CardSnapshot> Deck;
+        public readonly IReadOnlyList<CardSnapshot> Field;
         public readonly InfirmaryInstance Infirmary;
         
         private bool IsAttacking => State == MatchState.Attacking;
@@ -44,8 +44,8 @@ namespace ProjectABC.Core
             Player = matchSide.Player;
             State = matchSide.State;
             
-            Deck = matchSide.Hands.Select(card => new CardInstance(card)).ToList();
-            Field = matchSide.Field.Select(card => new CardInstance(card)).ToList();
+            Deck = matchSide.Hands.Select(card => new CardSnapshot(card)).ToList();
+            Field = matchSide.Field.Select(card => new CardSnapshot(card)).ToList();
             Infirmary = matchSide.Infirmary.GetSnapshotInstance;
         }
 
@@ -64,7 +64,7 @@ namespace ProjectABC.Core
         }
     }
 
-    public record CardInstance
+    public record CardSnapshot
     {
         public string Id => CardData.id;
         public int BasePower => CardData.basePower;
@@ -74,40 +74,40 @@ namespace ProjectABC.Core
         public readonly int Power;
         public readonly CardData CardData;
         
-        public CardInstance(Card card)
+        public CardSnapshot(Card card)
         {
             Power = card.Power;
             CardData = card.CardData;
         }
     }
 
-    public record InfirmaryInstance : IReadOnlyDictionary<string, IReadOnlyList<CardInstance>>
+    public record InfirmaryInstance : IReadOnlyDictionary<string, IReadOnlyList<CardSnapshot>>
     {
         public readonly IReadOnlyList<string> NameKeyList;
-        public readonly IReadOnlyDictionary<string, IReadOnlyList<CardInstance>> CardMap;
+        public readonly IReadOnlyDictionary<string, IReadOnlyList<CardSnapshot>> CardMap;
 
         public InfirmaryInstance(IEnumerable<string> nameKeys, IDictionary<string, CardPile> cardMap)
         {
             NameKeyList = new List<string>(nameKeys);
-            CardMap = new Dictionary<string, IReadOnlyList<CardInstance>>(cardMap.ToDictionary(KeySelector,
+            CardMap = new Dictionary<string, IReadOnlyList<CardSnapshot>>(cardMap.ToDictionary(KeySelector,
                 ValueSelector));
         }
 
-        public IReadOnlyList<CardInstance> this[int index] => CardMap[NameKeyList[index]];
+        public IReadOnlyList<CardSnapshot> this[int index] => CardMap[NameKeyList[index]];
 
         private static string KeySelector(KeyValuePair<string, CardPile> kvPair)
         {
             return kvPair.Key;
         }
 
-        private static IReadOnlyList<CardInstance> ValueSelector(KeyValuePair<string, CardPile> kvPair)
+        private static IReadOnlyList<CardSnapshot> ValueSelector(KeyValuePair<string, CardPile> kvPair)
         {
-            return new List<CardInstance>(kvPair.Value.Select(card => new CardInstance(card)));
+            return new List<CardSnapshot>(kvPair.Value.Select(card => new CardSnapshot(card)));
         }
         
         #region inherits IReadOnlyDictionary
 
-        public IEnumerator<KeyValuePair<string, IReadOnlyList<CardInstance>>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, IReadOnlyList<CardSnapshot>>> GetEnumerator()
         {
             return CardMap.GetEnumerator();
         }
@@ -123,15 +123,15 @@ namespace ProjectABC.Core
             return CardMap.ContainsKey(key);
         }
 
-        public bool TryGetValue(string key, out IReadOnlyList<CardInstance> value)
+        public bool TryGetValue(string key, out IReadOnlyList<CardSnapshot> value)
         {
             return CardMap.TryGetValue(key, out value);
         }
 
-        public IReadOnlyList<CardInstance> this[string key] => throw new NotImplementedException();
+        public IReadOnlyList<CardSnapshot> this[string key] => throw new NotImplementedException();
 
         public IEnumerable<string> Keys => NameKeyList;
-        public IEnumerable<IReadOnlyList<CardInstance>> Values => CardMap.Values;
+        public IEnumerable<IReadOnlyList<CardSnapshot>> Values => CardMap.Values;
 
         #endregion
     }

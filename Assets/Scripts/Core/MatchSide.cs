@@ -34,9 +34,9 @@ namespace ProjectABC.Core
 
         public void SetMatchState(MatchState state) => State = state;
 
-        public bool TryDraw()
+        public bool TryDraw(out Card drawn)
         {
-            bool isSuccessToDraw = Hands.TryDraw(out Card drawn);
+            bool isSuccessToDraw = Hands.TryDraw(out drawn);
             if (isSuccessToDraw)
             {
                 // TODO: call draw effect after implements card abilities
@@ -46,17 +46,12 @@ namespace ProjectABC.Core
             return isSuccessToDraw;
         }
 
-        public bool TryPutCardFieldToInfirmary(out int remainSlots)
+        public void PutCardsToInfirmary(out List<Card> cardsToInfirmary)
         {
-            bool isSuccessToPut = Infirmary.TryPut(Field, out remainSlots);
+            cardsToInfirmary = new List<Card>(Field);
             Field.Clear();
             
-            if (isSuccessToPut)
-            {
-                // TODO : call put to bench effect after implements card abilities
-            }
-
-            return isSuccessToPut;
+            Infirmary.PutCards(cardsToInfirmary);
         }
 
         public int GetEffectivePower()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using ProjectABC.Data;
 
@@ -8,25 +9,46 @@ namespace ProjectABC.Core
     /// </summary>
     public class LowestPowerCardsToTopOfDeck : CardEffect
     {
+        private readonly string _failureDescKey;
         private readonly int _cardsAmount;
 
         public LowestPowerCardsToTopOfDeck(Card card, JsonObject json) : base(card, json)
         {
-            foreach (var field in json.fields.Where(field => field.key == "cards_amount"))
+            foreach (var field in json.fields)
             {
-                _cardsAmount = field.value.intValue;
-                return;
+                switch (field.key)
+                {
+                    case GameConst.CardEffect.EFFECT_FAILURE_DESC_KEY :
+                        _failureDescKey = field.value.strValue;
+                        break;
+                    case "cards_amount":
+                        _cardsAmount = field.value.intValue;
+                        break;
+                }
             }
         }
         
-        public override bool TryApplyEffect(MatchSide mySide, out IMatchEvent matchEvent)
+        public override bool TryApplyEffect(CardMovingEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent)
         {
+            if (ApplyTrigger != trigger)
+            {
+                matchEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailureReason.TriggerNotMatch,
+                    "",
+                    new MatchSnapshot(mySide, otherSide)
+                );
+
+                return false;
+            }
+            
             if (mySide.Field.Count < _cardsAmount)
             {
-                string failedMessage = $"{CallCard.Name}의 효과를 발동하려 했으나 덱의 남은 카드가 {_cardsAmount} 미만이라 무시됨.\n"
-                                       + $"카드 효과 : {Description}";
-
-                matchEvent = new CommonMatchConsoleEvent(failedMessage);
+                matchEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailureReason.FailureMeetCondition,
+                    "",
+                    new MatchSnapshot(mySide, otherSide)
+                );
+                
                 return false;
             }
             
@@ -37,12 +59,8 @@ namespace ProjectABC.Core
             }
             
             mySide.Field.InsertRange(0, toMove);
-
-            string successMessage = $"{CallCard.Name}의 효과로 덱에서 가장 파워가 낮은 카드 {_cardsAmount}장을 덱 맨 위로 정렬\n"
-                                    + $"카드 효과 : {Description}\n"
-                                    + $"적용된 카드들 :\n{string.Join('\n', toMove)}";
+            matchEvent = new MoveCardsToTopOfDeck(toMove, new MatchSnapshot(mySide, otherSide));
             
-            matchEvent = new CommonMatchConsoleEvent(successMessage);
             return true;
         }
 
@@ -50,6 +68,16 @@ namespace ProjectABC.Core
         {
             // TODO : use localization
             return DescriptionKey;
+        }
+    }
+
+    public class MoveCardsToTopOfDeck : MatchEventBase
+    {
+        public readonly IReadOnlyList<CardSnapshot> MovedCardsToTopOfDeck;
+        
+        public MoveCardsToTopOfDeck(IEnumerable<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
+        {
+            MovedCardsToTopOfDeck = movedCards.Select(card => new CardSnapshot(card)).ToList();
         }
     }
 }

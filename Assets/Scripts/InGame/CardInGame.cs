@@ -14,7 +14,7 @@ namespace ProjectABC.InGame
         [SerializeField] private MeshRenderer _meshRenderer;
 
         private Card _card;
-        private CardInstance _cardInstance;
+        private CardSnapshot _cardSnapshot;
 
         private Animator _animator;
 
@@ -34,9 +34,9 @@ namespace ProjectABC.InGame
             _meshRenderer.SetMaterials(materials);
         }
 
-        public void SetCard(CardInstance card)
+        public void SetCard(CardSnapshot card)
         {
-            _cardInstance = card;
+            _cardSnapshot = card;
 
             _name.text = card.CardData.nameKey;
             _power.text = card.CardData.basePower.ToString();
@@ -50,9 +50,9 @@ namespace ProjectABC.InGame
             return _card;
         }
 
-        public CardInstance GetCardInstance()
+        public CardSnapshot GetCardInstance()
         {
-            return _cardInstance;
+            return _cardSnapshot;
         }
 
         public void FlipCard()

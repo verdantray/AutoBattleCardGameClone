@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,16 +5,18 @@ namespace ProjectABC.Core
 {
     public interface IMatchEvent
     {
-        public MatchFlowSnapshot Snapshot { get; }
+        public MatchSnapshot Snapshot { get; }
+
+        public void RegisterEvent(MatchContextEvent matchContextEvent);
     }
 
-    public class MatchFlowContextEvent : IContextEvent
+    public class MatchContextEvent : IContextEvent
     {
         public readonly IPlayer[] Participants;
         public IPlayer Winner { get; private set; } = null;
         public List<IMatchEvent> MatchEvents { get; } = new List<IMatchEvent>();
 
-        public MatchFlowContextEvent(params IPlayer[] participants)
+        public MatchContextEvent(params IPlayer[] participants)
         {
             Participants = participants;
         }
@@ -29,26 +30,26 @@ namespace ProjectABC.Core
         {
             Winner = player;
         }
-        
-        public void AddEvent(IMatchEvent matchEvent)
-        {
-            MatchEvents.Add(matchEvent);
-        }
     }
 
     public abstract class MatchEventBase : IMatchEvent
     {
-        public MatchFlowSnapshot Snapshot { get; }
+        public MatchSnapshot Snapshot { get; }
 
-        public MatchEventBase(MatchFlowSnapshot snapshot)
+        protected MatchEventBase(MatchSnapshot snapshot)
         {
             Snapshot = snapshot;
+        }
+        
+        public virtual void RegisterEvent(MatchContextEvent matchContextEvent)
+        {
+            matchContextEvent.MatchEvents.Add(this);
         }
     }
 
     public class MatchStartEvent : MatchEventBase
     {
-        public MatchStartEvent(IPlayer defendingPlayer, IPlayer attackingPlayer, MatchFlowSnapshot snapshot) : base(snapshot)
+        public MatchStartEvent(MatchSnapshot snapshot) : base(snapshot)
         {
             
         }
@@ -57,9 +58,9 @@ namespace ProjectABC.Core
     public class DrawCardEvent : MatchEventBase
     {
         public readonly IPlayer DrawPlayer;
-        public readonly CardInstance DrawCard;
+        public readonly CardSnapshot DrawCard;
         
-        public DrawCardEvent(IPlayer drawPlayer, MatchFlowSnapshot snapshot) : base(snapshot)
+        public DrawCardEvent(IPlayer drawPlayer, MatchSnapshot snapshot) : base(snapshot)
         {
             DrawPlayer = drawPlayer;
             DrawCard = snapshot.MatchSideSnapShots[DrawPlayer].Field[^1];
@@ -68,38 +69,31 @@ namespace ProjectABC.Core
 
     public class ComparePowerEvent : MatchEventBase
     {
-        public ComparePowerEvent(MatchSide defendingSide, MatchSide attackingSide,  MatchFlowSnapshot snapshot) : base(snapshot)
+        public ComparePowerEvent(MatchSnapshot snapshot) : base(snapshot)
         {
-            string defendingPlayerName = defendingSide.Player.Name;
-            string attackingPlayerName = attackingSide.Player.Name;
+            
         }
     }
 
     public class TryPutCardInfirmaryEvent : MatchEventBase
     {
-        public TryPutCardInfirmaryEvent(MatchSide defendingSide, MatchFlowSnapshot snapshot) : base(snapshot)
+        public TryPutCardInfirmaryEvent(IPlayer player, List<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
         {
-            string playerName = defendingSide.Player.Name;
-            List<Card> cardsToPut = defendingSide.Field;
+            
         }
     }
 
     public class SwitchPositionEvent : MatchEventBase
     {
-        public readonly IPlayer DefendingPlayer;
-        public readonly IPlayer AttackingPlayer;
-        
-        public SwitchPositionEvent(IPlayer defendingPlayer, IPlayer attackingPlayer, MatchFlowSnapshot snapshot) : base(snapshot)
+        public SwitchPositionEvent(MatchSnapshot snapshot) : base(snapshot)
         {
-            DefendingPlayer = defendingPlayer;
-            AttackingPlayer = attackingPlayer;
+            
         }
     }
 
     public class MatchFinishEvent : MatchEventBase
     {
-        public readonly IPlayer WinningPlayer; 
-        public readonly IPlayer LosingPlayer;
+        public readonly IPlayer WinningPlayer;
         public readonly MatchEndReason Reason;
         
         public enum MatchEndReason
@@ -108,11 +102,21 @@ namespace ProjectABC.Core
             EndByFullOfInfirmary
         }
         
-        public MatchFinishEvent(IPlayer winningPlayer, IPlayer losingPlayer, MatchEndReason reason, MatchFlowSnapshot snapshot) : base(snapshot)
+        public MatchFinishEvent(IPlayer winningPlayer, MatchEndReason reason, MatchSnapshot snapshot) : base(snapshot)
         {
             WinningPlayer = winningPlayer;
-            LosingPlayer = losingPlayer;
             Reason = reason;
         }
+
+        public override void RegisterEvent(MatchContextEvent matchContextEvent)
+        {
+            matchContextEvent.SetWinner(WinningPlayer);
+            matchContextEvent.MatchEvents.Add(this);
+        }
+    }
+
+    public class CardEffectEvent : MatchEventBase
+    {
+        public CardEffectEvent(MatchSnapshot snapshot) : base(snapshot) { }
     }
 }

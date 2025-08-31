@@ -56,7 +56,9 @@ namespace ProjectABC.Core
         private readonly Dictionary<string, CardPile> _cardMap = new Dictionary<string, CardPile>();
         
         public int SlotLimit { get; private set; } = GameConst.GameOption.DEFAULT_INFIRMARY_SLOT_LIMIT;
-        public int RemainSlots => SlotLimit - _cardMap.Count;
+        public int RemainSlotCount => SlotLimit - _cardMap.Count;
+        public bool IsSlotRemains => RemainSlotCount > 0;
+        
         public CardPile this[int index] => _cardMap[_nameKeyList[index]];
 
         #region inherits of IReadOnlyDictionary
@@ -85,7 +87,7 @@ namespace ProjectABC.Core
         }
 
         // Regardless success or failure, cards that comes as arg are put on the bench
-        public bool TryPut(IEnumerable<Card> cards, out int remainSlots)
+        public void PutCards(IEnumerable<Card> cards)
         {
             foreach (var card in cards)
             {
@@ -97,12 +99,15 @@ namespace ProjectABC.Core
                     continue;
                 }
 
+                if (RemainSlotCount <= 0)
+                {
+                    this[SlotLimit - 1].Add(card);
+                    continue;
+                }
+
                 _nameKeyList.Add(cardNameKey);
                 _cardMap[cardNameKey] = new CardPile { card };
             }
-
-            remainSlots = RemainSlots;
-            return remainSlots > 0;
         }
 
         public bool TryDrawCards(out CardPile cardPile)

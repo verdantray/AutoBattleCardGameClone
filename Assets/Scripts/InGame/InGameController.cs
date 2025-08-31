@@ -9,7 +9,7 @@ using UnityEngine;
 namespace ProjectABC.InGame
 {
     public class InGameController : MonoBehaviour,
-        IContextEventListener<MatchFlowContextEvent>
+        IContextEventListener<MatchContextEvent>
     {
         public static InGameController Instance;
         
@@ -41,14 +41,14 @@ namespace ProjectABC.InGame
         }
         private void Start()
         {
-            this.StartListening<MatchFlowContextEvent>();
+            this.StartListening<MatchContextEvent>();
             
             UIManager.Instance.DEBUGLayoutInGame.OnFinishRecruitLevelAmount += OnFinishRecruitLevelAmount;
             UIManager.Instance.DEBUGLayoutInGame.OnFinishDrawCard += OnFinishDrawCard;
         }
         private void OnDestroy()
         {
-            this.StopListening<MatchFlowContextEvent>();
+            this.StopListening<MatchContextEvent>();
         }
         
         public void ClearGame()
@@ -87,7 +87,7 @@ namespace ProjectABC.InGame
             _isBattleFinished = true;
         }
 
-        public void OnEvent(MatchFlowContextEvent contextEvent)
+        public void OnEvent(MatchContextEvent contextEvent)
         {
             var participants = contextEvent.Participants;
             var isPlayerGame = false;
@@ -119,7 +119,7 @@ namespace ProjectABC.InGame
             }
         }
 
-        public async void OnStartBattleAsync(MatchFlowContextEvent contextEvent)
+        public async void OnStartBattleAsync(MatchContextEvent contextEvent)
         {
             foreach (var matchEvent in contextEvent.MatchEvents)
             {
