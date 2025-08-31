@@ -1,0 +1,14 @@
+{
+  "card_effect_id": "effect_gain_win_points_with_clubs_from_infirmary",
+  "desc_key": "desc_effect_gain_win_points_with_clubs_from_infirmary",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "club_excludes": [
+    "Council"
+  ],
+  "necessary_club_amount": 3,
+  "gain_win_points": "1",
+  "desc_fail_key": "desc_fail_effect_gain_win_points_wth_clubs_from_infirmary"
+}

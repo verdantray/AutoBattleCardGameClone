@@ -1,7 +1,0 @@
-{
-  "skill_id": "gain_power_with_clubs_from_infirmary",
-  "power": 1,
-  "club_exclude": "Council",
-  "club_amount": 3,
-  "zone": "Infirmary"
-}

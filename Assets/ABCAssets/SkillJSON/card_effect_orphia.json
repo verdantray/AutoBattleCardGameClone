@@ -1,0 +1,15 @@
+{
+  "card_effect_id": "effect_power_up_as_clubs_of_infirmary",
+  "desc_key": "desc_effect_power_up_as_clubs_of_iinfirmary",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "cancel_triggers": [
+    "OnLeaveField"
+  ],
+  "club_excludes": [
+    "Council"
+  ],
+  "power_up_ratio": 1
+}

@@ -89,16 +89,7 @@ namespace ProjectABC.InGame
 
         public void OnEvent(MatchContextEvent contextEvent)
         {
-            var participants = contextEvent.Participants;
-            var isPlayerGame = false;
-            foreach (var participant in participants)
-            {
-                if (participant is InGamePlayer)
-                {
-                    _player = participant;
-                    isPlayerGame = true;
-                }
-            }
+            bool isPlayerGame = contextEvent.IsParticipants(_player);
 
             var matchEvents = contextEvent.MatchEvents;
             foreach (var matchEvent in matchEvents)

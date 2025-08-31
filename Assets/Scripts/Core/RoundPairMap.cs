@@ -8,14 +8,14 @@ namespace ProjectABC.Core
     {
         private readonly RoundPairs[] _roundPairMap;
 
-        public RoundPairMap(int rounds, int playerAmount)
+        public RoundPairMap(int playerAmount, int totalRounds = GameConst.GameOption.MAX_ROUND)
         {
-            _roundPairMap = new RoundPairs[rounds];
+            _roundPairMap = new RoundPairs[totalRounds];
 
             List<int> playerIndexes = Enumerable.Range(0, playerAmount).ToList();
             int pairAmount = playerAmount / 2;
 
-            for (int r = 0; r < rounds; r++)
+            for (int r = 0; r < totalRounds; r++)
             {
                 Span<RoundPair> roundPairs = new RoundPair[pairAmount];
                 
@@ -61,16 +61,16 @@ namespace ProjectABC.Core
             _roundPairs = roundPairs;
         }
 
-        public List<(PlayerState a, PlayerState b)> GetMatchingPlayerPairs(IList<PlayerState> playerStates)
+        public List<(T a, T b)> GetMatchingPlayerPairs<T>(IList<T> playerReferences)
         {
-            List<(PlayerState a, PlayerState b)> list = new List<(PlayerState a, PlayerState b)>();
+            List<(T a, T b)> list = new List<(T a, T b)>();
 
             foreach (RoundPair roundPair in _roundPairs)
             {
                 var (a, b) = roundPair;
                 
-                PlayerState playerAState = playerStates[a];
-                PlayerState playerBState = playerStates[b];
+                T playerAState = playerReferences[a];
+                T playerBState = playerReferences[b];
                 
                 list.Add((playerAState, playerBState));
             }

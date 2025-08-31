@@ -26,6 +26,7 @@ namespace ProjectABC.Core
         
         public void Add(Card card) => _cardList.Add(card);
         public void AddRange(IEnumerable<Card> cards) => _cardList.AddRange(cards);
+        public bool Remove(Card card) => _cardList.Remove(card);
         public void Clear() => _cardList.Clear();
 
         public bool TryDraw(out Card card)
@@ -139,6 +140,7 @@ namespace ProjectABC.Core
         public string Description => CardData.descKey;
         
         public readonly CardData CardData;
+        public readonly CardEffect CardEffect;
 
         public Card(CardData cardData)
         {
@@ -147,6 +149,11 @@ namespace ProjectABC.Core
             ClubType = CardData.clubType;
             GradeType = CardData.gradeType;
             Power = CardData.basePower;
+        }
+
+        public bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent)
+        {
+            return CardEffect.TryApplyEffect(trigger, mySide, otherSide, out matchEvent);
         }
 
         public override string ToString()

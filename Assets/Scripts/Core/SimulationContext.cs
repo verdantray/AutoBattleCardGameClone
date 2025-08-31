@@ -7,36 +7,40 @@ namespace ProjectABC.Core
     public class SimulationContext
     {
         public readonly List<IContextEvent> CollectedEvents = new List<IContextEvent>();
+        public readonly List<IPlayer> Participants = new List<IPlayer>();
+        
         public readonly GameState CurrentState;
 
-        public SimulationContext(IEnumerable<IPlayer> players)
+        public SimulationContext(List<IPlayer> players)
         {
+            Participants.AddRange(players);
             CurrentState = new GameState(players);
         }
         
         public IEnumerable<Task> GetTasksOfAllPlayersConfirmToProceed()
         {
-            return CurrentState.PlayerStates.Select(state => state.Player.WaitUntilConfirmToProceed());
+            return Participants.Select(player => player.WaitUntilConfirmToProceed());
         }
     }
 
     public class GameState
     {
         public readonly List<PlayerState> PlayerStates = new List<PlayerState>();
+        
         public readonly RoundPairMap RoundPairMap;
         public readonly ScoreBoard ScoreBoard;
 
         public int Round { get; private set; } = 0;
 
-        public GameState(IEnumerable<IPlayer> players)
+        public GameState(List<IPlayer> players)
         {
             foreach (var player in players)
             {
                 PlayerStates.Add(new PlayerState(player));
             }
-
-            RoundPairMap = new RoundPairMap(GameConst.GameOption.MAX_ROUND, PlayerStates.Count);
-            ScoreBoard = new ScoreBoard();
+            
+            RoundPairMap = new RoundPairMap(players.Count);
+            ScoreBoard = new ScoreBoard(players);
         }
 
         public PlayerState GetPlayerState(IPlayer player)
@@ -62,7 +66,6 @@ namespace ProjectABC.Core
         public readonly IPlayer Player;
 
         public int MulliganChances { get; private set; } = GameConst.GameOption.MULLIGAN_DEFAULT_AMOUNT;
-        public int WinPoints = 0;
 
         public readonly GradeCardPiles GradeCardPiles = new GradeCardPiles();
         public readonly List<Card> Deck = new List<Card>();

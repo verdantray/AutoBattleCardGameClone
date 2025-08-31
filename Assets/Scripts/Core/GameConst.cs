@@ -29,10 +29,10 @@ namespace ProjectABC.Core
         public static class CardEffect
         {
             public const string EFFECT_ID = "card_effect_id";
-            public const string EFFECT_APPLY_TRIGGER_KEY = "apply_trigger";
-            public const string EFFECT_CANCEL_TRIGGER_KEY = "cancel_trigger";
+            public const string EFFECT_APPLY_TRIGGERS_KEY = "apply_triggers";
+            public const string EFFECT_CANCEL_TRIGGERS_KEY = "cancel_triggers";
             public const string EFFECT_DESC_KEY = "desc_key";
-            public const string EFFECT_FAILURE_DESC_KEY = "fail_desc_key";
+            public const string EFFECT_FAILURE_DESC_KEY = "desc_fail_key";
         }
     }
 }

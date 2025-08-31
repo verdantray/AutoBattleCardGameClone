@@ -10,28 +10,6 @@ namespace ProjectABC.Core
         public void RegisterEvent(MatchContextEvent matchContextEvent);
     }
 
-    public class MatchContextEvent : IContextEvent
-    {
-        public readonly IPlayer[] Participants;
-        public IPlayer Winner { get; private set; } = null;
-        public List<IMatchEvent> MatchEvents { get; } = new List<IMatchEvent>();
-
-        public MatchContextEvent(params IPlayer[] participants)
-        {
-            Participants = participants;
-        }
-
-        public bool IsParticipants(IPlayer player)
-        {
-            return Participants.Contains(player);
-        }
-
-        public void SetWinner(IPlayer player)
-        {
-            Winner = player;
-        }
-    }
-
     public abstract class MatchEventBase : IMatchEvent
     {
         public MatchSnapshot Snapshot { get; }
@@ -110,13 +88,11 @@ namespace ProjectABC.Core
 
         public override void RegisterEvent(MatchContextEvent matchContextEvent)
         {
-            matchContextEvent.SetWinner(WinningPlayer);
+            var players = Snapshot.MatchSideSnapShots.Keys;
+            IPlayer otherPlayer = players.First(player => player != WinningPlayer);
+            
+            matchContextEvent.SetResult(WinningPlayer, otherPlayer);
             matchContextEvent.MatchEvents.Add(this);
         }
-    }
-
-    public class CardEffectEvent : MatchEventBase
-    {
-        public CardEffectEvent(MatchSnapshot snapshot) : base(snapshot) { }
     }
 }

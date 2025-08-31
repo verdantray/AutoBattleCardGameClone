@@ -11,15 +11,15 @@ namespace ProjectABC.Core
     
     public class MatchSide
     {
-        public readonly CardPile Hands = new CardPile();
-        public readonly Infirmary Infirmary = new Infirmary();
+        public readonly CardPile Deck = new CardPile();
         public readonly List<Card> Field = new List<Card>();
+        public readonly Infirmary Infirmary = new Infirmary();
         
         public readonly IPlayer Player;
         public readonly PlayerState PlayerState;
         
         public MatchState State { get; private set; } = MatchState.Attacking;
-        public int GainWinPoints = 0;
+        public int GainedWinPointsOnMatch { get; private set; } = 0;
         
         private bool IsAttacking => State == MatchState.Attacking;
         
@@ -28,15 +28,16 @@ namespace ProjectABC.Core
             Player = playerState.Player;
             PlayerState = playerState;
             
-            Hands.AddRange(playerState.Deck);
-            Hands.Shuffle();
+            Deck.AddRange(playerState.Deck);
+            Deck.Shuffle();
         }
 
         public void SetMatchState(MatchState state) => State = state;
+        public void AddGainWinPoints(int gainWinPoints) => GainedWinPointsOnMatch += gainWinPoints;
 
         public bool TryDraw(out Card drawn)
         {
-            bool isSuccessToDraw = Hands.TryDraw(out drawn);
+            bool isSuccessToDraw = Deck.TryDraw(out drawn);
             if (isSuccessToDraw)
             {
                 // TODO: call draw effect after implements card abilities

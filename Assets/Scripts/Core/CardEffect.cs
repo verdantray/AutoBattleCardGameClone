@@ -3,14 +3,16 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public enum CardMovingEvent
+    [Flags]
+    public enum EffectTriggerEvent
     {
-        OnEnterField,
-        OnWhileAttacking,
-        OnWhileDefending,
-        OnLeaveField,
-        OnEnterInfirmary,
-        OnLeaveInfirmary,
+        OnEnterFieldAsAttacker = 2^0,   // drawn to field by attacker
+        OnEnterFieldAsDefender = 2^1,   // drawn to field by defender
+        OnRemainField = 2^2,            // remain field either switch position (attack -> defend)
+        OnSwitchToDefend = 2^3,         // switch position as defend (last one of field)
+        OnLeaveField = 2^4,
+        OnEnterInfirmary = 2^5,
+        OnLeaveInfirmary = 2^6,
     }
 
     public abstract class CardEffect
@@ -20,7 +22,7 @@ namespace ProjectABC.Core
 
         protected readonly string EffectId;
         protected readonly string DescriptionKey;
-        protected readonly CardMovingEvent ApplyTrigger;
+        protected readonly EffectTriggerEvent ApplyTriggerFlag;
         
         protected CardEffect(Card card, JsonObject json)
         {
@@ -36,14 +38,22 @@ namespace ProjectABC.Core
                     case GameConst.CardEffect.EFFECT_DESC_KEY:
                         DescriptionKey = field.value.strValue;
                         break;
-                    case GameConst.CardEffect.EFFECT_APPLY_TRIGGER_KEY:
-                        ApplyTrigger = Enum.Parse<CardMovingEvent>(field.value.strValue, true);
+                    case GameConst.CardEffect.EFFECT_APPLY_TRIGGERS_KEY:
+
+                        EffectTriggerEvent flag = 0;
+                        
+                        foreach (var element in field.value.arr)
+                        {
+                            flag |= Enum.Parse<EffectTriggerEvent>(element.strValue, true);
+                        }
+
+                        ApplyTriggerFlag = flag;
                         break;
                 }
             }
         }
 
-        public abstract bool TryApplyEffect(CardMovingEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent);
+        public abstract bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent);
         
         protected abstract string GetDescription();
     }

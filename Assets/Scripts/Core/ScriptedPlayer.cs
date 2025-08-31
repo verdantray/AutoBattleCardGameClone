@@ -48,6 +48,8 @@ namespace ProjectABC.Core
 
                 cardPile.AddRange(cardPool);
             }
+
+            myState.GradeCardPiles[level].Shuffle();
             
             RecruitCardsAction action = new RecruitCardsAction(this, level, cardsToDraw);
             Task<RecruitCardsAction> task = Task.FromResult(action);

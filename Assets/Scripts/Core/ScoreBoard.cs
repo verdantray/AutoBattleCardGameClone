@@ -1,37 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace ProjectABC.Core
 {
-    public class ScoreBoard : IReadOnlyDictionary<IPlayer, List<RoundScore>>
+    public class ScoreBoard : IReadOnlyDictionary<IPlayer, RoundScore[]>
     {
-        private readonly Dictionary<IPlayer, List<RoundScore>> _roundScoreMap = new Dictionary<IPlayer, List<RoundScore>>();
+        private readonly Dictionary<IPlayer, RoundScore[]> _roundScoreMap = new Dictionary<IPlayer, RoundScore[]>();
 
-        public void RegisterRoundScores(params RoundScore[] roundScores)
+        public ScoreBoard(IEnumerable<IPlayer> players, int totalRounds = GameConst.GameOption.MAX_ROUND)
         {
-            foreach (RoundScore roundScore in roundScores)
+            foreach (IPlayer player in players)
             {
-                if (!_roundScoreMap.ContainsKey(roundScore.Player))
-                {
-                    _roundScoreMap[roundScore.Player] = new List<RoundScore>();
-                }
-                
-                _roundScoreMap[roundScore.Player].Add(roundScore);
+                _roundScoreMap.Add(player, new RoundScore[totalRounds]);
             }
         }
 
-        public bool TryGetTotalScores(IPlayer player, out IReadOnlyList<RoundScore> scores)
+        public int GetTotalWinPoints(IPlayer player, int round)
         {
-            bool result = _roundScoreMap.TryGetValue(player, out var list);
-            scores = result ? list.AsReadOnly() : null;
-
-            return result;
+            ReadOnlySpan<RoundScore> totalScoresUntilRounds = _roundScoreMap[player][..^round]
+                .Where(element => element != null)
+                .ToArray();
+            
+            int totalPoints = 0;
+            
+            foreach (RoundScore roundScore in totalScoresUntilRounds)
+            {
+                totalPoints += roundScore.WinPoints;
+            }
+            
+            return totalPoints;
+        }
+        
+        public void RegisterRoundScores(params RoundScore[] roundScores)
+        {
+            foreach (var roundScore in roundScores)
+            {
+                if (roundScore.Player == null)
+                {
+                    throw  new ArgumentException("Round scores player can't be null.");
+                }
+                
+                if (!_roundScoreMap.TryGetValue(roundScore.Player, out var playersScores))
+                {
+                    throw new ArgumentException($"{roundScore.Player.Name} has not registered a Scoreboard.");
+                }
+                
+                playersScores[roundScore.Round - 1] = roundScore;
+            }
         }
 
         #region inherits of IReadOnlyDictionary<IPlayer, List<RoundScore>>
 
-        public IEnumerator<KeyValuePair<IPlayer, List<RoundScore>>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IPlayer, RoundScore[]>> GetEnumerator()
         {
             return _roundScoreMap.GetEnumerator();
         }
@@ -47,34 +70,36 @@ namespace ProjectABC.Core
             return _roundScoreMap.ContainsKey(key);
         }
 
-        public bool TryGetValue(IPlayer key, out List<RoundScore> value)
+        public bool TryGetValue(IPlayer key, out RoundScore[] value)
         {
             return _roundScoreMap.TryGetValue(key, out value);
         }
 
-        public List<RoundScore> this[IPlayer key] => _roundScoreMap[key];
+        public RoundScore[] this[IPlayer key] => _roundScoreMap[key];
 
         public IEnumerable<IPlayer> Keys => _roundScoreMap.Keys;
-        public IEnumerable<List<RoundScore>> Values => _roundScoreMap.Values;
+        public IEnumerable<RoundScore[]> Values => _roundScoreMap.Values;
 
         #endregion
     }
 
     public enum RoundResult
     {
-        Win,
         Lose,
+        Win,
     }
     
     public record RoundScore
     {
+        public readonly int Round;
         public readonly IPlayer Player;
         public readonly IPlayer Opponent;
         public readonly int WinPoints;
-        public readonly RoundResult Result;
+        public readonly RoundResult Result = RoundResult.Lose;
 
-        public RoundScore(IPlayer player, IPlayer opponent, int winPoints, RoundResult result)
+        public RoundScore(int round, IPlayer player, IPlayer opponent, int winPoints, RoundResult result)
         {
+            Round = round;
             Player = player;
             Opponent = opponent;
             WinPoints = winPoints;
