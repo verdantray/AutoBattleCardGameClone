@@ -70,7 +70,7 @@ MonoBehaviour:
     titleKey: title_student_council_president
     nameKey: card_name_etella
     descKey: desc_elite
-    imagePath: meterial_card_etella_co
+    imagePath: material_card_etella_co
   cardDataForPiles:
   - id: card_mirea_co
     clubType: 2
