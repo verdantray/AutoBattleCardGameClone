@@ -1,6 +1,6 @@
 {
-  "card_effect_id": "effect_power_up_as_clubs_of_infirmary",
-  "desc_key": "desc_effect_power_up_as_clubs_of_iinfirmary",
+  "card_effect_id": "effect_power_up_as_each_clubs_from_infirmary",
+  "desc_key": "desc_effect_power_up_as_each_clubs_from_infirmary",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

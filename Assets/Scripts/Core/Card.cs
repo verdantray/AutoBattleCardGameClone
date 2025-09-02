@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,23 +93,28 @@ namespace ProjectABC.Core
         {
             foreach (var card in cards)
             {
-                string cardNameKey = card.CardData.nameKey;
-                
-                if (_nameKeyList.Contains(cardNameKey))
-                {
-                    _cardMap[cardNameKey].Add(card);
-                    continue;
-                }
-
-                if (RemainSlotCount <= 0)
-                {
-                    this[SlotLimit - 1].Add(card);
-                    continue;
-                }
-
-                _nameKeyList.Add(cardNameKey);
-                _cardMap[cardNameKey] = new CardPile { card };
+                PutCard(card);
             }
+        }
+
+        public void PutCard(Card card)
+        {
+            string cardNameKey = card.CardData.nameKey;
+                
+            if (_nameKeyList.Contains(cardNameKey))
+            {
+                _cardMap[cardNameKey].Add(card);
+                return;
+            }
+
+            if (RemainSlotCount <= 0)
+            {
+                this[SlotLimit - 1].Add(card);
+                return;
+            }
+
+            _nameKeyList.Add(cardNameKey);
+            _cardMap[cardNameKey] = new CardPile { card };
         }
 
         public bool TryDrawCards(out CardPile cardPile)
@@ -133,7 +139,6 @@ namespace ProjectABC.Core
         
         public ClubType ClubType { get; private set; }
         public GradeType GradeType { get; private set; }
-        public int Power { get; private set; }
 
         public string Title => CardData.titleKey;
         public string Name => CardData.nameKey;
@@ -142,23 +147,34 @@ namespace ProjectABC.Core
         public readonly CardData CardData;
         public readonly CardEffect CardEffect;
 
+        public readonly List<CardBuff> AppliedCardBuffs = new List<CardBuff>();
+
         public Card(CardData cardData)
         {
             CardData = cardData;
 
             ClubType = CardData.clubType;
             GradeType = CardData.gradeType;
-            Power = CardData.basePower;
         }
 
-        public bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent)
+        public void ApplyCardBuff<T>(T cardBuff) where T : CardBuff
         {
-            return CardEffect.TryApplyEffect(trigger, mySide, otherSide, out matchEvent);
+            AppliedCardBuffs.Add(cardBuff);
+        }
+
+        public void RemoveCardBuff<T>(T cardBuff) where T : CardBuff
+        {
+            AppliedCardBuffs.Remove(cardBuff);
+        }
+
+        public int GetEffectivePower(MatchSide matchSide)
+        {
+            return BasePower + AppliedCardBuffs.Sum(buff => buff.GetEffectivePower(this, matchSide));
         }
 
         public override string ToString()
         {
-            return $"(Card Id : {Id} / Power : {Power} / Club : {ClubType} / Grade : {GradeType})";
+            return $"(Card Id : {Id} / BasePower : {BasePower} / Club : {ClubType} / Grade : {GradeType})";
         }
     }
 }

@@ -8,26 +8,27 @@ namespace ProjectABC.Core
         public static Storage Instance { get; private set; }
         public static bool HasInstance => Instance != null;
 
-        public readonly List<CardData> CardDataForStarting = new List<CardData>();
-        public readonly List<CardData> CardDataForPiles = new List<CardData>();
-        public readonly List<RecruitData> RecruitData = new List<RecruitData>();
-        public readonly List<WinPointData> WinPointData = new List<WinPointData>();
+        public readonly IReadOnlyList<CardData> CardDataForStarting;
+        public readonly IReadOnlyList<CardData> CardDataForPiles;
+        public readonly IReadOnlyList<RecruitData> RecruitData;
+        public readonly IReadOnlyList<WinPointData> WinPointData;
 
-        public static void CreateInstance(GameDataAsset gameDataAsset)
+        private Storage(GameDataAsset gameDataAsset)
         {
-            Instance ??= new Storage();
+            CardDataForStarting = new List<CardData>(gameDataAsset.CardDataForStarting);
+            CardDataForPiles = new List<CardData>(gameDataAsset.CardDataForPiles);
+            RecruitData = new List<RecruitData>(gameDataAsset.RecruitData);
+            WinPointData = new List<WinPointData>(gameDataAsset.WinPointData);
+        }
+
+        public static Storage CreateInstance(GameDataAsset gameDataAsset)
+        {
+            if (!HasInstance)
+            {
+                Instance = new Storage(gameDataAsset);
+            }
             
-            Instance.CardDataForStarting.Clear();
-            Instance.CardDataForStarting.AddRange(gameDataAsset.CardDataForStarting);
-            
-            Instance.CardDataForPiles.Clear();
-            Instance.CardDataForPiles.AddRange(gameDataAsset.CardDataForPiles);
-            
-            Instance.RecruitData.Clear();
-            Instance.RecruitData.AddRange(gameDataAsset.RecruitData);
-            
-            Instance.WinPointData.Clear();
-            Instance.WinPointData.AddRange(gameDataAsset.WinPointData);
+            return Instance;
         }
     }
 }

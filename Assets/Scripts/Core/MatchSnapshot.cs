@@ -78,7 +78,8 @@ namespace ProjectABC.Core
         
         public CardSnapshot(Card card)
         {
-            Power = card.Power;
+            // TODO : apply buff either
+            Power = card.BasePower;
             CardData = card.CardData;
         }
     }

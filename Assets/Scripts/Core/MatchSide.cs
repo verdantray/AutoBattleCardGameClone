@@ -18,6 +18,8 @@ namespace ProjectABC.Core
         public readonly IPlayer Player;
         public readonly PlayerState PlayerState;
         
+        public readonly List<CardBuffHandleEntry> CardBuffHandlers = new List<CardBuffHandleEntry>();
+        
         public MatchState State { get; private set; } = MatchState.Attacking;
         public int GainedWinPointsOnMatch { get; private set; } = 0;
         
@@ -47,12 +49,12 @@ namespace ProjectABC.Core
             return isSuccessToDraw;
         }
 
-        public void PutCardsToInfirmary(out List<Card> cardsToInfirmary)
+        public void CheckApplyCardBuffs()
         {
-            cardsToInfirmary = new List<Card>(Field);
-            Field.Clear();
-            
-            Infirmary.PutCards(cardsToInfirmary);
+            foreach (var handler in CardBuffHandlers)
+            {
+                handler.CheckApplyCardBuff(this);
+            }
         }
 
         public int GetEffectivePower()
@@ -63,10 +65,54 @@ namespace ProjectABC.Core
             }
 
             int effectivePower = IsAttacking
-                ? Field.Sum(card => card.Power)
-                : Field[^1].Power;
+                ? Field.Sum(card => card.GetEffectivePower(this))
+                : Field[^1].GetEffectivePower(this);
             
             return effectivePower;
+        }
+    }
+
+    public class CardBuffHandleEntry
+    {
+        public delegate IEnumerable<Card> BuffTargetDelegate(MatchSide matchSide);
+        
+        public readonly Card CallCard;
+        
+        private readonly CardBuff _cardBuff;
+        private readonly BuffTargetDelegate _targetDelegate;
+        
+        private readonly HashSet<Card> _appliedCards = new HashSet<Card>();
+
+        public CardBuffHandleEntry(Card callCard, CardBuff cardBuff, BuffTargetDelegate buffTargetDelegate)
+        {
+            CallCard = callCard;
+            _cardBuff = cardBuff;
+            _targetDelegate = buffTargetDelegate;
+        }
+
+        public void CheckApplyCardBuff(MatchSide matchSide)
+        {
+            var targets = _targetDelegate(matchSide)
+                .Where(target => !_appliedCards.Contains(target))   // check target already apply buff
+                .ToArray();
+
+            foreach (var target in targets)
+            {
+                target.ApplyCardBuff(_cardBuff);
+                _appliedCards.Add(target);
+            }
+            
+            // return targets.Any();
+        }
+
+        public void Release()
+        {
+            foreach (var applied in _appliedCards)
+            {
+                applied.RemoveCardBuff(_cardBuff);
+            }
+            
+            _appliedCards.Clear();
         }
     }
 }

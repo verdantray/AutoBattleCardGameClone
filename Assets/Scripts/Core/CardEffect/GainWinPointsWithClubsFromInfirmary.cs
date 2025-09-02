@@ -5,7 +5,7 @@ using ProjectABC.Data;
 namespace ProjectABC.Core
 {
     /// <summary>
-    /// 양호실에 있는 카드들의 소속이 n종 이상일 시 승점 획득
+    /// 양호실에 있는 카드들의 소속이 n종 이상일 시 일정한 승점 획득
     /// </summary>
     public class GainWinPointsWithClubsFromInfirmary : CardEffect
     {
@@ -49,12 +49,7 @@ namespace ProjectABC.Core
         {
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
-                matchEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailureReason.TriggerNotMatch,
-                    "",
-                    new MatchSnapshot(mySide, otherSide)
-                );
-
+                matchEvent = null;
                 return false;
             }
 
@@ -67,12 +62,7 @@ namespace ProjectABC.Core
 
             if (clubsInInfirmary < _necessaryClubAmount)
             {
-                matchEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailureReason.FailureMeetCondition,
-                    "",
-                    new MatchSnapshot(mySide, otherSide)
-                );
-                
+                matchEvent = new FailToApplyCardEffectEvent("", new MatchSnapshot(mySide, otherSide));
                 return false;
             }
             

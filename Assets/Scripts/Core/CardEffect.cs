@@ -6,13 +6,12 @@ namespace ProjectABC.Core
     [Flags]
     public enum EffectTriggerEvent
     {
-        OnEnterFieldAsAttacker = 2^0,   // drawn to field by attacker
-        OnEnterFieldAsDefender = 2^1,   // drawn to field by defender
-        OnRemainField = 2^2,            // remain field either switch position (attack -> defend)
-        OnSwitchToDefend = 2^3,         // switch position as defend (last one of field)
-        OnLeaveField = 2^4,
-        OnEnterInfirmary = 2^5,
-        OnLeaveInfirmary = 2^6,
+        OnEnterFieldAsAttacker = 1 << 0,   // drawn to field by attacker
+        OnEnterFieldAsDefender = 1 << 1,   // drawn to field by defender
+        OnRemainField = 1 << 2,            // remain field either switch position (attack -> defend)
+        OnSwitchToDefend = 1 << 3,         // switch position as defend (last one of field)
+        OnLeaveField = 1 << 4,
+        OnEnterInfirmary = 1 << 5,
     }
 
     public abstract class CardEffect
@@ -52,27 +51,46 @@ namespace ProjectABC.Core
                 }
             }
         }
-
+        
         public abstract bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent);
+
+        public virtual bool TryReplaceMovement(EffectTriggerEvent trigger, MatchSide mySide, out IMatchEvent matchEvent)
+        {
+            matchEvent = null;
+            return false;
+        }
+        
+        // activate on recruit phase only
+        public virtual bool TryApplyEffectOnRecruit(out IContextEvent contextEvent)
+        {
+            contextEvent = null;
+            return false;
+        }
         
         protected abstract string GetDescription();
     }
 
     public class FailToApplyCardEffectEvent : MatchEventBase
     {
-        public enum FailureReason
-        {
-            TriggerNotMatch,
-            FailureMeetCondition,
-        }
-
-        public readonly FailureReason Reason;
         public readonly string FailureDescription;
         
-        public FailToApplyCardEffectEvent(FailureReason reason, string failureDescription, MatchSnapshot snapshot) : base(snapshot)
+        public FailToApplyCardEffectEvent(string failureDescription, MatchSnapshot snapshot) : base(snapshot)
         {
-            Reason = reason;
             FailureDescription = failureDescription;
+        }
+    }
+
+    public class ActiveCardBuffEvent : MatchEventBase
+    {
+        public ActiveCardBuffEvent(Card callCard, MatchSnapshot snapshot) : base(snapshot)
+        {
+        }
+    }
+
+    public class InactiveBuffEvent : MatchEventBase
+    {
+        public InactiveBuffEvent(Card callCard, MatchSnapshot snapshot) : base(snapshot)
+        {
         }
     }
 }

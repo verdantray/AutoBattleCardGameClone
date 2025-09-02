@@ -33,24 +33,14 @@ namespace ProjectABC.Core
         {
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
-                matchEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailureReason.TriggerNotMatch,
-                    "",
-                    new MatchSnapshot(mySide, otherSide)
-                );
-
+                matchEvent = null;
                 return false;
             }
             
             // if amount of remain hands less then _cardsAmount, then no need to move cards to top of deck...
             if (mySide.Deck.Count < _cardsAmount)
             {
-                matchEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailureReason.FailureMeetCondition,
-                    "",
-                    new MatchSnapshot(mySide, otherSide)
-                );
-                
+                matchEvent = new FailToApplyCardEffectEvent("", new MatchSnapshot(mySide, otherSide));
                 return false;
             }
             

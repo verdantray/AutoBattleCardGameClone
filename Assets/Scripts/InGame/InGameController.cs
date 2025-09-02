@@ -89,6 +89,15 @@ namespace ProjectABC.InGame
 
         public void OnEvent(MatchContextEvent contextEvent)
         {
+            foreach (IPlayer participants in contextEvent.LastMatchSideSnapShots.Keys)
+            {
+                if (participants is InGamePlayer inGamePlayer)
+                {
+                    _player = inGamePlayer;
+                    break;
+                }
+            }
+            
             bool isPlayerGame = contextEvent.IsParticipants(_player);
 
             var matchEvents = contextEvent.MatchEvents;

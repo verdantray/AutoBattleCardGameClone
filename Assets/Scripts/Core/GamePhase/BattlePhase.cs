@@ -25,7 +25,6 @@ namespace ProjectABC.Core
                 );
                 
                 matchContextEvent.Publish();
-                
                 simulationContext.CollectedEvents.Add(matchContextEvent);
                 
                 WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
@@ -81,7 +80,7 @@ namespace ProjectABC.Core
             }
 
             // TODO : using PCG32RNG
-            float pivot = 0.5f; //UnityEngine.Random.Range(0.0f, 1.0f);
+            double pivot = new Random().NextDouble();
 
             float totalWeight = _pointAndWeights.Sum(tuple => tuple.Item2);
             bool isTotalWeightLessThanZero = totalWeight <= 0;

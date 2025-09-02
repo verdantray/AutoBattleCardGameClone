@@ -13,7 +13,7 @@ namespace ProjectABC.Core
             
             foreach (PlayerState playerState in currentState.PlayerStates)
             {
-                var playerActionTask = playerState.Player.DecKConstructAsync();
+                var playerActionTask = playerState.Player.DeckConstructAsync();
                 tasks.Add(playerActionTask);
             }
 

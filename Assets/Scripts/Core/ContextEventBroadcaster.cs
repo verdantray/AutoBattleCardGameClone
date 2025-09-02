@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ProjectABC.Core
 {
-    public static class ContextEventManager
+    public static class ContextEventBroadcaster
     {
         private static readonly Dictionary<Type, List<HandlerEntry>> HandlerEntries = new Dictionary<Type, List<HandlerEntry>>();
 
@@ -83,12 +83,12 @@ namespace ProjectABC.Core
     {
         public static void StartListening<T>(this IContextEventListener<T> caller) where T : class, IContextEvent
         {
-            ContextEventManager.Subscribe(caller);
+            ContextEventBroadcaster.Subscribe(caller);
         }
 
         public static void StopListening<T>(this IContextEventListener<T> caller) where T : class, IContextEvent
         {
-            ContextEventManager.Unsubscribe(caller);
+            ContextEventBroadcaster.Unsubscribe(caller);
         }
     }
 

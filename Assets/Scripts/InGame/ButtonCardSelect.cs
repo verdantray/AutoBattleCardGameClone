@@ -33,7 +33,7 @@ namespace ProjectABC.InGame
             _card = card;
             
             _name.text = _card.Name;
-            _power.text = _card.Power.ToString();
+            _power.text = _card.BasePower.ToString();
             // _icon.sprite = card.imagePath;
         }
         public Card GetCard() { return _card; }
