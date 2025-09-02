@@ -6,112 +6,82 @@ using System.Linq;
 
 namespace ProjectABC.Core
 {
-    public class ScoreBoard : IReadOnlyDictionary<IPlayer, RoundScore[]>
+    public class ScoreBoard : IReadOnlyDictionary<IPlayer, List<ScoreEntry>>
     {
-        private readonly Dictionary<IPlayer, RoundScore[]> _roundScoreMap = new Dictionary<IPlayer, RoundScore[]>();
+        private readonly Dictionary<IPlayer, List<ScoreEntry>> _scoreEntries = new Dictionary<IPlayer, List<ScoreEntry>>();
 
-        public ScoreBoard(IEnumerable<IPlayer> players, int totalRounds = GameConst.GameOption.MAX_ROUND)
+        public ScoreBoard(IEnumerable<IPlayer> players)
         {
             foreach (IPlayer player in players)
             {
-                _roundScoreMap.Add(player, new RoundScore[totalRounds]);
+                _scoreEntries.Add(player, new List<ScoreEntry>());
             }
         }
 
-        public int GetTotalWinPoints(IPlayer player, int round)
+        public int GetTotalWinPoints(IPlayer player)
         {
-            ReadOnlySpan<RoundScore> totalScoresUntilRounds = _roundScoreMap[player][..^round]
-                .Where(element => element != null)
-                .ToArray();
-            
-            int totalPoints = 0;
-            
-            foreach (RoundScore roundScore in totalScoresUntilRounds)
-            {
-                totalPoints += roundScore.WinPoints;
-            }
-            
-            return totalPoints;
+            return !_scoreEntries.TryGetValue(player, out var entries)
+                ? throw new InvalidOperationException($"{player.Name} does not exist.")
+                : entries.Sum(entry => entry.GainedWinPoints);
         }
         
-        public void RegisterRoundScores(params RoundScore[] roundScores)
+        public void RegisterScoreEntry(IPlayer player, ScoreEntry entry)
         {
-            foreach (var roundScore in roundScores)
+            if (!_scoreEntries.TryGetValue(player, out var scoreEntries))
             {
-                if (roundScore.Player == null)
-                {
-                    throw  new ArgumentException("Round scores player can't be null.");
-                }
-                
-                if (!_roundScoreMap.TryGetValue(roundScore.Player, out var playersScores))
-                {
-                    throw new ArgumentException($"{roundScore.Player.Name} has not registered a Scoreboard.");
-                }
-                
-                playersScores[roundScore.Round - 1] = roundScore;
+                throw new InvalidOperationException($"{player.Name} does not exist.");
             }
+            
+            scoreEntries.Add(entry);
         }
 
-        #region inherits of IReadOnlyDictionary<IPlayer, List<RoundScore>>
+        #region inherits of IReadOnlyDictionary<IPlayer, List<ScoreEntry>>
 
-        public IEnumerator<KeyValuePair<IPlayer, RoundScore[]>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IPlayer, List<ScoreEntry>>> GetEnumerator()
         {
-            return _roundScoreMap.GetEnumerator();
+            return _scoreEntries.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _roundScoreMap.GetEnumerator();
+            return _scoreEntries.GetEnumerator();
         }
 
-        public int Count => _roundScoreMap.Count;
+        public int Count => _scoreEntries.Count;
         public bool ContainsKey(IPlayer key)
         {
-            return _roundScoreMap.ContainsKey(key);
+            return _scoreEntries.ContainsKey(key);
         }
 
-        public bool TryGetValue(IPlayer key, out RoundScore[] value)
+        public bool TryGetValue(IPlayer key, out List<ScoreEntry> value)
         {
-            return _roundScoreMap.TryGetValue(key, out value);
+            return _scoreEntries.TryGetValue(key, out value);
         }
 
-        public RoundScore[] this[IPlayer key] => _roundScoreMap[key];
+        public List<ScoreEntry> this[IPlayer key] => _scoreEntries[key];
 
-        public IEnumerable<IPlayer> Keys => _roundScoreMap.Keys;
-        public IEnumerable<RoundScore[]> Values => _roundScoreMap.Values;
+        public IEnumerable<IPlayer> Keys => _scoreEntries.Keys;
+        public IEnumerable<List<ScoreEntry>> Values => _scoreEntries.Values;
 
         #endregion
     }
-
-    public enum RoundResult
-    {
-        Lose,
-        Win,
-    }
     
-    public record RoundScore
+    public readonly struct ScoreEntry
     {
-        public readonly int Round;
-        public readonly IPlayer Player;
-        public readonly IPlayer Opponent;
-        public readonly int WinPoints;
-        public readonly RoundResult Result = RoundResult.Lose;
-
-        public RoundScore(int round, IPlayer player, IPlayer opponent, int winPoints, RoundResult result)
+        public enum ScoreReason
         {
-            Round = round;
-            Player = player;
-            Opponent = opponent;
-            WinPoints = winPoints;
-            Result = result;
+            ScoreByMatchWin,
+            ScoreByCardEffect,
+            ScoreByArguments,
         }
+        
+        public readonly int GainedWinPoints;
+        public readonly ScoreReason Reason;
 
-        public void Deconstruct(out IPlayer player, out IPlayer opponent, out int winPoints, out RoundResult result)
+        public ScoreEntry(int gainedWinPoints, ScoreReason reason)
         {
-            player = Player;
-            opponent = Opponent;
-            winPoints = WinPoints;
-            result = Result;
+            GainedWinPoints = gainedWinPoints;
+            Reason = reason;
         }
     }
 }

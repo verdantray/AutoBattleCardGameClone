@@ -29,24 +29,9 @@ namespace ProjectABC.Core
                 
                 WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
                 int roundWinPoints = winPointOnRound.GetWinPoint();
-                
-                RoundScore winningScore = new RoundScore(
-                    round,
-                    matchContextEvent.WinPlayer,
-                    matchContextEvent.LostPlayer,
-                    matchContextEvent.LastMatchSideSnapShots[matchContextEvent.WinPlayer].GainedWinPointsOnMatch + roundWinPoints,
-                    RoundResult.Win
-                );
 
-                RoundScore losingScore = new RoundScore(
-                    round,
-                    matchContextEvent.LostPlayer,
-                    matchContextEvent.WinPlayer,
-                    matchContextEvent.LastMatchSideSnapShots[matchContextEvent.LostPlayer].GainedWinPointsOnMatch,
-                    RoundResult.Lose
-                );
-                
-                currentState.ScoreBoard.RegisterRoundScores(winningScore, losingScore);
+                ScoreEntry winnerEntry = new ScoreEntry(roundWinPoints, ScoreEntry.ScoreReason.ScoreByMatchWin);
+                currentState.ScoreBoard.RegisterScoreEntry(matchContextEvent.WinPlayer, winnerEntry);
                 
                 // TODO: publish ContextEvent here for announce win points what winner gained on round and total win points
             }

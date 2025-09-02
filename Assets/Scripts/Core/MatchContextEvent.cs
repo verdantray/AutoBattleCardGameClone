@@ -34,8 +34,8 @@ namespace ProjectABC.Core
         public static MatchContextEvent RunMatch(int round, ScoreBoard scoreBoard, params PlayerState[] playerStates)
         {
             MatchContextEvent matchContextEvent = new MatchContextEvent(round);
-            
-            var (defender, attacker) = GetMatchSidesOnStart(round, scoreBoard, playerStates[0], playerStates[1]);
+                                                                                                                     
+            var (defender, attacker) = GetMatchSidesOnStart(scoreBoard, playerStates[0], playerStates[1]);
             defender.SetMatchState(MatchState.Defending);
             attacker.SetMatchState(MatchState.Attacking);
 
@@ -133,7 +133,7 @@ namespace ProjectABC.Core
             }
         }
         
-        private static (MatchSide defender, MatchSide attacker) GetMatchSidesOnStart(int round, ScoreBoard scoreBoard, params PlayerState[] playerStates)
+        private static (MatchSide defender, MatchSide attacker) GetMatchSidesOnStart(ScoreBoard scoreBoard, params PlayerState[] playerStates)
         { 
             List<PlayerState> orderedPlayerStates = playerStates
                 .OrderByDescending(WinPointsSelector)
@@ -153,7 +153,7 @@ namespace ProjectABC.Core
 
             int WinPointsSelector(PlayerState playerState)
             {
-                return scoreBoard.GetTotalWinPoints(playerState.Player, round);
+                return scoreBoard.GetTotalWinPoints(playerState.Player);
             }
         }
 
