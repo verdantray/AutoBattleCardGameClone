@@ -69,25 +69,25 @@ namespace ProjectABC.Core
     {
         public IPlayer Player { get; private set; }
 
-        private readonly GradeType _selectedGrade;
-        private readonly List<Card> _drawnCards;
+        public readonly GradeType SelectedGrade;
+        public readonly List<Card> DrawnCards;
 
         public RecruitCardsAction(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
         {
             Player = player;
-            _selectedGrade = selectedGrade;
-            _drawnCards = drawnCards;
+            SelectedGrade = selectedGrade;
+            DrawnCards = drawnCards;
         }
         
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
-            playerState.Deck.AddRange(_drawnCards);
+            playerState.Deck.AddRange(DrawnCards);
         }
         
         public RecruitConsoleEvent GetContextEvent()
         {
-            return new RecruitConsoleEvent(Player, _selectedGrade, _drawnCards);
+            return new RecruitConsoleEvent(Player, SelectedGrade, DrawnCards);
         }
     }
 }

@@ -32,8 +32,19 @@ namespace ProjectABC.Core
 
                 RecruitConsoleEvent contextEvent = action.GetContextEvent();
                 contextEvent.Publish();
-                
+
                 simulationContext.CollectedEvents.Add(contextEvent);
+
+                foreach (var cardRecruited in action.DrawnCards)
+                {
+                    if (!cardRecruited.CardEffect.TryApplyEffectOnRecruit(action.Player, currentState, out var recruitCardEffectEvent))
+                    {
+                        continue;
+                    }
+                    
+                    recruitCardEffectEvent.Publish();
+                    simulationContext.CollectedEvents.Add(recruitCardEffectEvent);
+                }
             }
         }
     }

@@ -1,0 +1,13 @@
+{
+  "card_effect_id": "effect_return_random_cards_belonging_clubs_to_deck",
+  "desc_key": "desc_effect_return_random_cards_belonging_clubs_to_deck",
+  "desc_fail_key": "desc_fail_effect_return_random_cards_belonging_clubs_to_deck",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "cards_amount": 1,
+  "club_includes": [
+    "Council"
+  ]
+}

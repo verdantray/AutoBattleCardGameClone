@@ -240,16 +240,16 @@ namespace ProjectABC.InGame
             StartCoroutine(ShowSplash(_splashStart));
         }
         
-        public void OnEndRound(MatchState matchState, MatchFinishEvent.MatchEndReason reason)
+        public void OnEndRound(MatchState matchState, MatchEndReason reason)
         {
             var stringReason = "";
             switch (reason)
             {
-                case MatchFinishEvent.MatchEndReason.EndByEmptyHand:
+                case MatchEndReason.EndByEmptyHand:
                     stringReason = "덱의 모든 카드를 소진하였습니다.";
                     break;
                 
-                case MatchFinishEvent.MatchEndReason.EndByFullOfInfirmary:
+                case MatchEndReason.EndByFullOfInfirmary:
                     stringReason = "양호실에 남은 슬롯이 없습니다.";
                     break;
             }

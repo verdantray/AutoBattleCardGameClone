@@ -4,11 +4,16 @@ using System.Linq;
 
 namespace ProjectABC.Core
 {
+    public enum MatchEndReason
+    {
+        EndByEmptyHand,
+        EndByFullOfInfirmary
+    }
+    
     public class MatchContextEvent : IContextEvent
     {
         public readonly int Round;
-        public IPlayer WinPlayer { get; private set; } = null;
-        public IPlayer LostPlayer { get; private set; } = null;
+        public MatchResult Result { get; private set; }
         public List<IMatchEvent> MatchEvents { get; } = new List<IMatchEvent>();
 
         public IReadOnlyDictionary<IPlayer, MatchSideSnapshot> LastMatchSideSnapShots => MatchEvents[^1]
@@ -22,20 +27,19 @@ namespace ProjectABC.Core
 
         public bool IsParticipants(IPlayer player)
         {
-            return player == WinPlayer || player == LostPlayer;
+            return Result.IsParticipants(player);
         }
 
-        public void SetResult(IPlayer winPlayer, IPlayer lostPlayer)
+        public void SetResult(IPlayer winPlayer, IPlayer losePlayer, MatchEndReason reason)
         {
-            WinPlayer = winPlayer;
-            LostPlayer = lostPlayer;
+            Result = new MatchResult(Round, winPlayer, losePlayer, reason);
         }
 
-        public static MatchContextEvent RunMatch(int round, ScoreBoard scoreBoard, params PlayerState[] playerStates)
+        public static MatchContextEvent RunMatch(GameState currentState, params PlayerState[] playerStates)
         {
-            MatchContextEvent matchContextEvent = new MatchContextEvent(round);
+            MatchContextEvent matchContextEvent = new MatchContextEvent(currentState.Round);
                                                                                                                      
-            var (defender, attacker) = GetMatchSidesOnStart(scoreBoard, playerStates[0], playerStates[1]);
+            var (defender, attacker) = GetMatchSidesOnStart(currentState.ScoreBoard, playerStates[0], playerStates[1]);
             defender.SetMatchState(MatchState.Defending);
             attacker.SetMatchState(MatchState.Attacking);
 
@@ -47,7 +51,7 @@ namespace ProjectABC.Core
                 // set attacker winner and return events
                 MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                     attacker.Player,
-                    MatchFinishEvent.MatchEndReason.EndByEmptyHand,
+                    MatchEndReason.EndByEmptyHand,
                     new MatchSnapshot(attacker, defender)
                 );
                 
@@ -59,25 +63,58 @@ namespace ProjectABC.Core
             DrawCardEvent defenderDrawnEvent = new DrawCardEvent(defender.Player, new MatchSnapshot(defender, attacker));
             defenderDrawnEvent.RegisterEvent(matchContextEvent);
 
-            drawnCardFromDefender.CardEffect.TryApplyEffect(
+            CardEffectArgs defenderDrawnEffectArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnEnterFieldAsDefender,
                 defender,
                 attacker,
-                out var applyCardEffectOfDefenderDrawnEvent
+                currentState
             );
             
+            drawnCardFromDefender.CardEffect.TryApplyEffect(defenderDrawnEffectArgs, out var applyCardEffectOfDefenderDrawnEvent);
             applyCardEffectOfDefenderDrawnEvent?.RegisterEvent(matchContextEvent);
+            
+            defender.CheckApplyCardBuffs();
+            
+            #region check infirmary slot remains after every card effect applied, because of card effect can put cards to infirmary
+
+            if (!defender.Infirmary.IsSlotRemains)
+            {
+                // set attacker winner and return events
+                MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
+                    attacker.Player,
+                    MatchEndReason.EndByFullOfInfirmary,
+                    new MatchSnapshot(attacker, defender)
+                );
+                    
+                matchFinishEvent.RegisterEvent(matchContextEvent);
+                return matchContextEvent;
+            }
+            
+            if (!attacker.Infirmary.IsSlotRemains)
+            {
+                // set defender winner and return events
+                MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
+                    defender.Player,
+                    MatchEndReason.EndByFullOfInfirmary,
+                    new MatchSnapshot(attacker, defender)
+                );
+                    
+                matchFinishEvent.RegisterEvent(matchContextEvent);
+                return matchContextEvent;
+            }
+
+            #endregion
             
             while (true)
             {
-                while (attacker.GetEffectivePower() < defender.GetEffectivePower())
+                while (attacker.GetEffectivePower(defender) < defender.GetEffectivePower(attacker))
                 {
                     if (!attacker.TryDraw(out Card drawnCardFromAttacker))
                     {
                         // set defender winner and return events
                         MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                             defender.Player,
-                            MatchFinishEvent.MatchEndReason.EndByEmptyHand,
+                            MatchEndReason.EndByEmptyHand,
                             new MatchSnapshot(attacker, defender)
                         );
                 
@@ -89,29 +126,60 @@ namespace ProjectABC.Core
                     DrawCardEvent attackerDrawnEvent = new DrawCardEvent(attacker.Player, new MatchSnapshot(defender, attacker));
                     attackerDrawnEvent.RegisterEvent(matchContextEvent);
 
-                    drawnCardFromAttacker.CardEffect.TryApplyEffect(
+                    CardEffectArgs attackerDrawnEffectArgs = new CardEffectArgs(
                         EffectTriggerEvent.OnEnterFieldAsAttacker,
                         attacker,
                         defender,
-                        out var applyCardEffectOfAttackerDrawnEvent
+                        currentState
                     );
                     
+                    drawnCardFromAttacker.CardEffect.TryApplyEffect(attackerDrawnEffectArgs, out var applyCardEffectOfAttackerDrawnEvent);
                     applyCardEffectOfAttackerDrawnEvent?.RegisterEvent(matchContextEvent);
                     
                     attacker.CheckApplyCardBuffs();
+                    
+                    #region check infirmary slot remains after every card effect applied, because of card effect can put cards to infirmary
+
+                    if (!defender.Infirmary.IsSlotRemains)
+                    {
+                        // set attacker winner and return events
+                        MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
+                            attacker.Player,
+                            MatchEndReason.EndByFullOfInfirmary,
+                            new MatchSnapshot(attacker, defender)
+                        );
+                    
+                        matchFinishEvent.RegisterEvent(matchContextEvent);
+                        return matchContextEvent;
+                    }
+            
+                    if (!attacker.Infirmary.IsSlotRemains)
+                    {
+                        // set defender winner and return events
+                        MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
+                            defender.Player,
+                            MatchEndReason.EndByFullOfInfirmary,
+                            new MatchSnapshot(attacker, defender)
+                        );
+                    
+                        matchFinishEvent.RegisterEvent(matchContextEvent);
+                        return matchContextEvent;
+                    }
+
+                    #endregion
                     
                     ComparePowerEvent comparePowerEvent = new ComparePowerEvent(new MatchSnapshot(defender, attacker));
                     comparePowerEvent.RegisterEvent(matchContextEvent);
                 }
 
-                PutCardsOfDefenderFieldsToInfirmary(defender, attacker, matchContextEvent);
+                PutCardsOfDefenderFieldsToInfirmary(defender, attacker, currentState, matchContextEvent);
                 
                 if (!defender.Infirmary.IsSlotRemains)
                 {
                     // set attacker winner and return events
                     MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                         attacker.Player,
-                        MatchFinishEvent.MatchEndReason.EndByFullOfInfirmary,
+                        MatchEndReason.EndByFullOfInfirmary,
                         new MatchSnapshot(attacker, defender)
                     );
                     
@@ -125,7 +193,7 @@ namespace ProjectABC.Core
                 defender.SetMatchState(MatchState.Defending);
                 attacker.SetMatchState(MatchState.Attacking);
                 
-                TriggerDefenderFieldCards(defender, attacker, matchContextEvent);
+                TriggerDefenderFieldCards(defender, attacker, currentState, matchContextEvent);
                 defender.CheckApplyCardBuffs();
                 
                 SwitchPositionEvent switchPositionEvent = new SwitchPositionEvent(new MatchSnapshot(defender, attacker));
@@ -157,7 +225,7 @@ namespace ProjectABC.Core
             }
         }
 
-        private static void PutCardsOfDefenderFieldsToInfirmary(MatchSide defender, MatchSide attacker, MatchContextEvent matchContextEvent)
+        private static void PutCardsOfDefenderFieldsToInfirmary(MatchSide defender, MatchSide attacker, GameState currentState, MatchContextEvent matchContextEvent)
         {
             List<Card> cardsToInfirmary = new List<Card>();
             
@@ -165,12 +233,14 @@ namespace ProjectABC.Core
             for (int i = defender.Field.Count - 1; i >= 0; i--)
             {
                 Card fieldCard = defender.Field[i];
-                bool isMovementReplaced = fieldCard.CardEffect.TryReplaceMovement(
+                CardEffectArgs leaveFieldEffectArgs = new CardEffectArgs(
                     EffectTriggerEvent.OnLeaveField,
                     defender,
-                    out IMatchEvent movementReplaceEvent
+                    attacker,
+                    currentState
                 );
-
+                
+                bool isMovementReplaced = fieldCard.CardEffect.TryReplaceMovement(leaveFieldEffectArgs, out IMatchEvent movementReplaceEvent);
                 if (!isMovementReplaced)
                 {
                     cardsToInfirmary.Add(fieldCard);
@@ -202,40 +272,43 @@ namespace ProjectABC.Core
             
             foreach (Card card in cardsToInfirmary)
             {
-                card.CardEffect.TryApplyEffect(
+                CardEffectArgs enterInfirmaryEffectArgs = new CardEffectArgs(
                     EffectTriggerEvent.OnEnterInfirmary,
                     defender,
                     attacker,
-                    out IMatchEvent applyCardEffectOfInfirmaryCardEvent
+                    currentState
                 );
                 
+                card.CardEffect.TryApplyEffect(enterInfirmaryEffectArgs, out IMatchEvent applyCardEffectOfInfirmaryCardEvent);
                 applyCardEffectOfInfirmaryCardEvent?.RegisterEvent(matchContextEvent);
             }
 
             defender.CheckApplyCardBuffs();
         }
 
-        private static void TriggerDefenderFieldCards(MatchSide defender, MatchSide attacker, MatchContextEvent matchContextEvent)
+        private static void TriggerDefenderFieldCards(MatchSide defender, MatchSide attacker, GameState currentState, MatchContextEvent matchContextEvent)
         {
             foreach (var card in defender.Field.SkipLast(1))
             {
-                card.CardEffect.TryApplyEffect(
+                CardEffectArgs remainFieldEffectArgs = new CardEffectArgs(
                     EffectTriggerEvent.OnRemainField,
                     defender,
                     attacker,
-                    out IMatchEvent applyCardEffectOfRemainFieldEvent
+                    currentState
                 );
                 
+                card.CardEffect.TryApplyEffect(remainFieldEffectArgs, out IMatchEvent applyCardEffectOfRemainFieldEvent);
                 applyCardEffectOfRemainFieldEvent?.RegisterEvent(matchContextEvent);
             }
 
-            defender.Field[^1].CardEffect.TryApplyEffect(
+            CardEffectArgs switchToDefendEffectArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnSwitchToDefend,
                 defender,
                 attacker,
-                out IMatchEvent applyCardEffectOfSwitchDefendEvent
+                currentState
             );
             
+            defender.Field[^1].CardEffect.TryApplyEffect(switchToDefendEffectArgs, out IMatchEvent applyCardEffectOfSwitchDefendEvent);
             applyCardEffectOfSwitchDefendEvent?.RegisterEvent(matchContextEvent);
         }
     }

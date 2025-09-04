@@ -29,6 +29,7 @@ namespace ProjectABC.Core
         
         public readonly RoundPairMap RoundPairMap;
         public readonly ScoreBoard ScoreBoard;
+        public readonly MatchResults MatchResults;
 
         public int Round { get; private set; } = 0;
 
@@ -41,6 +42,7 @@ namespace ProjectABC.Core
             
             RoundPairMap = new RoundPairMap(players.Count);
             ScoreBoard = new ScoreBoard(players);
+            MatchResults = new MatchResults();
         }
 
         public PlayerState GetPlayerState(IPlayer player)

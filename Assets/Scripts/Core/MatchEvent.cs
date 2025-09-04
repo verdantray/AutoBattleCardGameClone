@@ -74,12 +74,6 @@ namespace ProjectABC.Core
         public readonly IPlayer WinningPlayer;
         public readonly MatchEndReason Reason;
         
-        public enum MatchEndReason
-        {
-            EndByEmptyHand,
-            EndByFullOfInfirmary
-        }
-        
         public MatchFinishEvent(IPlayer winningPlayer, MatchEndReason reason, MatchSnapshot snapshot) : base(snapshot)
         {
             WinningPlayer = winningPlayer;
@@ -91,7 +85,7 @@ namespace ProjectABC.Core
             var players = Snapshot.MatchSideSnapShots.Keys;
             IPlayer otherPlayer = players.First(player => player != WinningPlayer);
             
-            matchContextEvent.SetResult(WinningPlayer, otherPlayer);
+            matchContextEvent.SetResult(WinningPlayer, otherPlayer, Reason);
             matchContextEvent.MatchEvents.Add(this);
         }
     }

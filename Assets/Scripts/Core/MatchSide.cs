@@ -21,7 +21,6 @@ namespace ProjectABC.Core
         public readonly List<CardBuffHandleEntry> CardBuffHandlers = new List<CardBuffHandleEntry>();
         
         public MatchState State { get; private set; } = MatchState.Attacking;
-        public int GainedWinPointsOnMatch { get; private set; } = 0;
         
         private bool IsAttacking => State == MatchState.Attacking;
         
@@ -35,7 +34,6 @@ namespace ProjectABC.Core
         }
 
         public void SetMatchState(MatchState state) => State = state;
-        public void AddGainWinPoints(int gainWinPoints) => GainedWinPointsOnMatch += gainWinPoints;
 
         public bool TryDraw(out Card drawn)
         {
@@ -57,7 +55,7 @@ namespace ProjectABC.Core
             }
         }
 
-        public int GetEffectivePower()
+        public int GetEffectivePower(MatchSide otherSide)
         {
             if (Field.Count == 0)
             {
@@ -65,8 +63,8 @@ namespace ProjectABC.Core
             }
 
             int effectivePower = IsAttacking
-                ? Field.Sum(card => card.GetEffectivePower(this))
-                : Field[^1].GetEffectivePower(this);
+                ? Field.Sum(card => card.GetEffectivePower(this, otherSide))
+                : Field[^1].GetEffectivePower(this, otherSide);
             
             return effectivePower;
         }

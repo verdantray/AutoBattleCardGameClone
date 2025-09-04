@@ -62,6 +62,7 @@ namespace ProjectABC.Core
         public bool IsSlotRemains => RemainSlotCount > 0;
         
         public CardPile this[int index] => _cardMap[_nameKeyList[index]];
+        public bool Remove(string nameKey) => _cardMap.Remove(nameKey);
 
         #region inherits of IReadOnlyDictionary
 
@@ -117,15 +118,15 @@ namespace ProjectABC.Core
             _cardMap[cardNameKey] = new CardPile { card };
         }
 
-        public bool TryDrawCards(out CardPile cardPile)
+        public bool RemoveByIndex(int index)
         {
-            string earliestName = _nameKeyList[0];
-            _nameKeyList.RemoveAt(0);
+            bool isSuccess = _cardMap.Remove(_nameKeyList[index]);
+            if (isSuccess)
+            {
+                _nameKeyList.RemoveAt(index);
+            }
 
-            cardPile = _cardMap[earliestName];
-            _cardMap.Remove(earliestName);
-
-            return true;
+            return isSuccess;
         }
         
         public IEnumerable<Card> GetAllCards() => _cardMap.Values.SelectMany(cardPile => cardPile);
@@ -167,9 +168,31 @@ namespace ProjectABC.Core
             AppliedCardBuffs.Remove(cardBuff);
         }
 
-        public int GetEffectivePower(MatchSide matchSide)
+        public int GetEffectivePower(MatchSide mySide, MatchSide otherSide)
         {
-            return BasePower + AppliedCardBuffs.Sum(buff => buff.GetEffectivePower(this, matchSide));
+            var enabledBuffs = AppliedCardBuffs.Where(buff => buff.IsBuffActive(this, mySide, otherSide)).ToList();
+            var disablerBuffs = enabledBuffs.Where(buff => buff.Type == BuffType.Disabler).ToList();
+            
+            if (disablerBuffs.Count > 0)
+            {
+                HashSet<CardBuff> disabledSet = new HashSet<CardBuff>();
+                foreach (var disabler in disablerBuffs)
+                {
+                    foreach (var buff in enabledBuffs.Where(buff => buff.Type != BuffType.Disabler))
+                    {
+                        if (!disabler.ShouldDisable(buff, this, mySide, otherSide))
+                        {
+                            continue;
+                        }
+
+                        disabledSet.Add(buff);
+                    }
+                }
+
+                enabledBuffs = enabledBuffs.Where(buff => !disabledSet.Contains(buff)).ToList();
+            }
+
+            return BasePower + enabledBuffs.Sum(buff => buff.CalculateAdditivePower(this, mySide, otherSide));
         }
 
         public override string ToString()

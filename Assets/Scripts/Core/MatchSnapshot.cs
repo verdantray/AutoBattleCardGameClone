@@ -32,7 +32,6 @@ namespace ProjectABC.Core
     {
         public readonly IPlayer Player;
         public readonly MatchState State;
-        public readonly int GainedWinPointsOnMatch;
         
         public readonly IReadOnlyList<CardSnapshot> Deck;
         public readonly IReadOnlyList<CardSnapshot> Field;
@@ -44,7 +43,6 @@ namespace ProjectABC.Core
         {
             Player = matchSide.Player;
             State = matchSide.State;
-            GainedWinPointsOnMatch = matchSide.GainedWinPointsOnMatch;
             
             Deck = matchSide.Deck.Select(card => new CardSnapshot(card)).ToList();
             Field = matchSide.Field.Select(card => new CardSnapshot(card)).ToList();

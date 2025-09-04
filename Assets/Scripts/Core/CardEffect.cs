@@ -12,6 +12,7 @@ namespace ProjectABC.Core
         OnSwitchToDefend = 1 << 3,         // switch position as defend (last one of field)
         OnLeaveField = 1 << 4,
         OnEnterInfirmary = 1 << 5,
+        OnLeaveInfirmary = 1 << 6,
     }
 
     public abstract class CardEffect
@@ -52,22 +53,46 @@ namespace ProjectABC.Core
             }
         }
         
-        public abstract bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent);
+        public abstract bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent);
 
-        public virtual bool TryReplaceMovement(EffectTriggerEvent trigger, MatchSide mySide, out IMatchEvent matchEvent)
+        public virtual bool TryReplaceMovement(CardEffectArgs args, out IMatchEvent matchEvent)
         {
             matchEvent = null;
             return false;
         }
         
         // activate on recruit phase only
-        public virtual bool TryApplyEffectOnRecruit(out IContextEvent contextEvent)
+        public virtual bool TryApplyEffectOnRecruit(IPlayer recruiter, GameState gameState, out IContextEvent contextEvent)
         {
             contextEvent = null;
             return false;
         }
         
         protected abstract string GetDescription();
+    }
+
+    public class CardEffectArgs
+    {
+        public readonly EffectTriggerEvent Trigger;
+        public readonly MatchSide OwnSide;
+        public readonly MatchSide OtherSide;
+        public readonly GameState GameState;
+
+        public CardEffectArgs(EffectTriggerEvent trigger, MatchSide ownSide, MatchSide otherSide, GameState gameState)
+        {
+            Trigger = trigger;
+            OwnSide = ownSide;
+            OtherSide = otherSide;
+            GameState = gameState;
+        }
+
+        public void Deconstruct(out EffectTriggerEvent trigger, out MatchSide ownSide, out MatchSide otherSide, out GameState gameState)
+        {
+            trigger = Trigger;
+            ownSide = OwnSide;
+            otherSide = OtherSide;
+            gameState = GameState;
+        }
     }
 
     public class FailToApplyCardEffectEvent : MatchEventBase
@@ -84,6 +109,7 @@ namespace ProjectABC.Core
     {
         public ActiveCardBuffEvent(Card callCard, MatchSnapshot snapshot) : base(snapshot)
         {
+            
         }
     }
 
@@ -91,6 +117,7 @@ namespace ProjectABC.Core
     {
         public InactiveBuffEvent(Card callCard, MatchSnapshot snapshot) : base(snapshot)
         {
+            
         }
     }
 }

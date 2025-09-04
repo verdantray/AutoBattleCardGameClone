@@ -29,31 +29,33 @@ namespace ProjectABC.Core
             }
         }
         
-        public override bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent)
+        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
         {
+            var (trigger, ownSide, otherSide, gameState) = args;
+            
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
                 matchEvent = null;
                 return false;
             }
             
-            // if amount of remain hands less then _cardsAmount, then no need to move cards to top of deck...
-            if (mySide.Deck.Count < _cardsAmount)
+            // if amount of remain hands less than _cardsAmount, then no need to move cards to top of deck...
+            if (ownSide.Deck.Count < _cardsAmount)
             {
-                matchEvent = new FailToApplyCardEffectEvent("", new MatchSnapshot(mySide, otherSide));
+                matchEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
                 return false;
             }
             
-            var toMove = mySide.Deck.OrderBy(card => card.BasePower).Take(_cardsAmount).ToList();
+            var toMove = ownSide.Deck.OrderBy(card => card.BasePower).Take(_cardsAmount).ToList();
             foreach (var card in toMove)
             {
-                mySide.Deck.Remove(card);
+                ownSide.Deck.Remove(card);
             }
             
-            mySide.Deck.AddToTopRange(toMove);
+            ownSide.Deck.AddToTopRange(toMove);
             
-            MatchSnapshot matchSnapshot = new MatchSnapshot(mySide, otherSide);
-            matchEvent = new MoveCardsToTopOfDeck(toMove, matchSnapshot);
+            MatchSnapshot matchSnapshot = new MatchSnapshot(ownSide, otherSide);
+            matchEvent = new MoveCardsToTopOfDeckEvent(toMove, matchSnapshot);
             
             return true;
         }
@@ -65,11 +67,11 @@ namespace ProjectABC.Core
         }
     }
 
-    public class MoveCardsToTopOfDeck : MatchEventBase
+    public class MoveCardsToTopOfDeckEvent : MatchEventBase
     {
         public readonly IReadOnlyList<CardSnapshot> MovedCardsToTopOfDeck;
         
-        public MoveCardsToTopOfDeck(IEnumerable<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
+        public MoveCardsToTopOfDeckEvent(IEnumerable<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
         {
             MovedCardsToTopOfDeck = movedCards.Select(card => new CardSnapshot(card)).ToList();
         }

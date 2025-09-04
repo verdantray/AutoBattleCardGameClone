@@ -45,15 +45,17 @@ namespace ProjectABC.Core
             }
         }
 
-        public override bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent)
+        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
         {
+            var (trigger, ownSide, otherSide, gameState) = args;
+            
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
                 matchEvent = null;
                 return false;
             }
 
-            var cardsInInfirmary = mySide.Infirmary.GetAllCards();
+            var cardsInInfirmary = ownSide.Infirmary.GetAllCards();
             int clubsInInfirmary = cardsInInfirmary
                 .Select(card => card.ClubType)
                 .Where(clubType => !_excludedClubFlag.HasFlag(clubType))
@@ -62,14 +64,17 @@ namespace ProjectABC.Core
 
             if (clubsInInfirmary < _necessaryClubAmount)
             {
-                matchEvent = new FailToApplyCardEffectEvent("", new MatchSnapshot(mySide, otherSide));
+                matchEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
                 return false;
             }
+
+            gameState.ScoreBoard.RegisterScoreEntry(
+                ownSide.Player,
+                new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect)
+            );
             
-            mySide.AddGainWinPoints(_gainWinPoints);
-            
-            MatchSnapshot matchSnapshot = new MatchSnapshot(mySide, otherSide);
-            matchEvent = new GainWinPointsByCardEffectEvent(mySide.Player, _gainWinPoints, matchSnapshot);
+            MatchSnapshot matchSnapshot = new MatchSnapshot(ownSide, otherSide);
+            matchEvent = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints, matchSnapshot);
 
             return true;
         }
@@ -77,7 +82,7 @@ namespace ProjectABC.Core
         protected override string GetDescription()
         {
             // TODO : use localization and format
-            throw new System.NotImplementedException();
+            return DescriptionKey;
         }
     }
     

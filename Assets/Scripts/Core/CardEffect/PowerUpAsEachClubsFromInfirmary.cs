@@ -18,7 +18,7 @@ namespace ProjectABC.Core
                 switch (field.key)
                 {
                     case GameConst.CardEffect.EFFECT_CANCEL_TRIGGERS_KEY:
-
+                        
                         EffectTriggerEvent flag = 0;
                         
                         foreach (var element in field.value.arr)
@@ -29,44 +29,56 @@ namespace ProjectABC.Core
                         _cancelTriggerFlag = flag;
                         break;
                     case "club_excludes":
+                        
+                        ClubType excludeFlag = 0;
+
+                        foreach (var element in field.value.arr)
+                        {
+                            excludeFlag |= Enum.Parse<ClubType>(element.strValue, true);
+                        }
+
+                        _excludedClubFlag = excludeFlag;
                         break;
                     case "power_up_ratio":
+                        _powerUpRatio = field.value.intValue;
                         break;
                 }
             }
         }
 
-        public override bool TryApplyEffect(EffectTriggerEvent trigger, MatchSide mySide, MatchSide otherSide, out IMatchEvent matchEvent)
+        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
         {
+            var (trigger, ownSide, otherSide, gameState) = args;
+            
             bool isApplyTrigger = ApplyTriggerFlag.HasFlag(trigger);
             bool isCancelTrigger = _cancelTriggerFlag.HasFlag(trigger);
 
-            bool isBuffActive = mySide.CardBuffHandlers.Exists(entry => entry.CallCard == CallCard);
+            bool isBuffActive = ownSide.CardBuffHandlers.Exists(entry => entry.CallCard == CallCard);
 
             // case : already buff active, but effect canceled
             if (isBuffActive && isCancelTrigger)
             {
-                var handlers = mySide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
+                var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
                 
                 foreach (var handler in handlers)
                 {
                     handler.Release();
-                    mySide.CardBuffHandlers.Remove(handler);
+                    ownSide.CardBuffHandlers.Remove(handler);
                 }
 
-                matchEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(mySide, otherSide));
+                matchEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 return true;
             }
 
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(_excludedClubFlag, _powerUpRatio);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, ApplyTriggerFlag, _excludedClubFlag, _powerUpRatio);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff, BuffTargetSelector);
                 
-                mySide.CardBuffHandlers.Add(handler);
+                ownSide.CardBuffHandlers.Add(handler);
                 
-                matchEvent = new ActiveCardBuffEvent(CallCard, new MatchSnapshot(mySide, otherSide));
+                matchEvent = new ActiveCardBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 return true;
             }
 
@@ -89,18 +101,21 @@ namespace ProjectABC.Core
         
         private class ExclusiveCardBuff : CardBuff
         {
+            public override BuffType Type => BuffType.Aura;
+
             private readonly ClubType _excludedClubFlag;
             private readonly int _powerUpRatio;
         
-            public ExclusiveCardBuff(ClubType excludedClubFlag, int powerUpRatio)
+            public ExclusiveCardBuff(Card callCard, EffectTriggerEvent callerTriggerFlag, ClubType excludedClubFlag, int powerUpRatio)
+                : base(callCard)
             {
                 _excludedClubFlag = excludedClubFlag;
                 _powerUpRatio = powerUpRatio;
             }
         
-            public override bool IsBuffActive(Card target, MatchSide matchSide)
+            public override bool IsBuffActive(Card target, MatchSide mySide, MatchSide otherSide)
             {
-                int clubCountInInfirmary = matchSide.Infirmary.GetAllCards()
+                int clubCountInInfirmary = mySide.Infirmary.GetAllCards()
                     .Select(card => card.ClubType)
                     .Distinct()
                     .Count(club => !_excludedClubFlag.HasFlag(club));
@@ -108,9 +123,9 @@ namespace ProjectABC.Core
                 return clubCountInInfirmary > 0;
             }
 
-            public override int CalculateAdditivePower(Card target, MatchSide matchSide)
+            public override int CalculateAdditivePower(Card target, MatchSide mySide, MatchSide otherSide)
             {
-                int clubCountInInfirmary = matchSide.Infirmary.GetAllCards()
+                int clubCountInInfirmary = mySide.Infirmary.GetAllCards()
                     .Select(card => card.ClubType)
                     .Distinct()
                     .Count(club => !_excludedClubFlag.HasFlag(club));

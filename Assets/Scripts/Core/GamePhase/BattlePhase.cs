@@ -13,25 +13,22 @@ namespace ProjectABC.Core
             var matchingPairs = simulationContext.CurrentState.GetMatchingPairs();
             
             GameState currentState = simulationContext.CurrentState;
-            int round = currentState.Round;
 
             foreach (var (playerAState, playerBState) in matchingPairs)
             {
                 // TODO : run match include gained win points
-                MatchContextEvent matchContextEvent = MatchContextEvent.RunMatch(
-                    round,
-                    currentState.ScoreBoard,
-                    playerAState, playerBState
-                );
+                MatchContextEvent matchContextEvent = MatchContextEvent.RunMatch(currentState, playerAState, playerBState);
                 
                 matchContextEvent.Publish();
                 simulationContext.CollectedEvents.Add(matchContextEvent);
                 
-                WinPointOnRound winPointOnRound = new WinPointOnRound(currentState.Round);
+                currentState.MatchResults.AddMatchResult(matchContextEvent.Result);
+                
+                WinPointOnRound winPointOnRound = new WinPointOnRound(matchContextEvent.Round);
                 int roundWinPoints = winPointOnRound.GetWinPoint();
 
                 ScoreEntry winnerEntry = new ScoreEntry(roundWinPoints, ScoreEntry.ScoreReason.ScoreByMatchWin);
-                currentState.ScoreBoard.RegisterScoreEntry(matchContextEvent.WinPlayer, winnerEntry);
+                currentState.ScoreBoard.RegisterScoreEntry(matchContextEvent.Result.Winner, winnerEntry);
                 
                 // TODO: publish ContextEvent here for announce win points what winner gained on round and total win points
             }
