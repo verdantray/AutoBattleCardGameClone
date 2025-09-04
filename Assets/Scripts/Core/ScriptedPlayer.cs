@@ -46,7 +46,10 @@ namespace ProjectABC.Core
                 cardsToDraw.AddRange(cardPool.Take(drawAmount));
                 cardPool.RemoveRange(0, drawAmount);
 
-                cardPile.AddRange(cardPool);
+                foreach (var card in cardPool)
+                {
+                    cardPile.Add(card);
+                }
             }
 
             myState.GradeCardPiles[level].Shuffle();

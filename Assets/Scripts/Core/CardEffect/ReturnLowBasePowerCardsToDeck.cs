@@ -31,21 +31,22 @@ namespace ProjectABC.Core
             }
         }
 
-        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
 
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
-                matchEvent = null;
-                return false;
+                return;
             }
 
             var cardsInInfirmary = ownSide.Infirmary.GetAllCards();
             if (!cardsInInfirmary.Any(card => card.BasePower <= _powerCriteria))
             {
-                matchEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                return false;
+                var failEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
+                failEffectEvent.RegisterEvent(matchContextEvent);
+                
+                return;
             }
             
             List<Card> cardsToMove = new List<Card>();
@@ -74,11 +75,26 @@ namespace ProjectABC.Core
 
                 moveCount++;
             }
-            
-            ownSide.Deck.AddRange(cardsToMove);
 
-            matchEvent = new MoveCardsToBottomOfDeckEvent(cardsToMove, new MatchSnapshot(ownSide, otherSide));
-            return true;
+            CardEffectArgs onLeaveInfirmaryArgs = new CardEffectArgs(
+                EffectTriggerEvent.OnLeaveInfirmary,
+                ownSide,
+                otherSide,
+                gameState
+            );
+            
+            foreach (var card in cardsToMove)
+            {
+                ownSide.Deck.Add(card);
+                card.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
+                if (matchContextEvent.MatchFinished)
+                {
+                    return;
+                }
+            }
+
+            var moveCardEffectEvent = new MoveCardsToBottomOfDeckEvent(cardsToMove, new MatchSnapshot(ownSide, otherSide));
+            moveCardEffectEvent.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()

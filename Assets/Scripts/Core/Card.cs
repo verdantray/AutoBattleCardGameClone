@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +22,8 @@ namespace ProjectABC.Core
         #endregion
         
         public void AddToTop(Card card) => _cardList.Insert(0, card);
-        public void AddToTopRange(IEnumerable<Card> cards) => _cardList.InsertRange(0, cards);
         
         public void Add(Card card) => _cardList.Add(card);
-        public void AddRange(IEnumerable<Card> cards) => _cardList.AddRange(cards);
         public bool Remove(Card card) => _cardList.Remove(card);
         public void Clear() => _cardList.Clear();
 
@@ -54,7 +51,7 @@ namespace ProjectABC.Core
 
     public class Infirmary : IReadOnlyDictionary<string, CardPile>
     {
-        private readonly List<string> _nameKeyList = new List<string>();   // do not allow duplicates, change order
+        private readonly List<string> _nameKeyList = new List<string>();   // do not allow duplicates or change order
         private readonly Dictionary<string, CardPile> _cardMap = new Dictionary<string, CardPile>();
         
         public int SlotLimit { get; private set; } = GameConst.GameOption.DEFAULT_INFIRMARY_SLOT_LIMIT;
@@ -87,15 +84,6 @@ namespace ProjectABC.Core
         {
             _nameKeyList.Clear();
             _cardMap.Clear();
-        }
-
-        // Regardless success or failure, cards that comes as arg are put on the bench
-        public void PutCards(IEnumerable<Card> cards)
-        {
-            foreach (var card in cards)
-            {
-                PutCard(card);
-            }
         }
 
         public void PutCard(Card card)
@@ -168,9 +156,9 @@ namespace ProjectABC.Core
             AppliedCardBuffs.Remove(cardBuff);
         }
 
-        public int GetEffectivePower(MatchSide mySide, MatchSide otherSide)
+        public int GetEffectivePower(CardBuffArgs args)
         {
-            var enabledBuffs = AppliedCardBuffs.Where(buff => buff.IsBuffActive(this, mySide, otherSide)).ToList();
+            var enabledBuffs = AppliedCardBuffs.Where(buff => buff.IsBuffActive(this, args)).ToList();
             var disablerBuffs = enabledBuffs.Where(buff => buff.Type == BuffType.Disabler).ToList();
             
             if (disablerBuffs.Count > 0)
@@ -180,7 +168,7 @@ namespace ProjectABC.Core
                 {
                     foreach (var buff in enabledBuffs.Where(buff => buff.Type != BuffType.Disabler))
                     {
-                        if (!disabler.ShouldDisable(buff, this, mySide, otherSide))
+                        if (!disabler.ShouldDisable(buff, this, args))
                         {
                             continue;
                         }
@@ -192,7 +180,7 @@ namespace ProjectABC.Core
                 enabledBuffs = enabledBuffs.Where(buff => !disabledSet.Contains(buff)).ToList();
             }
 
-            return BasePower + enabledBuffs.Sum(buff => buff.CalculateAdditivePower(this, mySide, otherSide));
+            return BasePower + enabledBuffs.Sum(buff => buff.CalculateAdditivePower(this, args));
         }
 
         public override string ToString()

@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjectABC.Core
 {
+    [Flags]
     public enum MatchState
     {
-        Attacking,
-        Defending,
+        Attacking = 1 << 0,
+        Defending = 1 << 1,
     }
     
     public class MatchSide
@@ -28,8 +30,11 @@ namespace ProjectABC.Core
         {
             Player = playerState.Player;
             PlayerState = playerState;
-            
-            Deck.AddRange(playerState.Deck);
+
+            foreach (var card in playerState.Deck)
+            {
+                Deck.Add(card);
+            }
             Deck.Shuffle();
         }
 
@@ -47,24 +52,28 @@ namespace ProjectABC.Core
             return isSuccessToDraw;
         }
 
-        public void CheckApplyCardBuffs()
+        public void CheckApplyCardBuffs(MatchSide otherSide, GameState gameState)
         {
+            CardBuffArgs cardBuffArgs = new CardBuffArgs(this, otherSide, gameState);
+            
             foreach (var handler in CardBuffHandlers)
             {
-                handler.CheckApplyCardBuff(this);
+                handler.CheckApplyCardBuff(cardBuffArgs);
             }
         }
 
-        public int GetEffectivePower(MatchSide otherSide)
+        public int GetEffectivePower(MatchSide otherSide, GameState gameState)
         {
             if (Field.Count == 0)
             {
                 return 0;
             }
 
+            CardBuffArgs cardBuffArgs = new CardBuffArgs(this, otherSide, gameState);
+
             int effectivePower = IsAttacking
-                ? Field.Sum(card => card.GetEffectivePower(this, otherSide))
-                : Field[^1].GetEffectivePower(this, otherSide);
+                ? Field.Sum(card => card.GetEffectivePower(cardBuffArgs))
+                : Field[^1].GetEffectivePower(cardBuffArgs);
             
             return effectivePower;
         }
@@ -72,35 +81,40 @@ namespace ProjectABC.Core
 
     public class CardBuffHandleEntry
     {
-        public delegate IEnumerable<Card> BuffTargetDelegate(MatchSide matchSide);
-        
         public readonly Card CallCard;
         
         private readonly CardBuff _cardBuff;
-        private readonly BuffTargetDelegate _targetDelegate;
-        
         private readonly HashSet<Card> _appliedCards = new HashSet<Card>();
 
-        public CardBuffHandleEntry(Card callCard, CardBuff cardBuff, BuffTargetDelegate buffTargetDelegate)
+        public CardBuffHandleEntry(Card callCard, CardBuff cardBuff)
         {
             CallCard = callCard;
             _cardBuff = cardBuff;
-            _targetDelegate = buffTargetDelegate;
         }
 
-        public void CheckApplyCardBuff(MatchSide matchSide)
+        public void CheckApplyCardBuff(CardBuffArgs args)
         {
-            var targets = _targetDelegate(matchSide)
-                .Where(target => !_appliedCards.Contains(target))   // check target already apply buff
-                .ToArray();
+            var buffTargets = _cardBuff.GetBuffTargets(args);
+            var exhaustedTargets = _appliedCards
+                .Where(applied => !buffTargets.Contains(applied))
+                .ToList();
 
-            foreach (var target in targets)
+            foreach (var exhausted in exhaustedTargets)
             {
-                target.ApplyCardBuff(_cardBuff);
-                _appliedCards.Add(target);
+                exhausted.RemoveCardBuff(_cardBuff);
+                _appliedCards.Remove(exhausted);
             }
-            
-            // return targets.Any();
+
+            foreach (var newlyApply in buffTargets)
+            {
+                if (_appliedCards.Contains(newlyApply))
+                {
+                    continue;
+                }
+                
+                newlyApply.ApplyCardBuff(_cardBuff);
+                _appliedCards.Add(newlyApply);
+            }
         }
 
         public void Release()

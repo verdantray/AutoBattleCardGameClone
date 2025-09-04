@@ -29,35 +29,34 @@ namespace ProjectABC.Core
             }
         }
         
-        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
             
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
-                matchEvent = null;
-                return false;
+                return;
             }
             
             // if amount of remain hands less than _cardsAmount, then no need to move cards to top of deck...
             if (ownSide.Deck.Count < _cardsAmount)
             {
-                matchEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                return false;
+                var failedEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
+                failedEffectEvent.RegisterEvent(matchContextEvent);
+                
+                return;
             }
             
             var toMove = ownSide.Deck.OrderBy(card => card.BasePower).Take(_cardsAmount).ToList();
             foreach (var card in toMove)
             {
                 ownSide.Deck.Remove(card);
+                ownSide.Deck.AddToTop(card);
             }
             
-            ownSide.Deck.AddToTopRange(toMove);
-            
             MatchSnapshot matchSnapshot = new MatchSnapshot(ownSide, otherSide);
-            matchEvent = new MoveCardsToTopOfDeckEvent(toMove, matchSnapshot);
-            
-            return true;
+            var moveCardsEffectEvent = new MoveCardsToTopOfDeckEvent(toMove, matchSnapshot);
+            moveCardsEffectEvent.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()

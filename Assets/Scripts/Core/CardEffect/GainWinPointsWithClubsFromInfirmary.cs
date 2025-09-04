@@ -45,14 +45,13 @@ namespace ProjectABC.Core
             }
         }
 
-        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
             
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
-                matchEvent = null;
-                return false;
+                return;
             }
 
             var cardsInInfirmary = ownSide.Infirmary.GetAllCards();
@@ -64,8 +63,10 @@ namespace ProjectABC.Core
 
             if (clubsInInfirmary < _necessaryClubAmount)
             {
-                matchEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                return false;
+                var failedApplyEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
+                failedApplyEffectEvent.RegisterEvent(matchContextEvent);
+                
+                return;
             }
 
             gameState.ScoreBoard.RegisterScoreEntry(
@@ -74,9 +75,8 @@ namespace ProjectABC.Core
             );
             
             MatchSnapshot matchSnapshot = new MatchSnapshot(ownSide, otherSide);
-            matchEvent = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints, matchSnapshot);
-
-            return true;
+            var gainWinPointsEventEffect = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints, matchSnapshot);
+            gainWinPointsEventEffect.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()

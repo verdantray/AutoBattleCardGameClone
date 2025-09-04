@@ -36,8 +36,12 @@ namespace ProjectABC.Core
             foreach (var gradeGroup in _cardDataForPiles.GroupBy(card => card.GradeType))
             {
                 GradeType gradeType = gradeGroup.Key;
+
+                foreach (var card in gradeGroup)
+                {
+                    playerState.GradeCardPiles[gradeType].Add(card);
+                }
                 
-                playerState.GradeCardPiles[gradeType].AddRange(gradeGroup);
                 playerState.GradeCardPiles[gradeType].Shuffle();
             }
         }

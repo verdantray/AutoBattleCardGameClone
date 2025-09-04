@@ -1,0 +1,14 @@
+{
+  "card_effect_id": "effect_give_power_up_to_belong_clubs_from_infirmary",
+  "desc_key": "desc_effect_effect_give_power_up_to_belong_clubs_from_infirmary",
+  "apply_triggers": [
+    "OnEnterInfirmary"
+  ],
+  "cancel_triggers": [
+    "OnLeaveInfirmary"
+  ],
+  "club_includes": [
+    "Unregistered"
+  ],
+  "power_up_bonus": 1
+}

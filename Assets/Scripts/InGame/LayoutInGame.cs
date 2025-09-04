@@ -167,7 +167,11 @@ namespace ProjectABC.InGame
             _btnRerollCard.gameObject.SetActive(hasMulliganChance);
             
             CardPile targetCardPile = _state.GradeCardPiles[_gradeType];
-            targetCardPile.AddRange(_cardsInHand);
+
+            foreach (var card in _cardsInHand)
+            {
+                targetCardPile.Add(card);
+            }
             
             int handAmount = GameConst.GameOption.RECRUIT_HAND_AMOUNT - _cardSelected.Count;
             _cardsInHand = targetCardPile.DrawCards(handAmount);

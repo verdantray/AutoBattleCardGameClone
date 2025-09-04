@@ -21,6 +21,11 @@ namespace ProjectABC.Core
         
         public virtual void RegisterEvent(MatchContextEvent matchContextEvent)
         {
+            if (matchContextEvent.MatchFinished)
+            {
+                return;
+            }
+            
             matchContextEvent.MatchEvents.Add(this);
         }
     }
@@ -45,6 +50,14 @@ namespace ProjectABC.Core
         }
     }
 
+    public class CheckApplyBuffEvent : MatchEventBase
+    {
+        public CheckApplyBuffEvent(MatchSnapshot snapshot) : base(snapshot)
+        {
+            
+        }
+    }
+
     public class ComparePowerEvent : MatchEventBase
     {
         public ComparePowerEvent(MatchSnapshot snapshot) : base(snapshot)
@@ -55,7 +68,7 @@ namespace ProjectABC.Core
 
     public class TryPutCardInfirmaryEvent : MatchEventBase
     {
-        public TryPutCardInfirmaryEvent(IPlayer player, List<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
+        public TryPutCardInfirmaryEvent(IPlayer player, Card card, MatchSnapshot snapshot) : base(snapshot)
         {
             
         }

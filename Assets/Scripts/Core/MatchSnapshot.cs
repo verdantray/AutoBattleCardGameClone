@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -129,7 +128,7 @@ namespace ProjectABC.Core
             return CardMap.TryGetValue(key, out value);
         }
 
-        public IReadOnlyList<CardSnapshot> this[string key] => throw new NotImplementedException();
+        public IReadOnlyList<CardSnapshot> this[string key] => CardMap[key];
 
         public IEnumerable<string> Keys => NameKeyList;
         public IEnumerable<IReadOnlyList<CardSnapshot>> Values => CardMap.Values;

@@ -5,13 +5,13 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class PowerUpAsEachClubsFromInfirmary : CardEffect
+    public class GivePowerUpToBelongClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly ClubType _excludedClubFlag;
-        private readonly int _powerUpRatio;
+        private readonly ClubType _includedClubFlag;
+        private readonly int _powerUpBonus;
         
-        public PowerUpAsEachClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        public GivePowerUpToBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -28,19 +28,18 @@ namespace ProjectABC.Core
 
                         _cancelTriggerFlag = flag;
                         break;
-                    case "club_excludes":
-                        
-                        ClubType excludeFlag = 0;
+                    case "club_includes":
+                        ClubType includeFlag = 0;
 
                         foreach (var element in field.value.arr)
                         {
-                            excludeFlag |= Enum.Parse<ClubType>(element.strValue, true);
+                            includeFlag |= Enum.Parse<ClubType>(element.strValue, true);
                         }
 
-                        _excludedClubFlag = excludeFlag;
+                        _includedClubFlag = includeFlag;
                         break;
-                    case "power_up_ratio":
-                        _powerUpRatio = field.value.intValue;
+                    case "power_up_bonus":
+                        _powerUpBonus = field.value.intValue;
                         break;
                 }
             }
@@ -49,7 +48,7 @@ namespace ProjectABC.Core
         public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
-            
+
             bool isApplyTrigger = ApplyTriggerFlag.HasFlag(trigger);
             bool isCancelTrigger = _cancelTriggerFlag.HasFlag(trigger);
 
@@ -59,7 +58,7 @@ namespace ProjectABC.Core
             if (isBuffActive && isCancelTrigger)
             {
                 var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-                
+
                 foreach (var handler in handlers)
                 {
                     handler.Release();
@@ -68,14 +67,14 @@ namespace ProjectABC.Core
 
                 var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
-
+                
                 return;
             }
-
+            
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _excludedClubFlag, _powerUpRatio);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -90,51 +89,40 @@ namespace ProjectABC.Core
             // TODO: localization
             return DescriptionKey;
         }
-        
+
         private class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Aura;
+            
+            private readonly ClubType _includedClubFlag;
+            private readonly int _powerUpBonus;
 
-            private readonly ClubType _excludedClubFlag;
-            private readonly int _powerUpRatio;
-        
-            public ExclusiveCardBuff(Card callCard, ClubType excludedClubFlag, int powerUpRatio) : base(callCard)
+            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, int powerUpBonus) : base(callCard)
             {
-                _excludedClubFlag = excludedClubFlag;
-                _powerUpRatio = powerUpRatio;
+                _includedClubFlag = includedClubFlag;
+                _powerUpBonus = powerUpBonus;
             }
 
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                var (ownSide, otherSide, gameState) = args;
-            
-                return ownSide.Field.Contains(CallCard)
-                    ? new[] { CallCard }
-                    : Array.Empty<Card>();
+                return args.OwnSide.Field.Where(card => _includedClubFlag.HasFlag(card.ClubType));
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
                 var (ownSide, otherSide, gameState) = args;
-                
-                int clubCountInInfirmary = ownSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
+                HashSet<Card> infirmaryCardSet = new HashSet<Card>(ownSide.Infirmary.GetAllCards());
 
-                return ownSide.Field.Contains(target) && clubCountInInfirmary > 0;
+                bool isCallerInInfirmary = infirmaryCardSet.Contains(CallCard);
+                bool isTargetInField = ownSide.Field.Contains(target);
+                bool isTargetBelongingClub = _includedClubFlag.HasFlag(target.ClubType);
+                
+                return isCallerInInfirmary && isTargetInField && isTargetBelongingClub;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
-                var  (ownSide, otherSide, gameState) = args;
-                
-                int clubCountInInfirmary = ownSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
-            
-                return clubCountInInfirmary * _powerUpRatio;
+                return _powerUpBonus;
             }
         }
     }

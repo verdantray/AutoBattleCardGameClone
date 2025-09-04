@@ -38,14 +38,13 @@ namespace ProjectABC.Core
             }
         }
 
-        public override bool TryApplyEffect(CardEffectArgs args, out IMatchEvent matchEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
 
             if (!ApplyTriggerFlag.HasFlag(trigger))
             {
-                matchEvent = null;
-                return false;
+                return;
             }
 
             Random random = new Random();
@@ -56,37 +55,50 @@ namespace ProjectABC.Core
 
             if (!cardsBelongClubsInInfirmary.Any())
             {
-                matchEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                return false;
+                var failEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
+                failEffectEvent.RegisterEvent(matchContextEvent);
+                
+                return;
             }
 
             List<Card> cardsToMove = new List<Card>();
             
             for (int i = 0; i < _cardsAmount; i++)
             {
-                foreach (var (key, cardPile) in ownSide.Infirmary)
+                for (int j = ownSide.Infirmary.Count; j >= 0; j--)
                 {
-                    if (!cardPile.Contains(cardsBelongClubsInInfirmary[i]))
+                    if (!ownSide.Infirmary[j].Contains(cardsBelongClubsInInfirmary[i]))
                     {
                         continue;
                     }
-
-                    cardPile.Remove(cardsBelongClubsInInfirmary[i]);
-                    cardsToMove.Add(cardsBelongClubsInInfirmary[i]);
                     
-                    if (cardPile.Count == 0)
+                    ownSide.Infirmary[j].Remove(cardsBelongClubsInInfirmary[i]);
+                    cardsToMove.Add(cardsBelongClubsInInfirmary[i]);
+
+                    if (ownSide.Infirmary[j].Count > 0)
                     {
-                        ownSide.Infirmary.Remove(key);
+                        continue;
                     }
                     
-                    break;
+                    ownSide.Infirmary.RemoveByIndex(j);
                 }
             }
-            
-            ownSide.Deck.AddRange(cardsToMove);
 
-            matchEvent = new MoveCardsToBottomOfDeckEvent(cardsToMove, new MatchSnapshot(ownSide, otherSide));
-            return true;
+            CardEffectArgs onLeaveInfirmaryArgs = new CardEffectArgs(
+                EffectTriggerEvent.OnLeaveInfirmary,
+                ownSide,
+                otherSide,
+                gameState
+            );
+            
+            foreach (var card in cardsToMove)
+            {
+                ownSide.Deck.Add(card);
+                card.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
+            }
+
+            var moveCardEffectEvent = new MoveCardsToBottomOfDeckEvent(cardsToMove, new MatchSnapshot(ownSide, otherSide));
+            moveCardEffectEvent.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()
