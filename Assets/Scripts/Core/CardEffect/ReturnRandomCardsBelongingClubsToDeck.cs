@@ -5,6 +5,9 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
+    /// <summary>
+    /// 양호실에 있는 특정 소속 카드 중 무작위 n장을 덱 맨 아래로 넣음
+    /// </summary>
     public class ReturnRandomCardsBelongingClubsToDeck : CardEffect
     {
         private readonly string _failureDescKey;

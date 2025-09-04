@@ -5,6 +5,9 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
+    /// <summary>
+    /// 양호실에 특정 동아리를 제외한 소속 수 N만큼 자신의 파워 증가
+    /// </summary>
     public class PowerUpAsEachClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;

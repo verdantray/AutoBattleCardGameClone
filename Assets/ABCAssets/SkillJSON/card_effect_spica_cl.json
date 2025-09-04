@@ -1,0 +1,12 @@
+{
+  "card_effect_id": "effect_gain_power_up_each_infirmary_slots",
+  "desc_key": "desc_effect_gain_power_up_each_infirmary_slots",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "cancel_triggers": [
+    "OnLeaveField"
+  ],
+  "power_up_ratio": 1
+}

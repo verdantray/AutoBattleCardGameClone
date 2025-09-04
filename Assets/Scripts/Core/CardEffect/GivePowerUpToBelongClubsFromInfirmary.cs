@@ -5,6 +5,9 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
+    /// <summary>
+    /// 양호실로 보내질 때 : 특정 동아리 소속의 카드가 공격 / 수비 중일 때 파워 + N 만큼 증가
+    /// </summary>
     public class GivePowerUpToBelongClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
