@@ -10,5 +10,9 @@
   "club_includes": [
     "TraditionExperience"
   ],
+  "enable_match_states": [
+    "Attacking",
+    "Defending"
+  ],
   "power_up_bonus": 1
 }

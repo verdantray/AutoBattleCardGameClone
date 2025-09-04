@@ -9,6 +9,7 @@ namespace ProjectABC.Core
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly ClubType _includedClubFlag;
+        private readonly MatchState _matchStateFlag;
         private readonly int _powerUpBonus;
         
         public GivePowerUpToBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
@@ -37,6 +38,15 @@ namespace ProjectABC.Core
                         }
 
                         _includedClubFlag = includeFlag;
+                        break;
+                    case "enable_match_states":
+                        MatchState stateFlag = 0;
+
+                        foreach (var element in field.value.arr)
+                        {
+                            stateFlag |= Enum.Parse<MatchState>(element.strValue, true);
+                        }
+                        _matchStateFlag = stateFlag;
                         break;
                     case "power_up_bonus":
                         _powerUpBonus = field.value.intValue;
@@ -74,7 +84,7 @@ namespace ProjectABC.Core
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _powerUpBonus);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _matchStateFlag, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -95,11 +105,13 @@ namespace ProjectABC.Core
             public override BuffType Type => BuffType.Aura;
             
             private readonly ClubType _includedClubFlag;
+            private readonly MatchState _matchStateFlag;
             private readonly int _powerUpBonus;
 
-            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, int powerUpBonus) : base(callCard)
+            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, MatchState matchStateFlag, int powerUpBonus) : base(callCard)
             {
                 _includedClubFlag = includedClubFlag;
+                _matchStateFlag = matchStateFlag;
                 _powerUpBonus = powerUpBonus;
             }
 
@@ -116,8 +128,9 @@ namespace ProjectABC.Core
                 bool isCallerInInfirmary = infirmaryCardSet.Contains(CallCard);
                 bool isTargetInField = ownSide.Field.Contains(target);
                 bool isTargetBelongingClub = _includedClubFlag.HasFlag(target.ClubType);
+                bool isEnableMatchState = _matchStateFlag.HasFlag(ownSide.State);
                 
-                return isCallerInInfirmary && isTargetInField && isTargetBelongingClub;
+                return isCallerInInfirmary && isTargetInField && isTargetBelongingClub && isEnableMatchState;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

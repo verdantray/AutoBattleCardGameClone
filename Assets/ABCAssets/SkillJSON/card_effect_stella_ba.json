@@ -8,7 +8,10 @@
     "OnLeaveInfirmary"
   ],
   "club_includes": [
-    "Unregistered"
+    "Band"
+  ],
+  "enable_match_states": [
+    "Attacking"
   ],
   "power_up_bonus": 1
 }
