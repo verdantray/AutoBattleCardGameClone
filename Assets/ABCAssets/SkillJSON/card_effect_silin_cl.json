@@ -7,5 +7,5 @@
   ],
   "desc_fail_key":  "desc_fail_effect_return_low_base_power_cards_to_deck",
   "cards_amount": 1,
-  "power_criteria": 3,
+  "power_criteria": 3
 }

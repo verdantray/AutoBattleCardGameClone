@@ -1,0 +1,15 @@
+{
+  "card_effect_id": "effect_power_up_self_while_match_state",
+  "desc_key": "desc_effect_power_up_self_while_defending",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "cancel_triggers": [
+    "OnLeaveField"
+  ],
+  "enable_match_states": [
+    "Defending"
+  ],
+  "power_up_bonus": 5
+}

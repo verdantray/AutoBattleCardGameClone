@@ -1,6 +1,6 @@
 {
   "card_effect_id": "effect_lowest_power_cards_to_top_of_deck",
-  "desc_key": "desc_effect_lowest_power_card_to_top_of_deck",
+  "desc_key": "desc_effect_lowest_power_cards_to_top_of_deck",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using ProjectABC.Data;
 
+
 namespace ProjectABC.Core
 {
     /// <summary>
-    /// 양호실로 보내질 때 : 특정 동아리 소속의 카드가 공격 / 수비 중일 때 파워 + N 만큼 증가
+    /// 양호실에 특정 동아리 소속이 있는 경우 자신의 파워 N 증가
     /// </summary>
-    public class GivePowerUpToBelongClubsFromInfirmary : CardEffect
+    public class PowerUpSelfBelongClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly ClubType _includedClubFlag;
-        private readonly MatchState _enableStateFlag;
         private readonly int _powerUpBonus;
         
-        public GivePowerUpToBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        public PowerUpSelfBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
                 switch (field.key)
                 {
                     case GameConst.CardEffect.EFFECT_CANCEL_TRIGGERS_KEY:
-                        
+
                         EffectTriggerEvent flag = 0;
-                        
+
                         foreach (var element in field.value.arr)
                         {
                             flag |= Enum.Parse<EffectTriggerEvent>(element.strValue, true);
@@ -33,6 +33,7 @@ namespace ProjectABC.Core
                         _cancelTriggerFlag = flag;
                         break;
                     case "club_includes":
+
                         ClubType includeFlag = 0;
 
                         foreach (var element in field.value.arr)
@@ -41,15 +42,6 @@ namespace ProjectABC.Core
                         }
 
                         _includedClubFlag = includeFlag;
-                        break;
-                    case "enable_match_states":
-                        MatchState stateFlag = 0;
-
-                        foreach (var element in field.value.arr)
-                        {
-                            stateFlag |= Enum.Parse<MatchState>(element.strValue, true);
-                        }
-                        _enableStateFlag = stateFlag;
                         break;
                     case "power_up_bonus":
                         _powerUpBonus = field.value.intValue;
@@ -61,7 +53,7 @@ namespace ProjectABC.Core
         public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
-
+            
             bool isApplyTrigger = ApplyTriggerFlag.HasFlag(trigger);
             bool isCancelTrigger = _cancelTriggerFlag.HasFlag(trigger);
 
@@ -71,7 +63,7 @@ namespace ProjectABC.Core
             if (isBuffActive && isCancelTrigger)
             {
                 var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-
+                
                 foreach (var handler in handlers)
                 {
                     handler.Release();
@@ -80,14 +72,14 @@ namespace ProjectABC.Core
 
                 var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
-                
+
                 return;
             }
-            
+
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _enableStateFlag, _powerUpBonus);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -108,32 +100,28 @@ namespace ProjectABC.Core
             public override BuffType Type => BuffType.Aura;
             
             private readonly ClubType _includedClubFlag;
-            private readonly MatchState _enableStateFlag;
             private readonly int _powerUpBonus;
-
-            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, MatchState enableStateFlag, int powerUpBonus) : base(callCard)
+            
+            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, int powerUpBonus) : base(callCard)
             {
                 _includedClubFlag = includedClubFlag;
-                _enableStateFlag = enableStateFlag;
                 _powerUpBonus = powerUpBonus;
             }
-
+            
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                return args.OwnSide.Field.Where(card => _includedClubFlag.HasFlag(card.ClubType));
+                return args.OwnSide.Field.Contains(CallCard)
+                    ? new[] { CallCard }
+                    : Array.Empty<Card>();
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                var (ownSide, otherSide, gameState) = args;
-                HashSet<Card> infirmaryCardSet = new HashSet<Card>(ownSide.Infirmary.GetAllCards());
-
-                bool isCallerInInfirmary = infirmaryCardSet.Contains(CallCard);
-                bool isTargetInField = ownSide.Field.Contains(target);
-                bool isTargetBelongingClub = _includedClubFlag.HasFlag(target.ClubType);
-                bool isEnableMatchState = _enableStateFlag.HasFlag(ownSide.State);
+                bool isTargetInField = args.OwnSide.Field.Contains(target);
+                bool isClubExistsInInfirmary = args.OwnSide.Infirmary.GetAllCards()
+                    .Any(card => _includedClubFlag.HasFlag(card.ClubType));
                 
-                return isCallerInInfirmary && isTargetInField && isTargetBelongingClub && isEnableMatchState;
+                return isTargetInField && isClubExistsInInfirmary;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

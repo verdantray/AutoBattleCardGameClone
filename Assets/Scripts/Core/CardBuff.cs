@@ -12,7 +12,7 @@ namespace ProjectABC.Core
     
     public abstract class CardBuff
     {
-        public virtual BuffType Type { get; }
+        public abstract BuffType Type { get; }
 
         public readonly Card CallCard;
 
