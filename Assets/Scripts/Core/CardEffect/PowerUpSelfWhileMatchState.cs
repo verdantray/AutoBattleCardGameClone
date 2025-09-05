@@ -116,7 +116,8 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                return args.OwnSide.Field.Contains(target) && _enableStateFlag.HasFlag(args.OwnSide.State);
+                return args.OwnSide.IsEffectiveStandOnField(target)
+                       && _enableStateFlag.HasFlag(args.OwnSide.State);
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

@@ -107,7 +107,7 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                return target.BasePower == _powerCriteria && args.OwnSide.Field.Contains(target);
+                return target.BasePower == _powerCriteria && args.OwnSide.IsEffectiveStandOnField(target);
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

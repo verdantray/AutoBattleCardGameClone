@@ -117,11 +117,11 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                bool isTargetInField = args.OwnSide.Field.Contains(target);
+                bool isTargetEffectiveStand = args.OwnSide.IsEffectiveStandOnField(target);
                 bool isClubExistsInInfirmary = args.OwnSide.Infirmary.GetAllCards()
                     .Any(card => _includedClubFlag.HasFlag(card.ClubType));
                 
-                return isTargetInField && isClubExistsInInfirmary;
+                return isTargetEffectiveStand && isClubExistsInInfirmary;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

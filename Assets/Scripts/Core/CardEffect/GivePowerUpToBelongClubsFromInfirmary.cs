@@ -129,11 +129,11 @@ namespace ProjectABC.Core
                 HashSet<Card> infirmaryCardSet = new HashSet<Card>(ownSide.Infirmary.GetAllCards());
 
                 bool isCallerInInfirmary = infirmaryCardSet.Contains(CallCard);
-                bool isTargetInField = ownSide.Field.Contains(target);
+                bool isTargetEffectiveStand = ownSide.IsEffectiveStandOnField(target);
                 bool isTargetBelongingClub = _includedClubFlag.HasFlag(target.ClubType);
                 bool isEnableMatchState = _enableStateFlag.HasFlag(ownSide.State);
                 
-                return isCallerInInfirmary && isTargetInField && isTargetBelongingClub && isEnableMatchState;
+                return isCallerInInfirmary && isTargetEffectiveStand && isTargetBelongingClub && isEnableMatchState;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

@@ -71,11 +71,18 @@ namespace ProjectABC.Core
 
             CardBuffArgs cardBuffArgs = new CardBuffArgs(this, otherSide, gameState);
 
-            int effectivePower = IsAttacking
-                ? Field.Sum(card => card.GetEffectivePower(cardBuffArgs))
-                : Field[^1].GetEffectivePower(cardBuffArgs);
+            int effectivePower = Field
+                .Where(IsEffectiveStandOnField)
+                .Sum(card => card.GetEffectivePower(cardBuffArgs));
             
             return effectivePower;
+        }
+
+        public bool IsEffectiveStandOnField(Card card)
+        {
+            return IsAttacking
+                ? Field.Contains(card)
+                : Field[^1] == card;
         }
     }
 
