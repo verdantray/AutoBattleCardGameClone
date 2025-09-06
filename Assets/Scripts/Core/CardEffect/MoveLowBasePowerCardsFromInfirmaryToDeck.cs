@@ -8,14 +8,14 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에서 기본 파워가 기준 n 이하인 카드 m장을 덱 아래로 넣음
     /// </summary>
-    public class ReturnLowBasePowerCardsToDeck : CardEffect
+    public class MoveLowBasePowerCardsFromInfirmaryToDeck : CardEffect
     {
         private readonly string _failureDescKey;
 
         private readonly int _cardsAmount;
         private readonly int _powerCriteria;
         
-        public ReturnLowBasePowerCardsToDeck(Card card, JsonObject json) : base(card, json)
+        public MoveLowBasePowerCardsFromInfirmaryToDeck(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -52,7 +52,13 @@ namespace ProjectABC.Core
                 return;
             }
             
-            List<Card> cardsToMove = new List<Card>();
+            CardEffectArgs onLeaveInfirmaryArgs = new CardEffectArgs(
+                EffectTriggerEvent.OnLeaveInfirmary,
+                ownSide,
+                otherSide,
+                gameState
+            );
+
             int moveCount = 0;
             
             for (int i = ownSide.Infirmary.Count - 1; i >= 0; i--)
@@ -67,8 +73,6 @@ namespace ProjectABC.Core
                 {
                     continue;
                 }
-                
-                cardsToMove.Add(cardToMove);
 
                 ownSide.Infirmary[i].Remove(cardToMove);
                 if (ownSide.Infirmary[i].Count == 0)
@@ -76,28 +80,19 @@ namespace ProjectABC.Core
                     ownSide.Infirmary.RemoveByIndex(i);
                 }
 
+                ownSide.Deck.Add(cardToMove);
+                cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
+                
                 moveCount++;
-            }
-
-            CardEffectArgs onLeaveInfirmaryArgs = new CardEffectArgs(
-                EffectTriggerEvent.OnLeaveInfirmary,
-                ownSide,
-                otherSide,
-                gameState
-            );
-            
-            foreach (var card in cardsToMove)
-            {
-                ownSide.Deck.Add(card);
-                card.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
+                
                 if (matchContextEvent.MatchFinished)
                 {
                     return;
                 }
-            }
 
-            var moveCardEffectEvent = new MoveCardsToBottomOfDeckEvent(cardsToMove, new MatchSnapshot(ownSide, otherSide));
-            moveCardEffectEvent.RegisterEvent(matchContextEvent);
+                var moveCardEffectEvent = new MoveCardToBottomOfDeckEvent(cardToMove, new MatchSnapshot(ownSide, otherSide));
+                moveCardEffectEvent.RegisterEvent(matchContextEvent);
+            }
         }
 
         protected override string GetDescription()
@@ -107,13 +102,11 @@ namespace ProjectABC.Core
         }
     }
 
-    public class MoveCardsToBottomOfDeckEvent : MatchEventBase
+    public class MoveCardToBottomOfDeckEvent : MatchEventBase
     {
-        public readonly IReadOnlyList<CardSnapshot> MoveCardsToBottomOfDeck;
-        
-        public MoveCardsToBottomOfDeckEvent(IEnumerable<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
+        public MoveCardToBottomOfDeckEvent(Card movedCard, MatchSnapshot snapshot) : base(snapshot)
         {
-            MoveCardsToBottomOfDeck = movedCards.Select(card => new CardSnapshot(card)).ToList();
+            
         }
     }
 }

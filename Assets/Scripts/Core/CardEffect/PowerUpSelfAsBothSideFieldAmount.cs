@@ -5,12 +5,15 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class PowerUpSelfAsEachFieldAmount : CardEffect
+    /// <summary>
+    /// 자신과 상대 필드의 카드 장수 만큼 자신의 공격력 n 증가
+    /// </summary>
+    public class PowerUpSelfAsBothSideFieldAmount : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpRatio;
         
-        public PowerUpSelfAsEachFieldAmount(Card card, JsonObject json) : base(card, json)
+        public PowerUpSelfAsBothSideFieldAmount(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -104,7 +107,7 @@ namespace ProjectABC.Core
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
-                return args.OwnSide.Field.Count + _powerUpRatio;
+                return (args.OwnSide.Field.Count + args.OtherSide.Field.Count) * _powerUpRatio;
             }
         }
     }

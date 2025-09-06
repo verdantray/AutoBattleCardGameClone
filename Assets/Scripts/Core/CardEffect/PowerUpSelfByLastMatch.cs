@@ -1,20 +1,24 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using ProjectABC.Data;
+
 
 namespace ProjectABC.Core
 {
-    /// <summary>
-    /// 양호실에 특정 동아리를 제외한 소속 수 N만큼 자신의 파워 증가
-    /// </summary>
-    public class PowerUpSelfAsEachClubsFromInfirmary : CardEffect
+    public enum LastRoundResult
     {
-        private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly ClubType _excludedClubFlag;
-        private readonly int _powerUpRatio;
+        Win,
+        Lose,
+    }
+    
+    public class PowerUpSelfByLastMatch : CardEffect
+    {
         
-        public PowerUpSelfAsEachClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        private readonly EffectTriggerEvent _cancelTriggerFlag;
+        private readonly LastRoundResult _enableLastResult;
+        private readonly int _powerUpBonus;
+        
+        public PowerUpSelfByLastMatch(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -31,19 +35,11 @@ namespace ProjectABC.Core
 
                         _cancelTriggerFlag = flag;
                         break;
-                    case "club_excludes":
-                        
-                        ClubType excludeFlag = 0;
-
-                        foreach (var element in field.value.arr)
-                        {
-                            excludeFlag |= Enum.Parse<ClubType>(element.strValue, true);
-                        }
-
-                        _excludedClubFlag = excludeFlag;
+                    case "enable_last_result":
+                        _enableLastResult = Enum.Parse<LastRoundResult>(field.value.strValue, true);
                         break;
-                    case "power_up_ratio":
-                        _powerUpRatio = field.value.intValue;
+                    case "power_up_bonus":
+                        _powerUpBonus = field.value.intValue;
                         break;
                 }
             }
@@ -52,7 +48,7 @@ namespace ProjectABC.Core
         public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
-            
+
             bool isApplyTrigger = ApplyTriggerFlag.HasFlag(trigger);
             bool isCancelTrigger = _cancelTriggerFlag.HasFlag(trigger);
 
@@ -62,7 +58,7 @@ namespace ProjectABC.Core
             if (isBuffActive && isCancelTrigger)
             {
                 var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-                
+
                 foreach (var handler in handlers)
                 {
                     handler.Release();
@@ -71,14 +67,14 @@ namespace ProjectABC.Core
 
                 var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
-
+                
                 return;
             }
-
+            
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _excludedClubFlag, _powerUpRatio);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _enableLastResult, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -97,16 +93,16 @@ namespace ProjectABC.Core
         private class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Aura;
-
-            private readonly ClubType _excludedClubFlag;
-            private readonly int _powerUpRatio;
-        
-            public ExclusiveCardBuff(Card callCard, ClubType excludedClubFlag, int powerUpRatio) : base(callCard)
+            
+            private readonly LastRoundResult _enableLastResult;
+            private readonly int _powerUpBonus;
+            
+            public ExclusiveCardBuff(Card callCard, LastRoundResult enableLastResult, int powerUpBonus) : base(callCard)
             {
-                _excludedClubFlag = excludedClubFlag;
-                _powerUpRatio = powerUpRatio;
+                _enableLastResult = enableLastResult;
+                _powerUpBonus = powerUpBonus;
             }
-
+            
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
                 return args.OwnSide.Field.Contains(CallCard)
@@ -116,22 +112,27 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                int clubCountInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
+                IPlayer ownPlayer = args.OwnSide.Player;
+                int lastRound = args.GameState.Round - 1;
+
+                if (lastRound <= 0)
+                {
+                    return false;
+                }
+
+                var lastMatchResult = args.GameState.MatchResults.GetMatchResult(lastRound, ownPlayer);
+
+                bool isTargetEffectiveStand = args.OwnSide.IsEffectiveStandOnField(target);
+                bool isEnableResultLastMatch = _enableLastResult == LastRoundResult.Win
+                    ? lastMatchResult.Winner == ownPlayer
+                    : lastMatchResult.Loser == ownPlayer;
                 
-                return args.OwnSide.IsEffectiveStandOnField(target) && clubCountInInfirmary > 0;
+                return isEnableResultLastMatch && isTargetEffectiveStand;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
-                int clubCountInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
-            
-                return clubCountInInfirmary * _powerUpRatio;
+                return _powerUpBonus;
             }
         }
     }

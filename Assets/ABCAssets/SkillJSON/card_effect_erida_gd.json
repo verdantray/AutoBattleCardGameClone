@@ -1,0 +1,8 @@
+{
+  "card_effect_id": "effect_gain_win_points_on_success_attack",
+  "desc_key": "desc_effect_gain_win_points_on_success_attack",
+  "apply_triggers": [
+    "OnSwitchToDefend"
+  ],
+  "gain_win_points": 2
+}

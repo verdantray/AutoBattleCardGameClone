@@ -1,6 +1,6 @@
 {
-  "card_effect_id": "effect_power_up_self_as_each_field_amount",
-  "desc_key": "desc_effect_power_up_self_as_each_field_amount",
+  "card_effect_id": "effect_power_up_self_as_both_side_field_amount",
+  "desc_key": "desc_effect_power_up_self_as_both_side_field_amount",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

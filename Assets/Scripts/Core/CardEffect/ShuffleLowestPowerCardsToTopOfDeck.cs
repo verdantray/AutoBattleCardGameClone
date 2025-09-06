@@ -7,13 +7,13 @@ namespace ProjectABC.Core
     /// <summary>
     /// 덱에서 가장 낮은 파워 카드들을 덱 맨 위로 정렬
     /// </summary>
-    public class LowestPowerCardsToTopOfDeck : CardEffect
+    public class ShuffleLowestPowerCardsToTopOfDeck : CardEffect
     {
         private readonly string _failureDescKey;
         
         private readonly int _cardsAmount;
 
-        public LowestPowerCardsToTopOfDeck(Card card, JsonObject json) : base(card, json)
+        public ShuffleLowestPowerCardsToTopOfDeck(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -46,17 +46,37 @@ namespace ProjectABC.Core
                 
                 return;
             }
+
+            HashSet<int> rangeToMoveCardPowers = new HashSet<int>(ownSide.Deck
+                .OrderBy(card => card.BasePower)
+                .Take(_cardsAmount)
+                .Select(card => card.BasePower)
+                .Distinct());
             
-            var toMove = ownSide.Deck.OrderBy(card => card.BasePower).Take(_cardsAmount).ToList();
-            foreach (var card in toMove)
+            int moveCount = 0;
+            
+            for (int i = 0; i < ownSide.Deck.Count; i++)
             {
-                ownSide.Deck.Remove(card);
-                ownSide.Deck.AddToTop(card);
+                if (_cardsAmount == moveCount)
+                {
+                    break;
+                }
+
+                if (!rangeToMoveCardPowers.Contains(ownSide.Deck[i].BasePower))
+                {
+                    continue;
+                }
+
+                Card cardToShuffle = ownSide.Deck[i];
+
+                ownSide.Deck.Remove(cardToShuffle);
+                ownSide.Deck.AddToTop(cardToShuffle);
+
+                var moveCardsEffectEvent = new MoveCardsToTopOfDeckEvent(cardToShuffle, new MatchSnapshot(ownSide, otherSide));
+                moveCardsEffectEvent.RegisterEvent(matchContextEvent);
+                
+                moveCount++;
             }
-            
-            MatchSnapshot matchSnapshot = new MatchSnapshot(ownSide, otherSide);
-            var moveCardsEffectEvent = new MoveCardsToTopOfDeckEvent(toMove, matchSnapshot);
-            moveCardsEffectEvent.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()
@@ -68,11 +88,9 @@ namespace ProjectABC.Core
 
     public class MoveCardsToTopOfDeckEvent : MatchEventBase
     {
-        public readonly IReadOnlyList<CardSnapshot> MovedCardsToTopOfDeck;
-        
-        public MoveCardsToTopOfDeckEvent(IEnumerable<Card> movedCards, MatchSnapshot snapshot) : base(snapshot)
+        public MoveCardsToTopOfDeckEvent(Card movedCard, MatchSnapshot snapshot) : base(snapshot)
         {
-            MovedCardsToTopOfDeck = movedCards.Select(card => new CardSnapshot(card)).ToList();
+            
         }
     }
 }

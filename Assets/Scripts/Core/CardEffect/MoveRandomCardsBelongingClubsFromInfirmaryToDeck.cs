@@ -8,13 +8,13 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에 있는 특정 소속 카드 중 무작위 n장을 덱 맨 아래로 넣음
     /// </summary>
-    public class ReturnRandomCardsBelongingClubsToDeck : CardEffect
+    public class MoveRandomCardsBelongingClubsFromInfirmaryToDeck : CardEffect
     {
         private readonly string _failureDescKey;
         private readonly int _cardsAmount;
         private readonly ClubType _includedClubFlag;
         
-        public ReturnRandomCardsBelongingClubsToDeck(Card card, JsonObject json) : base(card, json)
+        public MoveRandomCardsBelongingClubsFromInfirmaryToDeck(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -27,7 +27,7 @@ namespace ProjectABC.Core
                         _cardsAmount = field.value.intValue;
                         break;
                     case "club_includes":
-
+                        
                         ClubType includeFlag = 0;
                         
                         foreach (var element in field.value.arr)
@@ -64,29 +64,6 @@ namespace ProjectABC.Core
                 return;
             }
 
-            List<Card> cardsToMove = new List<Card>();
-            
-            for (int i = 0; i < _cardsAmount; i++)
-            {
-                for (int j = ownSide.Infirmary.Count; j >= 0; j--)
-                {
-                    if (!ownSide.Infirmary[j].Contains(cardsBelongClubsInInfirmary[i]))
-                    {
-                        continue;
-                    }
-                    
-                    ownSide.Infirmary[j].Remove(cardsBelongClubsInInfirmary[i]);
-                    cardsToMove.Add(cardsBelongClubsInInfirmary[i]);
-
-                    if (ownSide.Infirmary[j].Count > 0)
-                    {
-                        continue;
-                    }
-                    
-                    ownSide.Infirmary.RemoveByIndex(j);
-                }
-            }
-
             CardEffectArgs onLeaveInfirmaryArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnLeaveInfirmary,
                 ownSide,
@@ -94,14 +71,40 @@ namespace ProjectABC.Core
                 gameState
             );
             
-            foreach (var card in cardsToMove)
+            for (int i = 0; i < _cardsAmount; i++)
             {
-                ownSide.Deck.Add(card);
-                card.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
-            }
+                if (cardsBelongClubsInInfirmary.Length <= i)
+                {
+                    break;
+                }
+                
+                Card cardToMove = cardsBelongClubsInInfirmary[i];
+                
+                for (int j = ownSide.Infirmary.Count; j >= 0; j--)
+                {
+                    if (!ownSide.Infirmary[j].Contains(cardToMove))
+                    {
+                        continue;
+                    }
+                    
+                    ownSide.Infirmary[j].Remove(cardToMove);
+                    if (ownSide.Infirmary[j].Count == 0)
+                    {
+                        ownSide.Infirmary.RemoveByIndex(j);
+                    }
+                    
+                    ownSide.Deck.Add(cardToMove);
+                    cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
 
-            var moveCardEffectEvent = new MoveCardsToBottomOfDeckEvent(cardsToMove, new MatchSnapshot(ownSide, otherSide));
-            moveCardEffectEvent.RegisterEvent(matchContextEvent);
+                    if (matchContextEvent.MatchFinished)
+                    {
+                        return;
+                    }
+                    
+                    var moveCardEffectEvent = new MoveCardToBottomOfDeckEvent(cardToMove, new MatchSnapshot(ownSide, otherSide));
+                    moveCardEffectEvent.RegisterEvent(matchContextEvent);
+                }
+            }
         }
 
         protected override string GetDescription()

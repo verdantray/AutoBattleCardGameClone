@@ -1,0 +1,12 @@
+{
+  "card_effect_id": "effect_give_power_up_to_specific_power_from_infirmary",
+  "desc_key": "desc_effect_give_power_up_to_specific_power_from_infirmary",
+  "apply_triggers": [
+    "OnEnterInfirmary"
+  ],
+  "cancel_triggers": [
+    "OnLeaveInfirmary"
+  ],
+  "power_criteria": 1,
+  "power_up_bonus": 1
+}

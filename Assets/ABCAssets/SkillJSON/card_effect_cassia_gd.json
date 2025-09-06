@@ -1,0 +1,11 @@
+{
+  "card_effect_id": "effect_power_up_self_as_each_won_count",
+  "desc_key": "desc_effect_power_up_self_as_each_won_count",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker"
+  ],
+  "cancel_triggers": [
+    "OnLeaveField"
+  ],
+  "power_up_ratio": 1
+}

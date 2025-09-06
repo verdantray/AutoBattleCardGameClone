@@ -1,0 +1,5 @@
+{
+  "card_effect_id": "effect_gain_win_points_on_recruit",
+  "desc_key": "desc_effect_gain_win_points_on_recruit",
+  "gain_win_points": 2
+}

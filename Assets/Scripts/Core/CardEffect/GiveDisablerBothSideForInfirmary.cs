@@ -1,20 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using ProjectABC.Data;
+
 
 namespace ProjectABC.Core
 {
-    /// <summary>
-    /// 양호실에 특정 동아리를 제외한 소속 수 N만큼 자신의 파워 증가
-    /// </summary>
-    public class PowerUpSelfAsEachClubsFromInfirmary : CardEffect
+    public class GiveDisablerBothSideForInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly ClubType _excludedClubFlag;
-        private readonly int _powerUpRatio;
         
-        public PowerUpSelfAsEachClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        public GiveDisablerBothSideForInfirmary(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -31,20 +26,6 @@ namespace ProjectABC.Core
 
                         _cancelTriggerFlag = flag;
                         break;
-                    case "club_excludes":
-                        
-                        ClubType excludeFlag = 0;
-
-                        foreach (var element in field.value.arr)
-                        {
-                            excludeFlag |= Enum.Parse<ClubType>(element.strValue, true);
-                        }
-
-                        _excludedClubFlag = excludeFlag;
-                        break;
-                    case "power_up_ratio":
-                        _powerUpRatio = field.value.intValue;
-                        break;
                 }
             }
         }
@@ -52,7 +33,7 @@ namespace ProjectABC.Core
         public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
-            
+
             bool isApplyTrigger = ApplyTriggerFlag.HasFlag(trigger);
             bool isCancelTrigger = _cancelTriggerFlag.HasFlag(trigger);
 
@@ -62,7 +43,8 @@ namespace ProjectABC.Core
             if (isBuffActive && isCancelTrigger)
             {
                 var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-                
+                handlers.AddRange(otherSide.CardBuffHandlers.FindAll(entry =>entry.CallCard == CallCard));
+
                 foreach (var handler in handlers)
                 {
                     handler.Release();
@@ -71,17 +53,18 @@ namespace ProjectABC.Core
 
                 var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
-
+                
                 return;
             }
-
+            
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _excludedClubFlag, _powerUpRatio);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
+                otherSide.CardBuffHandlers.Add(handler);
                 
                 var activeBuffEvent = new ActiveCardBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 activeBuffEvent.RegisterEvent(matchContextEvent);
@@ -96,42 +79,31 @@ namespace ProjectABC.Core
         
         private class ExclusiveCardBuff : CardBuff
         {
-            public override BuffType Type => BuffType.Aura;
-
-            private readonly ClubType _excludedClubFlag;
-            private readonly int _powerUpRatio;
+            public override BuffType Type => BuffType.Disabler;
         
-            public ExclusiveCardBuff(Card callCard, ClubType excludedClubFlag, int powerUpRatio) : base(callCard)
-            {
-                _excludedClubFlag = excludedClubFlag;
-                _powerUpRatio = powerUpRatio;
-            }
-
+            public ExclusiveCardBuff(Card callCard) : base(callCard) { }
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                return args.OwnSide.Field.Contains(CallCard)
-                    ? new[] { CallCard }
-                    : Array.Empty<Card>();
+                return args.OwnSide.Field;
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                int clubCountInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
+                HashSet<Card> infirmaryCardSet = new HashSet<Card>(args.OwnSide.Infirmary.GetAllCards());
                 
-                return args.OwnSide.IsEffectiveStandOnField(target) && clubCountInInfirmary > 0;
+                return target.AppliedCardBuffs.Exists(buff => infirmaryCardSet.Contains(buff.CallCard));
+            }
+
+            public override bool ShouldDisable(CardBuff other, Card target, CardBuffArgs args)
+            {
+                HashSet<Card> infirmaryCardSet = new HashSet<Card>(args.OwnSide.Infirmary.GetAllCards());
+
+                return infirmaryCardSet.Contains(other.CallCard);
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
-                int clubCountInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
-            
-                return clubCountInInfirmary * _powerUpRatio;
+                return 0;
             }
         }
     }
