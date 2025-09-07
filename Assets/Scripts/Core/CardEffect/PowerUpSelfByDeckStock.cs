@@ -2,17 +2,16 @@ using System;
 using System.Collections.Generic;
 using ProjectABC.Data;
 
+
 namespace ProjectABC.Core
 {
-    /// <summary>
-    /// 양호실의 남은 슬롯 n만큼 자신의 파워 증가
-    /// </summary>
-    public class PowerUpSelfAsEachInfirmarySlots : CardEffect
+    public class PowerUpSelfByDeckStock : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly int _powerUpRatio;
+        private readonly int _deckStock;
+        private readonly int _powerUpBonus;
         
-        public PowerUpSelfAsEachInfirmarySlots(Card card, JsonObject json) : base(card, json)
+        public PowerUpSelfByDeckStock(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -29,8 +28,11 @@ namespace ProjectABC.Core
 
                         _cancelTriggerFlag = flag;
                         break;
-                    case "power_up_ratio":
-                        _powerUpRatio = field.value.intValue;
+                    case "deck_stock":
+                        _deckStock = field.value.intValue;
+                        break;
+                    case "power_up_bonus":
+                        _powerUpBonus = field.value.intValue;
                         break;
                 }
             }
@@ -65,7 +67,7 @@ namespace ProjectABC.Core
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _powerUpRatio);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _deckStock, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -84,14 +86,16 @@ namespace ProjectABC.Core
         private class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Aura;
-
-            private readonly int _powerUpRatio;
-
-            public ExclusiveCardBuff(Card callCard, int powerUpRatio) : base(callCard)
+            
+            private readonly int _deckStock;
+            private readonly int _powerUpBonus;
+            
+            public ExclusiveCardBuff(Card callCard, int deckStock, int powerUpBonus) : base(callCard)
             {
-                _powerUpRatio = powerUpRatio;
+                _deckStock = deckStock;
+                _powerUpBonus = powerUpBonus;
             }
-
+            
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
                 return args.OwnSide.Field.Contains(CallCard)
@@ -102,12 +106,12 @@ namespace ProjectABC.Core
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
                 return args.OwnSide.IsEffectiveStandOnField(target)
-                       && args.OwnSide.Infirmary.IsSlotRemains;
+                       && args.OwnSide.Deck.Count >= _deckStock;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
-                return args.OwnSide.Infirmary.RemainSlotCount * _powerUpRatio;
+                return _powerUpBonus;
             }
         }
     }

@@ -1,0 +1,13 @@
+{
+  "card_effect_id": "effect_power_up_self_by_deck_stock",
+  "desc_key": "desc_effect_power_up_self_by_deck_stock",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "cancel_triggers": [
+    "OnLeaveField"
+  ],
+  "deck_stock": 15,
+  "power_up_ratio": 3
+}

@@ -1,0 +1,11 @@
+{
+  "card_effect_id": "effect_move_specific_grade_cards_from_piles_to_deck",
+  "desc_key": "desc_effect_move_specific_grade_cards_from_piles_to_deck",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "desc_fail_key":  "desc_fail_effect_move_specific_grade_cards_from_piles_to_deck",
+  "target_grade": "1st",
+  "card_amount": 1
+}

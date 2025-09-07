@@ -72,7 +72,7 @@ namespace ProjectABC.Core
                 ownSide.Deck.Remove(cardToShuffle);
                 ownSide.Deck.AddToTop(cardToShuffle);
 
-                var moveCardsEffectEvent = new MoveCardsToTopOfDeckEvent(cardToShuffle, new MatchSnapshot(ownSide, otherSide));
+                var moveCardsEffectEvent = new MoveCardToTopOfDeckEvent(cardToShuffle, new MatchSnapshot(ownSide, otherSide));
                 moveCardsEffectEvent.RegisterEvent(matchContextEvent);
                 
                 moveCount++;
@@ -86,9 +86,9 @@ namespace ProjectABC.Core
         }
     }
 
-    public class MoveCardsToTopOfDeckEvent : MatchEventBase
+    public class MoveCardToTopOfDeckEvent : MatchEventBase
     {
-        public MoveCardsToTopOfDeckEvent(Card movedCard, MatchSnapshot snapshot) : base(snapshot)
+        public MoveCardToTopOfDeckEvent(Card movedCard, MatchSnapshot snapshot) : base(snapshot)
         {
             
         }

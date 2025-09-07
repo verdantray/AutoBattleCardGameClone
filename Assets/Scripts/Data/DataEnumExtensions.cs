@@ -2,7 +2,7 @@ using System;
 
 namespace ProjectABC.Data
 {
-    internal static class DataEnumExtensions
+    public static class DataEnumExtensions
     {
         public static GradeType ParseGradeType(this string text)
         {
