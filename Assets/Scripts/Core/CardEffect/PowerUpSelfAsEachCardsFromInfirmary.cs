@@ -7,15 +7,14 @@ using ProjectABC.Data;
 namespace ProjectABC.Core
 {
     /// <summary>
-    /// 양호실에 특정 동아리 소속이 있는 경우 자신의 파워 N 증가
+    /// 양호실의 카드당 자신의 파워 n 증가
     /// </summary>
-    public class PowerUpSelfBelongClubsFromInfirmary : CardEffect
+    public class PowerUpSelfAsEachCardsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly ClubType _includedClubFlag;
-        private readonly int _powerUpBonus;
+        private readonly int _powerUpRatio;
         
-        public PowerUpSelfBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        public PowerUpSelfAsEachCardsFromInfirmary(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
@@ -32,19 +31,8 @@ namespace ProjectABC.Core
 
                         _cancelTriggerFlag = flag;
                         break;
-                    case "club_includes":
-
-                        ClubType includeFlag = 0;
-
-                        foreach (var element in field.value.arr)
-                        {
-                            includeFlag |= Enum.Parse<ClubType>(element.strValue, true);
-                        }
-
-                        _includedClubFlag = includeFlag;
-                        break;
-                    case "power_up_bonus":
-                        _powerUpBonus = field.value.intValue;
+                    case "power_up_ratio":
+                        _powerUpRatio =  field.value.intValue;
                         break;
                 }
             }
@@ -53,7 +41,7 @@ namespace ProjectABC.Core
         public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
-            
+
             bool isApplyTrigger = ApplyTriggerFlag.HasFlag(trigger);
             bool isCancelTrigger = _cancelTriggerFlag.HasFlag(trigger);
 
@@ -63,7 +51,7 @@ namespace ProjectABC.Core
             if (isBuffActive && isCancelTrigger)
             {
                 var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-                
+
                 foreach (var handler in handlers)
                 {
                     handler.Release();
@@ -72,14 +60,14 @@ namespace ProjectABC.Core
 
                 var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
-
+                
                 return;
             }
-
+            
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _powerUpBonus);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _powerUpRatio);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -94,18 +82,16 @@ namespace ProjectABC.Core
             // TODO: localization
             return DescriptionKey;
         }
-
+        
         private class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
+
+            private readonly int _powerUpRatio;
             
-            private readonly ClubType _includedClubFlag;
-            private readonly int _powerUpBonus;
-            
-            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, int powerUpBonus) : base(callCard)
+            public ExclusiveCardBuff(Card callCard, int powerUpRatio) : base(callCard)
             {
-                _includedClubFlag = includedClubFlag;
-                _powerUpBonus = powerUpBonus;
+                _powerUpRatio = powerUpRatio;
             }
             
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
@@ -117,16 +103,14 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                bool isTargetEffectiveStand = args.OwnSide.IsEffectiveStandOnField(target);
-                bool isClubExistsInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Any(card => _includedClubFlag.HasFlag(card.ClubType));
-                
-                return isTargetEffectiveStand && isClubExistsInInfirmary;
+                return args.OwnSide.IsEffectiveStandOnField(target);
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
-                return _powerUpBonus;
+                int infirmaryCardsCount = args.OwnSide.Infirmary.GetAllCards().Count();
+                
+                return infirmaryCardsCount * _powerUpRatio;
             }
         }
     }

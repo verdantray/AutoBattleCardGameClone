@@ -5,7 +5,8 @@ namespace ProjectABC.Core
 {
     public enum BuffType
     {
-        Aura,
+        Positive,
+        Negative,
         Disabler,
     }
     

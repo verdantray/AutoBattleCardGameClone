@@ -1,0 +1,14 @@
+{
+  "card_effect_id": "effect_power_up_self_as_each_card_types_belong_clubs",
+  "desc_key": "desc_effect_power_up_self_as_each_card_types_belong_clubs",
+  "apply_triggers": [
+    "OnEnterInfirmary"
+  ],
+  "cancel_triggers": [
+    "OnLeaveInfirmary"
+  ],
+  "club_includes": [
+    "TraditionExperience"
+  ],
+  "power_up_ratio": 2
+}

@@ -24,7 +24,7 @@ namespace ProjectABC.Core
         
         public MatchState State { get; private set; } = MatchState.Attacking;
         
-        private bool IsAttacking => State == MatchState.Attacking;
+        public bool IsAttacking => State == MatchState.Attacking;
         
         public MatchSide(PlayerState playerState)
         {

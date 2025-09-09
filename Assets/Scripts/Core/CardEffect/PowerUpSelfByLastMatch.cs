@@ -92,7 +92,7 @@ namespace ProjectABC.Core
         
         private class ExclusiveCardBuff : CardBuff
         {
-            public override BuffType Type => BuffType.Aura;
+            public override BuffType Type => BuffType.Positive;
             
             private readonly LastRoundResult _enableLastResult;
             private readonly int _powerUpBonus;

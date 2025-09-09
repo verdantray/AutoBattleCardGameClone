@@ -96,7 +96,7 @@ namespace ProjectABC.Core
         
         private class ExclusiveCardBuff : CardBuff
         {
-            public override BuffType Type => BuffType.Aura;
+            public override BuffType Type => BuffType.Positive;
 
             private readonly ClubType _excludedClubFlag;
             private readonly int _powerUpRatio;
@@ -116,12 +116,7 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                int clubCountInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Select(card => card.ClubType)
-                    .Distinct()
-                    .Count(club => !_excludedClubFlag.HasFlag(club));
-                
-                return args.OwnSide.IsEffectiveStandOnField(target) && clubCountInInfirmary > 0;
+                return args.OwnSide.IsEffectiveStandOnField(target);
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

@@ -6,7 +6,7 @@ namespace ProjectABC.Core
 {
     public enum MatchEndReason
     {
-        EndByEmptyHand,
+        EndByEmptyDeck,
         EndByFullOfInfirmary
     }
     
@@ -55,12 +55,11 @@ namespace ProjectABC.Core
                 // set attacker winner and return events
                 MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                     attacker.Player,
-                    MatchEndReason.EndByEmptyHand,
+                    MatchEndReason.EndByEmptyDeck,
                     new MatchSnapshot(attacker, defender)
                 );
                 
                 matchFinishEvent.RegisterEvent(matchContextEvent);
-                
                 return matchContextEvent;
             }
 
@@ -91,12 +90,11 @@ namespace ProjectABC.Core
                         // set defender winner and return events
                         MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                             defender.Player,
-                            MatchEndReason.EndByEmptyHand,
+                            MatchEndReason.EndByEmptyDeck,
                             new MatchSnapshot(attacker, defender)
                         );
                 
                         matchFinishEvent.RegisterEvent(matchContextEvent);
-                        
                         return matchContextEvent;
                     }
                     
@@ -170,35 +168,12 @@ namespace ProjectABC.Core
 
         private static void PutCardsOfDefenderFieldsToInfirmary(MatchSide defender, MatchSide attacker, GameState currentState, MatchContextEvent matchContextEvent)
         {
-            List<Card> cardsToInfirmary = new List<Card>();
-            
-            // replace movement instead put to infirmary
-            for (int i = defender.Field.Count - 1; i >= 0; i--)
-            {
-                Card fieldCard = defender.Field[i];
-                CardEffectArgs leaveFieldEffectArgs = new CardEffectArgs(
-                    EffectTriggerEvent.OnLeaveField,
-                    defender,
-                    attacker,
-                    currentState
-                );
-                
-                bool isMovementReplaced = fieldCard.CardEffect.TryReplaceMovement(leaveFieldEffectArgs, matchContextEvent);
-                if (!isMovementReplaced)
-                {
-                    cardsToInfirmary.Add(fieldCard);
-                    defender.Field.Remove(fieldCard);
-                }
-            }
-            
-            CheckApplyBuffs(defender, attacker, currentState, matchContextEvent);
-
-            if (cardsToInfirmary.Count == 0)
-            {
-                return;
-            }
-            
-            // put cards from defender field to infirmary
+            CardEffectArgs leaveFieldEffectArgs = new CardEffectArgs(
+                EffectTriggerEvent.OnLeaveField,
+                defender,
+                attacker,
+                currentState
+            );
             
             CardEffectArgs enterInfirmaryEffectArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnEnterInfirmary,
@@ -207,13 +182,26 @@ namespace ProjectABC.Core
                 currentState
             );
             
-            foreach (Card card in cardsToInfirmary)
+            while (defender.Field.Count == 0)
             {
-                defender.Infirmary.PutCard(card);
+                Card cardToMove = defender.Field[^1];
+                defender.Field.Remove(cardToMove);
+                
+                bool isMovementReplaced = cardToMove.CardEffect.TryReplaceMovement(leaveFieldEffectArgs, matchContextEvent);
+                
+                // replace movement instead put to infirmary
+                if (isMovementReplaced)
+                {
+                    CheckApplyBuffs(defender, attacker, currentState, matchContextEvent);
+                    continue;
+                }
+                
+                // put cards from defender field to infirmary
+                defender.Infirmary.PutCard(cardToMove);
                 
                 TryPutCardInfirmaryEvent putCardInfirmaryEvent = new TryPutCardInfirmaryEvent(
                     defender.Player,
-                    card,
+                    cardToMove,
                     new MatchSnapshot(defender, attacker)
                 );
                 
@@ -231,7 +219,7 @@ namespace ProjectABC.Core
                     return;
                 }
                 
-                card.CardEffect.CheckApplyEffect(enterInfirmaryEffectArgs, matchContextEvent);
+                cardToMove.CardEffect.CheckApplyEffect(enterInfirmaryEffectArgs, matchContextEvent);
                 if (matchContextEvent.MatchFinished)
                 {
                     return;
@@ -239,12 +227,12 @@ namespace ProjectABC.Core
             }
         }
 
-        private static void CheckApplyBuffs(MatchSide defender, MatchSide attacker, GameState currentState, MatchContextEvent matchContextEvent)
+        public static void CheckApplyBuffs(MatchSide playerASide, MatchSide playerBSide, GameState currentState, MatchContextEvent matchContextEvent)
         {
-            defender.CheckApplyCardBuffs(attacker, currentState);
-            attacker.CheckApplyCardBuffs(defender, currentState);
+            playerASide.CheckApplyCardBuffs(playerBSide, currentState);
+            playerBSide.CheckApplyCardBuffs(playerASide, currentState);
             
-            CheckApplyBuffEvent checkApplyBuffEvent = new CheckApplyBuffEvent(new MatchSnapshot(defender, attacker));
+            CheckApplyBuffEvent checkApplyBuffEvent = new CheckApplyBuffEvent(new MatchSnapshot(playerASide, playerBSide));
             checkApplyBuffEvent.RegisterEvent(matchContextEvent);
         }
 

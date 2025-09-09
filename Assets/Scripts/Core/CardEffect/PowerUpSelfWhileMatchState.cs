@@ -96,7 +96,7 @@ namespace ProjectABC.Core
 
         private class ExclusiveCardBuff : CardBuff
         {
-            public override BuffType Type => BuffType.Aura;
+            public override BuffType Type => BuffType.Positive;
 
             private readonly MatchState _enableStateFlag;
             private readonly int _powerUpBonus;

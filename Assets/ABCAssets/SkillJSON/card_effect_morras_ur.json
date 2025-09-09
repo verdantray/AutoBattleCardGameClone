@@ -1,0 +1,14 @@
+{
+  "card_effect_id": "effect_give_power_down_while_state_from_infirmary",
+  "desc_key": "desc_effect_give_power_down_while_state_from_infirmary",
+  "apply_triggers": [
+    "OnEnterInfirmary"
+  ],
+  "cancel_triggers": [
+    "OnLeaveInfirmary"
+  ],
+  "enable_match_states": [
+    "Attacking"
+  ],
+  "power_down_penalty": -1
+}

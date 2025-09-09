@@ -1,0 +1,10 @@
+{
+  "card_effect_id": "effect_move_random_cards_to_field",
+  "desc_key": "desc_effect_move_random_cards_to_field",
+  "desc_fail_key": "desc_fail_effect_move_random_cards_to_field",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker",
+    "OnEnterFieldAsDefender"
+  ],
+  "cards_amount": 2
+}

@@ -1,47 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using ProjectABC.Data;
 
 
 namespace ProjectABC.Core
 {
-    /// <summary>
-    /// 양호실에 특정 동아리 소속이 있는 경우 자신의 파워 N 증가
-    /// </summary>
-    public class PowerUpSelfBelongClubsFromInfirmary : CardEffect
+    public class PowerUpSelfIfAttackAlone : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly ClubType _includedClubFlag;
         private readonly int _powerUpBonus;
         
-        public PowerUpSelfBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        public PowerUpSelfIfAttackAlone(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {
                 switch (field.key)
                 {
                     case GameConst.CardEffect.EFFECT_CANCEL_TRIGGERS_KEY:
-
+                        
                         EffectTriggerEvent flag = 0;
-
+                        
                         foreach (var element in field.value.arr)
                         {
                             flag |= Enum.Parse<EffectTriggerEvent>(element.strValue, true);
                         }
 
                         _cancelTriggerFlag = flag;
-                        break;
-                    case "club_includes":
-
-                        ClubType includeFlag = 0;
-
-                        foreach (var element in field.value.arr)
-                        {
-                            includeFlag |= Enum.Parse<ClubType>(element.strValue, true);
-                        }
-
-                        _includedClubFlag = includeFlag;
                         break;
                     case "power_up_bonus":
                         _powerUpBonus = field.value.intValue;
@@ -79,7 +63,7 @@ namespace ProjectABC.Core
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _includedClubFlag, _powerUpBonus);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -94,17 +78,15 @@ namespace ProjectABC.Core
             // TODO: localization
             return DescriptionKey;
         }
-
+        
         private class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
-            
-            private readonly ClubType _includedClubFlag;
+
             private readonly int _powerUpBonus;
             
-            public ExclusiveCardBuff(Card callCard, ClubType includedClubFlag, int powerUpBonus) : base(callCard)
+            public ExclusiveCardBuff(Card callCard, int powerUpBonus) : base(callCard)
             {
-                _includedClubFlag = includedClubFlag;
                 _powerUpBonus = powerUpBonus;
             }
             
@@ -117,11 +99,10 @@ namespace ProjectABC.Core
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                bool isTargetEffectiveStand = args.OwnSide.IsEffectiveStandOnField(target);
-                bool isClubExistsInInfirmary = args.OwnSide.Infirmary.GetAllCards()
-                    .Any(card => _includedClubFlag.HasFlag(card.ClubType));
+                bool isAttacking = args.OwnSide.IsAttacking;
+                bool isTargetOnly = args.OwnSide.Field.Contains(target) && args.OwnSide.Field.Count == 1;
                 
-                return isTargetEffectiveStand && isClubExistsInInfirmary;
+                return isAttacking && isTargetOnly;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
@@ -130,4 +111,7 @@ namespace ProjectABC.Core
             }
         }
     }
+
+    
+        
 }

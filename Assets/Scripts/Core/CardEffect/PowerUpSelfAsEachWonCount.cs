@@ -5,6 +5,9 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
+    /// <summary>
+    /// 자신의 매치 승리 횟수 n 만큼 파워 증가
+    /// </summary>
     public class PowerUpSelfAsEachWonCount : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
@@ -81,7 +84,7 @@ namespace ProjectABC.Core
         
         private class ExclusiveCardBuff : CardBuff
         {
-            public override BuffType Type => BuffType.Aura;
+            public override BuffType Type => BuffType.Positive;
 
             private readonly int _powerUpRatio;
             
@@ -100,7 +103,7 @@ namespace ProjectABC.Core
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
                 return args.OwnSide.IsEffectiveStandOnField(target)
-                       && args.OwnSide.State == MatchState.Attacking;
+                       && args.OwnSide.IsAttacking;
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

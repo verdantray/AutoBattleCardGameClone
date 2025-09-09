@@ -249,7 +249,7 @@ namespace ProjectABC.InGame
             var stringReason = "";
             switch (reason)
             {
-                case MatchEndReason.EndByEmptyHand:
+                case MatchEndReason.EndByEmptyDeck:
                     stringReason = "덱의 모든 카드를 소진하였습니다.";
                     break;
                 

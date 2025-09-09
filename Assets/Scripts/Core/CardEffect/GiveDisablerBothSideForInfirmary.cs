@@ -91,7 +91,8 @@ namespace ProjectABC.Core
             {
                 HashSet<Card> infirmaryCardSet = new HashSet<Card>(args.OwnSide.Infirmary.GetAllCards());
                 
-                return target.AppliedCardBuffs.Exists(buff => infirmaryCardSet.Contains(buff.CallCard));
+                return args.OwnSide.IsEffectiveStandOnField(target)
+                       && target.AppliedCardBuffs.Exists(buff => infirmaryCardSet.Contains(buff.CallCard));
             }
 
             public override bool ShouldDisable(CardBuff other, Card target, CardBuffArgs args)

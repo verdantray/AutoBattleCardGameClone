@@ -1,0 +1,11 @@
+{
+  "card_effect_id": "effect_power_up_self_if_attack_alone",
+  "desc_key": "desc_effect_power_up_self_if_attack_alone",
+  "apply_triggers": [
+    "OnEnterFieldAsAttacker"
+  ],
+  "cancel_triggers": [
+    "OnLeaveField"
+  ],
+  "power_up_bonus": 2
+}
