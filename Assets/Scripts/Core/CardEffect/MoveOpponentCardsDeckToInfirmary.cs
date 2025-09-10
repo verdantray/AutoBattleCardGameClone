@@ -6,7 +6,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 상대의 덱에서 카드 n장을 양호실로 보냄
     /// </summary>
-    public class MoveOpponentCardsDeckToInfirmary : CardEffect
+    public sealed class MoveOpponentCardsDeckToInfirmary : CardEffect
     {
         private readonly int _cardsAmount;
         

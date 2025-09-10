@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 자신과 상대 필드의 카드 장수 만큼 자신의 공격력 n 증가
     /// </summary>
-    public class PowerUpSelfAsBothSideFieldAmount : CardEffect
+    public sealed class PowerUpSelfAsBothSideFieldAmount : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpRatio;
@@ -82,7 +82,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

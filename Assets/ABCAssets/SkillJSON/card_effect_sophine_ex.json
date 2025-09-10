@@ -1,6 +1,6 @@
 {
-  "card_effect_id": "effect_power_up_self_by_deck_stock",
-  "desc_key": "desc_effect_power_up_self_by_deck_stock",
+  "card_effect_id": "effect_power_up_self_by_opponent_deck_stock",
+  "desc_key": "desc_effect_power_up_self_by_opponent_deck_stock",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

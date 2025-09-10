@@ -9,7 +9,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실로 보내질 때 : 필드에 있는 카드 중 기본 파워 n인 카드 파워 + m만큼 증가
     /// </summary>
-    public class GivePowerUpToSpecificPowerFromInfirmary : CardEffect
+    public sealed class GivePowerUpToSpecificPowerFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerCriteria;
@@ -87,7 +87,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
             

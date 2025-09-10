@@ -3,7 +3,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class GainWinPointsOnSuccessAttack : CardEffect
+    public sealed class GainWinPointsOnSuccessAttack : CardEffect
     {
         private readonly int _gainWinPoints;
         

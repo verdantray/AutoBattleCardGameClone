@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 수비할 때 내 파워 + n 만큼 증가
     /// </summary>
-    public class PowerUpSelfWhileMatchState : CardEffect
+    public sealed class PowerUpSelfWhileMatchState : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly MatchState _enableStateFlag;
@@ -94,7 +94,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

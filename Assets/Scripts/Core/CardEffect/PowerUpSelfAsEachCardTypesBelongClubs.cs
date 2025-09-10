@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에서 특정 소속의 카드 1종당 내 파워 n만큼 증가
     /// </summary>
-    public class PowerUpSelfAsEachCardTypesBelongClubs : CardEffect
+    public sealed class PowerUpSelfAsEachCardTypesBelongClubs : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly ClubType _includedClubFlag;
@@ -93,7 +93,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

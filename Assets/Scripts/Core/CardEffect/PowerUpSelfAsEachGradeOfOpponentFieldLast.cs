@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 상대 필드의 마지막 카드의 학년 수치 n만큼 파워 증가
     /// </summary>
-    public class PowerUpSelfAsEachGradeOfOpponentFieldLast : CardEffect
+    public sealed class PowerUpSelfAsEachGradeOfOpponentFieldLast : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpRatio;
@@ -82,7 +82,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

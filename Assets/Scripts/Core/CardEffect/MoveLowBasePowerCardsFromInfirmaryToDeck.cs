@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using ProjectABC.Data;
 
@@ -8,7 +6,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에서 기본 파워가 기준 n 이하인 카드 m장을 덱 아래로 넣음
     /// </summary>
-    public class MoveLowBasePowerCardsFromInfirmaryToDeck : CardEffect
+    public sealed class MoveLowBasePowerCardsFromInfirmaryToDeck : CardEffect
     {
         private readonly string _failureDescKey;
 

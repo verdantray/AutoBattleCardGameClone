@@ -11,7 +11,7 @@ namespace ProjectABC.Core
         Lose,
     }
     
-    public class PowerUpSelfByLastMatch : CardEffect
+    public sealed class PowerUpSelfByLastMatch : CardEffect
     {
         
         private readonly EffectTriggerEvent _cancelTriggerFlag;
@@ -90,7 +90,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
             

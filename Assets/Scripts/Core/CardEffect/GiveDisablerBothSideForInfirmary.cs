@@ -5,7 +5,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class GiveDisablerBothSideForInfirmary : CardEffect
+    public sealed class GiveDisablerBothSideForInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         
@@ -77,7 +77,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Disabler;
         

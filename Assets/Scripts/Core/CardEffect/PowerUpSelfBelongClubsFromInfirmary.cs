@@ -9,7 +9,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에 특정 동아리 소속이 있는 경우 자신의 파워 N 증가
     /// </summary>
-    public class PowerUpSelfBelongClubsFromInfirmary : CardEffect
+    public sealed class PowerUpSelfBelongClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly ClubType _includedClubFlag;
@@ -95,7 +95,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
             

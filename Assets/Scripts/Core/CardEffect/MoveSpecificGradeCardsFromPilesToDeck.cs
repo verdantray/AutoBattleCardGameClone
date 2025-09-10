@@ -5,7 +5,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class MoveSpecificGradeCardsFromPilesToDeck : CardEffect
+    public sealed class MoveSpecificGradeCardsFromPilesToDeck : CardEffect
     {
         private readonly string _failureDescriptionKey;
         private readonly GradeType _targetGrade;

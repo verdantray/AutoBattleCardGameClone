@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실로 보내질 때 : 특정 동아리 소속의 카드가 공격 / 수비 중일 때 파워 + N 만큼 증가
     /// </summary>
-    public class GivePowerUpToBelongClubsFromInfirmary : CardEffect
+    public sealed class GivePowerUpToBelongClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly ClubType _includedClubFlag;
@@ -103,7 +103,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
             

@@ -3,7 +3,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class MoveDeckToInfirmary : CardEffect
+    public sealed class MoveDeckToInfirmary : CardEffect
     {
         private readonly int _cardsAmount;
         

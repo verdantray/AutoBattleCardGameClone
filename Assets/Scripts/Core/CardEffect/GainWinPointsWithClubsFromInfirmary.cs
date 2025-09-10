@@ -7,7 +7,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에 있는 카드들의 소속이 n종 이상일 시 일정한 승점 획득
     /// </summary>
-    public class GainWinPointsWithClubsFromInfirmary : CardEffect
+    public sealed class GainWinPointsWithClubsFromInfirmary : CardEffect
     {
         private readonly string _failureDescKey;
         

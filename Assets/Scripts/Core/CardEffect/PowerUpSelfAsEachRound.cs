@@ -8,7 +8,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 현재 라운드 n 만큼 자신의 파워 증가
     /// </summary>
-    public class PowerUpSelfAsEachRound : CardEffect
+    public sealed class PowerUpSelfAsEachRound : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpRatio;
@@ -82,7 +82,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

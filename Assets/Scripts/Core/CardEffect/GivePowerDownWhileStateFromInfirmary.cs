@@ -4,7 +4,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class GivePowerDownWhileStateFromInfirmary : CardEffect
+    public sealed class GivePowerDownWhileStateFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly MatchState _enableStateFlag;
@@ -90,7 +90,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Negative;
 

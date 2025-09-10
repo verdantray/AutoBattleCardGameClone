@@ -7,7 +7,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실의 남은 슬롯 n만큼 자신의 파워 증가
     /// </summary>
-    public class PowerUpSelfAsEachInfirmarySlots : CardEffect
+    public sealed class PowerUpSelfAsEachInfirmarySlots : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpRatio;
@@ -81,7 +81,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

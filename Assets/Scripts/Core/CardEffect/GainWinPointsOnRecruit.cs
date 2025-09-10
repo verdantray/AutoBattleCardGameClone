@@ -6,7 +6,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 카드 영입 시 승점 n 획득
     /// </summary>
-    public class GainWinPointsOnRecruit : CardEffect
+    public sealed class GainWinPointsOnRecruit : CardEffect
     {
         private readonly int _gainWinPoints;
         

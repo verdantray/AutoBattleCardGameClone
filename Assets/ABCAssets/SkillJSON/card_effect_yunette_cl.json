@@ -1,11 +1,10 @@
 {
-  "card_effect_id": "effect_return_low_base_power_cards_to_deck",
-  "desc_key": "desc_effect_return_low_base_power_cards_to_deck",
+  "card_effect_id": "effect_move_low_base_power_cards_from_infirmary_to_deck",
+  "desc_key": "desc_effect_move_low_base_power_cards_from_infirmary_to_deck",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"
   ],
-  "desc_fail_key": "desc_fail_effect_return_low_base_power_cards_to_deck",
   "cards_amount": 1,
   "power_criteria": 1
 }

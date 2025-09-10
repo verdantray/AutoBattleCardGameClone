@@ -6,5 +6,5 @@
     "OnEnterFieldAsDefender"
   ],
   "cards_amount": 2,
-  "desc_fail_key": "desc_fail_effect_shuffle_lowest_power_card_to_top_of_deck"
+  "desc_fail_key": "desc_effect_fail_not_enough_deck_stock"
 }

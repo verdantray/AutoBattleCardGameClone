@@ -4,7 +4,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class GainWinPointsByLastMatch : CardEffect
+    public sealed class GainWinPointsByLastMatch : CardEffect
     {
         private readonly LastRoundResult _enableLastResult;
         private readonly int _gainWinPoints;

@@ -5,7 +5,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class PowerUpSelfIfAttackAlone : CardEffect
+    public sealed class PowerUpSelfIfAttackAlone : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpBonus;
@@ -79,7 +79,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
         
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
 

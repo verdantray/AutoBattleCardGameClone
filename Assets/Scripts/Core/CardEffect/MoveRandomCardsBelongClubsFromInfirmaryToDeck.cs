@@ -7,13 +7,13 @@ namespace ProjectABC.Core
     /// <summary>
     /// 양호실에 있는 특정 소속 카드 중 무작위 n장을 덱 맨 아래로 넣음
     /// </summary>
-    public class MoveRandomCardsBelongingClubsFromInfirmaryToDeck : CardEffect
+    public sealed class MoveRandomCardsBelongClubsFromInfirmaryToDeck : CardEffect
     {
         private readonly string _failureDescKey;
         private readonly int _cardsAmount;
         private readonly ClubType _includedClubFlag;
         
-        public MoveRandomCardsBelongingClubsFromInfirmaryToDeck(Card card, JsonObject json) : base(card, json)
+        public MoveRandomCardsBelongClubsFromInfirmaryToDeck(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {

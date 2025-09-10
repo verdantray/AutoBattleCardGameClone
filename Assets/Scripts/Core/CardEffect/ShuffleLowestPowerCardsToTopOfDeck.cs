@@ -7,7 +7,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 덱에서 가장 낮은 파워 카드들을 덱 맨 위로 정렬
     /// </summary>
-    public class ShuffleLowestPowerCardsToTopOfDeck : CardEffect
+    public sealed class ShuffleLowestPowerCardsToTopOfDeck : CardEffect
     {
         private readonly string _failureDescKey;
         

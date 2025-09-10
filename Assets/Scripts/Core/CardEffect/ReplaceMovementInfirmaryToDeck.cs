@@ -5,7 +5,7 @@ namespace ProjectABC.Core
     /// <summary>
     /// 이 카드가 필드에서 벗어날 때 양호실 대신 덱 맨 아래로 이동
     /// </summary>
-    public class ReplaceMovementInfirmaryToDeck : CardEffect
+    public sealed class ReplaceMovementInfirmaryToDeck : CardEffect
     {
         public ReplaceMovementInfirmaryToDeck(Card card, JsonObject json) : base(card, json) { }
 

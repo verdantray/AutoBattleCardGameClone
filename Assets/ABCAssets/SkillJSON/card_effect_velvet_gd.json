@@ -1,6 +1,6 @@
 {
   "card_effect_id": "effect_power_up_self_by_last_match",
-  "desc_key": "desc_effect_power_up_self_by_last_match",
+  "desc_key": "desc_effect_power_up_self_if_won_last_match",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

@@ -4,7 +4,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class MoveRandomCardsToField : CardEffect
+    public sealed class MoveRandomCardsToField : CardEffect
     {
         private readonly string _failureDescriptionKey;
         private readonly int _cardsAmount;

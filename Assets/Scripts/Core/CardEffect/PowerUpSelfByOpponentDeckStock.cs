@@ -5,7 +5,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class PowerUpSelfByOpponentDeckStock : CardEffect
+    public sealed class PowerUpSelfByOpponentDeckStock : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _opponentDeckStock;
@@ -83,7 +83,7 @@ namespace ProjectABC.Core
             return DescriptionKey;
         }
 
-        private class ExclusiveCardBuff : CardBuff
+        private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Positive;
             

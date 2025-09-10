@@ -5,7 +5,6 @@
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"
   ],
-  "desc_fail_key":  "desc_fail_effect_move_low_base_power_cards_from_infirmary_to_deck",
   "cards_amount": 1,
   "power_criteria": 3
 }
