@@ -29,6 +29,8 @@ namespace ProjectABC.Data.Editor
                 return false;
             }
 
+            collection.Clear();
+            
             foreach (var textAsset in textAssets)
             {
                 var element = new T();
