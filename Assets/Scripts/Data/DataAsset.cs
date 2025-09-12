@@ -33,16 +33,15 @@ namespace ProjectABC.Data.Editor
             {
                 if (updater.TryUpdateData(sheetAddress, fieldName, collection))
                 {
-                    OnDataUpdated(fieldName);
                     break;
                 }
             }
         }
 
-        private void OnDataUpdated(string fieldName)
-        {
-            Undo.RecordObject(this, $"Update {name}.{fieldName}");
-        }
+        // private void OnDataUpdated(string fieldName)
+        // {
+        //     Undo.RecordObject(this, $"Update {name}.{fieldName}");
+        // }
 #endif
     }
 
@@ -50,41 +49,44 @@ namespace ProjectABC.Data.Editor
     [CustomEditor(typeof(DataAsset), editorForChildClasses: true)]
     public class DataAssetEditor : UnityEditor.Editor
     {
-        private readonly string[] propertyNames = { "sheetAddress", "dataUpdaters" };
         private static bool _foldOut = true;
         
-        private SerializedProperty[] serializedProperties = null;
+        protected virtual string[] PropertyNames => new[] { "sheetAddress", "dataUpdaters" };
+        protected SerializedProperty[] SerializedProperties = null;
         
         private void OnEnable()
         {
-            serializedProperties = new SerializedProperty[propertyNames.Length];
+            SerializedProperties = new SerializedProperty[PropertyNames.Length];
 
-            for (int i = 0; i < propertyNames.Length; i++)
+            for (int i = 0; i < PropertyNames.Length; i++)
             {
-                serializedProperties[i] = serializedObject.FindProperty(propertyNames[i]);
+                SerializedProperties[i] = serializedObject.FindProperty(PropertyNames[i]);
             }
         }
 
         public override void OnInspectorGUI()
         {
-            DrawPropertiesExcluding(serializedObject, propertyNames);
+            DrawPropertiesExcluding(serializedObject, PropertyNames);
             GUILayout.Space(EditorGUIUtility.singleLineHeight * 2.0f);
+            
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            
             DrawRemains();
+            
+            EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void DrawRemains()
+        protected virtual void DrawRemains()
         {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
-
             _foldOut = EditorGUILayout.Foldout(_foldOut, "Update Data from sheets");
             if (_foldOut)
             {
-                foreach (SerializedProperty property in serializedProperties)
-                {
-                    EditorGUILayout.PropertyField(property);
-                }
+                EditorGUI.indentLevel++;
+                
+                EditorGUILayout.PropertyField(SerializedProperties[0]);
+                EditorGUILayout.PropertyField(SerializedProperties[1]);
             
                 GUILayout.Space(EditorGUIUtility.singleLineHeight);
             
@@ -92,9 +94,9 @@ namespace ProjectABC.Data.Editor
                 {
                     EditorCoroutineRunner.StartCoroutine(UpdateDataRoutine());
                 }
+
+                EditorGUI.indentLevel--;
             }
-            
-            EditorGUILayout.EndVertical();
         }
 
         private IEnumerator UpdateDataRoutine()

@@ -21,6 +21,7 @@ namespace ProjectABC.Data
         HauteCuisine = 1 << 4,
         Unregistered = 1 << 5,
         TraditionExperience = 1 << 6,
+        Examiners = 1 << 7,
     }
     
     public enum GradeType
@@ -40,7 +41,7 @@ namespace ProjectABC.Data
         public int amount;
         public string titleKey;
         public string nameKey;
-        public string descKey;
+        public string cardEffectId;
         public string imagePath;
 
 #if UNITY_EDITOR
@@ -71,8 +72,8 @@ namespace ProjectABC.Data
                     case "name_key":
                         nameKey = cell.value;
                         break;
-                    case "desc_key":
-                        descKey = cell.value;
+                    case "card_effect_id":
+                        cardEffectId = cell.value;
                         break;
                     case "image_path":
                         imagePath = cell.value;

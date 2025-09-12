@@ -132,7 +132,6 @@ namespace ProjectABC.Core
 
         public string Title => CardData.titleKey;
         public string Name => CardData.nameKey;
-        public string Description => CardData.descKey;
         
         public readonly CardData CardData;
         public readonly CardEffect CardEffect;
