@@ -27,14 +27,11 @@ namespace ProjectABC.Data.Editor
 
         public abstract void UpdateDataFromSheet();
 
-        protected void UpdateData<T>(string fieldName, ICollection<T> collection) where T : IFieldUpdatable, new()
+        protected void UpdateData<T>(string fieldName, ICollection<T> collection, bool clearBeforeUpdate = true) where T : IFieldUpdatable, new()
         {
             foreach (var updater in dataUpdaters)
             {
-                if (updater.TryUpdateData(sheetAddress, fieldName, collection))
-                {
-                    break;
-                }
+                updater.TryUpdateData(sheetAddress, fieldName, collection, clearBeforeUpdate);
             }
         }
 

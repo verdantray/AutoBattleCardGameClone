@@ -32,7 +32,7 @@ namespace ProjectABC.Data.Editor
         public string updateFieldName;
         public SpreadSheetReader sheetReader;
 
-        public bool TryUpdateData<T>(string sheetAddress, string fieldName, ICollection<T> collection) where T : IFieldUpdatable, new()
+        public bool TryUpdateData<T>(string sheetAddress, string fieldName, ICollection<T> collection, bool clearBeforeUpdate) where T : IFieldUpdatable, new()
         {
             if (!fieldName.Equals(updateFieldName.Replace(" ", ""), StringComparison.InvariantCultureIgnoreCase))
             {
@@ -45,7 +45,10 @@ namespace ProjectABC.Data.Editor
             void OnGetSpreadSheet(GstuSpreadSheet spreadSheet)
             {
                 // StringBuilder sb = new StringBuilder();
-                collection.Clear();
+                if (clearBeforeUpdate)
+                {
+                    collection.Clear();
+                }
                 
                 foreach (var rowCells in spreadSheet.rows.primaryDictionary.Values)
                 {

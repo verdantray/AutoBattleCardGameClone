@@ -22,14 +22,17 @@ namespace ProjectABC.Data.Editor
         public string updateFieldName;
         public TextAsset[] textAssets;
 
-        public bool TryUpdateData<T>(string fieldName, ICollection<T> collection) where T : ILocalFieldUpdatable, new()
+        public bool TryUpdateData<T>(string fieldName, ICollection<T> collection, bool clearBeforeUpdate) where T : ILocalFieldUpdatable, new()
         {
             if (!fieldName.Equals(updateFieldName.Replace(" ", ""), StringComparison.InvariantCultureIgnoreCase))
             {
                 return false;
             }
 
-            collection.Clear();
+            if (clearBeforeUpdate)
+            {
+                collection.Clear();
+            }
             
             foreach (var textAsset in textAssets)
             {

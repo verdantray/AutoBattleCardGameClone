@@ -10,7 +10,7 @@ using UnityEditor;
 
 namespace ProjectABC.Data
 {
-    [CreateAssetMenu(fileName = "GameDataAsset", menuName = "Scripting/ScriptableObject Script Menu/DataAssets/GameDataAsset")]
+    [CreateAssetMenu(fileName = nameof(GameDataAsset), menuName = "Scripting/ScriptableObject Script Menu/DataAssets/GameDataAsset")]
     public class GameDataAsset : DataAsset
     {
         [SerializeField] private List<LocalDataUpdater> localDataUpdaters;
@@ -50,11 +50,11 @@ namespace ProjectABC.Data
             AssetDatabase.Refresh();
         }
 
-        private void UpdateLocalData<T>(string fieldName, ICollection<T> collection) where T : ILocalFieldUpdatable, new()
+        private void UpdateLocalData<T>(string fieldName, ICollection<T> collection, bool clearBeforeUpdate = true) where T : ILocalFieldUpdatable, new()
         {
             foreach (var localUpdater in localDataUpdaters)
             {
-                if (localUpdater.TryUpdateData(fieldName, collection))
+                if (localUpdater.TryUpdateData(fieldName, collection, clearBeforeUpdate))
                 {
                     break;
                 }

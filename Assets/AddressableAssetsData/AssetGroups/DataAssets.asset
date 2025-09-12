@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: DataAssets
   m_GUID: 14a71962475b51247a7db8ea4f48ef24
   m_SerializeEntries:
+  - m_GUID: a76ed54733d99924b9785b2f57ecf518
+    m_Address: LocalizationDataAsset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db5eab6a4102fc54e8d53fa21519e8e2
     m_Address: GameDataAsset
     m_ReadOnly: 0

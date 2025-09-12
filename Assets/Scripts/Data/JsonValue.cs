@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 namespace ProjectABC.Data
 {
@@ -27,8 +28,8 @@ namespace ProjectABC.Data
         public int intValue;
         public float floatValue;
         public bool boolValue;
-        public JsonObject obj = new JsonObject();
-        public List<JsonValue> arr = new List<JsonValue>();
+        [SerializeReference] public JsonObject obj = null;
+        [SerializeReference] public List<JsonValue> arr = null;
         
         public JsonValue() { }
 
