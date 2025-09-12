@@ -44,6 +44,10 @@ namespace ProjectABC.Data
         public void UpdateDataFromAssets()
         {
             UpdateLocalData(nameof(cardEffectData), cardEffectData);
+            
+            EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
         }
 
         private void UpdateLocalData<T>(string fieldName, ICollection<T> collection) where T : ILocalFieldUpdatable, new()
