@@ -28,6 +28,11 @@ namespace ProjectABC.Core
         protected CardEffect(Card card, JsonObject json)
         {
             CallCard = card;
+            
+            if (json == null)
+            {
+                return;
+            }
 
             foreach (var field in json.fields)
             {

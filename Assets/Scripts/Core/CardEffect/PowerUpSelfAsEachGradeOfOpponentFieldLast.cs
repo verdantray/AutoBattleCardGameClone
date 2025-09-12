@@ -115,8 +115,8 @@ namespace ProjectABC.Core
                     GradeType.Third => 3,
                     _ => throw new ArgumentOutOfRangeException()
                 };
-                
-                return powerFromGrade *  _powerUpRatio;
+
+                return powerFromGrade * _powerUpRatio;
             }
         }
     }

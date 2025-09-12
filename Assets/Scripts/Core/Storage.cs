@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ProjectABC.Data;
 
 namespace ProjectABC.Core
@@ -12,6 +13,7 @@ namespace ProjectABC.Core
         public readonly IReadOnlyList<CardData> CardDataForPiles;
         public readonly IReadOnlyList<RecruitData> RecruitData;
         public readonly IReadOnlyList<WinPointData> WinPointData;
+        public readonly IReadOnlyDictionary<string, CardEffectData> CardEffectData;
 
         private Storage(GameDataAsset gameDataAsset)
         {
@@ -19,6 +21,7 @@ namespace ProjectABC.Core
             CardDataForPiles = new List<CardData>(gameDataAsset.CardDataForPiles);
             RecruitData = new List<RecruitData>(gameDataAsset.RecruitData);
             WinPointData = new List<WinPointData>(gameDataAsset.WinPointData);
+            CardEffectData = gameDataAsset.CardEffectData.ToDictionary(data => data.id, data => data);
         }
 
         public static Storage CreateInstance(GameDataAsset gameDataAsset)

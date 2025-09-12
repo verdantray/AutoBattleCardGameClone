@@ -9,12 +9,12 @@ namespace ProjectABC.Core
     /// <summary>
     /// 상대 양호실의 동아리 소속 수 n 만큼 자신의 파워 증가
     /// </summary>
-    public sealed class PowerUpSelfAsEachOpponentClubsFromInfirmary : CardEffect
+    public sealed class PowerUpSelfAsEachOpponentBelongClubsFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
         private readonly int _powerUpRatio;
         
-        public PowerUpSelfAsEachOpponentClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
+        public PowerUpSelfAsEachOpponentBelongClubsFromInfirmary(Card card, JsonObject json) : base(card, json)
         {
             foreach (var field in json.fields)
             {

@@ -144,6 +144,8 @@ namespace ProjectABC.Core
 
             ClubType = CardData.clubType;
             GradeType = CardData.gradeType;
+            
+            CardEffect = CardEffectFactory.GetCardEffect(this, cardData.cardEffectId);
         }
 
         public void ApplyCardBuff<T>(T cardBuff) where T : CardBuff
