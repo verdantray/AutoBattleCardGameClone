@@ -6,7 +6,6 @@ namespace ProjectABC.Core
 {
     public sealed class MoveRandomCardsToField : CardEffect
     {
-        private readonly string _failureDescriptionKey;
         private readonly int _cardsAmount;
         
         public MoveRandomCardsToField(Card card, JsonObject json) : base(card, json)
@@ -15,9 +14,6 @@ namespace ProjectABC.Core
             {
                 switch (field.key)
                 {
-                    case "fail_desc_key":
-                        _failureDescriptionKey = field.value.strValue;
-                        break;
                     case "cards_amount":
                         _cardsAmount = field.value.intValue;
                         break;
@@ -43,9 +39,12 @@ namespace ProjectABC.Core
 
             if (cardsInInfirmary.Length == 0)
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(_failureDescriptionKey, new MatchSnapshot(ownSide, otherSide));
+                var failEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
+                
                 failEffectEvent.RegisterEvent(matchContextEvent);
-
                 return;
             }
             
@@ -118,8 +117,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _cardsAmount);
         }
     }
 }

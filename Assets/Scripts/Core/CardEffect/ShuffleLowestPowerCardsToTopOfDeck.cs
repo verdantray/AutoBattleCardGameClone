@@ -9,8 +9,6 @@ namespace ProjectABC.Core
     /// </summary>
     public sealed class ShuffleLowestPowerCardsToTopOfDeck : CardEffect
     {
-        private readonly string _failureDescKey;
-        
         private readonly int _cardsAmount;
 
         public ShuffleLowestPowerCardsToTopOfDeck(Card card, JsonObject json) : base(card, json)
@@ -19,9 +17,6 @@ namespace ProjectABC.Core
             {
                 switch (field.key)
                 {
-                    case GameConst.CardEffect.EFFECT_FAILURE_DESC_KEY :
-                        _failureDescKey = field.value.strValue;
-                        break;
                     case "cards_amount":
                         _cardsAmount = field.value.intValue;
                         break;
@@ -41,9 +36,12 @@ namespace ProjectABC.Core
             // if amount of remain hands less than _cardsAmount, then no need to move cards to top of deck...
             if (ownSide.Deck.Count < _cardsAmount)
             {
-                var failedEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                failedEffectEvent.RegisterEvent(matchContextEvent);
+                var failedEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoDeckRemains,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
                 
+                failedEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
@@ -81,8 +79,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO : use localization and format
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _cardsAmount);
         }
     }
 

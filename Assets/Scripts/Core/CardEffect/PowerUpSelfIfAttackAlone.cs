@@ -5,6 +5,9 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
+    /// <summary>
+    /// 공격할 때 필드의 유일한 카드라면 자신의 파워 +n
+    /// </summary>
     public sealed class PowerUpSelfIfAttackAlone : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
@@ -75,8 +78,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _powerUpBonus);
         }
         
         private sealed class ExclusiveCardBuff : CardBuff

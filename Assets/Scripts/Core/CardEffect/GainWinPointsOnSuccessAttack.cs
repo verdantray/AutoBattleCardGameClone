@@ -31,6 +31,11 @@ namespace ProjectABC.Core
 
             if (ownSide.Field[^1] != CallCard)
             {
+                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
+                failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
@@ -48,8 +53,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _gainWinPoints);
         }
     }
 }

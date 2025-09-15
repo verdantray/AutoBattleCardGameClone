@@ -49,6 +49,12 @@ namespace ProjectABC.Core
 
             if (!isEnableResultLastMatch)
             {
+                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
+                
+                failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
@@ -66,8 +72,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _gainWinPoints);
         }
     }
 }

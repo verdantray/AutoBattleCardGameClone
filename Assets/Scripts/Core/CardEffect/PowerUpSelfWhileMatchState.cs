@@ -90,8 +90,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _powerUpBonus);
         }
 
         private sealed class ExclusiveCardBuff : CardBuff

@@ -16,7 +16,6 @@ namespace ProjectABC.Core
 
             foreach (var (playerAState, playerBState) in matchingPairs)
             {
-                // TODO : run match include gained win points
                 MatchContextEvent matchContextEvent = MatchContextEvent.RunMatch(currentState, playerAState, playerBState);
                 
                 matchContextEvent.Publish();

@@ -5,6 +5,5 @@
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"
   ],
-  "cards_amount": 2,
-  "desc_fail_key": "desc_effect_fail_not_enough_deck_stock"
+  "cards_amount": 2
 }

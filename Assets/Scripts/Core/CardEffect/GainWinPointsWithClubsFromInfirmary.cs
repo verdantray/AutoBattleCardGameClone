@@ -9,8 +9,6 @@ namespace ProjectABC.Core
     /// </summary>
     public sealed class GainWinPointsWithClubsFromInfirmary : CardEffect
     {
-        private readonly string _failureDescKey;
-        
         private readonly ClubType _excludedClubFlag;
         private readonly int _necessaryClubAmount;
         private readonly int _gainWinPoints;
@@ -21,9 +19,6 @@ namespace ProjectABC.Core
             {
                 switch (field.key)
                 {
-                    case GameConst.CardEffect.EFFECT_FAILURE_DESC_KEY :
-                        _failureDescKey = field.value.strValue;
-                        break;
                     case "club_excludes":
 
                         ClubType excludeFlag = 0;
@@ -63,9 +58,12 @@ namespace ProjectABC.Core
 
             if (clubsInInfirmary < _necessaryClubAmount)
             {
-                var failedApplyEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                failedApplyEffectEvent.RegisterEvent(matchContextEvent);
+                var failedApplyEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
                 
+                failedApplyEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
@@ -81,8 +79,16 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO : use localization and format
-            return DescriptionKey;
+            var excludeClubs = ((ClubType[])Enum.GetValues(typeof(ClubType)))
+                .Where(club => _excludedClubFlag.HasFlag(club))
+                .Select(club => LocalizationHelper.Instance.Localize(club.GetLocalizationKey()));
+
+            return LocalizationHelper.Instance.Localize(
+                DescriptionKey,
+                string.Join(", ", excludeClubs),
+                _necessaryClubAmount,
+                _gainWinPoints
+            );
         }
     }
     

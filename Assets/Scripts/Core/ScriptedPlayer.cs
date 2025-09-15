@@ -60,6 +60,20 @@ namespace ProjectABC.Core
             return task;
         }
 
+        public Task<DeleteCardsAction> DeleteCardsAsync(PlayerState myState)
+        {
+            // TODO : use PCG32
+            Random random = new Random();
+            
+            int deleteAmount = Enumerable.Range(0, myState.Deck.Count - 1).OrderBy(_ => random.Next()).First();
+            List<Card> cardsToDelete = myState.Deck.OrderBy(_ => random.Next()).Take(deleteAmount).ToList();
+
+            DeleteCardsAction action = new DeleteCardsAction(this, cardsToDelete);
+            Task<DeleteCardsAction> task = Task.FromResult(action);
+            
+            return task;
+        }
+
         public Task WaitUntilConfirmToProceed()
         {
             return Task.CompletedTask;

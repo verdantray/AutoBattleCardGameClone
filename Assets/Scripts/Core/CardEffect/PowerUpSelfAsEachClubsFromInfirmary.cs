@@ -90,8 +90,11 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            var excludeClubs = ((ClubType[])Enum.GetValues(typeof(ClubType)))
+                .Where(club => _excludedClubFlag.HasFlag(club))
+                .Select(club => LocalizationHelper.Instance.Localize(club.GetLocalizationKey()));
+
+            return LocalizationHelper.Instance.Localize(DescriptionKey, string.Join(", ", excludeClubs), _powerUpRatio);
         }
         
         private sealed class ExclusiveCardBuff : CardBuff

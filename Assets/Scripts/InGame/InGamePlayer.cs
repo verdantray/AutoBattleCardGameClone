@@ -30,6 +30,11 @@ namespace ProjectABC.InGame
             return action;
         }
 
+        public Task<DeleteCardsAction> DeleteCardsAsync(PlayerState myState)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task WaitUntilConfirmToProceed()
         {
             while (InGameController.Instance.IsBattleFinished == false)

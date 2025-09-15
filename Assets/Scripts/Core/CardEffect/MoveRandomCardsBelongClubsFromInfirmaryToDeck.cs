@@ -9,7 +9,6 @@ namespace ProjectABC.Core
     /// </summary>
     public sealed class MoveRandomCardsBelongClubsFromInfirmaryToDeck : CardEffect
     {
-        private readonly string _failureDescKey;
         private readonly int _cardsAmount;
         private readonly ClubType _includedClubFlag;
         
@@ -19,9 +18,6 @@ namespace ProjectABC.Core
             {
                 switch (field.key)
                 {
-                    case GameConst.CardEffect.EFFECT_FAILURE_DESC_KEY:
-                        _failureDescKey = field.value.strValue;
-                        break;
                     case "cards_amount":
                         _cardsAmount = field.value.intValue;
                         break;
@@ -59,9 +55,12 @@ namespace ProjectABC.Core
 
             if (cardsBelongClubsInInfirmary.Length == 0)
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                failEffectEvent.RegisterEvent(matchContextEvent);
+                var failEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
                 
+                failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
@@ -110,8 +109,11 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            var clubs = ((ClubType[])Enum.GetValues(typeof(ClubType)))
+                .Where(club => _includedClubFlag.HasFlag(club))
+                .Select(club => LocalizationHelper.Instance.Localize(club.GetLocalizationKey()));
+
+            return LocalizationHelper.Instance.Localize(DescriptionKey, string.Join(", ", clubs), _cardsAmount);
         }
     }
 }

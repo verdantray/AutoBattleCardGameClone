@@ -14,5 +14,15 @@ namespace ProjectABC.Data
                 _ => throw new ArgumentException($"'{text}' is unknown grade type")
             };
         }
+
+        public static string GetLocalizationKey(this GradeType gradeType)
+        {
+            return $"grade_{gradeType.ToString().ToLowerInvariant()}";
+        }
+
+        public static string GetLocalizationKey(this ClubType clubType)
+        {
+            return $"club_{clubType.ToString().ToLowerInvariant()}";
+        }
     }
 }

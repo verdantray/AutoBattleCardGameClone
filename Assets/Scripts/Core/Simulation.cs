@@ -38,6 +38,13 @@ namespace ProjectABC.Core
             for (int round = 1; round <= GameConst.GameOption.MAX_ROUND; round++)
             {
                 _gamePhases.Enqueue(new PreparationPhase(round));
+
+                // TODO: use schedule data
+                if (round is 3 or 7)
+                {
+                    _gamePhases.Enqueue(new DeletionPhase());
+                }
+                
                 _gamePhases.Enqueue(new RecruitPhase());
                 _gamePhases.Enqueue(new BattlePhase());
             }

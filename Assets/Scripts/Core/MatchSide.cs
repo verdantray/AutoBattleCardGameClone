@@ -45,7 +45,6 @@ namespace ProjectABC.Core
             bool isSuccessToDraw = Deck.TryDraw(out drawn);
             if (isSuccessToDraw)
             {
-                // TODO: call draw effect after implements card abilities
                 Field.Add(drawn);
             }
 

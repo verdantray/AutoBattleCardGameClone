@@ -130,8 +130,8 @@ namespace ProjectABC.Core
         public ClubType ClubType { get; private set; }
         public GradeType GradeType { get; private set; }
 
-        public string Title => CardData.titleKey;
-        public string Name => CardData.nameKey;
+        public string Title => LocalizationHelper.Instance.Localize(CardData.titleKey);
+        public string Name => LocalizationHelper.Instance.Localize(CardData.nameKey);
         
         public readonly CardData CardData;
         public readonly CardEffect CardEffect;
@@ -187,7 +187,7 @@ namespace ProjectABC.Core
 
         public override string ToString()
         {
-            return $"(Card Id : {Id} / BasePower : {BasePower} / Club : {ClubType} / Grade : {GradeType})";
+            return $"{Title} {Name} ({Id} / {BasePower} / {CardEffect.Description})";
         }
     }
 }

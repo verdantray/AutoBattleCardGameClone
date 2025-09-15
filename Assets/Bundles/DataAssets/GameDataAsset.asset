@@ -837,7 +837,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -847,7 +847,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -857,24 +857,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701184
+          - rid: 7078914588109701185
       - key: target_grade
         value:
           type: 0
@@ -883,9 +869,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
-      - key: card_amount
+      - key: cards_amount
         value:
           type: 1
           strValue: 
@@ -893,7 +879,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_astra_ba
     json:
@@ -906,7 +892,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -916,7 +902,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -926,24 +912,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701186
+          - rid: 7078914588109701187
       - key: cancel_triggers
         value:
           type: 6
@@ -952,16 +924,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701188
       - key: power_up_ratio
         value:
           type: 1
@@ -970,7 +935,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_astra_ex
     json:
@@ -983,7 +948,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -993,7 +958,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1003,24 +968,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701189
+          - rid: 7078914588109701190
       - key: cancel_triggers
         value:
           type: 6
@@ -1029,16 +980,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701191
       - key: power_up_ratio
         value:
           type: 1
@@ -1047,7 +991,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_ayame_te
     json:
@@ -1060,7 +1004,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1070,7 +1014,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1080,16 +1024,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701192
       - key: cancel_triggers
         value:
           type: 6
@@ -1098,16 +1035,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701193
       - key: club_includes
         value:
           type: 6
@@ -1116,16 +1046,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: TraditionExperience
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701194
       - key: enable_match_states
         value:
           type: 6
@@ -1134,24 +1057,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Attacking
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: Defending
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701195
+          - rid: 7078914588109701196
       - key: power_up_bonus
         value:
           type: 1
@@ -1160,7 +1069,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_cassia_ex
     json:
@@ -1173,7 +1082,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1183,7 +1092,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1193,16 +1102,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701197
       - key: cancel_triggers
         value:
           type: 6
@@ -1211,16 +1113,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701198
       - key: power_up_ratio
         value:
           type: 1
@@ -1229,7 +1124,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_cassia_gd
     json:
@@ -1242,7 +1137,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1252,7 +1147,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1262,16 +1157,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701199
       - key: cancel_triggers
         value:
           type: 6
@@ -1280,16 +1168,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701200
       - key: power_up_ratio
         value:
           type: 1
@@ -1298,7 +1179,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_cosmi_ba
     json:
@@ -1311,7 +1192,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1321,7 +1202,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1331,24 +1212,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701201
+          - rid: 7078914588109701202
       - key: cancel_triggers
         value:
           type: 6
@@ -1357,16 +1224,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701203
       - key: club_includes
         value:
           type: 6
@@ -1375,16 +1235,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Band
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701204
       - key: power_up_bonus
         value:
           type: 1
@@ -1393,7 +1246,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_creva_ur
     json:
@@ -1406,7 +1259,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1416,7 +1269,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1426,25 +1279,11 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-      - key: card_amount
+          - rid: 7078914588109701205
+          - rid: 7078914588109701206
+      - key: cards_amount
         value:
           type: 1
           strValue: 
@@ -1452,7 +1291,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_elara_ba
     json:
@@ -1465,7 +1304,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1475,7 +1314,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1485,16 +1324,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701207
       - key: cancel_triggers
         value:
           type: 6
@@ -1503,16 +1335,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701208
       - key: club_includes
         value:
           type: 6
@@ -1521,16 +1346,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Band
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701209
       - key: enable_match_states
         value:
           type: 6
@@ -1539,24 +1357,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Attacking
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: Defending
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701210
+          - rid: 7078914588109701211
       - key: power_up_bonus
         value:
           type: 1
@@ -1565,7 +1369,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_elicia_co
     json:
@@ -1578,17 +1382,17 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
           type: 0
-          strValue: desc_effect_gain_win_points_with_clubs_from_infirmary_exclude_council
+          strValue: desc_effect_gain_win_points_with_clubs_from_infirmary
           intValue: 0
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1598,24 +1402,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701212
+          - rid: 7078914588109701213
       - key: club_excludes
         value:
           type: 6
@@ -1624,16 +1414,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Council
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701214
       - key: necessary_club_amount
         value:
           type: 1
@@ -1642,7 +1425,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: gain_win_points
         value:
@@ -1652,17 +1435,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
-          arr: []
-      - key: desc_fail_key
-        value:
-          type: 0
-          strValue: desc_effect_fail_not_enough_cards_meet_condition
-          intValue: 0
-          floatValue: 0
-          boolValue: 0
-          obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_elite
     json:
@@ -1675,7 +1448,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1685,7 +1458,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1695,7 +1468,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_erida_gd
     json:
@@ -1708,7 +1481,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1718,7 +1491,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1728,16 +1501,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnSwitchToDefend
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701215
       - key: gain_win_points
         value:
           type: 1
@@ -1746,7 +1512,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_exid_ur
     json:
@@ -1759,7 +1525,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1769,7 +1535,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1779,25 +1545,11 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-      - key: card_amount
+          - rid: 7078914588109701216
+          - rid: 7078914588109701217
+      - key: cards_amount
         value:
           type: 1
           strValue: 
@@ -1805,7 +1557,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_flag_gd
     json:
@@ -1818,7 +1570,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1828,7 +1580,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1838,24 +1590,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701218
+          - rid: 7078914588109701219
       - key: cancel_triggers
         value:
           type: 6
@@ -1864,16 +1602,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701220
       - key: enable_last_result
         value:
           type: 0
@@ -1882,7 +1613,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_bonus
         value:
@@ -1892,7 +1623,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_glitch_gd
     json:
@@ -1905,7 +1636,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1915,7 +1646,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1925,24 +1656,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFIeldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701221
+          - rid: 7078914588109701222
       - key: enable_last_result
         value:
           type: 0
@@ -1951,7 +1668,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: gain_win_points
         value:
@@ -1961,7 +1678,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_hiyori_te
     json:
@@ -1974,7 +1691,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -1984,7 +1701,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -1994,16 +1711,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701223
       - key: cancel_triggers
         value:
           type: 6
@@ -2012,16 +1722,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701224
       - key: club_includes
         value:
           type: 6
@@ -2030,16 +1733,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: TraditionExperience
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701225
       - key: power_up_ratio
         value:
           type: 1
@@ -2048,7 +1744,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_kanade_te
     json:
@@ -2061,7 +1757,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2071,7 +1767,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2081,24 +1777,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701226
+          - rid: 7078914588109701227
       - key: cards_amount
         value:
           type: 1
@@ -2107,7 +1789,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_kohane_te
     json:
@@ -2120,7 +1802,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2130,7 +1812,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2140,16 +1822,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701228
       - key: cancel_triggers
         value:
           type: 6
@@ -2158,16 +1833,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701229
       - key: power_criteria
         value:
           type: 1
@@ -2176,7 +1844,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_bonus
         value:
@@ -2186,7 +1854,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_libre_cl
     json:
@@ -2199,7 +1867,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2209,7 +1877,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2219,16 +1887,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701230
   - id: card_effect_lisenna_co
     json:
       fields:
@@ -2240,7 +1901,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2250,7 +1911,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2260,24 +1921,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701231
+          - rid: 7078914588109701232
       - key: cards_amount
         value:
           type: 1
@@ -2286,17 +1933,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
-          arr: []
-      - key: desc_fail_key
-        value:
-          type: 0
-          strValue: desc_effect_fail_not_enough_deck_stock
-          intValue: 0
-          floatValue: 0
-          boolValue: 0
-          obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_melisa_ba
     json:
@@ -2309,7 +1946,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2319,7 +1956,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2329,16 +1966,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701233
       - key: cancel_triggers
         value:
           type: 6
@@ -2347,16 +1977,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701234
       - key: power_criteria
         value:
           type: 1
@@ -2365,7 +1988,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_bonus
         value:
@@ -2375,7 +1998,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_mocha_hc
     json:
@@ -2388,7 +2011,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2398,7 +2021,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2408,24 +2031,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701235
+          - rid: 7078914588109701236
       - key: cancel_triggers
         value:
           type: 6
@@ -2434,16 +2043,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701237
       - key: deck_stock
         value:
           type: 1
@@ -2452,7 +2054,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_ratio
         value:
@@ -2462,7 +2064,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_morras_ur
     json:
@@ -2475,7 +2077,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2485,7 +2087,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2495,16 +2097,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701238
       - key: cancel_triggers
         value:
           type: 6
@@ -2513,16 +2108,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701239
       - key: enable_match_states
         value:
           type: 6
@@ -2531,16 +2119,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Attacking
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701240
       - key: power_down_penalty
         value:
           type: 1
@@ -2549,7 +2130,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_neria_ba
     json:
@@ -2562,7 +2143,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2572,7 +2153,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2582,24 +2163,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701241
+          - rid: 7078914588109701242
       - key: cancel_triggers
         value:
           type: 6
@@ -2608,16 +2175,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701243
       - key: enable_match_states
         value:
           type: 6
@@ -2626,16 +2186,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Defending
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701244
       - key: power_up_bonus
         value:
           type: 1
@@ -2644,7 +2197,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_nirvel_ur
     json:
@@ -2657,7 +2210,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2667,7 +2220,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2677,16 +2230,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701245
       - key: cancel_triggers
         value:
           type: 6
@@ -2695,16 +2241,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701246
       - key: power_up_bonus
         value:
           type: 1
@@ -2713,7 +2252,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_orca_cl
     json:
@@ -2726,7 +2265,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2736,7 +2275,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2746,24 +2285,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701247
+          - rid: 7078914588109701248
       - key: cancel_triggers
         value:
           type: 6
@@ -2772,16 +2297,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701249
       - key: power_up_ratio
         value:
           type: 1
@@ -2790,7 +2308,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_orca_ex
     json:
@@ -2803,7 +2321,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2813,7 +2331,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2823,25 +2341,11 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-      - key: card_amount
+          - rid: 7078914588109701250
+          - rid: 7078914588109701251
+      - key: cards_amount
         value:
           type: 1
           strValue: 
@@ -2849,7 +2353,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_orphia_co
     json:
@@ -2862,17 +2366,17 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
           type: 0
-          strValue: desc_effect_power_up_self_as_each_clubs_from_infirmary_exclude_council
+          strValue: desc_effect_power_up_self_as_each_clubs_from_infirmary
           intValue: 0
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2882,24 +2386,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701252
+          - rid: 7078914588109701253
       - key: cancel_triggers
         value:
           type: 6
@@ -2908,16 +2398,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701254
       - key: club_excludes
         value:
           type: 6
@@ -2926,16 +2409,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Council
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701255
       - key: power_up_ratio
         value:
           type: 1
@@ -2944,7 +2420,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_script_gd
     json:
@@ -2957,7 +2433,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -2967,7 +2443,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -2977,24 +2453,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701256
+          - rid: 7078914588109701257
       - key: cancel_triggers
         value:
           type: 6
@@ -3003,16 +2465,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701258
   - id: card_effect_selina_cl
     json:
       fields:
@@ -3024,17 +2479,17 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
           type: 0
-          strValue: desc_effect_move_random_cards_belong_council_from_infirmary_to_deck
+          strValue: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
           intValue: 0
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3044,24 +2499,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701259
+          - rid: 7078914588109701260
       - key: cards_amount
         value:
           type: 1
@@ -3070,7 +2511,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: club_includes
         value:
@@ -3080,16 +2521,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Council
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701261
   - id: card_effect_selina_ex
     json:
       fields:
@@ -3101,7 +2535,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3111,7 +2545,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3121,24 +2555,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701262
+          - rid: 7078914588109701263
       - key: cancel_triggers
         value:
           type: 6
@@ -3147,16 +2567,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701264
       - key: power_up_ratio
         value:
           type: 1
@@ -3165,7 +2578,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_selina_hc
     json:
@@ -3178,17 +2591,17 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
           type: 0
-          strValue: desc_effect_move_random_cards_belong_council_from_infirmary_to_deck
+          strValue: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
           intValue: 0
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3198,24 +2611,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701265
+          - rid: 7078914588109701266
       - key: cards_amount
         value:
           type: 1
@@ -3224,7 +2623,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: club_includes
         value:
@@ -3234,16 +2633,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Council
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701267
   - id: card_effect_serano_ur
     json:
       fields:
@@ -3255,7 +2647,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3265,7 +2657,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3275,16 +2667,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701268
       - key: cancel_triggers
         value:
           type: 6
@@ -3293,16 +2678,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701269
       - key: club_includes
         value:
           type: 6
@@ -3311,16 +2689,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Unregistered
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701270
       - key: enable_match_states
         value:
           type: 6
@@ -3329,24 +2700,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Attacking
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: Defending
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701271
+          - rid: 7078914588109701272
       - key: power_up_bonus
         value:
           type: 1
@@ -3355,7 +2712,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_seredy_cl
     json:
@@ -3368,7 +2725,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3378,7 +2735,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3388,16 +2745,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701273
       - key: cancel_triggers
         value:
           type: 6
@@ -3406,16 +2756,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701274
       - key: club_includes
         value:
           type: 6
@@ -3424,16 +2767,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Coastline
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701275
       - key: enable_match_states
         value:
           type: 6
@@ -3442,24 +2778,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Attacking
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: Defending
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701276
+          - rid: 7078914588109701277
       - key: power_up_bonus
         value:
           type: 1
@@ -3468,7 +2790,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_shirahane_te
     json:
@@ -3481,7 +2803,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3491,7 +2813,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3501,24 +2823,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701278
+          - rid: 7078914588109701279
       - key: cancel_triggers
         value:
           type: 6
@@ -3527,16 +2835,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701280
       - key: power_up_ratio
         value:
           type: 1
@@ -3545,7 +2846,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_silin_cl
     json:
@@ -3558,7 +2859,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3568,7 +2869,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3578,24 +2879,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701281
+          - rid: 7078914588109701282
       - key: cards_amount
         value:
           type: 1
@@ -3604,7 +2891,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_criteria
         value:
@@ -3614,7 +2901,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_sophine_ex
     json:
@@ -3627,7 +2914,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3637,7 +2924,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3647,24 +2934,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701283
+          - rid: 7078914588109701284
       - key: cancel_triggers
         value:
           type: 6
@@ -3673,16 +2946,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701285
       - key: opponent_deck_stock
         value:
           type: 1
@@ -3691,7 +2957,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_ratio
         value:
@@ -3701,7 +2967,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_sophine_hc
     json:
@@ -3714,7 +2980,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3724,7 +2990,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3734,24 +3000,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701286
+          - rid: 7078914588109701287
       - key: target_grade
         value:
           type: 0
@@ -3760,9 +3012,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
-      - key: card_amount
+      - key: cards_amount
         value:
           type: 1
           strValue: 
@@ -3770,7 +3022,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_spica_cl
     json:
@@ -3783,7 +3035,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3793,7 +3045,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3803,24 +3055,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701288
+          - rid: 7078914588109701289
       - key: cancel_triggers
         value:
           type: 6
@@ -3829,16 +3067,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701290
       - key: power_up_ratio
         value:
           type: 1
@@ -3847,7 +3078,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_stella_ba
     json:
@@ -3860,7 +3091,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3870,7 +3101,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3880,16 +3111,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701291
       - key: cancel_triggers
         value:
           type: 6
@@ -3898,16 +3122,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveInfirmary
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701292
       - key: club_includes
         value:
           type: 6
@@ -3916,16 +3133,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Band
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701293
       - key: enable_match_states
         value:
           type: 6
@@ -3934,16 +3144,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: Attacking
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701294
       - key: power_up_bonus
         value:
           type: 1
@@ -3952,7 +3155,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_suiren_ex
     json:
@@ -3965,7 +3168,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -3975,7 +3178,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -3985,24 +3188,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701295
+          - rid: 7078914588109701296
       - key: cancel_triggers
         value:
           type: 6
@@ -4011,16 +3200,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701297
       - key: power_up_ratio
         value:
           type: 1
@@ -4029,7 +3211,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_suiren_te
     json:
@@ -4042,7 +3224,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -4052,7 +3234,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -4062,24 +3244,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701298
+          - rid: 7078914588109701299
       - key: cancel_triggers
         value:
           type: 6
@@ -4088,16 +3256,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701300
       - key: club_includes
         value:
           type: 6
@@ -4106,16 +3267,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: TraditionExperience
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701301
       - key: power_up_ratio
         value:
           type: 1
@@ -4124,7 +3278,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_tarmotte_hc
     json:
@@ -4137,7 +3291,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -4147,7 +3301,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -4157,24 +3311,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701302
+          - rid: 7078914588109701303
       - key: cancel_triggers
         value:
           type: 6
@@ -4183,16 +3323,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701304
       - key: deck_stock
         value:
           type: 1
@@ -4201,7 +3334,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_ratio
         value:
@@ -4211,7 +3344,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_tibera_gd
     json:
@@ -4224,7 +3357,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -4234,7 +3367,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: gain_win_points
         value:
@@ -4244,7 +3377,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_velvet_gd
     json:
@@ -4257,7 +3390,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -4267,7 +3400,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -4277,24 +3410,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701305
+          - rid: 7078914588109701306
       - key: cancel_triggers
         value:
           type: 6
@@ -4303,16 +3422,9 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnLeaveField
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701307
       - key: enable_last_result
         value:
           type: 0
@@ -4321,7 +3433,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_up_bonus
         value:
@@ -4331,7 +3443,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
   - id: card_effect_yunette_cl
     json:
@@ -4344,7 +3456,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: desc_key
         value:
@@ -4354,7 +3466,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: apply_triggers
         value:
@@ -4364,24 +3476,10 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr:
-          - type: 0
-            strValue: OnEnterFieldAsAttacker
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
-          - type: 0
-            strValue: OnEnterFieldAsDefender
-            intValue: 0
-            floatValue: 0
-            boolValue: 0
-            obj:
-              fields: []
-            arr: []
+          - rid: 7078914588109701308
+          - rid: 7078914588109701309
       - key: cards_amount
         value:
           type: 1
@@ -4390,7 +3488,7 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
       - key: power_criteria
         value:
@@ -4400,5 +3498,1396 @@ MonoBehaviour:
           floatValue: 0
           boolValue: 0
           obj:
-            fields: []
+            rid: -2
           arr: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7078914588109701184
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701185
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701186
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701187
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701188
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701189
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701190
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701191
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701192
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701193
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701194
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: TraditionExperience
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701195
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701196
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701197
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701198
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701199
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701200
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701201
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701202
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701203
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701204
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Band
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701205
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701206
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701207
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701208
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701209
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Band
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701210
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701211
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701212
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701213
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701214
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701215
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnSwitchToDefend
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701216
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701217
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701218
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701219
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701220
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701221
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFIeldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701222
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701223
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701224
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701225
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: TraditionExperience
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701226
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701227
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701228
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701229
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701230
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701231
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701232
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701233
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701234
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701235
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701236
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701237
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701238
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701239
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701240
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701241
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701242
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701243
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701244
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701245
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701246
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701247
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701248
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701249
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701250
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701251
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701252
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701253
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701254
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701255
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701256
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701257
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701258
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701259
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701260
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701261
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701262
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701263
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701264
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701265
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701266
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701267
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701268
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701269
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701270
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Unregistered
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701271
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701272
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701273
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701274
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701275
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Coastline
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701276
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701277
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701278
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701279
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701280
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701281
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701282
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701283
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701284
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701285
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701286
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701287
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701288
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701289
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701290
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701291
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701292
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701293
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Band
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701294
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701295
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701296
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701297
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701298
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701299
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701300
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701301
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: TraditionExperience
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701302
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701303
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701304
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701305
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701306
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701307
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701308
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914588109701309
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []

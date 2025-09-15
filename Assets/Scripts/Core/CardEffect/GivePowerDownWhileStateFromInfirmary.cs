@@ -4,6 +4,9 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
+    /// <summary>
+    /// 공격 / 수비 시 자신의 필드의 모든 카드들의 파워 n만큼 감소
+    /// </summary>
     public sealed class GivePowerDownWhileStateFromInfirmary : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
@@ -86,8 +89,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO: localization
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _powerDownPenalty);
         }
 
         private sealed class ExclusiveCardBuff : CardBuff

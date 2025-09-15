@@ -102,11 +102,32 @@ namespace ProjectABC.Core
 
     public class FailToApplyCardEffectEvent : MatchEventBase
     {
+        public enum FailReason
+        {
+            NoMeetCondition,
+            NoDeckRemains,
+            NoCardPileRemains,
+            NoOpponentCardPileRemains,
+            NoInfirmaryRemains,
+            NoOpponentInfirmaryRemains,
+        }
+        
         public readonly string FailureDescription;
         
-        public FailToApplyCardEffectEvent(string failureDescription, MatchSnapshot snapshot) : base(snapshot)
+        public FailToApplyCardEffectEvent(FailReason reason, MatchSnapshot snapshot) : base(snapshot)
         {
-            FailureDescription = failureDescription;
+            string failDescriptionKey = reason switch
+            {
+                FailReason.NoMeetCondition => GameConst.CardEffect.FAIL_REASON_NO_MEET_CONDITION,
+                FailReason.NoDeckRemains => GameConst.CardEffect.FAIL_REASON_NO_DECK_REMAINS,
+                FailReason.NoCardPileRemains => GameConst.CardEffect.FAIL_REASON_NO_CARD_PILE_REMAINS,
+                FailReason.NoOpponentCardPileRemains => GameConst.CardEffect.FAIL_REASON_NO_OPPONENT_CARD_PILE_REMAINS,
+                FailReason.NoInfirmaryRemains => GameConst.CardEffect.FAIL_REASON_NO_INFIRMARY_REMAINS,
+                FailReason.NoOpponentInfirmaryRemains => GameConst.CardEffect.FAIL_REASON_NO_OPPONENT_INFIRMARY_REMAINS,
+                _ => throw new ArgumentOutOfRangeException(nameof(reason), reason, null)
+            };
+            
+            FailureDescription = LocalizationHelper.Instance.Localize(failDescriptionKey);
         }
     }
 

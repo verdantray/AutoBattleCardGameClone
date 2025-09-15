@@ -1,6 +1,6 @@
 {
   "card_effect_id": "effect_move_random_cards_belong_clubs_from_infirmary_to_deck",
-  "desc_key": "desc_effect_move_random_cards_belong_council_from_infirmary_to_deck",
+  "desc_key": "desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

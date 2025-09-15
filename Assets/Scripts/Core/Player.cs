@@ -11,7 +11,17 @@ namespace ProjectABC.Core
         // temporary implements, DeckConstructAsync will implement each inherits after add more club types
         public Task<DeckConstructAction> DeckConstructAsync()
         {
-            ReadOnlySpan<ClubType> gradeTypes = Enum.GetValues(typeof(ClubType)) as ClubType[];
+            ClubType[] gradeTypes =
+            {
+                ClubType.Council,
+                ClubType.Coastline,
+                ClubType.Band,
+                ClubType.GameDevelopment,
+                ClubType.HauteCuisine,
+                ClubType.Unregistered,
+                ClubType.TraditionExperience
+            };
+            
             ClubType flag = 0;
 
             foreach (var gradeType in gradeTypes)
@@ -26,6 +36,7 @@ namespace ProjectABC.Core
         }
         
         public Task<RecruitCardsAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
+        public Task<DeleteCardsAction> DeleteCardsAsync(PlayerState myState);
         public Task WaitUntilConfirmToProceed();
     }
 

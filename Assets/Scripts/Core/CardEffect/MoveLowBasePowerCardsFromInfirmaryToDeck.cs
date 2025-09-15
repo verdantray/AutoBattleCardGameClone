@@ -8,8 +8,6 @@ namespace ProjectABC.Core
     /// </summary>
     public sealed class MoveLowBasePowerCardsFromInfirmaryToDeck : CardEffect
     {
-        private readonly string _failureDescKey;
-
         private readonly int _cardsAmount;
         private readonly int _powerCriteria;
         
@@ -19,9 +17,6 @@ namespace ProjectABC.Core
             {
                 switch (field.key)
                 {
-                    case GameConst.CardEffect.EFFECT_CANCEL_TRIGGERS_KEY:
-                        _failureDescKey = field.value.strValue;
-                        break;
                     case "cards_amount":
                         _cardsAmount = field.value.intValue;
                         break;
@@ -44,9 +39,12 @@ namespace ProjectABC.Core
             var cardsInInfirmary = ownSide.Infirmary.GetAllCards();
             if (!cardsInInfirmary.Any(card => card.BasePower <= _powerCriteria))
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(_failureDescKey, new MatchSnapshot(ownSide, otherSide));
-                failEffectEvent.RegisterEvent(matchContextEvent);
+                var failEffectEvent = new FailToApplyCardEffectEvent(
+                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
+                    new MatchSnapshot(ownSide, otherSide)
+                );
                 
+                failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
             
@@ -95,8 +93,7 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // TODO : use localization and format
-            return DescriptionKey;
+            return LocalizationHelper.Instance.Localize(DescriptionKey, _powerCriteria, _cardsAmount);
         }
     }
 

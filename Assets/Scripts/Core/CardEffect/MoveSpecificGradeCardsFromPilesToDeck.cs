@@ -7,9 +7,8 @@ namespace ProjectABC.Core
 {
     public sealed class MoveSpecificGradeCardsFromPilesToDeck : CardEffect
     {
-        private readonly string _failureDescriptionKey;
         private readonly GradeType _targetGrade;
-        private readonly int _cardAmount;
+        private readonly int _cardsAmount;
         
         public MoveSpecificGradeCardsFromPilesToDeck(Card card, JsonObject json) : base(card, json)
         {
@@ -17,14 +16,11 @@ namespace ProjectABC.Core
             {
                 switch (field.key)
                 {
-                    case "fail_desc_key":
-                        _failureDescriptionKey = field.value.strValue;
-                        break;
                     case "target_grade":
                         _targetGrade = field.value.strValue.ParseGradeType();
                         break;
-                    case "card_amount":
-                        _cardAmount = field.value.intValue;
+                    case "cards_amount":
+                        _cardsAmount = field.value.intValue;
                         break;
                 }
             }
@@ -46,12 +42,12 @@ namespace ProjectABC.Core
             // TODO : use PCG32
             Random random = new Random();
             
-            for (int i = 0; i < _cardAmount; i++)
+            for (int i = 0; i < _cardsAmount; i++)
             {
                 if (!gradeCardPiles[_targetGrade].TryDraw(out Card drawnCard))
                 {
                     FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
-                        _failureDescriptionKey,
+                        FailToApplyCardEffectEvent.FailReason.NoCardPileRemains,
                         new MatchSnapshot(ownSide, otherSide)
                     );
                     
@@ -74,8 +70,9 @@ namespace ProjectABC.Core
 
         protected override string GetDescription()
         {
-            // localization
-            return DescriptionKey;
+            string gradeText = LocalizationHelper.Instance.Localize(_targetGrade.GetLocalizationKey());
+
+            return LocalizationHelper.Instance.Localize(DescriptionKey, gradeText, _cardsAmount);
         }
     }
 

@@ -18,11 +18,12 @@ namespace ProjectABC.Core
             _selectedClubsFlag = selectedClubsFlag;
 
             _cardDataForStarting = Storage.Instance.CardDataForStarting
+                .Where(ClubFilter)
                 .SelectMany(CreateCardsFromData)
                 .ToList();
             
             _cardDataForPiles = Storage.Instance.CardDataForPiles
-                .Where(cardData => _selectedClubsFlag.HasFlag(cardData.clubType))
+                .Where(ClubFilter)
                 .SelectMany(CreateCardsFromData)
                 .ToList();
         }
@@ -44,6 +45,11 @@ namespace ProjectABC.Core
                 
                 playerState.GradeCardPiles[gradeType].Shuffle();
             }
+        }
+
+        private bool ClubFilter(CardData cardData)
+        {
+            return _selectedClubsFlag.HasFlag(cardData.clubType);
         }
 
         private static IEnumerable<Card> CreateCardsFromData(CardData cardData)
@@ -92,6 +98,36 @@ namespace ProjectABC.Core
         public RecruitConsoleEvent GetContextEvent()
         {
             return new RecruitConsoleEvent(Player, SelectedGrade, DrawnCards);
+        }
+    }
+    
+    public class DeleteCardsAction : IPlayerAction<DeleteCardsConsoleEvent>
+    {
+        public IPlayer Player { get; private set; }
+
+        public readonly List<Card> DeleteCards;
+        
+        public DeleteCardsAction(IPlayer player, List<Card> deleteCards)
+        {
+            Player = player;
+            DeleteCards = deleteCards;
+        }
+        
+        public void ApplyState(GameState state)
+        {
+            PlayerState playerState = state.GetPlayerState(Player);
+
+            foreach (var card in DeleteCards)
+            {
+                playerState.Deck.Remove(card);
+            }
+            
+            playerState.Deleted.AddRange(DeleteCards);
+        }
+        
+        public DeleteCardsConsoleEvent GetContextEvent()
+        {
+            return new DeleteCardsConsoleEvent(Player, DeleteCards);
         }
     }
 }

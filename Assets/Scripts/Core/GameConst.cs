@@ -6,6 +6,7 @@ namespace ProjectABC.Core
         public static class Address
         {
             public const string GAME_DATA_ASSET = "GameDataAsset";
+            public const string LOCALIZATION_DATA_ASSET = "LocalizationDataAsset";
         }
         
         public static class AssetPath
@@ -32,7 +33,19 @@ namespace ProjectABC.Core
             public const string EFFECT_APPLY_TRIGGERS_KEY = "apply_triggers";
             public const string EFFECT_CANCEL_TRIGGERS_KEY = "cancel_triggers";
             public const string EFFECT_DESC_KEY = "desc_key";
-            public const string EFFECT_FAILURE_DESC_KEY = "desc_fail_key";
+
+            public const string FAIL_REASON_NO_MEET_CONDITION = "desc_effect_fail_no_meet_condition";
+            public const string FAIL_REASON_NO_DECK_REMAINS = "desc_effect_fail_no_deck_remains";
+            public const string FAIL_REASON_NO_CARD_PILE_REMAINS = "desc_effect_fail_no_opponent_deck_remains";
+            public const string FAIL_REASON_NO_OPPONENT_CARD_PILE_REMAINS = "desc_effect_fail_no_opponent_card_pile_remains";
+            public const string FAIL_REASON_NO_INFIRMARY_REMAINS = "desc_effect_fail_no_infirmary_remains";
+            public const string FAIL_REASON_NO_OPPONENT_INFIRMARY_REMAINS = "desc_effect_fail_no_opponent_infirmary_remains";
+        }
+
+        public static class Localization
+        {
+            public const string MATCHING_KEY = "key";
+            public const string INNER_MATCHING_PATTERN = "%localization_key:(?<key>[^%]+)%";
         }
     }
 }

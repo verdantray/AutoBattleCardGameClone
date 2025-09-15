@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ProjectABC.Data;
 
 
@@ -21,7 +22,11 @@ namespace ProjectABC.Core
                 return new EmptyCardEffect(card, null);
             }
 
-            switch (data.id)
+            string effectId = data.json.fields
+                .FirstOrDefault(field => field.key == GameConst.CardEffect.EFFECT_ID)?.value.strValue
+                              ?? string.Empty;
+
+            switch (effectId)
             {
                 case "effect_elite":
                     return new EliteCardEffect(card, data);
@@ -93,7 +98,7 @@ namespace ProjectABC.Core
                     return new GainWinPointsOnRecruit(card, data);
                 
                 default:
-                    throw new ArgumentException($"{data.id} is not valid");
+                    throw new ArgumentException($"{effectId} is not valid");
             }
         }
     }
