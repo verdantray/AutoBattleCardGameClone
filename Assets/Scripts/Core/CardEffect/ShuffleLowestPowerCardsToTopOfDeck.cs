@@ -38,7 +38,7 @@ namespace ProjectABC.Core
             {
                 var failedEffectEvent = new FailToApplyCardEffectEvent(
                     FailToApplyCardEffectEvent.FailReason.NoDeckRemains,
-                    new MatchSnapshot(ownSide, otherSide)
+                    new MatchSnapshot(gameState, ownSide, otherSide)
                 );
                 
                 failedEffectEvent.RegisterEvent(matchContextEvent);
@@ -70,7 +70,7 @@ namespace ProjectABC.Core
                 ownSide.Deck.Remove(cardToShuffle);
                 ownSide.Deck.AddToTop(cardToShuffle);
 
-                var moveCardsEffectEvent = new MoveCardToTopOfDeckEvent(cardToShuffle, new MatchSnapshot(ownSide, otherSide));
+                var moveCardsEffectEvent = new MoveCardToTopOfDeckEvent(cardToShuffle, new MatchSnapshot(gameState, ownSide, otherSide));
                 moveCardsEffectEvent.RegisterEvent(matchContextEvent);
                 
                 moveCount++;

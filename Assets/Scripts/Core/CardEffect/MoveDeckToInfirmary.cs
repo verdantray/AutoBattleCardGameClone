@@ -50,7 +50,7 @@ namespace ProjectABC.Core
                     MatchFinishEvent finishByEmptyDeckEvent = new MatchFinishEvent(
                         otherSide.Player,
                         MatchEndReason.EndByEmptyDeck,
-                        new MatchSnapshot(ownSide, otherSide)
+                        new MatchSnapshot(gameState, ownSide, otherSide)
                     );
                     
                     finishByEmptyDeckEvent.RegisterEvent(matchContextEvent);
@@ -71,7 +71,7 @@ namespace ProjectABC.Core
                 TryPutCardInfirmaryEvent putCardInfirmaryEvent = new TryPutCardInfirmaryEvent(
                     ownSide.Player,
                     cardToMove,
-                    new MatchSnapshot(ownSide, otherSide)
+                    new MatchSnapshot(gameState, ownSide, otherSide)
                 );
                 
                 putCardInfirmaryEvent.RegisterEvent(matchContextEvent);
@@ -81,7 +81,7 @@ namespace ProjectABC.Core
                     MatchFinishEvent finishByFullOfInfirmaryEvent = new MatchFinishEvent(
                         otherSide.Player,
                         MatchEndReason.EndByFullOfInfirmary,
-                        new MatchSnapshot(ownSide, otherSide)
+                        new MatchSnapshot(gameState, ownSide, otherSide)
                     );
                     
                     finishByFullOfInfirmaryEvent.RegisterEvent(matchContextEvent);

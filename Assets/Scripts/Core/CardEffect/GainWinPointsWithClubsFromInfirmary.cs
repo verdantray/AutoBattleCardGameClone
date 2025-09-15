@@ -60,7 +60,7 @@ namespace ProjectABC.Core
             {
                 var failedApplyEffectEvent = new FailToApplyCardEffectEvent(
                     FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
-                    new MatchSnapshot(ownSide, otherSide)
+                    new MatchSnapshot(gameState, ownSide, otherSide)
                 );
                 
                 failedApplyEffectEvent.RegisterEvent(matchContextEvent);
@@ -72,7 +72,7 @@ namespace ProjectABC.Core
                 new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect)
             );
             
-            MatchSnapshot matchSnapshot = new MatchSnapshot(ownSide, otherSide);
+            MatchSnapshot matchSnapshot = new MatchSnapshot(gameState, ownSide, otherSide);
             var gainWinPointsEventEffect = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints, matchSnapshot);
             gainWinPointsEventEffect.RegisterEvent(matchContextEvent);
         }

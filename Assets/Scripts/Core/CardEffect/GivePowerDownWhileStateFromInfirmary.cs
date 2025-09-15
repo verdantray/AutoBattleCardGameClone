@@ -68,7 +68,7 @@ namespace ProjectABC.Core
                     ownSide.CardBuffHandlers.Remove(handler);
                 }
 
-                var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
+                var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(gameState, ownSide, otherSide));
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
 
                 return;
@@ -82,7 +82,7 @@ namespace ProjectABC.Core
                 
                 ownSide.CardBuffHandlers.Add(handler);
                 
-                var activeBuffEvent = new ActiveCardBuffEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
+                var activeBuffEvent = new ActiveCardBuffEvent(CallCard, new MatchSnapshot(gameState, ownSide, otherSide));
                 activeBuffEvent.RegisterEvent(matchContextEvent);
             }
         }

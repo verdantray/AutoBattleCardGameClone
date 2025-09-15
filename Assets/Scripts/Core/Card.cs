@@ -119,7 +119,7 @@ namespace ProjectABC.Core
         }
         
         public IEnumerable<Card> GetAllCards() => _cardMap.Values.SelectMany(cardPile => cardPile);
-        public InfirmaryInstance GetSnapshotInstance => new InfirmaryInstance(_nameKeyList, _cardMap);
+        public InfirmaryInstance GetSnapshotInstance(CardBuffArgs args) => new InfirmaryInstance(_nameKeyList, _cardMap, args);
     }
 
     public class Card

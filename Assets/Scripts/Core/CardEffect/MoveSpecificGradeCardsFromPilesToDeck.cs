@@ -48,7 +48,7 @@ namespace ProjectABC.Core
                 {
                     FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
                         FailToApplyCardEffectEvent.FailReason.NoCardPileRemains,
-                        new MatchSnapshot(ownSide, otherSide)
+                        new MatchSnapshot(gameState, ownSide, otherSide)
                     );
                     
                     failEffectEvent.RegisterEvent(matchContextEvent);
@@ -63,7 +63,7 @@ namespace ProjectABC.Core
                 // additive-recruit is not trigger card effect of drawn card...
                 // drawnCard.CardEffect.TryApplyEffectOnRecruit(ownPlayer, gameState, out var contextEvent);
 
-                MoveCardToRandomOfDeck moveCardEvent = new MoveCardToRandomOfDeck(drawnCard, new MatchSnapshot(ownSide, otherSide));
+                MoveCardToRandomOfDeck moveCardEvent = new MoveCardToRandomOfDeck(drawnCard, new MatchSnapshot(gameState, ownSide, otherSide));
                 moveCardEvent.RegisterEvent(matchContextEvent);
             }
         }

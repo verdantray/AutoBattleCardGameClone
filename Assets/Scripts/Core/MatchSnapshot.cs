@@ -10,10 +10,13 @@ namespace ProjectABC.Core
     {
         public readonly IReadOnlyDictionary<IPlayer, MatchSideSnapshot> MatchSideSnapShots;
         
-        public MatchSnapshot(params MatchSide[] matchSides)
+        public MatchSnapshot(GameState gameState, params MatchSide[] matchSides)
         {
-            MatchSideSnapShots =
-                new Dictionary<IPlayer, MatchSideSnapshot>(matchSides.ToDictionary(KeySelector, ValueSelector));
+            MatchSideSnapShots = new Dictionary<IPlayer, MatchSideSnapshot>
+            {
+                { matchSides[0].Player, new MatchSideSnapshot(matchSides[0], matchSides[1], gameState) },
+                { matchSides[1].Player, new MatchSideSnapshot(matchSides[1], matchSides[0], gameState) },
+            };
         }
 
         public bool IsParticipants(IPlayer player) => MatchSideSnapShots.ContainsKey(player);
@@ -22,9 +25,6 @@ namespace ProjectABC.Core
         {
             return MatchSideSnapShots.TryGetValue(player, out matchSideSnapshot);
         }
-        
-        private static IPlayer KeySelector(MatchSide matchSide) => matchSide.Player;
-        private static MatchSideSnapshot ValueSelector(MatchSide matchSide) => new MatchSideSnapshot(matchSide);
     }
     
     public record MatchSideSnapshot
@@ -36,48 +36,109 @@ namespace ProjectABC.Core
         public readonly IReadOnlyList<CardSnapshot> Field;
         public readonly InfirmaryInstance Infirmary;
         
-        private bool IsAttacking => State == MatchState.Attacking;
-
-        public MatchSideSnapshot(MatchSide matchSide)
+        public bool IsAttacking => State == MatchState.Attacking;
+        
+        public int EffectivePower
         {
-            Player = matchSide.Player;
-            State = matchSide.State;
+            get
+            {
+                if (Field.Count == 0)
+                {
+                    return 0;
+                }
+
+                int effectivePower = IsAttacking
+                    ? Field.Sum(card => card.Power)
+                    : Field[^1].Power;
             
-            Deck = matchSide.Deck.Select(card => new CardSnapshot(card)).ToList();
-            Field = matchSide.Field.Select(card => new CardSnapshot(card)).ToList();
-            Infirmary = matchSide.Infirmary.GetSnapshotInstance;
+                return effectivePower;
+            }
         }
 
-        public int GetEffectivePower()
+        public MatchSideSnapshot(MatchSide ownSide, MatchSide otherSide, GameState gameState)
         {
-            if (Field.Count == 0)
-            {
-                return 0;
-            }
-
-            int effectivePower = IsAttacking
-                ? Field.Sum(card => card.Power)
-                : Field[^1].Power;
+            CardBuffArgs args = new CardBuffArgs(ownSide, otherSide, gameState);
             
-            return effectivePower;
+            Player = ownSide.Player;
+            State = ownSide.State;
+            
+            Deck = ownSide.Deck.Select(card => new CardSnapshot(card, args)).ToList();
+            Field = ownSide.Field.Select(card => new CardSnapshot(card, args)).ToList();
+            Infirmary = ownSide.Infirmary.GetSnapshotInstance(args);
         }
     }
 
     public record CardSnapshot
     {
-        public string Id => CardData.id;
-        public int BasePower => CardData.basePower;
-        public ClubType ClubType => CardData.clubType;
-        public GradeType GradeType => CardData.gradeType;
+        public readonly string Id;
+        public readonly ClubType ClubType;
+        public readonly GradeType GradeType;
+        public readonly int BasePower;
+        public readonly Card Card;
+        public readonly IReadOnlyList<BuffSnapshot> Buffs;
         
-        public readonly int Power;
-        public readonly CardData CardData;
+        public int Power => Buffs.Sum(buff => buff.AdditivePower) + BasePower;
+        public string Title => Card.Title;
+        public string Name => Card.Name;
+        public string Description => Card.CardEffect.Description;
         
-        public CardSnapshot(Card card)
+        public CardSnapshot(Card card, CardBuffArgs args)
         {
-            // TODO : apply buff either
-            Power = card.BasePower;
-            CardData = card.CardData;
+            Id = card.Id;
+            ClubType = card.ClubType;
+            GradeType = card.GradeType;
+            BasePower = card.BasePower;
+            
+            Card = card;
+
+            List<BuffSnapshot> buffSnapshots = new List<BuffSnapshot>();
+            CardBuff[] disablerBuffs = card.AppliedCardBuffs
+                .Where(buff => buff.Type == BuffType.Disabler && buff.IsBuffActive(card, args))
+                .ToArray();
+
+            foreach (var buff in card.AppliedCardBuffs)
+            {
+                bool isDisabled = !disablerBuffs.Contains(buff)
+                                  && disablerBuffs.Any(disabler => disabler.ShouldDisable(buff, card, args));
+
+                BuffSnapshot snapshot = new BuffSnapshot(buff, card, args, isDisabled);
+                buffSnapshots.Add(snapshot);
+            }
+            
+            Buffs = buffSnapshots;
+        }
+    }
+
+    public record BuffSnapshot
+    {
+        public enum BuffState
+        {
+            Active,
+            InActive,
+            Disabled
+        }
+        
+        public readonly BuffType BuffType;
+        public readonly BuffState State;
+        public readonly int AdditivePower;
+
+        public readonly Card CallCard;
+        public string Description => CallCard.CardEffect.Description;
+
+        public BuffSnapshot(CardBuff cardBuff, Card target, CardBuffArgs args, bool isDisabled)
+        {
+            BuffType = cardBuff.Type;
+            State = isDisabled
+                ? BuffState.Disabled
+                : cardBuff.IsBuffActive(target, args)
+                    ? BuffState.Active
+                    : BuffState.InActive;
+            
+            AdditivePower = cardBuff.IsBuffActive(target, args)
+                ? cardBuff.CalculateAdditivePower(target, args)
+                : 0;
+            
+            CallCard = cardBuff.CallCard;
         }
     }
 
@@ -86,11 +147,16 @@ namespace ProjectABC.Core
         public readonly IReadOnlyList<string> NameKeyList;
         public readonly IReadOnlyDictionary<string, IReadOnlyList<CardSnapshot>> CardMap;
 
-        public InfirmaryInstance(IEnumerable<string> nameKeys, IDictionary<string, CardPile> cardMap)
+        public InfirmaryInstance(IEnumerable<string> nameKeys, IDictionary<string, CardPile> cardMap, CardBuffArgs args)
         {
             NameKeyList = new List<string>(nameKeys);
-            CardMap = new Dictionary<string, IReadOnlyList<CardSnapshot>>(cardMap.ToDictionary(KeySelector,
-                ValueSelector));
+            CardMap = new Dictionary<string, IReadOnlyList<CardSnapshot>>(cardMap.ToDictionary(KeySelector, ValueSelector));
+            return;
+            
+            IReadOnlyList<CardSnapshot> ValueSelector(KeyValuePair<string, CardPile> kvPair)
+            {
+                return new List<CardSnapshot>(kvPair.Value.Select(card => new CardSnapshot(card, args)));
+            }
         }
 
         public IReadOnlyList<CardSnapshot> this[int index] => CardMap[NameKeyList[index]];
@@ -98,11 +164,6 @@ namespace ProjectABC.Core
         private static string KeySelector(KeyValuePair<string, CardPile> kvPair)
         {
             return kvPair.Key;
-        }
-
-        private static IReadOnlyList<CardSnapshot> ValueSelector(KeyValuePair<string, CardPile> kvPair)
-        {
-            return new List<CardSnapshot>(kvPair.Value.Select(card => new CardSnapshot(card)));
         }
         
         #region inherits IReadOnlyDictionary

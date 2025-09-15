@@ -47,7 +47,7 @@ namespace ProjectABC.Core
             defender.SetMatchState(MatchState.Defending);
             attacker.SetMatchState(MatchState.Attacking);
 
-            MatchStartEvent matchStartEvent = new MatchStartEvent(new MatchSnapshot(defender, attacker));
+            MatchStartEvent matchStartEvent = new MatchStartEvent(new MatchSnapshot(currentState, defender, attacker));
             matchStartEvent.RegisterEvent(matchContextEvent);
 
             if (!defender.TryDraw(out Card drawnCardFromDefender))
@@ -56,14 +56,14 @@ namespace ProjectABC.Core
                 MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                     attacker.Player,
                     MatchEndReason.EndByEmptyDeck,
-                    new MatchSnapshot(attacker, defender)
+                    new MatchSnapshot(currentState, attacker, defender)
                 );
                 
                 matchFinishEvent.RegisterEvent(matchContextEvent);
                 return matchContextEvent;
             }
 
-            DrawCardEvent defenderDrawnEvent = new DrawCardEvent(defender.Player, new MatchSnapshot(defender, attacker));
+            DrawCardEvent defenderDrawnEvent = new DrawCardEvent(defender.Player, new MatchSnapshot(currentState, defender, attacker));
             defenderDrawnEvent.RegisterEvent(matchContextEvent);
 
             CardEffectArgs defenderDrawnEffectArgs = new CardEffectArgs(
@@ -91,14 +91,14 @@ namespace ProjectABC.Core
                         MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                             defender.Player,
                             MatchEndReason.EndByEmptyDeck,
-                            new MatchSnapshot(attacker, defender)
+                            new MatchSnapshot(currentState, attacker, defender)
                         );
                 
                         matchFinishEvent.RegisterEvent(matchContextEvent);
                         return matchContextEvent;
                     }
                     
-                    DrawCardEvent attackerDrawnEvent = new DrawCardEvent(attacker.Player, new MatchSnapshot(defender, attacker));
+                    DrawCardEvent attackerDrawnEvent = new DrawCardEvent(attacker.Player, new MatchSnapshot(currentState, defender, attacker));
                     attackerDrawnEvent.RegisterEvent(matchContextEvent);
 
                     CardEffectArgs attackerDrawnEffectArgs = new CardEffectArgs(
@@ -116,7 +116,7 @@ namespace ProjectABC.Core
                     
                     CheckApplyBuffs(defender, attacker, currentState, matchContextEvent);
                     
-                    ComparePowerEvent comparePowerEvent = new ComparePowerEvent(new MatchSnapshot(defender, attacker));
+                    ComparePowerEvent comparePowerEvent = new ComparePowerEvent(new MatchSnapshot(currentState, defender, attacker));
                     comparePowerEvent.RegisterEvent(matchContextEvent);
                 }
 
@@ -135,7 +135,7 @@ namespace ProjectABC.Core
                 
                 TriggerDefenderFieldCards(defender, attacker, currentState, matchContextEvent);
                 
-                SwitchPositionEvent switchPositionEvent = new SwitchPositionEvent(new MatchSnapshot(defender, attacker));
+                SwitchPositionEvent switchPositionEvent = new SwitchPositionEvent(new MatchSnapshot(currentState, defender, attacker));
                 switchPositionEvent.RegisterEvent(matchContextEvent);
                 
                 CheckApplyBuffs(defender, attacker, currentState, matchContextEvent);
@@ -202,7 +202,7 @@ namespace ProjectABC.Core
                 TryPutCardInfirmaryEvent putCardInfirmaryEvent = new TryPutCardInfirmaryEvent(
                     defender.Player,
                     cardToMove,
-                    new MatchSnapshot(defender, attacker)
+                    new MatchSnapshot(currentState, defender, attacker)
                 );
                 
                 putCardInfirmaryEvent.RegisterEvent(matchContextEvent);
@@ -212,7 +212,7 @@ namespace ProjectABC.Core
                     MatchFinishEvent matchFinishEvent = new MatchFinishEvent(
                         attacker.Player,
                         MatchEndReason.EndByFullOfInfirmary,
-                        new MatchSnapshot(defender, attacker)
+                        new MatchSnapshot(currentState, defender, attacker)
                     );
                     
                     matchFinishEvent.RegisterEvent(matchContextEvent);
@@ -232,7 +232,7 @@ namespace ProjectABC.Core
             playerASide.CheckApplyCardBuffs(playerBSide, currentState);
             playerBSide.CheckApplyCardBuffs(playerASide, currentState);
             
-            CheckApplyBuffEvent checkApplyBuffEvent = new CheckApplyBuffEvent(new MatchSnapshot(playerASide, playerBSide));
+            CheckApplyBuffEvent checkApplyBuffEvent = new CheckApplyBuffEvent(new MatchSnapshot(currentState, playerASide, playerBSide));
             checkApplyBuffEvent.RegisterEvent(matchContextEvent);
         }
 

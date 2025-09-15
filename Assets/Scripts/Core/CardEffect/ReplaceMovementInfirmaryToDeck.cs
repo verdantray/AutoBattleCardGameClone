@@ -26,7 +26,7 @@ namespace ProjectABC.Core
             ownSide.Field.Remove(CallCard);
             ownSide.Deck.Add(CallCard);
 
-            MoveCardToBottomOfDeckEvent moveCardEvent = new MoveCardToBottomOfDeckEvent(CallCard, new MatchSnapshot(ownSide, otherSide));
+            MoveCardToBottomOfDeckEvent moveCardEvent = new MoveCardToBottomOfDeckEvent(CallCard, new MatchSnapshot(gameState, ownSide, otherSide));
             moveCardEvent.RegisterEvent(matchContextEvent);
             
             return true;

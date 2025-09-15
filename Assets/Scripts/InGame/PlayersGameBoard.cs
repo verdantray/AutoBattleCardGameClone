@@ -113,7 +113,7 @@ namespace ProjectABC.InGame
             while (targetCards.Count > 0)
             {
                 var card = targetCards[^1];
-                var cardID = card.GetCardInstance().CardData.id;
+                var cardID = card.GetCard().Id;
 
                 if (_benchCards.ContainsKey(cardID))
                 {

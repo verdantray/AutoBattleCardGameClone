@@ -38,10 +38,10 @@ namespace ProjectABC.InGame
         {
             _cardSnapshot = card;
 
-            _name.text = card.CardData.nameKey;
-            _power.text = card.CardData.basePower.ToString();
+            _name.text = card.Name;
+            _power.text = card.Power.ToString();
             
-            var materials = CardMaterialLoader.Instance.GetCardMaterials(card.CardData.imagePath);
+            var materials = CardMaterialLoader.Instance.GetCardMaterials(card.Card.CardData.imagePath);
             _meshRenderer.SetMaterials(materials);
         }
 

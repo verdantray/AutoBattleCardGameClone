@@ -41,7 +41,7 @@ namespace ProjectABC.Core
             {
                 var failEffectEvent = new FailToApplyCardEffectEvent(
                     FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains,
-                    new MatchSnapshot(ownSide, otherSide)
+                    new MatchSnapshot(gameState, ownSide, otherSide)
                 );
                 
                 failEffectEvent.RegisterEvent(matchContextEvent);

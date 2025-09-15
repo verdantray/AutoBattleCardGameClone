@@ -41,7 +41,7 @@ namespace ProjectABC.Core
             {
                 var failEffectEvent = new FailToApplyCardEffectEvent(
                     FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
-                    new MatchSnapshot(ownSide, otherSide)
+                    new MatchSnapshot(gameState, ownSide, otherSide)
                 );
                 
                 failEffectEvent.RegisterEvent(matchContextEvent);
@@ -86,7 +86,7 @@ namespace ProjectABC.Core
                     return;
                 }
 
-                var moveCardEffectEvent = new MoveCardToBottomOfDeckEvent(cardToMove, new MatchSnapshot(ownSide, otherSide));
+                var moveCardEffectEvent = new MoveCardToBottomOfDeckEvent(cardToMove, new MatchSnapshot(gameState, ownSide, otherSide));
                 moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
