@@ -9,12 +9,12 @@ namespace ProjectABC.Core
     {
         public ReplaceMovementInfirmaryToDeck(Card card, JsonObject json) : base(card, json) { }
 
-        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             // Do nothing
         }
 
-        public override bool TryReplaceMovement(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public override bool TryReplaceMovement(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
 

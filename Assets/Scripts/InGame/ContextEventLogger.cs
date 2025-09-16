@@ -6,13 +6,15 @@ namespace ProjectABC.InGame
     public class ContextEventLogger : MonoBehaviour,
         IContextEventListener<CommonConsoleEvent>,
         IContextEventListener<DeckConstructionConsoleEvent>,
-        IContextEventListener<RecruitConsoleEvent>
+        IContextEventListener<RecruitConsoleEvent>,
+        IContextEventListener<DeleteCardsConsoleEvent>
     {
         private void Start()
         {
             this.StartListening<CommonConsoleEvent>();
             this.StartListening<DeckConstructionConsoleEvent>();
             this.StartListening<RecruitConsoleEvent>();
+            this.StartListening<DeleteCardsConsoleEvent>();
             
             Debug.Log("logger ready");
         }
@@ -23,6 +25,7 @@ namespace ProjectABC.InGame
             this.StopListening<DeckConstructionConsoleEvent>();
             this.StopListening<DeckConstructionConsoleEvent>();
             this.StopListening<RecruitConsoleEvent>();
+            this.StopListening<DeleteCardsConsoleEvent>();
         }
 
         public void DisplayLog(IContextEvent contextEvent)
@@ -41,6 +44,11 @@ namespace ProjectABC.InGame
         }
 
         public void OnEvent(RecruitConsoleEvent contextEvent)
+        {
+            DisplayLog(contextEvent);
+        }
+
+        public void OnEvent(DeleteCardsConsoleEvent contextEvent)
         {
             DisplayLog(contextEvent);
         }

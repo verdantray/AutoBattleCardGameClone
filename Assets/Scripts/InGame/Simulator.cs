@@ -14,44 +14,35 @@ namespace ProjectABC.InGame
         {
             try
             {
-                if (!Storage.HasInstance)
-                {
-                    var gameDataAssetHandle = Addressables.LoadAssetAsync<GameDataAsset>(GameConst.Address.GAME_DATA_ASSET);
-                    var localizationDataAssetHandle = Addressables.LoadAssetAsync<LocalizationDataAsset>(GameConst.Address.LOCALIZATION_DATA_ASSET);
+                var gameDataAssetHandle = Addressables.LoadAssetAsync<GameDataAsset>(GameConst.Address.GAME_DATA_ASSET);
+                var localizationDataAssetHandle = Addressables.LoadAssetAsync<LocalizationDataAsset>(GameConst.Address.LOCALIZATION_DATA_ASSET);
 
-                    await Task.WhenAll(gameDataAssetHandle.Task, localizationDataAssetHandle.Task);
+                await Task.WhenAll(gameDataAssetHandle.Task, localizationDataAssetHandle.Task);
 
-                    Storage.CreateInstance(gameDataAssetHandle.Result);
-                    Addressables.Release(gameDataAssetHandle);
+                Storage.CreateInstance(gameDataAssetHandle.Result);
+                Addressables.Release(gameDataAssetHandle);
 
-                    LocalizationHelper.CreateInstance(localizationDataAssetHandle.Result);
-                    Addressables.Release(localizationDataAssetHandle);
-                }
+                LocalizationHelper.CreateInstance(localizationDataAssetHandle.Result);
+                Addressables.Release(localizationDataAssetHandle);
 
                 await CardMaterialLoader.LoadMaterials();
+                
+                Run();
             }
             catch (Exception e)
             {
                 Debug.LogWarning($"Simulator has error occured : {e}");
                 throw; // TODO 예외 처리
-            }
-            finally
-            {
-                Run();
             }
         }
 
         public async void Run()
         {
-            try
-            {
-                await RunSimulationAsync();
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"Simulator has error occured : {e}");
-                throw; // TODO 예외 처리
-            }
+            Debug.Log("Simulator has started");
+            
+            await RunSimulationAsync();
+            
+            Debug.Log("Simulator has finished");
         }
 
         private async Task RunSimulationAsync()

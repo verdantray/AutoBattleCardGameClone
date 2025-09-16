@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace ProjectABC.InGame
 {
-    public class InGameController : MonoBehaviour,
-        IContextEventListener<MatchContextEvent>
+    public class InGameController : MonoBehaviour
     {
         public static InGameController Instance;
         
@@ -41,14 +40,12 @@ namespace ProjectABC.InGame
         }
         private void Start()
         {
-            this.StartListening<MatchContextEvent>();
-            
             UIManager.Instance.DEBUGLayoutInGame.OnFinishRecruitLevelAmount += OnFinishRecruitLevelAmount;
             UIManager.Instance.DEBUGLayoutInGame.OnFinishDrawCard += OnFinishDrawCard;
         }
         private void OnDestroy()
         {
-            this.StopListening<MatchContextEvent>();
+            
         }
         
         public void ClearGame()
@@ -87,67 +84,12 @@ namespace ProjectABC.InGame
             _isBattleFinished = true;
         }
 
-        public void OnEvent(MatchContextEvent contextEvent)
+        public void OnEvent()
         {
-            foreach (IPlayer participants in contextEvent.LastMatchSideSnapShots.Keys)
-            {
-                if (participants is InGamePlayer inGamePlayer)
-                {
-                    _player = inGamePlayer;
-                    break;
-                }
-            }
             
-            bool isPlayerGame = contextEvent.IsParticipants(_player);
-
-            var matchEvents = contextEvent.MatchEvents;
-            foreach (var matchEvent in matchEvents)
-            {
-                if (!matchEvent.Snapshot.IsParticipants(_player)) 
-                    continue;
-                
-                var players = matchEvent.Snapshot.MatchSideSnapShots.Keys.ToList();
-                foreach (var player in players.OfType<ScriptedPlayer>())
-                {
-                    _enemy = player;
-                }
-            }
-
-            if (isPlayerGame)
-            {
-                OnStartBattleAsync(contextEvent);
-            }
         }
 
-        public async void OnStartBattleAsync(MatchContextEvent contextEvent)
-        {
-            foreach (var matchEvent in contextEvent.MatchEvents)
-            {
-                switch (matchEvent)
-                {
-                    case MatchStartEvent matchStartEvent:
-                        await OnMatchStart(matchStartEvent);
-                        break;
-                    
-                    case DrawCardEvent drawCardEvent:
-                        await OnDrawCard(drawCardEvent);
-                        break;
-                    
-                    case SwitchPositionEvent switchPositionEvent:
-                        await OnSwitchPosition(switchPositionEvent);
-                        break;
-                    
-                    case TryPutCardInfirmaryEvent tryPutCardInfirmaryEvent:
-                        await OnTryPutCardInfirmary(tryPutCardInfirmaryEvent);
-                        break;
-                        
-                    case MatchFinishEvent matchFinishEvent:
-                        await OnMatchFinish(matchFinishEvent);
-                        break;
-                }
-            }
-            OnFinishBattle();
-        }
+        
         
         private async Task OnMatchStart(MatchStartEvent matchStartEvent)
         {

@@ -9,7 +9,7 @@ namespace ProjectABC.Core
             
         }
 
-        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             // Do nothing
         }
@@ -27,7 +27,7 @@ namespace ProjectABC.Core
             
         }
 
-        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             // Do nothing
         }

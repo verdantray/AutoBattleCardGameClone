@@ -27,7 +27,7 @@ namespace ProjectABC.Core
             }
         }
 
-        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
 

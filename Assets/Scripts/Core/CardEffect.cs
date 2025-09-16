@@ -59,9 +59,9 @@ namespace ProjectABC.Core
             }
         }
         
-        public abstract void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent);
+        public abstract void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent);
 
-        public virtual bool TryReplaceMovement(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public virtual bool TryReplaceMovement(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             return false;
         }

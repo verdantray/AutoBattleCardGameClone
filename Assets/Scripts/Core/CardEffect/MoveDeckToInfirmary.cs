@@ -20,7 +20,7 @@ namespace ProjectABC.Core
             }
         }
 
-        public override void CheckApplyEffect(CardEffectArgs args, MatchContextEvent matchContextEvent)
+        public override void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             var (trigger, ownSide, otherSide, gameState) = args;
 
@@ -61,7 +61,11 @@ namespace ProjectABC.Core
                 bool isMovementReplaced = cardToMove.CardEffect.TryReplaceMovement(leaveFieldEffectArgs, matchContextEvent);
                 if (isMovementReplaced)
                 {
-                    MatchContextEvent.CheckApplyBuffs(ownSide, otherSide, gameState, matchContextEvent);
+                    ownSide.CheckApplyCardBuffs(otherSide, gameState);
+                    otherSide.CheckApplyCardBuffs(ownSide, gameState);
+
+                    CheckApplyBuffEvent checkApplyBuffEvent = new CheckApplyBuffEvent(new MatchSnapshot(gameState, ownSide, otherSide));
+                    checkApplyBuffEvent.RegisterEvent(matchContextEvent);
                     continue;
                 }
                 

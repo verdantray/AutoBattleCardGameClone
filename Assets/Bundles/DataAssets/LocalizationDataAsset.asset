@@ -129,7 +129,7 @@ MonoBehaviour:
     en: 
     ja: 
   - key: desc_effect_power_up_self_while_defending
-    ko: "%localiization_key:desc_effect_condition_on_defend% \uB0B4 \uD30C\uC6CC\uAC00
+    ko: "%localization_key:desc_effect_condition_on_defend% \uB0B4 \uD30C\uC6CC\uAC00
       {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
     en: 
     ja: 

@@ -1,13 +1,21 @@
+using System.Collections.Generic;
 using System.Linq;
 
 
 namespace ProjectABC.Core
 {
+    public interface IMatchContextEvent : IContextEvent
+    {
+        public MatchResult Result { get; }
+        public bool MatchFinished { get; }
+        public List<IMatchEvent> MatchEvents { get; }
+
+        public void SetResult(IPlayer winPlayer, IPlayer losePlayer, MatchEndReason reason);
+    }
+    
     public interface IMatchEvent
     {
-        public MatchSnapshot Snapshot { get; }
-
-        public void RegisterEvent(MatchContextEvent matchContextEvent);
+        public void RegisterEvent(IMatchContextEvent matchContextEvent);
     }
 
     public abstract class MatchEventBase : IMatchEvent
@@ -19,7 +27,7 @@ namespace ProjectABC.Core
             Snapshot = snapshot;
         }
         
-        public virtual void RegisterEvent(MatchContextEvent matchContextEvent)
+        public virtual void RegisterEvent(IMatchContextEvent matchContextEvent)
         {
             if (matchContextEvent.MatchFinished)
             {
@@ -93,7 +101,7 @@ namespace ProjectABC.Core
             Reason = reason;
         }
 
-        public override void RegisterEvent(MatchContextEvent matchContextEvent)
+        public override void RegisterEvent(IMatchContextEvent matchContextEvent)
         {
             var players = Snapshot.MatchSideSnapShots.Keys;
             IPlayer otherPlayer = players.First(player => player != WinningPlayer);

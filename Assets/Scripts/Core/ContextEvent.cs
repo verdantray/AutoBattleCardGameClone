@@ -73,7 +73,7 @@ namespace ProjectABC.Core
             StringBuilder stringBuilder = new StringBuilder();
 
             stringBuilder.AppendLine($"덱으로부터 {deletedCards.Count} 장의 카드를 게임에서 제거합니다.");
-            stringBuilder.AppendLine($"제거한 카드들:\n{string.Join('\n', deletedCards)})");
+            stringBuilder.AppendLine($"제거한 카드들:\n{string.Join('\n', deletedCards)}");
 
             Message = $"플레이어 {player.Name} : {stringBuilder}";
         }
