@@ -225,7 +225,7 @@ MonoBehaviour:
     gradeType: 0
     basePower: 3
     amount: 2
-    titleKey: title_crew
+    titleKey: title_coastline_guard
     nameKey: card_name_pora
     cardEffectId: card_effect_elite
     imagePath: 
@@ -531,7 +531,7 @@ MonoBehaviour:
     gradeType: 2
     basePower: 10
     amount: 4
-    titleKey: ttitle_chef
+    titleKey: title_chef
     nameKey: card_name_sophine
     cardEffectId: card_effect_sophine_hc
     imagePath: 
@@ -540,7 +540,7 @@ MonoBehaviour:
     gradeType: 2
     basePower: 7
     amount: 2
-    titleKey: title_appetizer_specialis
+    titleKey: title_appetizer_specialist
     nameKey: card_name_brinie
     cardEffectId: card_effect_elite
     imagePath: 
@@ -859,8 +859,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701184
-          - rid: 7078914588109701185
+          - rid: 7078914611111788612
+          - rid: 7078914611111788613
       - key: target_grade
         value:
           type: 0
@@ -914,8 +914,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701186
-          - rid: 7078914588109701187
+          - rid: 7078914611111788614
+          - rid: 7078914611111788615
       - key: cancel_triggers
         value:
           type: 6
@@ -926,7 +926,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701188
+          - rid: 7078914611111788616
       - key: power_up_ratio
         value:
           type: 1
@@ -970,8 +970,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701189
-          - rid: 7078914588109701190
+          - rid: 7078914611111788617
+          - rid: 7078914611111788618
       - key: cancel_triggers
         value:
           type: 6
@@ -982,7 +982,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701191
+          - rid: 7078914611111788619
       - key: power_up_ratio
         value:
           type: 1
@@ -1026,7 +1026,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701192
+          - rid: 7078914611111788620
       - key: cancel_triggers
         value:
           type: 6
@@ -1037,7 +1037,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701193
+          - rid: 7078914611111788621
       - key: club_includes
         value:
           type: 6
@@ -1048,7 +1048,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701194
+          - rid: 7078914611111788622
       - key: enable_match_states
         value:
           type: 6
@@ -1059,8 +1059,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701195
-          - rid: 7078914588109701196
+          - rid: 7078914611111788623
+          - rid: 7078914611111788624
       - key: power_up_bonus
         value:
           type: 1
@@ -1104,7 +1104,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701197
+          - rid: 7078914611111788625
       - key: cancel_triggers
         value:
           type: 6
@@ -1115,7 +1115,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701198
+          - rid: 7078914611111788626
       - key: power_up_ratio
         value:
           type: 1
@@ -1159,7 +1159,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701199
+          - rid: 7078914611111788627
       - key: cancel_triggers
         value:
           type: 6
@@ -1170,7 +1170,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701200
+          - rid: 7078914611111788628
       - key: power_up_ratio
         value:
           type: 1
@@ -1214,8 +1214,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701201
-          - rid: 7078914588109701202
+          - rid: 7078914611111788629
+          - rid: 7078914611111788630
       - key: cancel_triggers
         value:
           type: 6
@@ -1226,7 +1226,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701203
+          - rid: 7078914611111788631
       - key: club_includes
         value:
           type: 6
@@ -1237,7 +1237,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701204
+          - rid: 7078914611111788632
       - key: power_up_bonus
         value:
           type: 1
@@ -1281,8 +1281,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701205
-          - rid: 7078914588109701206
+          - rid: 7078914611111788633
+          - rid: 7078914611111788634
       - key: cards_amount
         value:
           type: 1
@@ -1326,7 +1326,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701207
+          - rid: 7078914611111788635
       - key: cancel_triggers
         value:
           type: 6
@@ -1337,7 +1337,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701208
+          - rid: 7078914611111788636
       - key: club_includes
         value:
           type: 6
@@ -1348,7 +1348,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701209
+          - rid: 7078914611111788637
       - key: enable_match_states
         value:
           type: 6
@@ -1359,8 +1359,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701210
-          - rid: 7078914588109701211
+          - rid: 7078914611111788638
+          - rid: 7078914611111788639
       - key: power_up_bonus
         value:
           type: 1
@@ -1404,8 +1404,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701212
-          - rid: 7078914588109701213
+          - rid: 7078914611111788640
+          - rid: 7078914611111788641
       - key: club_excludes
         value:
           type: 6
@@ -1416,7 +1416,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701214
+          - rid: 7078914611111788642
       - key: necessary_club_amount
         value:
           type: 1
@@ -1503,7 +1503,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701215
+          - rid: 7078914611111788643
       - key: gain_win_points
         value:
           type: 1
@@ -1547,8 +1547,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701216
-          - rid: 7078914588109701217
+          - rid: 7078914611111788644
+          - rid: 7078914611111788645
       - key: cards_amount
         value:
           type: 1
@@ -1592,8 +1592,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701218
-          - rid: 7078914588109701219
+          - rid: 7078914611111788646
+          - rid: 7078914611111788647
       - key: cancel_triggers
         value:
           type: 6
@@ -1604,7 +1604,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701220
+          - rid: 7078914611111788648
       - key: enable_last_result
         value:
           type: 0
@@ -1658,8 +1658,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701221
-          - rid: 7078914588109701222
+          - rid: 7078914611111788649
+          - rid: 7078914611111788650
       - key: enable_last_result
         value:
           type: 0
@@ -1713,7 +1713,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701223
+          - rid: 7078914611111788651
       - key: cancel_triggers
         value:
           type: 6
@@ -1724,7 +1724,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701224
+          - rid: 7078914611111788652
       - key: club_includes
         value:
           type: 6
@@ -1735,7 +1735,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701225
+          - rid: 7078914611111788653
       - key: power_up_ratio
         value:
           type: 1
@@ -1779,8 +1779,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701226
-          - rid: 7078914588109701227
+          - rid: 7078914611111788654
+          - rid: 7078914611111788655
       - key: cards_amount
         value:
           type: 1
@@ -1824,7 +1824,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701228
+          - rid: 7078914611111788656
       - key: cancel_triggers
         value:
           type: 6
@@ -1835,7 +1835,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701229
+          - rid: 7078914611111788657
       - key: power_criteria
         value:
           type: 1
@@ -1889,7 +1889,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701230
+          - rid: 7078914611111788658
   - id: card_effect_lisenna_co
     json:
       fields:
@@ -1923,8 +1923,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701231
-          - rid: 7078914588109701232
+          - rid: 7078914611111788659
+          - rid: 7078914611111788660
       - key: cards_amount
         value:
           type: 1
@@ -1968,7 +1968,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701233
+          - rid: 7078914611111788661
       - key: cancel_triggers
         value:
           type: 6
@@ -1979,7 +1979,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701234
+          - rid: 7078914611111788662
       - key: power_criteria
         value:
           type: 1
@@ -2033,8 +2033,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701235
-          - rid: 7078914588109701236
+          - rid: 7078914611111788663
+          - rid: 7078914611111788664
       - key: cancel_triggers
         value:
           type: 6
@@ -2045,7 +2045,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701237
+          - rid: 7078914611111788665
       - key: deck_stock
         value:
           type: 1
@@ -2056,7 +2056,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr: []
-      - key: power_up_ratio
+      - key: power_up_bonus
         value:
           type: 1
           strValue: 
@@ -2099,7 +2099,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701238
+          - rid: 7078914611111788666
       - key: cancel_triggers
         value:
           type: 6
@@ -2110,7 +2110,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701239
+          - rid: 7078914611111788667
       - key: enable_match_states
         value:
           type: 6
@@ -2121,7 +2121,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701240
+          - rid: 7078914611111788668
       - key: power_down_penalty
         value:
           type: 1
@@ -2165,8 +2165,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701241
-          - rid: 7078914588109701242
+          - rid: 7078914611111788669
+          - rid: 7078914611111788670
       - key: cancel_triggers
         value:
           type: 6
@@ -2177,7 +2177,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701243
+          - rid: 7078914611111788671
       - key: enable_match_states
         value:
           type: 6
@@ -2188,7 +2188,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701244
+          - rid: 7078914611111788672
       - key: power_up_bonus
         value:
           type: 1
@@ -2232,7 +2232,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701245
+          - rid: 7078914611111788673
       - key: cancel_triggers
         value:
           type: 6
@@ -2243,7 +2243,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701246
+          - rid: 7078914611111788674
       - key: power_up_bonus
         value:
           type: 1
@@ -2287,8 +2287,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701247
-          - rid: 7078914588109701248
+          - rid: 7078914611111788675
+          - rid: 7078914611111788676
       - key: cancel_triggers
         value:
           type: 6
@@ -2299,7 +2299,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701249
+          - rid: 7078914611111788677
       - key: power_up_ratio
         value:
           type: 1
@@ -2343,8 +2343,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701250
-          - rid: 7078914588109701251
+          - rid: 7078914611111788678
+          - rid: 7078914611111788679
       - key: cards_amount
         value:
           type: 1
@@ -2388,8 +2388,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701252
-          - rid: 7078914588109701253
+          - rid: 7078914611111788680
+          - rid: 7078914611111788681
       - key: cancel_triggers
         value:
           type: 6
@@ -2400,7 +2400,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701254
+          - rid: 7078914611111788682
       - key: club_excludes
         value:
           type: 6
@@ -2411,7 +2411,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701255
+          - rid: 7078914611111788683
       - key: power_up_ratio
         value:
           type: 1
@@ -2455,8 +2455,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701256
-          - rid: 7078914588109701257
+          - rid: 7078914611111788684
+          - rid: 7078914611111788685
       - key: cancel_triggers
         value:
           type: 6
@@ -2467,7 +2467,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701258
+          - rid: 7078914611111788686
   - id: card_effect_selina_cl
     json:
       fields:
@@ -2501,8 +2501,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701259
-          - rid: 7078914588109701260
+          - rid: 7078914611111788687
+          - rid: 7078914611111788688
       - key: cards_amount
         value:
           type: 1
@@ -2523,7 +2523,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701261
+          - rid: 7078914611111788689
   - id: card_effect_selina_ex
     json:
       fields:
@@ -2557,8 +2557,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701262
-          - rid: 7078914588109701263
+          - rid: 7078914611111788690
+          - rid: 7078914611111788691
       - key: cancel_triggers
         value:
           type: 6
@@ -2569,7 +2569,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701264
+          - rid: 7078914611111788692
       - key: power_up_ratio
         value:
           type: 1
@@ -2613,8 +2613,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701265
-          - rid: 7078914588109701266
+          - rid: 7078914611111788693
+          - rid: 7078914611111788694
       - key: cards_amount
         value:
           type: 1
@@ -2635,7 +2635,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701267
+          - rid: 7078914611111788695
   - id: card_effect_serano_ur
     json:
       fields:
@@ -2669,7 +2669,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701268
+          - rid: 7078914611111788696
       - key: cancel_triggers
         value:
           type: 6
@@ -2680,7 +2680,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701269
+          - rid: 7078914611111788697
       - key: club_includes
         value:
           type: 6
@@ -2691,7 +2691,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701270
+          - rid: 7078914611111788698
       - key: enable_match_states
         value:
           type: 6
@@ -2702,8 +2702,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701271
-          - rid: 7078914588109701272
+          - rid: 7078914611111788699
+          - rid: 7078914611111788700
       - key: power_up_bonus
         value:
           type: 1
@@ -2747,7 +2747,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701273
+          - rid: 7078914611111788701
       - key: cancel_triggers
         value:
           type: 6
@@ -2758,7 +2758,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701274
+          - rid: 7078914611111788702
       - key: club_includes
         value:
           type: 6
@@ -2769,7 +2769,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701275
+          - rid: 7078914611111788703
       - key: enable_match_states
         value:
           type: 6
@@ -2780,8 +2780,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701276
-          - rid: 7078914588109701277
+          - rid: 7078914611111788704
+          - rid: 7078914611111788705
       - key: power_up_bonus
         value:
           type: 1
@@ -2825,8 +2825,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701278
-          - rid: 7078914588109701279
+          - rid: 7078914611111788706
+          - rid: 7078914611111788707
       - key: cancel_triggers
         value:
           type: 6
@@ -2837,7 +2837,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701280
+          - rid: 7078914611111788708
       - key: power_up_ratio
         value:
           type: 1
@@ -2881,8 +2881,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701281
-          - rid: 7078914588109701282
+          - rid: 7078914611111788709
+          - rid: 7078914611111788710
       - key: cards_amount
         value:
           type: 1
@@ -2936,8 +2936,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701283
-          - rid: 7078914588109701284
+          - rid: 7078914611111788711
+          - rid: 7078914611111788712
       - key: cancel_triggers
         value:
           type: 6
@@ -2948,7 +2948,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701285
+          - rid: 7078914611111788713
       - key: opponent_deck_stock
         value:
           type: 1
@@ -3002,8 +3002,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701286
-          - rid: 7078914588109701287
+          - rid: 7078914611111788714
+          - rid: 7078914611111788715
       - key: target_grade
         value:
           type: 0
@@ -3057,8 +3057,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701288
-          - rid: 7078914588109701289
+          - rid: 7078914611111788716
+          - rid: 7078914611111788717
       - key: cancel_triggers
         value:
           type: 6
@@ -3069,7 +3069,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701290
+          - rid: 7078914611111788718
       - key: power_up_ratio
         value:
           type: 1
@@ -3113,7 +3113,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701291
+          - rid: 7078914611111788719
       - key: cancel_triggers
         value:
           type: 6
@@ -3124,7 +3124,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701292
+          - rid: 7078914611111788720
       - key: club_includes
         value:
           type: 6
@@ -3135,7 +3135,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701293
+          - rid: 7078914611111788721
       - key: enable_match_states
         value:
           type: 6
@@ -3146,7 +3146,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701294
+          - rid: 7078914611111788722
       - key: power_up_bonus
         value:
           type: 1
@@ -3190,8 +3190,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701295
-          - rid: 7078914588109701296
+          - rid: 7078914611111788723
+          - rid: 7078914611111788724
       - key: cancel_triggers
         value:
           type: 6
@@ -3202,7 +3202,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701297
+          - rid: 7078914611111788725
       - key: power_up_ratio
         value:
           type: 1
@@ -3246,8 +3246,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701298
-          - rid: 7078914588109701299
+          - rid: 7078914611111788726
+          - rid: 7078914611111788727
       - key: cancel_triggers
         value:
           type: 6
@@ -3258,7 +3258,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701300
+          - rid: 7078914611111788728
       - key: club_includes
         value:
           type: 6
@@ -3269,7 +3269,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701301
+          - rid: 7078914611111788729
       - key: power_up_ratio
         value:
           type: 1
@@ -3313,8 +3313,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701302
-          - rid: 7078914588109701303
+          - rid: 7078914611111788730
+          - rid: 7078914611111788731
       - key: cancel_triggers
         value:
           type: 6
@@ -3325,7 +3325,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701304
+          - rid: 7078914611111788732
       - key: deck_stock
         value:
           type: 1
@@ -3336,7 +3336,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr: []
-      - key: power_up_ratio
+      - key: power_up_bonus
         value:
           type: 1
           strValue: 
@@ -3412,8 +3412,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701305
-          - rid: 7078914588109701306
+          - rid: 7078914611111788733
+          - rid: 7078914611111788734
       - key: cancel_triggers
         value:
           type: 6
@@ -3424,7 +3424,7 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701307
+          - rid: 7078914611111788735
       - key: enable_last_result
         value:
           type: 0
@@ -3478,8 +3478,8 @@ MonoBehaviour:
           obj:
             rid: -2
           arr:
-          - rid: 7078914588109701308
-          - rid: 7078914588109701309
+          - rid: 7078914611111788736
+          - rid: 7078914611111788737
       - key: cards_amount
         value:
           type: 1
@@ -3505,7 +3505,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 7078914588109701184
+    - rid: 7078914611111788612
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3516,7 +3516,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701185
+    - rid: 7078914611111788613
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3527,7 +3527,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701186
+    - rid: 7078914611111788614
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3538,7 +3538,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701187
+    - rid: 7078914611111788615
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3549,7 +3549,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701188
+    - rid: 7078914611111788616
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3560,7 +3560,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701189
+    - rid: 7078914611111788617
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3571,7 +3571,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701190
+    - rid: 7078914611111788618
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3582,7 +3582,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701191
+    - rid: 7078914611111788619
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3593,7 +3593,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701192
+    - rid: 7078914611111788620
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3604,7 +3604,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701193
+    - rid: 7078914611111788621
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3615,7 +3615,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701194
+    - rid: 7078914611111788622
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3626,7 +3626,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701195
+    - rid: 7078914611111788623
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3637,7 +3637,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701196
+    - rid: 7078914611111788624
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3648,7 +3648,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701197
+    - rid: 7078914611111788625
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3659,7 +3659,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701198
+    - rid: 7078914611111788626
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3670,7 +3670,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701199
+    - rid: 7078914611111788627
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3681,7 +3681,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701200
+    - rid: 7078914611111788628
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3692,7 +3692,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701201
+    - rid: 7078914611111788629
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3703,7 +3703,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701202
+    - rid: 7078914611111788630
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3714,7 +3714,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701203
+    - rid: 7078914611111788631
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3725,7 +3725,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701204
+    - rid: 7078914611111788632
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3736,7 +3736,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701205
+    - rid: 7078914611111788633
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3747,7 +3747,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701206
+    - rid: 7078914611111788634
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3758,7 +3758,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701207
+    - rid: 7078914611111788635
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3769,7 +3769,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701208
+    - rid: 7078914611111788636
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3780,7 +3780,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701209
+    - rid: 7078914611111788637
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3791,7 +3791,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701210
+    - rid: 7078914611111788638
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3802,7 +3802,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701211
+    - rid: 7078914611111788639
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3813,7 +3813,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701212
+    - rid: 7078914611111788640
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3824,7 +3824,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701213
+    - rid: 7078914611111788641
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3835,7 +3835,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701214
+    - rid: 7078914611111788642
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3846,7 +3846,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701215
+    - rid: 7078914611111788643
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3857,7 +3857,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701216
+    - rid: 7078914611111788644
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3868,7 +3868,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701217
+    - rid: 7078914611111788645
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3879,7 +3879,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701218
+    - rid: 7078914611111788646
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3890,7 +3890,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701219
+    - rid: 7078914611111788647
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3901,7 +3901,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701220
+    - rid: 7078914611111788648
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3912,7 +3912,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701221
+    - rid: 7078914611111788649
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3923,7 +3923,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701222
+    - rid: 7078914611111788650
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3934,7 +3934,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701223
+    - rid: 7078914611111788651
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3945,7 +3945,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701224
+    - rid: 7078914611111788652
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3956,7 +3956,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701225
+    - rid: 7078914611111788653
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3967,7 +3967,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701226
+    - rid: 7078914611111788654
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3978,7 +3978,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701227
+    - rid: 7078914611111788655
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -3989,7 +3989,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701228
+    - rid: 7078914611111788656
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4000,7 +4000,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701229
+    - rid: 7078914611111788657
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4011,7 +4011,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701230
+    - rid: 7078914611111788658
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4022,7 +4022,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701231
+    - rid: 7078914611111788659
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4033,7 +4033,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701232
+    - rid: 7078914611111788660
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4044,7 +4044,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701233
+    - rid: 7078914611111788661
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4055,7 +4055,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701234
+    - rid: 7078914611111788662
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4066,7 +4066,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701235
+    - rid: 7078914611111788663
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4077,7 +4077,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701236
+    - rid: 7078914611111788664
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4088,7 +4088,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701237
+    - rid: 7078914611111788665
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4099,7 +4099,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701238
+    - rid: 7078914611111788666
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4110,7 +4110,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701239
+    - rid: 7078914611111788667
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4121,7 +4121,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701240
+    - rid: 7078914611111788668
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4132,7 +4132,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701241
+    - rid: 7078914611111788669
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4143,7 +4143,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701242
+    - rid: 7078914611111788670
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4154,7 +4154,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701243
+    - rid: 7078914611111788671
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4165,7 +4165,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701244
+    - rid: 7078914611111788672
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4176,7 +4176,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701245
+    - rid: 7078914611111788673
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4187,7 +4187,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701246
+    - rid: 7078914611111788674
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4198,7 +4198,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701247
+    - rid: 7078914611111788675
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4209,7 +4209,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701248
+    - rid: 7078914611111788676
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4220,7 +4220,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701249
+    - rid: 7078914611111788677
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4231,7 +4231,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701250
+    - rid: 7078914611111788678
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4242,7 +4242,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701251
+    - rid: 7078914611111788679
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4253,7 +4253,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701252
+    - rid: 7078914611111788680
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4264,7 +4264,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701253
+    - rid: 7078914611111788681
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4275,7 +4275,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701254
+    - rid: 7078914611111788682
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4286,7 +4286,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701255
+    - rid: 7078914611111788683
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4297,7 +4297,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701256
+    - rid: 7078914611111788684
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4308,7 +4308,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701257
+    - rid: 7078914611111788685
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4319,7 +4319,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701258
+    - rid: 7078914611111788686
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4330,7 +4330,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701259
+    - rid: 7078914611111788687
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4341,7 +4341,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701260
+    - rid: 7078914611111788688
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4352,7 +4352,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701261
+    - rid: 7078914611111788689
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4363,7 +4363,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701262
+    - rid: 7078914611111788690
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4374,7 +4374,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701263
+    - rid: 7078914611111788691
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4385,7 +4385,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701264
+    - rid: 7078914611111788692
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4396,7 +4396,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701265
+    - rid: 7078914611111788693
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4407,7 +4407,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701266
+    - rid: 7078914611111788694
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4418,7 +4418,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701267
+    - rid: 7078914611111788695
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4429,7 +4429,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701268
+    - rid: 7078914611111788696
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4440,7 +4440,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701269
+    - rid: 7078914611111788697
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4451,7 +4451,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701270
+    - rid: 7078914611111788698
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4462,7 +4462,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701271
+    - rid: 7078914611111788699
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4473,7 +4473,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701272
+    - rid: 7078914611111788700
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4484,7 +4484,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701273
+    - rid: 7078914611111788701
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4495,7 +4495,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701274
+    - rid: 7078914611111788702
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4506,7 +4506,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701275
+    - rid: 7078914611111788703
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4517,7 +4517,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701276
+    - rid: 7078914611111788704
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4528,7 +4528,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701277
+    - rid: 7078914611111788705
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4539,7 +4539,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701278
+    - rid: 7078914611111788706
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4550,7 +4550,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701279
+    - rid: 7078914611111788707
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4561,7 +4561,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701280
+    - rid: 7078914611111788708
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4572,7 +4572,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701281
+    - rid: 7078914611111788709
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4583,7 +4583,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701282
+    - rid: 7078914611111788710
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4594,7 +4594,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701283
+    - rid: 7078914611111788711
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4605,7 +4605,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701284
+    - rid: 7078914611111788712
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4616,7 +4616,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701285
+    - rid: 7078914611111788713
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4627,7 +4627,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701286
+    - rid: 7078914611111788714
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4638,7 +4638,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701287
+    - rid: 7078914611111788715
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4649,7 +4649,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701288
+    - rid: 7078914611111788716
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4660,7 +4660,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701289
+    - rid: 7078914611111788717
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4671,7 +4671,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701290
+    - rid: 7078914611111788718
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4682,7 +4682,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701291
+    - rid: 7078914611111788719
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4693,7 +4693,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701292
+    - rid: 7078914611111788720
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4704,7 +4704,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701293
+    - rid: 7078914611111788721
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4715,7 +4715,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701294
+    - rid: 7078914611111788722
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4726,7 +4726,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701295
+    - rid: 7078914611111788723
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4737,7 +4737,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701296
+    - rid: 7078914611111788724
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4748,7 +4748,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701297
+    - rid: 7078914611111788725
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4759,7 +4759,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701298
+    - rid: 7078914611111788726
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4770,7 +4770,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701299
+    - rid: 7078914611111788727
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4781,7 +4781,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701300
+    - rid: 7078914611111788728
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4792,7 +4792,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701301
+    - rid: 7078914611111788729
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4803,7 +4803,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701302
+    - rid: 7078914611111788730
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4814,7 +4814,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701303
+    - rid: 7078914611111788731
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4825,7 +4825,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701304
+    - rid: 7078914611111788732
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4836,7 +4836,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701305
+    - rid: 7078914611111788733
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4847,7 +4847,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701306
+    - rid: 7078914611111788734
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4858,7 +4858,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701307
+    - rid: 7078914611111788735
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4869,7 +4869,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701308
+    - rid: 7078914611111788736
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0
@@ -4880,7 +4880,7 @@ MonoBehaviour:
         obj:
           rid: -2
         arr: []
-    - rid: 7078914588109701309
+    - rid: 7078914611111788737
       type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
       data:
         type: 0

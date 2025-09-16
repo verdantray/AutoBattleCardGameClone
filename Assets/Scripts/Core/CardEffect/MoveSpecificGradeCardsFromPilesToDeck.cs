@@ -52,8 +52,8 @@ namespace ProjectABC.Core
                 }
                 
                 ownPlayerState.Deck.Add(drawnCard);
-                
-                int randomIndex = Enumerable.Range(0, ownSide.Deck.Count - 1).OrderBy(_ => random.Next()).First();
+
+                int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).First();
                 ownSide.Deck.Insert(randomIndex, drawnCard);
                 
                 // additive-recruit is not trigger card effect of drawn card...
