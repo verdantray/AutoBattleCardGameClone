@@ -58,11 +58,7 @@ namespace ProjectABC.Core
 
             if (clubsInInfirmary < _necessaryClubAmount)
             {
-                var failedApplyEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
+                var failedApplyEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
                 failedApplyEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
@@ -72,8 +68,7 @@ namespace ProjectABC.Core
                 new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect)
             );
             
-            MatchSnapshot matchSnapshot = new MatchSnapshot(gameState, ownSide, otherSide);
-            var gainWinPointsEventEffect = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints, matchSnapshot);
+            var gainWinPointsEventEffect = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints);
             gainWinPointsEventEffect.RegisterEvent(matchContextEvent);
         }
 
@@ -89,18 +84,6 @@ namespace ProjectABC.Core
                 _necessaryClubAmount,
                 _gainWinPoints
             );
-        }
-    }
-    
-    public class GainWinPointsByCardEffectEvent : MatchEventBase
-    {
-        public readonly IPlayer GainedPlayer;
-        public readonly int WinPoints;
-            
-        public GainWinPointsByCardEffectEvent(IPlayer player, int winPoints, MatchSnapshot snapshot) : base(snapshot)
-        {
-            GainedPlayer = player;
-            WinPoints = winPoints;
         }
     }
 }

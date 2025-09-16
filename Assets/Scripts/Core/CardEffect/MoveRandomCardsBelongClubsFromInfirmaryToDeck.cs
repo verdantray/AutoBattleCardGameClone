@@ -55,11 +55,7 @@ namespace ProjectABC.Core
 
             if (cardsBelongClubsInInfirmary.Length == 0)
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
+                var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains);
                 failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
@@ -102,7 +98,8 @@ namespace ProjectABC.Core
                     return;
                 }
                     
-                var moveCardEffectEvent = new MoveCardToBottomOfDeckEvent(cardToMove, new MatchSnapshot(gameState, ownSide, otherSide));
+                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{cardToMove}";
+                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
                 moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }

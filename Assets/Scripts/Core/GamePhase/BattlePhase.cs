@@ -21,13 +21,13 @@ namespace ProjectABC.Core
                 matchContextConsoleEvent.Publish();
                 simulationContext.CollectedEvents.Add(matchContextConsoleEvent);
                 
-                // currentState.MatchResults.AddMatchResult(matchContextConsoleEvent.Result);
-                //
-                // WinPointOnRound winPointOnRound = new WinPointOnRound(matchContextConsoleEvent.Round);
-                // int roundWinPoints = winPointOnRound.GetWinPoint();
-                //
-                // ScoreEntry winnerEntry = new ScoreEntry(roundWinPoints, ScoreEntry.ScoreReason.ScoreByMatchWin);
-                // currentState.ScoreBoard.RegisterScoreEntry(matchContextConsoleEvent.Result.Winner, winnerEntry);
+                currentState.MatchResults.AddMatchResult(matchContextConsoleEvent.Result);
+                
+                WinPointOnRound winPointOnRound = new WinPointOnRound(matchContextConsoleEvent.Round);
+                int roundWinPoints = winPointOnRound.GetWinPoint();
+                
+                ScoreEntry winnerEntry = new ScoreEntry(roundWinPoints, ScoreEntry.ScoreReason.ScoreByMatchWin);
+                currentState.ScoreBoard.RegisterScoreEntry(matchContextConsoleEvent.Result.Winner, winnerEntry);
                 
                 // TODO: publish ContextEvent here for announce win points what winner gained on round and total win points
             }

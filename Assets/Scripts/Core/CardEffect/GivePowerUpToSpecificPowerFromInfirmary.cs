@@ -62,7 +62,7 @@ namespace ProjectABC.Core
                     ownSide.CardBuffHandlers.Remove(handler);
                 }
 
-                var inactiveBuffEvent = new InactiveBuffEvent(CallCard, new MatchSnapshot(gameState, ownSide, otherSide));
+                var inactiveBuffEvent = new CommonMatchMessageEvent($"{CallCard.Title} {CallCard.Name}의 효과가 취소됩니다. / {CallCard.CardEffect.Description}");
                 inactiveBuffEvent.RegisterEvent(matchContextEvent);
                 
                 return;
@@ -76,7 +76,7 @@ namespace ProjectABC.Core
                 
                 ownSide.CardBuffHandlers.Add(handler);
                 
-                var activeBuffEvent = new ActiveCardBuffEvent(CallCard, new MatchSnapshot(gameState, ownSide, otherSide));
+                var activeBuffEvent = new CommonMatchMessageEvent($"{CallCard.Title} {CallCard.Name}의 효과가 발동됩니다. / {CallCard.CardEffect.Description}");
                 activeBuffEvent.RegisterEvent(matchContextEvent);
             }
         }

@@ -39,11 +39,7 @@ namespace ProjectABC.Core
 
             if (cardsInInfirmary.Length == 0)
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
+                var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains);
                 failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }

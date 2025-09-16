@@ -49,24 +49,15 @@ namespace ProjectABC.Core
 
             if (!isEnableResultLastMatch)
             {
-                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
+                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
                 failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
             ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(ownPlayer, scoreEntry);
-
-            GainWinPointsByCardEffectEvent gainWinPointEvent = new GainWinPointsByCardEffectEvent(
-                ownPlayer,
-                _gainWinPoints,
-                new MatchSnapshot(gameState, ownSide, otherSide)
-            );
             
+            GainWinPointsByCardEffectEvent gainWinPointEvent = new GainWinPointsByCardEffectEvent(ownPlayer, _gainWinPoints);
             gainWinPointEvent.RegisterEvent(matchContextEvent);
         }
 

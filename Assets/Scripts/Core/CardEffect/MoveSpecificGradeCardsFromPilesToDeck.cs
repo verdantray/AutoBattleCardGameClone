@@ -46,11 +46,7 @@ namespace ProjectABC.Core
             {
                 if (!gradeCardPiles[_targetGrade].TryDraw(out Card drawnCard))
                 {
-                    FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
-                        FailToApplyCardEffectEvent.FailReason.NoCardPileRemains,
-                        new MatchSnapshot(gameState, ownSide, otherSide)
-                    );
-                    
+                    FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoCardPileRemains);
                     failEffectEvent.RegisterEvent(matchContextEvent);
                     break;
                 }
@@ -63,8 +59,9 @@ namespace ProjectABC.Core
                 // additive-recruit is not trigger card effect of drawn card...
                 // drawnCard.CardEffect.TryApplyEffectOnRecruit(ownPlayer, gameState, out var contextEvent);
 
-                MoveCardToRandomOfDeck moveCardEvent = new MoveCardToRandomOfDeck(drawnCard, new MatchSnapshot(gameState, ownSide, otherSide));
-                moveCardEvent.RegisterEvent(matchContextEvent);
+                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {random}번째 위치로 보냄\n{drawnCard}";
+                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
+                moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
 
@@ -73,13 +70,6 @@ namespace ProjectABC.Core
             string gradeText = LocalizationHelper.Instance.Localize(_targetGrade.GetLocalizationKey());
 
             return LocalizationHelper.Instance.Localize(DescriptionKey, gradeText, _cardsAmount);
-        }
-    }
-
-    public class MoveCardToRandomOfDeck : MatchEventBase
-    {
-        public MoveCardToRandomOfDeck(Card card, MatchSnapshot snapshot) : base(snapshot)
-        {
         }
     }
 }

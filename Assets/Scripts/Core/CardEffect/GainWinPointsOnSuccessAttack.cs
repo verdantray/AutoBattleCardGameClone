@@ -31,10 +31,7 @@ namespace ProjectABC.Core
 
             if (ownSide.Field[^1] != CallCard)
             {
-                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
+                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
                 failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
@@ -42,12 +39,7 @@ namespace ProjectABC.Core
             ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(ownSide.Player, scoreEntry);
 
-            GainWinPointsByCardEffectEvent matchEvent = new GainWinPointsByCardEffectEvent(
-                ownSide.Player,
-                _gainWinPoints,
-                new MatchSnapshot(gameState, ownSide, otherSide)
-            );
-            
+            GainWinPointsByCardEffectEvent matchEvent = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints);
             matchEvent.RegisterEvent(matchContextEvent);
         }
 

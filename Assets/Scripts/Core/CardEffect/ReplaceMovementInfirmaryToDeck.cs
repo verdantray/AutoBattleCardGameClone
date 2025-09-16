@@ -26,8 +26,9 @@ namespace ProjectABC.Core
             ownSide.Field.Remove(CallCard);
             ownSide.Deck.Add(CallCard);
 
-            MoveCardToBottomOfDeckEvent moveCardEvent = new MoveCardToBottomOfDeckEvent(CallCard, new MatchSnapshot(gameState, ownSide, otherSide));
-            moveCardEvent.RegisterEvent(matchContextEvent);
+            string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{CallCard}";
+            var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
+            moveCardEffectEvent.RegisterEvent(matchContextEvent);
             
             return true;
         }

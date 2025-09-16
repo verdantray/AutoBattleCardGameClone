@@ -39,11 +39,7 @@ namespace ProjectABC.Core
             var cardsInInfirmary = ownSide.Infirmary.GetAllCards();
             if (!cardsInInfirmary.Any(card => card.BasePower <= _powerCriteria))
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoMeetCondition,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
+                var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
                 failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
@@ -86,7 +82,8 @@ namespace ProjectABC.Core
                     return;
                 }
 
-                var moveCardEffectEvent = new MoveCardToBottomOfDeckEvent(cardToMove, new MatchSnapshot(gameState, ownSide, otherSide));
+                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{cardToMove}";
+                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
                 moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
@@ -94,14 +91,6 @@ namespace ProjectABC.Core
         protected override string GetDescription()
         {
             return LocalizationHelper.Instance.Localize(DescriptionKey, _powerCriteria, _cardsAmount);
-        }
-    }
-
-    public class MoveCardToBottomOfDeckEvent : MatchEventBase
-    {
-        public MoveCardToBottomOfDeckEvent(Card movedCard, MatchSnapshot snapshot) : base(snapshot)
-        {
-            
         }
     }
 }

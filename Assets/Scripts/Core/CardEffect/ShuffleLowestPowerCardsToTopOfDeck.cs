@@ -36,11 +36,7 @@ namespace ProjectABC.Core
             // if amount of remain hands less than _cardsAmount, then no need to move cards to top of deck...
             if (ownSide.Deck.Count < _cardsAmount)
             {
-                var failedEffectEvent = new FailToApplyCardEffectEvent(
-                    FailToApplyCardEffectEvent.FailReason.NoDeckRemains,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
+                var failedEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoDeckRemains);
                 failedEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
@@ -69,9 +65,10 @@ namespace ProjectABC.Core
 
                 ownSide.Deck.Remove(cardToShuffle);
                 ownSide.Deck.AddToTop(cardToShuffle);
-
-                var moveCardsEffectEvent = new MoveCardToTopOfDeckEvent(cardToShuffle, new MatchSnapshot(gameState, ownSide, otherSide));
-                moveCardsEffectEvent.RegisterEvent(matchContextEvent);
+                
+                string moveCardToTopOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 위로 보냄\n{cardToShuffle}";
+                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToTopOfDeckMessage);
+                moveCardEffectEvent.RegisterEvent(matchContextEvent);
                 
                 moveCount++;
             }
@@ -80,14 +77,6 @@ namespace ProjectABC.Core
         protected override string GetDescription()
         {
             return LocalizationHelper.Instance.Localize(DescriptionKey, _cardsAmount);
-        }
-    }
-
-    public class MoveCardToTopOfDeckEvent : MatchEventBase
-    {
-        public MoveCardToTopOfDeckEvent(Card movedCard, MatchSnapshot snapshot) : base(snapshot)
-        {
-            
         }
     }
 }

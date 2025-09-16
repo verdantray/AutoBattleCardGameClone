@@ -7,7 +7,8 @@ namespace ProjectABC.InGame
         IContextEventListener<CommonConsoleEvent>,
         IContextEventListener<DeckConstructionConsoleEvent>,
         IContextEventListener<RecruitConsoleEvent>,
-        IContextEventListener<DeleteCardsConsoleEvent>
+        IContextEventListener<DeleteCardsConsoleEvent>,
+        IContextEventListener<MatchContextConsoleEvent>
     {
         private void Start()
         {
@@ -15,6 +16,7 @@ namespace ProjectABC.InGame
             this.StartListening<DeckConstructionConsoleEvent>();
             this.StartListening<RecruitConsoleEvent>();
             this.StartListening<DeleteCardsConsoleEvent>();
+            this.StartListening<MatchContextConsoleEvent>();
             
             Debug.Log("logger ready");
         }
@@ -26,6 +28,7 @@ namespace ProjectABC.InGame
             this.StopListening<DeckConstructionConsoleEvent>();
             this.StopListening<RecruitConsoleEvent>();
             this.StopListening<DeleteCardsConsoleEvent>();
+            this.StopListening<MatchContextConsoleEvent>();
         }
 
         public void DisplayLog(IContextEvent contextEvent)
@@ -49,6 +52,11 @@ namespace ProjectABC.InGame
         }
 
         public void OnEvent(DeleteCardsConsoleEvent contextEvent)
+        {
+            DisplayLog(contextEvent);
+        }
+
+        public void OnEvent(MatchContextConsoleEvent contextEvent)
         {
             DisplayLog(contextEvent);
         }

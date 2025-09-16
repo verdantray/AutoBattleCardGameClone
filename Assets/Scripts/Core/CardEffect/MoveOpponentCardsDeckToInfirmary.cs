@@ -45,10 +45,10 @@ namespace ProjectABC.Core
             {
                 if (!otherSide.Deck.TryDraw(out Card cardToMove))
                 {
-                    MatchFinishEvent finishByEmptyDeckEvent = new MatchFinishEvent(
+                    MatchFinishMessageEvent finishByEmptyDeckEvent = new MatchFinishMessageEvent(
                         ownSide.Player,
-                        MatchEndReason.EndByEmptyDeck,
-                        new MatchSnapshot(gameState, ownSide, otherSide)
+                        otherSide.Player,
+                        MatchEndReason.EndByEmptyDeck
                     );
                     
                     finishByEmptyDeckEvent.RegisterEvent(matchContextEvent);
@@ -61,27 +61,22 @@ namespace ProjectABC.Core
                     ownSide.CheckApplyCardBuffs(otherSide, gameState);
                     otherSide.CheckApplyCardBuffs(ownSide, gameState);
 
-                    CheckApplyBuffEvent checkApplyBuffEvent = new CheckApplyBuffEvent(new MatchSnapshot(gameState, ownSide, otherSide));
-                    checkApplyBuffEvent.RegisterEvent(matchContextEvent);
+                    // TODO: register match event if need to announce applying buffs
                     continue;
                 }
                 
                 otherSide.Infirmary.PutCard(cardToMove);
 
-                TryPutCardInfirmaryEvent putCardInfirmaryEvent = new TryPutCardInfirmaryEvent(
-                    otherSide.Player,
-                    cardToMove,
-                    new MatchSnapshot(gameState, ownSide, otherSide)
-                );
-                
-                putCardInfirmaryEvent.RegisterEvent(matchContextEvent);
+                string putCardToInfirmaryMessage = $"{otherSide.Player.Name}가 카드를 양호실에 넣음. \n{cardToMove}";
+                CommonMatchMessageEvent putCardToInfirmaryEvent = new CommonMatchMessageEvent(putCardToInfirmaryMessage);
+                putCardToInfirmaryEvent.RegisterEvent(matchContextEvent);
 
                 if (!otherSide.Infirmary.IsSlotRemains)
                 {
-                    MatchFinishEvent finishByFullOfInfirmaryEvent = new MatchFinishEvent(
+                    MatchFinishMessageEvent finishByFullOfInfirmaryEvent = new MatchFinishMessageEvent(
                         ownSide.Player,
-                        MatchEndReason.EndByFullOfInfirmary,
-                        new MatchSnapshot(gameState, ownSide, otherSide)
+                        otherSide.Player,
+                        MatchEndReason.EndByFullOfInfirmary
                     );
                     
                     finishByFullOfInfirmaryEvent.RegisterEvent(matchContextEvent);
