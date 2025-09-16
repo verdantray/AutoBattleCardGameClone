@@ -59,7 +59,7 @@ namespace ProjectABC.Core
                 // additive-recruit is not trigger card effect of drawn card...
                 // drawnCard.CardEffect.TryApplyEffectOnRecruit(ownPlayer, gameState, out var contextEvent);
 
-                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {random}번째 위치로 보냄\n{drawnCard}";
+                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {randomIndex}번째 위치로 보냄\n{drawnCard}";
                 var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
                 moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
