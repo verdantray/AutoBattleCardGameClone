@@ -35,10 +35,6 @@ namespace ProjectABC.Core
             _gamePhases.Clear();
             _gamePhases.Enqueue(new DeckConstructionPhase());
             
-            // _gamePhases.Enqueue(new PreparationPhase(1));
-            // _gamePhases.Enqueue(new RecruitPhase());
-            // _gamePhases.Enqueue(new BattlePhase());
-
             for (int round = 1; round <= GameConst.GameOption.MAX_ROUND; round++)
             {
                 _gamePhases.Enqueue(new PreparationPhase(round));

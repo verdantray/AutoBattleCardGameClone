@@ -53,7 +53,8 @@ namespace ProjectABC.Core
                 
                 ownPlayerState.Deck.Add(drawnCard);
 
-                int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).First();
+                // if deck is empty then return default value of int (= 0)
+                int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).FirstOrDefault();
                 ownSide.Deck.Insert(randomIndex, drawnCard);
                 
                 // additive-recruit is not trigger card effect of drawn card...
