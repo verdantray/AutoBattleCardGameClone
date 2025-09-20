@@ -2,11 +2,11 @@ using System;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
-using ProjectABC.InGame;
+using ProjectABC.Engine;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class Simulator : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class UIManager : MonoBehaviour
     {

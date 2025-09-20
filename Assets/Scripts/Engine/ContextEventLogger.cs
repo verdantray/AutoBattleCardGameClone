@@ -1,7 +1,7 @@
 using ProjectABC.Core;
 using UnityEngine;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class ContextEventLogger : MonoBehaviour,
         IContextEventListener<CommonConsoleEvent>,

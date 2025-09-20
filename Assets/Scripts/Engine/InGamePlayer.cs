@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ProjectABC.Core;
 using UnityEngine;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class InGamePlayer : IPlayer
     {

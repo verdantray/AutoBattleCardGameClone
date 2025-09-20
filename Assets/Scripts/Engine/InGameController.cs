@@ -6,7 +6,7 @@ using ProjectABC.Core;
 using ProjectABC.Data;
 using UnityEngine;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class InGameController : MonoBehaviour
     {

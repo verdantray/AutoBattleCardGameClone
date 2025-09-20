@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using ProjectABC.Core;
 using ProjectABC.Data;
-using ProjectABC.InGame.UI;
+using ProjectABC.Engine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class LayoutInGame : LayoutBase
     {

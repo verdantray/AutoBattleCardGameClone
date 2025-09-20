@@ -4,7 +4,7 @@ using System.Linq;
 using ProjectABC.Core;
 using UnityEngine;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class PlayersGameBoard : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using ProjectABC.Core;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class CardMaterialLoader : MonoBehaviour
     {

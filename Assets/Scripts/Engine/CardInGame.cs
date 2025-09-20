@@ -3,7 +3,7 @@ using ProjectABC.Core;
 using TMPro;
 using UnityEngine;
 
-namespace ProjectABC.InGame
+namespace ProjectABC.Engine
 {
     public class CardInGame : MonoBehaviour
     {
