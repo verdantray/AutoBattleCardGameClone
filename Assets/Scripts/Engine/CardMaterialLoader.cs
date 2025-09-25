@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using UnityEngine;
@@ -26,11 +28,19 @@ namespace ProjectABC.Engine
             DontDestroyOnLoad(gameObject);
         }
 
-        public static async Task LoadMaterials()
+        public static async Task LoadMaterials(CancellationToken token = default)
         {
-            while (!HasInstance)
+            try
             {
-                await Task.Yield();
+                while (!HasInstance)
+                {
+                    await Task.Yield();
+                }
+            }
+            catch (OperationCanceledException e) when (token.IsCancellationRequested)
+            {
+                Debug.LogError($"Waiting card material loader task is canceled...{e}");
+                throw;
             }
 
             var handle = Addressables.LoadAssetsAsync<Material>("Materials", OnLoadMaterial);

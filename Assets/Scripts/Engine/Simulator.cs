@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
@@ -25,7 +26,11 @@ namespace ProjectABC.Engine
                 LocalizationHelper.CreateInstance(localizationDataAssetHandle.Result);
                 Addressables.Release(localizationDataAssetHandle);
 
-                await CardMaterialLoader.LoadMaterials();
+                using (var loadingMaterialTimeout = new CancellationTokenSource())
+                {
+                    loadingMaterialTimeout.CancelAfter(5000);
+                    await CardMaterialLoader.LoadMaterials(loadingMaterialTimeout.Token);
+                }
                 
                 Run();
             }

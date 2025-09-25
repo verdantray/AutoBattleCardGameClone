@@ -10,25 +10,15 @@ namespace ProjectABC.Core
         // temporary implements, DeckConstructAsync will implement each inherits after add more club types
         public Task<DeckConstructAction> DeckConstructAsync()
         {
-            ClubType[] gradeTypes =
-            {
-                ClubType.Council,
-                ClubType.Coastline,
-                ClubType.Band,
-                ClubType.GameDevelopment,
-                ClubType.HauteCuisine,
-                ClubType.Unregistered,
-                ClubType.TraditionExperience
-            };
-            
-            ClubType flag = 0;
+            ClubType selectedSetFlag = ClubType.Council
+                                       | ClubType.Coastline
+                                       | ClubType.Band
+                                       | ClubType.GameDevelopment
+                                       | ClubType.HauteCuisine
+                                       | ClubType.Unregistered
+                                       | ClubType.TraditionExperience;
 
-            foreach (var gradeType in gradeTypes)
-            {
-                flag |= gradeType;
-            }
-
-            DeckConstructAction action = new DeckConstructAction(this, flag);
+            DeckConstructAction action = new DeckConstructAction(this, selectedSetFlag);
             Task<DeckConstructAction> task = Task.FromResult(action);
 
             return task;
