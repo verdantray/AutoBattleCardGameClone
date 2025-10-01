@@ -8,6 +8,7 @@ namespace ProjectABC.Utils
         public static T Instance { get; protected set; }
         public static bool HasInstance => (bool)Instance;
         protected bool IsInstance => HasInstance && Instance == this as T;
+        protected virtual bool SetPersistent => false;
 
         protected virtual void Awake()
         {
@@ -23,7 +24,11 @@ namespace ProjectABC.Utils
             }
 
             Instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            
+            if (SetPersistent)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
         }
     }
 }

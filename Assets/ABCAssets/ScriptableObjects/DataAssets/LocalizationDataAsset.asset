@@ -1,0 +1,818 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03844c1870de33c4697ced618ad41eb2, type: 3}
+  m_Name: LocalizationDataAsset
+  m_EditorClassIdentifier: 
+  sheetAddress: 1wQ5OPEu1YpF1723OPkDaGFzqRKUCNSB9A2mby1ybu8E
+  dataUpdaters:
+  - updateFieldName: Localization Data
+    sheetReader:
+      sheetName: 99. localization_card
+      startCell: A02
+      endCell: D133
+  - updateFieldName: Localization Data
+    sheetReader:
+      sheetName: 99. localization_card_effect
+      startCell: A02
+      endCell: E52
+  localizationData:
+  - key: desc_effect_condition_on_recruit
+    ko: "\uC601\uC785 \uC2DC :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_appear
+    ko: "\uB4F1\uC7A5 \uC2DC :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_while_field
+    ko: "\uD544\uB4DC\uC5D0 \uC788\uC744 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_leave_field
+    ko: "\uD544\uB4DC\uC5D0\uC11C \uBC97\uC5B4\uB0A0 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_while_infirmary
+    ko: "\uC591\uD638\uC2E4\uC5D0 \uC788\uC744 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_attack
+    ko: "\uACF5\uACA9\uD560 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_defend
+    ko: "\uC218\uBE44\uD560 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_success_attack
+    ko: "\uACF5\uACA9\uC774 \uC131\uACF5\uD588\uC744 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_elite
+    ko: "\uC815\uC608"
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_with_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0
+      \uC788\uB294 \uCE74\uB4DC\uB4E4\uC758 \uC18C\uC18D \uC911 {0}\uB97C \uC81C\uC678\uD55C
+      \uC18C\uC18D\uC774 {1}\uC885 \uC774\uC0C1\uC774\uBA74 \uC2B9\uC810\uC744 +{2}
+      \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_shuffle_lowest_power_cards_to_top_of_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uB371
+      \uC911 \uD30C\uC6CC\uAC00 \uAC00\uC7A5 \uB0AE\uC740 \uCE74\uB4DC {0}\uC7A5\uC744
+      \uB371 \uB9E8 \uC704\uB85C \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC5D0 \uC788\uB294 \uCE74\uB4DC\uB4E4\uC758 \uC18C\uC18D
+      \uC911 {0}\uB97C \uC81C\uC678\uD55C \uC18C\uC18D \uC218\uB9CC\uD07C \uB0B4
+      \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_low_base_power_cards_from_infirmary_to_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
+      \uAE30\uBCF8 \uD30C\uC6CC\uAC00 {0} \uC774\uD558\uC778 \uCE74\uB4DC {1}\uC7A5\uC744
+      \uB371 \uB9E8 \uC544\uB798\uB85C \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
+      {0} \uC18C\uC18D \uCE74\uB4DC {1}\uC7A5\uC744 \uBB34\uC791\uC704\uB85C \uC120\uD0DD\uD574
+      \uB371 \uB9E8 \uC544\uB798\uB85C \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_up_to_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 {0} \uC18C\uC18D \uCE74\uB4DC\uB4E4\uC758 \uD30C\uC6CC\uAC00
+      +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_infirmary_slots
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4
+      \uBE48 \uCE78\uB2F9 \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_replace_movement_infirmary_to_deck
+    ko: "%localization_key:desc_effect_condition_on_leave_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uB85C \uC774\uB3D9\uD558\uB294 \uB300\uC2E0 \uB371 \uB9E8
+      \uC544\uB798\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC5D0 {0} \uC18C\uC18D \uCE74\uB4DC\uAC00 \uC788\uC73C\uBA74
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_up_to_specific_power_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 \uCE74\uB4DC \uC911 \uAE30\uBCF8 \uD30C\uC6CC\uAC00
+      {0}\uC778 \uCE74\uB4DC\uB4E4\uC758 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_up_to_belong_clubs_from_infirmary_while_attack
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 {0} \uC18C\uC18D \uCE74\uB4DC\uB4E4\uC774 \uACF5\uACA9\uD560
+      \uB54C \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_while_defending
+    ko: "%localization_key:desc_effect_condition_on_defend% \uB0B4 \uD30C\uC6CC\uAC00
+      {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_both_side_field_amount
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uACFC
+      \uC0C1\uB300 \uD544\uB4DC\uC758 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C \uB0B4
+      \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_if_won_last_match
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC774
+      \uC9C0\uB09C \uB77C\uC6B4\uB4DC\uC5D0\uC11C \uC2B9\uB9AC\uD588\uB2E4\uBA74
+      \uB0B4 \uD30C\uC6CC\uAC00 {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_on_recruit
+    ko: "%localization_key:desc_effect_condition_on_recruit% \uC2B9\uC810\uC744 +{0}
+      \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_on_success_attack
+    ko: "%localization_key:desc_effect_condition_on_success_attack% \uC774 \uCE74\uB4DC\uB97C
+      \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uB0C8\uB2E4\uBA74 \uC2B9\uC810\uC744 +{0} \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_if_lost_last_match
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC774 \uC9C0\uB09C
+      \uB77C\uC6B4\uB4DC\uC5D0\uC11C \uD328\uBC30\uD588\uB2E4\uBA74 \uC2B9\uC810\uC744
+      +{0} \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_disabler_both_side_for_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uACFC
+      \uC0C1\uB300 \uC591\uD638\uC2E4\uC758 \uCE74\uB4DC \uD6A8\uACFC\uAC00 \uBAA8\uB450
+      \uBB34\uD6A8\uAC00 \uB429\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_won_count
+    ko: "%localization_key:desc_effect_condition_on_attack% \uC790\uC2E0\uC758 \uB9E4\uCE58
+      \uC2B9\uB9AC \uD69F\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_by_deck_stock
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uB371\uC758 \uB0A8\uC740 \uCE74\uB4DC\uAC00 {0}\uC7A5 \uC774\uC0C1\uC774\uBA74
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_specific_grade_cards_from_piles_to_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0\uC11C
+      {0} \uCE74\uB4DC {1}\uC7A5\uC744 \uBF51\uC544 \uB371\uC758 \uBB34\uC791\uC704
+      \uC704\uCE58\uC5D0 \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_if_attack_alone
+    ko: "%localization_key:desc_effect_condition_on_attack% \uC790\uC2E0\uC758 \uD544\uB4DC\uC758
+      \uC720\uC77C\uD55C \uCE74\uB4DC\uB77C\uBA74 \uB0B4 \uD30C\uC6CC\uAC00 +{0}
+      \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_down_while_state_from_infirmary_while_attack
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uCE74\uB4DC\uB4E4\uC774 \uACF5\uACA9\uD560
+      \uB54C \uD30C\uC6CC\uAC00 -{0} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_deck_to_infirmary
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uB371
+      \uB9E8 \uC704\uC758 \uCE74\uB4DC {0}\uC7A5\uC744 \uC591\uD638\uC2E4\uB85C \uBCF4\uB0C5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_card_types_belong_clubs
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC758 {0} \uC18C\uC18D\uC778 \uCE74\uB4DC \uC885\uB958\uB9C8\uB2E4
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_random_cards_to_field
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
+      \uBB34\uC791\uC704 \uCE74\uB4DC {0}\uC7A5\uC744 \uAC00\uC838\uC640 \uC774 \uCE74\uB4DC
+      \uC544\uB798\uC5D0 \uB461\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC758 {0} \uC18C\uC18D\uC778 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_cards_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC758 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
+      +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_round
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uD604\uC7AC \uB77C\uC6B4\uB4DC
+      \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_grade_of_opponent_field_last
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC0C1\uB300\uAC00
+      \uD544\uB4DC\uC5D0 \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uB0B8 \uCE74\uB4DC\uC758
+      \uD559\uB144 \uC218\uCE58\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_opponent_cards_deck_to_infirmary
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC0C1\uB300\uC758 \uB371
+      \uB9E8 \uC704\uC758 \uCE74\uB4DC {0}\uC7A5\uC744 \uC0C1\uB300\uC758 \uC591\uD638\uC2E4\uB85C
+      \uBCF4\uB0C5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_opponent_won_count
+    ko: "%localization_key:desc_effect_condition_on_attack% \uC0C1\uB300\uC758 \uB9E4\uCE58
+      \uC2B9\uB9AC \uD69F\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_opponent_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300 \uC591\uD638\uC2E4\uC758
+      \uB3D9\uC544\uB9AC \uC18C\uC18D \uC885\uB958 \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
+      +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_by_opponent_deck_stock
+    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300\uC758 \uB371\uC758
+      \uB0A8\uC740 \uCE74\uB4DC\uAC00 {0}\uC7A5 \uC774\uC0C1\uC778 \uACBD\uC6B0 \uC790\uC2E0\uC758
+      \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_deck_remains
+    ko: "\uC790\uC2E0\uC758 \uB371\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_opponent_deck_remains
+    ko: "\uC0C1\uB300\uC758 \uB371\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_card_pile_remains
+    ko: "\uC790\uC2E0\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_opponent_card_pile_remains
+    ko: "\uC0C1\uB300\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_infirmary_remains
+    ko: "\uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_opponent_infirmary_remains
+    ko: "\uC0C1\uB300\uC758 \uC591\uD638\uC2E4\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_meet_condition
+    ko: "\uCE74\uB4DC\uAC00 \uC694\uAD6C\uD558\uB294 \uC870\uAC74\uC744 \uB9CC\uC871\uD558\uC9C0
+      \uBABB\uD588\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: grade_first
+    ko: "1\uD559\uB144"
+    en: 1st Grade
+    ja: 
+  - key: grade_second
+    ko: "2\uD559\uB144"
+    en: 2nd Grade
+    ja: 
+  - key: grade_third
+    ko: "3\uD559\uB144"
+    en: 3rd Grade
+    ja: 
+  - key: club_council
+    ko: "\uD559\uC0DD\uD68C"
+    en: Council
+    ja: 
+  - key: club_coastline
+    ko: "\uD574\uC548 \uAD00\uB9AC"
+    en: Coastline
+    ja: 
+  - key: club_band
+    ko: "\uBC34\uB4DC\uBD80"
+    en: Band
+    ja: 
+  - key: club_gamedevelopment
+    ko: "\uAC8C\uC784\uAC1C\uBC1C\uBD80"
+    en: Game Development
+    ja: 
+  - key: club_hautecuisine
+    ko: "\uC624\uD2B8\uD034\uC9C4"
+    en: Haute Cuisine
+    ja: 
+  - key: club_unregistered
+    ko: "\uC5B8\uB808\uC9C0\uC2A4\uD130\uB4DC"
+    en: Unregistered
+    ja: 
+  - key: club_traditionexperience
+    ko: "\uC804\uD1B5\uCCB4\uD5D8\uBD80"
+    en: Tradition Experience
+    ja: 
+  - key: club_examiners
+    ko: "\uC2DC\uD5D8\uCD9C\uC81C\uBD80"
+    en: Examiners
+    ja: 
+  - key: card_name_Irian
+    ko: "\uC774\uB9AC\uC548"
+    en: Irian
+    ja: 
+  - key: card_name_elicia
+    ko: "\uC5D8\uB9AC\uC2DC\uC544"
+    en: Elicia
+    ja: 
+  - key: card_name_mirea
+    ko: "\uBBF8\uB808\uC544"
+    en: Mirea
+    ja: 
+  - key: card_name_verde
+    ko: "\uBCA0\uB974\uB370"
+    en: Verde
+    ja: 
+  - key: card_name_lisenna
+    ko: "\uB9AC\uC13C\uB098"
+    en: Lisenna
+    ja: 
+  - key: card_name_etella
+    ko: "\uC5D0\uD154\uB77C"
+    en: Etella
+    ja: 
+  - key: card_name_orphia
+    ko: "\uC624\uB974\uD53C\uC544"
+    en: Orphia
+    ja: 
+  - key: card_name_yunette
+    ko: "\uC720\uB124\uD2B8"
+    en: Yunette
+    ja: 
+  - key: card_name_pora
+    ko: "\uD3EC\uB77C"
+    en: Pora
+    ja: 
+  - key: card_name_selina
+    ko: "\uC140\uB9AC\uB098"
+    en: Selina
+    ja: 
+  - key: card_name_silin
+    ko: "\uC2E4\uB9B0"
+    en: Silin
+    ja: 
+  - key: card_name_navia
+    ko: "\uB098\uBE44\uC544"
+    en: Navia
+    ja: 
+  - key: card_name_seredy
+    ko: "\uC138\uB808\uB514"
+    en: Seredy
+    ja: 
+  - key: card_name_spica
+    ko: "\uC2A4\uD53C\uCE74"
+    en: Spica
+    ja: 
+  - key: card_name_orca
+    ko: "\uC624\uB974\uCE74"
+    en: Orca
+    ja: 
+  - key: card_name_mari
+    ko: "\uB9C8\uB9AC"
+    en: Mari
+    ja: 
+  - key: card_name_libre
+    ko: "\uB9AC\uBE0C\uB808"
+    en: Libre
+    ja: 
+  - key: card_name_elara
+    ko: "\uC5D8\uB77C\uB77C"
+    en: Elara
+    ja: 
+  - key: card_name_cordie
+    ko: "\uCF54\uB974\uB514"
+    en: Cordie
+    ja: 
+  - key: card_name_cosmi
+    ko: "\uCF54\uC2A4\uBBF8"
+    en: Cosmi
+    ja: 
+  - key: card_name_melisa
+    ko: "\uBA5C\uB9AC\uC0AC"
+    en: Melisa
+    ja: 
+  - key: card_name_stella
+    ko: "\uC2A4\uD154\uB77C"
+    en: Stella
+    ja: 
+  - key: card_name_harmony
+    ko: "\uD558\uBAA8\uB2C8"
+    en: Harmony
+    ja: 
+  - key: card_name_neria
+    ko: "\uB124\uB9AC\uC544"
+    en: Neria
+    ja: 
+  - key: card_name_astra
+    ko: "\uC544\uC2A4\uD2B8\uB77C"
+    en: Astra
+    ja: 
+  - key: card_name_ravian
+    ko: "\uB77C\uBE44\uC548"
+    en: Ravian
+    ja: 
+  - key: card_name_flag
+    ko: "\uD50C\uB798\uADF8"
+    en: Flag
+    ja: 
+  - key: card_name_prim
+    ko: "\uD504\uB9BC"
+    en: Prim
+    ja: 
+  - key: card_name_tibera
+    ko: "\uD2F0\uBCA0\uB77C"
+    en: Tibera
+    ja: 
+  - key: card_name_erida
+    ko: "\uC5D0\uB9AC\uB2E4"
+    en: Erida
+    ja: 
+  - key: card_name_glitch
+    ko: "\uAE00\uB9AC\uCE58"
+    en: Glitch
+    ja: 
+  - key: card_name_sketch
+    ko: "\uC2A4\uCF00\uCE58"
+    en: Sketch
+    ja: 
+  - key: card_name_script
+    ko: "\uC2A4\uD06C\uB9BD\uD2B8"
+    en: Script
+    ja: 
+  - key: card_name_velvet
+    ko: "\uBCA8\uBCB3"
+    en: Velvet
+    ja: 
+  - key: card_name_lucie
+    ko: "\uB8E8\uC2DC\uC5D0"
+    en: Lucie
+    ja: 
+  - key: card_name_cassia
+    ko: "\uCE74\uC2DC\uC544"
+    en: Cassia
+    ja: 
+  - key: card_name_mocha
+    ko: "\uBAA8\uCE74"
+    en: Mocha
+    ja: 
+  - key: card_name_forette
+    ko: "\uD3EC\uB808\uD2B8"
+    en: Forette
+    ja: 
+  - key: card_name_amelie
+    ko: "\uC544\uBA5C\uB9AC"
+    en: Amelie
+    ja: 
+  - key: card_name_bagnie
+    ko: "\uBC14\uB2C8\uC5D0"
+    en: Bagnie
+    ja: 
+  - key: card_name_tarmotte
+    ko: "\uD0C0\uB974\uBAA8\uD2B8"
+    en: Tarmotte
+    ja: 
+  - key: card_name_brinie
+    ko: "\uBE0C\uB9AC\uB2C8"
+    en: Brinie
+    ja: 
+  - key: card_name_sophine
+    ko: "\uC18C\uD53C\uB124"
+    en: Sophine
+    ja: 
+  - key: card_name_nirvel
+    ko: "\uB2C8\uB974\uBCA8"
+    en: Nirvel
+    ja: 
+  - key: card_name_lucy
+    ko: "\uB8E8\uC2DC"
+    en: Lucy
+    ja: 
+  - key: card_name_serano
+    ko: "\uC138\uB77C\uB178"
+    en: Serano
+    ja: 
+  - key: card_name_morras
+    ko: "\uBAA8\uB77C\uC2A4"
+    en: Morras
+    ja: 
+  - key: card_name_aspen
+    ko: "\uC544\uC2A4\uD39C"
+    en: Aspen
+    ja: 
+  - key: card_name_exid
+    ko: "\uC5D1\uC2DC\uB4DC"
+    en: Exid
+    ja: 
+  - key: card_name_creva
+    ko: "\uD06C\uB808\uBC14"
+    en: Creva
+    ja: 
+  - key: card_name_corinth
+    ko: "\uCF54\uB9B0\uD2B8"
+    en: Corinth
+    ja: 
+  - key: card_name_ayame
+    ko: "\uC544\uC57C\uBA54"
+    en: Ayame
+    ja: 
+  - key: card_name_yukari
+    ko: "\uC720\uCE74\uB9AC"
+    en: Yukari
+    ja: 
+  - key: card_name_kohane
+    ko: "\uCF54\uD558\uB124"
+    en: Kohane
+    ja: 
+  - key: card_name_hiyori
+    ko: "\uD788\uC694\uB9AC"
+    en: Hiyori
+    ja: 
+  - key: card_name_suzuho
+    ko: "\uC2A4\uC988\uD638"
+    en: Suzuho
+    ja: 
+  - key: card_name_kanade
+    ko: "\uCE74\uB098\uB370"
+    en: Kanade
+    ja: 
+  - key: card_name_suiren
+    ko: "\uC2A4\uC774\uB80C"
+    en: Suiren
+    ja: 
+  - key: card_name_towa
+    ko: "\uD1A0\uC640"
+    en: Towa
+    ja: 
+  - key: card_name_shirahane
+    ko: "\uC2DC\uB77C\uD558\uB124"
+    en: Shirahane
+    ja: 
+  - key: title_clerk
+    ko: "\uC11C\uAE30"
+    en: clerk
+    ja: 
+  - key: title_treasurer
+    ko: "\uD68C\uACC4"
+    en: Treasurer
+    ja: 
+  - key: title_event_planner
+    ko: "\uD589\uC0AC \uAE30\uD68D"
+    en: Event Planner
+    ja: 
+  - key: title_vice_president
+    ko: "\uBD80\uD68C\uC7A5"
+    en: Vice President
+    ja: 
+  - key: title_disciplinary_officer
+    ko: "\uC120\uB3C4\uBD80"
+    en: Disciplinary Officer
+    ja: 
+  - key: title_student_council_president
+    ko: "\uD559\uC0DD\uD68C\uC7A5"
+    en: Student Council President
+    ja: 
+  - key: title_publicist
+    ko: "\uD559\uAD50 \uD64D\uBCF4\uC6D0"
+    en: Publicist
+    ja: 
+  - key: title_coastline_cleaner
+    ko: "\uD574\uC548 \uCCAD\uC18C \uB2F4\uB2F9"
+    en: Coastline Cleaner
+    ja: 
+  - key: title_coastline_guard
+    ko: "\uD574\uC548 \uACBD\uBE44"
+    en: Coastline guard
+    ja: 
+  - key: title_council_envoy
+    ko: "\uD559\uC0DD\uD68C \uD30C\uACAC\uBD80\uC6D0"
+    en: Council envoy
+    ja: 
+  - key: title_fisher
+    ko: "\uB09A\uC2DC\uAFBC"
+    en: Fisher
+    ja: 
+  - key: title_rescuer
+    ko: "\uAD6C\uC870\uC6D0"
+    en: Rescuer
+    ja: 
+  - key: title_surveyor
+    ko: "\uCE21\uB7C9\uC0AC"
+    en: Surveyor
+    ja: 
+  - key: title_lighthouse_keeper
+    ko: "\uB4F1\uB300\uC9C0\uAE30"
+    en: Lighthouse Keeper
+    ja: 
+  - key: title_captain
+    ko: "\uC120\uC7A5"
+    en: Captain
+    ja: 
+  - key: title_marine_leisure_member
+    ko: "\uD574\uC591 \uB808\uC800"
+    en: Marine Leisure Member
+    ja: 
+  - key: title_diver
+    ko: "\uC7A0\uC218\uBD80"
+    en: Diver
+    ja: 
+  - key: title_violin
+    ko: "\uBC14\uC774\uC62C\uB9B0"
+    en: Violin
+    ja: 
+  - key: title_staff
+    ko: "\uC2A4\uD0DC\uD504"
+    en: Staff
+    ja: 
+  - key: title_keyboard
+    ko: "\uD0A4\uBCF4\uB4DC"
+    en: keyboard
+    ja: 
+  - key: title_dj
+    ko: DJ
+    en: DJ
+    ja: 
+  - key: title_guitarist
+    ko: "\uAE30\uD0C0"
+    en: Guitarist
+    ja: 
+  - key: title_castanets_player
+    ko: "\uCE90\uC2A4\uD130\uB124\uCE20"
+    en: Castanets Player
+    ja: 
+  - key: title_bassist
+    ko: "\uBCA0\uC774\uC2A4"
+    en: Bassist
+    ja: 
+  - key: title_vocalist
+    ko: "\uBCF4\uCEEC"
+    en: Vocalist
+    ja: 
+  - key: title_drummer
+    ko: "\uB4DC\uB7FC"
+    en: Drummer
+    ja: 
+  - key: title_qa_tester
+    ko: QA
+    en: QA Tester
+    ja: 
+  - key: title_scenario_writer
+    ko: "\uC2DC\uB098\uB9AC\uC624"
+    en: Scenario Writer
+    ja: 
+  - key: title_animator
+    ko: "\uC560\uB2C8\uBA54\uC774\uD130"
+    en: Animator
+    ja: 
+  - key: title_planner_designer
+    ko: "\uAE30\uD68D\uC790"
+    en: Planner / Designer
+    ja: 
+  - key: title_vfx_artist
+    ko: "\uB514\uBC84\uAC70"
+    en: VFX Artist
+    ja: 
+  - key: title_illustrator
+    ko: "\uC6D0\uD654\uAC00"
+    en: Illustrator
+    ja: 
+  - key: title_client_programmer
+    ko: "\uD074\uB77C\uC774\uC5B8\uD2B8"
+    en: Client Programmer
+    ja: 
+  - key: title_server_programmer
+    ko: "\uC11C\uBC84"
+    en: Server Programmer
+    ja: 
+  - key: title_3d_modeler
+    ko: "3D \uBAA8\uB378\uB7EC"
+    en: 3D modeler
+    ja: 
+  - key: title_director
+    ko: "\uB514\uB809\uD130"
+    en: Director
+    ja: 
+  - key: title_dessert_specialist
+    ko: "\uB514\uC838\uD2B8 \uB2F4\uB2F9"
+    en: Dessert Specialist
+    ja: 
+  - key: title_apprentice
+    ko: "\uC218\uC2B5\uC0DD"
+    en: Apprentice
+    ja: 
+  - key: title_supply_manager
+    ko: "\uC7AC\uB8CC \uBCF4\uAE09 \uB2F4\uB2F9"
+    en: Supply Manager
+    ja: 
+  - key: title_fish_specialist
+    ko: "\uBB3C\uACE0\uAE30 \uB2F4\uB2F9"
+    en: Fish Specialist
+    ja: 
+  - key: title_meat_specialist
+    ko: "\uACE0\uAE30 \uB2F4\uB2F9"
+    en: Meat Specialist
+    ja: 
+  - key: title_appetizer_specialist
+    ko: "\uC5D0\uD53C\uD0C0\uC774\uC800 \uB2F4\uB2F9"
+    en: Appetizer Specialist
+    ja: 
+  - key: title_chef
+    ko: "\uC170\uD504"
+    en: Chef
+    ja: 
+  - key: title_downer
+    ko: "\uB2E4\uC6B0\uB108"
+    en: Downer
+    ja: 
+  - key: title_mascot
+    ko: "\uB9C8\uC2A4\uCF54\uD2B8"
+    en: Mascot
+    ja: 
+  - key: title_graffiti_artist
+    ko: "\uADF8\uB798\uD53C\uD2F0"
+    en: Graffiti Artist
+    ja: 
+  - key: title_goth_look
+    ko: "\uACE0\uC2A4\uB8E9"
+    en: Goth Look
+    ja: 
+  - key: title_former_council_member
+    ko: "\uC804 \uD559\uC0DD\uD68C"
+    en: Former Council Member
+    ja: 
+  - key: title_arsonist
+    ko: "\uBC29\uD654\uBC94"
+    en: Arsonist
+    ja: 
+  - key: title_boss
+    ko: "\uBCF4\uC2A4"
+    en: Boss
+    ja: 
+  - key: title_drifter
+    ko: "\uB5A0\uB3CC\uC774"
+    en: Drifter
+    ja: 
+  - key: title_deer_spirit
+    ko: "\uC0AC\uC2B4"
+    en: Deer Spirit
+    ja: 
+  - key: title_fox_spirit
+    ko: "\uC5EC\uC6B0"
+    en: Fox Spirit
+    ja: 
+  - key: title_long-tailed_tit
+    ko: "\uC624\uBAA9\uB208\uC774"
+    en: Aegithalos Spirit
+    ja: 
+  - key: title_squirrel_spirit
+    ko: "\uB2E4\uB78C\uC950"
+    en: Squirrel Spirit
+    ja: 
+  - key: title_cat_spirit
+    ko: "\uACE0\uC591\uC774"
+    en: Cat Spirit
+    ja: 
+  - key: title_dog_spirit
+    ko: "\uAC1C"
+    en: Dog Spirit
+    ja: 
+  - key: title_sheep_spirit
+    ko: "\uC591"
+    en: Sheep Spirit
+    ja: 
+  - key: title_dragon_spirit
+    ko: "\uC6A9"
+    en: Dragon Spirit
+    ja: 
+  - key: title_swan_spirit
+    ko: "\uBC31\uC870"
+    en: Swan Spirit
+    ja: 

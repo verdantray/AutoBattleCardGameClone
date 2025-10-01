@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProjectABC.Core;
@@ -10,17 +9,12 @@ namespace ProjectABC.Engine.Scene
 {
     public sealed class SceneLoader : MonoSingleton<SceneLoader>
     {
-        [Header("Scene Profiles")]
-        [SerializeField] private SceneLoadingProfile persistentWorldProfile;
-        [SerializeField] private SceneLoadingProfile loadingProfile;
-        [SerializeField] private SceneLoadingProfile[] sceneLoadingProfiles;
-
         private void Start()
         {
             
         }
 
-        public async Task LoadSceneAsync(SceneType targetScene)
+        public async Task LoadSceneAsync(string targetSceneName)
         {
             #region 1. Open and active loading scene
 
@@ -36,13 +30,6 @@ namespace ProjectABC.Engine.Scene
             SceneManager.SetActiveScene(loadingScene);
 
             #endregion
-            
-            string targetSceneName = targetScene switch
-            {
-                SceneType.Title => GameConst.SceneName.TITLE,
-                SceneType.InGame => GameConst.SceneName.IN_GAME,
-                _ => throw new ArgumentOutOfRangeException(nameof(targetScene), targetScene, null)
-            };
 
             #region 2. Unload unuse scenes
 

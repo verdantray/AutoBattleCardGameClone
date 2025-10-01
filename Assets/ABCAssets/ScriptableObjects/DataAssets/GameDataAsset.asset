@@ -1,0 +1,4893 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15ce30f21e4d57e4ba5cdef0727e877c, type: 3}
+  m_Name: GameDataAsset
+  m_EditorClassIdentifier: 
+  sheetAddress: 1wQ5OPEu1YpF1723OPkDaGFzqRKUCNSB9A2mby1ybu8E
+  dataUpdaters:
+  - updateFieldName: Card Data For Starting
+    sheetReader:
+      sheetName: 01. card_data_for_starting_deck
+      startCell: A02
+      endCell: K10
+  - updateFieldName: Card Data For Piles
+    sheetReader:
+      sheetName: 02. card_data_for_card_piles
+      startCell: A02
+      endCell: K68
+  - updateFieldName: Recruit Data
+    sheetReader:
+      sheetName: 03. recruit_data
+      startCell: A02
+      endCell: C12
+  - updateFieldName: Win Point Data
+    sheetReader:
+      sheetName: 04. win_point_data
+      startCell: A02
+      endCell: C16
+  localDataUpdaters:
+  - updateFieldName: Card Effect Data
+    textAssets:
+    - {fileID: 4900000, guid: f60fc6211e5368d4db9955b57de2fe26, type: 3}
+    - {fileID: 4900000, guid: 49cdaaf777bc70d4f8d430123c2a2b82, type: 3}
+    - {fileID: 4900000, guid: 06c3fd284dee90c42bce7838755d81fd, type: 3}
+    - {fileID: 4900000, guid: 3a2f58872f6fa1c48a1a0657a9ff9307, type: 3}
+    - {fileID: 4900000, guid: 60ca04aeee87baa4388671931d668f1a, type: 3}
+    - {fileID: 4900000, guid: bf31deb0689a8b54394aeb673981e915, type: 3}
+    - {fileID: 4900000, guid: 22486143992b4ec4fa0865944369803c, type: 3}
+    - {fileID: 4900000, guid: 0463e4716db3b7549ae2457a5f0cee33, type: 3}
+    - {fileID: 4900000, guid: a07b34fa97afd8542a2af2f61097f560, type: 3}
+    - {fileID: 4900000, guid: 917b1fd526acd334ca9c822d8bfe9f01, type: 3}
+    - {fileID: 4900000, guid: 943d2821cace4fc47a94e3fa4ae83cc8, type: 3}
+    - {fileID: 4900000, guid: 929eb3f33286ad04495f20f43ed52a8c, type: 3}
+    - {fileID: 4900000, guid: b7fa9c03bc672fc47b3ccc65212d0c2b, type: 3}
+    - {fileID: 4900000, guid: 705e8513fd947f94cabdebbbfce0db8c, type: 3}
+    - {fileID: 4900000, guid: 93dbf98b4b4b01746b98ec9cf3d0b885, type: 3}
+    - {fileID: 4900000, guid: f121d16467d6019449c8dac0eca84280, type: 3}
+    - {fileID: 4900000, guid: d7ee7711a35028a4099341e764c5f656, type: 3}
+    - {fileID: 4900000, guid: 2e97f44612eba3a438f90ceb180daedf, type: 3}
+    - {fileID: 4900000, guid: 5e35c89943ef64b438787abe4e974381, type: 3}
+    - {fileID: 4900000, guid: c651300c347214849a05b6c966932344, type: 3}
+    - {fileID: 4900000, guid: fe35ee30abcb08c48a9653159aec7c3c, type: 3}
+    - {fileID: 4900000, guid: 76187b68cb727cb4ea021bef7e49e642, type: 3}
+    - {fileID: 4900000, guid: 9538b8dceb96f504392241058c25d3fc, type: 3}
+    - {fileID: 4900000, guid: c6703728f2d8cd34087941d0e314b524, type: 3}
+    - {fileID: 4900000, guid: 30e4f341b27abb74e8f45bf48b2f4279, type: 3}
+    - {fileID: 4900000, guid: ff9113b4944532a419ef77922a996eaa, type: 3}
+    - {fileID: 4900000, guid: b907a1d2ece3aea42b3112026dc8bcba, type: 3}
+    - {fileID: 4900000, guid: 054a4561f67ac7041b927292ed9ab2ae, type: 3}
+    - {fileID: 4900000, guid: 38bf3426ee2bf91488f55a1c5af343fa, type: 3}
+    - {fileID: 4900000, guid: 4e703e2fe741f594897254c8a1af8270, type: 3}
+    - {fileID: 4900000, guid: 19e84111567811a48b22148b5c0dc373, type: 3}
+    - {fileID: 4900000, guid: 2c7f9e9b89435504a9952ebc7b8bbe69, type: 3}
+    - {fileID: 4900000, guid: f73a101d9a91fa443908c721437ea610, type: 3}
+    - {fileID: 4900000, guid: 50c0eaaab479a224383a64dca0500bd5, type: 3}
+    - {fileID: 4900000, guid: 5836be7624ffb3b4f87a70200c9b622d, type: 3}
+    - {fileID: 4900000, guid: fa6abfb1490f7f5469a4377c33c015da, type: 3}
+    - {fileID: 4900000, guid: 15b46620ed3e105459096e2035913464, type: 3}
+    - {fileID: 4900000, guid: 054491f68f1bb724da97af60a35e7335, type: 3}
+    - {fileID: 4900000, guid: 4c503f443054d424fb527c0dae9666d9, type: 3}
+    - {fileID: 4900000, guid: 0596b1221e75d40439d72911863c59d7, type: 3}
+    - {fileID: 4900000, guid: 33206928aa5503a4d8a864d0ed68aa15, type: 3}
+    - {fileID: 4900000, guid: 0ae62bef9028f59419c037ffa7186547, type: 3}
+    - {fileID: 4900000, guid: 9115e203e5cbab94c9c5f7aaea0dd75e, type: 3}
+    - {fileID: 4900000, guid: 66339bfe34d445a4d928d28103a31802, type: 3}
+    - {fileID: 4900000, guid: 54f8aea82fa16c14988f8f06337d706d, type: 3}
+    - {fileID: 4900000, guid: ef677f321f665844f8e3b1702ce825b1, type: 3}
+  cardDataForStarting:
+  - id: card_irian_co
+    clubType: 1
+    gradeType: 0
+    basePower: 1
+    amount: 3
+    titleKey: title_clerk
+    nameKey: card_name_Irian
+    cardEffectId: 
+    imagePath: material_card_irian_co
+  - id: card_mirea_co
+    clubType: 1
+    gradeType: 0
+    basePower: 2
+    amount: 1
+    titleKey: title_treasurer
+    nameKey: card_name_mirea
+    cardEffectId: card_effect_elite
+    imagePath: material_card_mirea_co
+  - id: card_verde_co
+    clubType: 1
+    gradeType: 1
+    basePower: 3
+    amount: 1
+    titleKey: title_vice_president
+    nameKey: card_name_verde
+    cardEffectId: card_effect_elite
+    imagePath: material_card_verde_co
+  - id: card_etella_co
+    clubType: 1
+    gradeType: 2
+    basePower: 4
+    amount: 1
+    titleKey: title_student_council_president
+    nameKey: card_name_etella
+    cardEffectId: card_effect_elite
+    imagePath: material_card_etella_co
+  - id: card_selina_ex
+    clubType: 128
+    gradeType: 0
+    basePower: 0
+    amount: 4
+    titleKey: title_inspector
+    nameKey: card_name_selina
+    cardEffectId: card_effect_selina_ex
+    imagePath: 
+  - id: card_mirea_ex
+    clubType: 128
+    gradeType: 0
+    basePower: 2
+    amount: 1
+    titleKey: title_treasurer
+    nameKey: card_name_mirea
+    cardEffectId: 
+    imagePath: 
+  - id: card_verde_ex
+    clubType: 128
+    gradeType: 1
+    basePower: 3
+    amount: 1
+    titleKey: title_vice_president
+    nameKey: card_name_verde
+    cardEffectId: 
+    imagePath: 
+  - id: card_etella_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 4
+    amount: 1
+    titleKey: title_student_council_president
+    nameKey: card_name_etella
+    cardEffectId: 
+    imagePath: 
+  cardDataForPiles:
+  - id: card_mirea_co
+    clubType: 1
+    gradeType: 0
+    basePower: 2
+    amount: 2
+    titleKey: title_treasurer
+    nameKey: card_name_mirea
+    cardEffectId: card_effect_elite
+    imagePath: material_card_mirea_co
+  - id: card_elicia_co
+    clubType: 1
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_event_planner
+    nameKey: card_name_elicia
+    cardEffectId: card_effect_elicia_co
+    imagePath: material_card_elicia_co
+  - id: card_verde_co
+    clubType: 1
+    gradeType: 1
+    basePower: 3
+    amount: 2
+    titleKey: title_vice_president
+    nameKey: card_name_verde
+    cardEffectId: card_effect_elite
+    imagePath: material_card_verde_co
+  - id: card_lisenna_co
+    clubType: 1
+    gradeType: 1
+    basePower: 2
+    amount: 4
+    titleKey: title_disciplinary_officer
+    nameKey: card_name_lisenna
+    cardEffectId: card_effect_lisenna_co
+    imagePath: material_card_lisenna_co
+  - id: card_etella_co
+    clubType: 1
+    gradeType: 2
+    basePower: 4
+    amount: 2
+    titleKey: title_student_council_president
+    nameKey: card_name_etella
+    cardEffectId: card_effect_elite
+    imagePath: material_card_etella_co
+  - id: card_orphia_co
+    clubType: 1
+    gradeType: 2
+    basePower: 3
+    amount: 4
+    titleKey: title_publicist
+    nameKey: card_name_orphia
+    cardEffectId: card_effect_orphia_co
+    imagePath: material_card_orphia_co
+  - id: card_yunette_cl
+    clubType: 2
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_coastline_cleaner
+    nameKey: card_name_yunette
+    cardEffectId: card_effect_yunette_cl
+    imagePath: 
+  - id: card_pora_cl
+    clubType: 2
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_coastline_guard
+    nameKey: card_name_pora
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_selina_cl
+    clubType: 2
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_council_envoy
+    nameKey: card_name_selina
+    cardEffectId: card_effect_selina_cl
+    imagePath: 
+  - id: card_silin_cl
+    clubType: 2
+    gradeType: 1
+    basePower: 4
+    amount: 4
+    titleKey: title_fisher
+    nameKey: card_name_silin
+    cardEffectId: card_effect_silin_cl
+    imagePath: 
+  - id: card_navia_cl
+    clubType: 2
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_rescuer
+    nameKey: card_name_navia
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_seredy_cl
+    clubType: 2
+    gradeType: 1
+    basePower: 3
+    amount: 4
+    titleKey: title_surveyor
+    nameKey: card_name_seredy
+    cardEffectId: card_effect_seredy_cl
+    imagePath: 
+  - id: card_spica_cl
+    clubType: 2
+    gradeType: 1
+    basePower: 1
+    amount: 4
+    titleKey: title_lighthouse_keeper
+    nameKey: card_name_spica
+    cardEffectId: card_effect_spica_cl
+    imagePath: 
+  - id: card_orca_cl
+    clubType: 2
+    gradeType: 2
+    basePower: 5
+    amount: 4
+    titleKey: title_captain
+    nameKey: card_name_orca
+    cardEffectId: card_effect_orca_cl
+    imagePath: 
+  - id: card_mari_cl
+    clubType: 2
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_marine_leisure_member
+    nameKey: card_name_mari
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_libre_cl
+    clubType: 2
+    gradeType: 2
+    basePower: 4
+    amount: 4
+    titleKey: title_diver
+    nameKey: card_name_libre
+    cardEffectId: card_effect_libre_cl
+    imagePath: 
+  - id: card_elara_ba
+    clubType: 4
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_violin
+    nameKey: card_name_elara
+    cardEffectId: card_effect_elara_ba
+    imagePath: 
+  - id: card_cordie_ba
+    clubType: 4
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_staff
+    nameKey: card_name_cordie
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_cosmi_ba
+    clubType: 4
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_keyboard
+    nameKey: card_name_cosmi
+    cardEffectId: card_effect_cosmi_ba
+    imagePath: 
+  - id: card_melisa_ba
+    clubType: 4
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_dj
+    nameKey: card_name_melisa
+    cardEffectId: card_effect_melisa_ba
+    imagePath: 
+  - id: card_stella_ba
+    clubType: 4
+    gradeType: 1
+    basePower: 4
+    amount: 4
+    titleKey: title_guitarist
+    nameKey: card_name_stella
+    cardEffectId: card_effect_stella_ba
+    imagePath: 
+  - id: card_harmony_ba
+    clubType: 4
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_castanets_player
+    nameKey: card_name_harmony
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_neria_ba
+    clubType: 4
+    gradeType: 1
+    basePower: 2
+    amount: 4
+    titleKey: title_bassist
+    nameKey: card_name_neria
+    cardEffectId: card_effect_neria_ba
+    imagePath: 
+  - id: card_astra_ba
+    clubType: 4
+    gradeType: 2
+    basePower: 4
+    amount: 4
+    titleKey: title_vocalist
+    nameKey: card_name_astra
+    cardEffectId: card_effect_astra_ba
+    imagePath: 
+  - id: card_ravian_ba
+    clubType: 4
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_drummer
+    nameKey: card_name_ravian
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_flag_gd
+    clubType: 8
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_qa_tester
+    nameKey: card_name_flag
+    cardEffectId: card_effect_flag_gd
+    imagePath: 
+  - id: card_prim_gd
+    clubType: 8
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_scenario_writer
+    nameKey: card_name_prim
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_tibera_gd
+    clubType: 8
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_animator
+    nameKey: card_name_tibera
+    cardEffectId: card_effect_tibera_gd
+    imagePath: 
+  - id: card_erida_gd
+    clubType: 8
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_planner_designer
+    nameKey: card_name_erida
+    cardEffectId: card_effect_erida_gd
+    imagePath: 
+  - id: card_glitch_gd
+    clubType: 8
+    gradeType: 1
+    basePower: 4
+    amount: 4
+    titleKey: title_vfx_artist
+    nameKey: card_name_glitch
+    cardEffectId: card_effect_glitch_gd
+    imagePath: 
+  - id: card_sketch_gd
+    clubType: 8
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_illustrator
+    nameKey: card_name_sketch
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_script_gd
+    clubType: 8
+    gradeType: 1
+    basePower: 5
+    amount: 4
+    titleKey: title_client_programmer
+    nameKey: card_name_script
+    cardEffectId: card_effect_script_gd
+    imagePath: 
+  - id: card_velvet_gd
+    clubType: 8
+    gradeType: 2
+    basePower: 5
+    amount: 4
+    titleKey: title_server_programmer
+    nameKey: card_name_velvet
+    cardEffectId: card_effect_velvet_gd
+    imagePath: 
+  - id: card_lucie_gd
+    clubType: 8
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_3d_modeler
+    nameKey: card_name_lucie
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_cassia_gd
+    clubType: 8
+    gradeType: 2
+    basePower: 3
+    amount: 4
+    titleKey: title_director
+    nameKey: card_name_cassia
+    cardEffectId: card_effect_cassia_gd
+    imagePath: 
+  - id: card_mocha_hc
+    clubType: 16
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_dessert_specialist
+    nameKey: card_name_mocha
+    cardEffectId: card_effect_mocha_hc
+    imagePath: 
+  - id: card_forette_hc
+    clubType: 16
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_apprentice
+    nameKey: card_name_forette
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_selina_hc
+    clubType: 16
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_council_envoy
+    nameKey: card_name_selina
+    cardEffectId: card_effect_selina_hc
+    imagePath: 
+  - id: card_amelie_hc
+    clubType: 16
+    gradeType: 1
+    basePower: 3
+    amount: 4
+    titleKey: title_supply_manager
+    nameKey: card_name_amelie
+    cardEffectId: card_effect_amelie_hc
+    imagePath: 
+  - id: card_bagnie_hc
+    clubType: 16
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_fish_specialist
+    nameKey: card_name_bagnie
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_tarmotte_hc
+    clubType: 16
+    gradeType: 1
+    basePower: 3
+    amount: 4
+    titleKey: title_meat_specialist
+    nameKey: card_name_tarmotte
+    cardEffectId: card_effect_tarmotte_hc
+    imagePath: 
+  - id: card_sophine_hc
+    clubType: 16
+    gradeType: 2
+    basePower: 10
+    amount: 4
+    titleKey: title_chef
+    nameKey: card_name_sophine
+    cardEffectId: card_effect_sophine_hc
+    imagePath: 
+  - id: card_brinie_hc
+    clubType: 16
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_appetizer_specialist
+    nameKey: card_name_brinie
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_nirvel_ur
+    clubType: 32
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_downer
+    nameKey: card_name_nirvel
+    cardEffectId: card_effect_nirvel_ur
+    imagePath: 
+  - id: card_lucy_ur
+    clubType: 32
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_mascot
+    nameKey: card_name_lucy
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_serano_ur
+    clubType: 32
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_graffiti_artist
+    nameKey: card_name_serano
+    cardEffectId: card_effect_serano_ur
+    imagePath: 
+  - id: card_morras_ur
+    clubType: 32
+    gradeType: 1
+    basePower: 7
+    amount: 4
+    titleKey: title_goth_look
+    nameKey: card_name_morras
+    cardEffectId: card_effect_morras_ur
+    imagePath: 
+  - id: card_aspen_ur
+    clubType: 32
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_former_council_member
+    nameKey: card_name_aspen
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_exid_ur
+    clubType: 32
+    gradeType: 1
+    basePower: 6
+    amount: 4
+    titleKey: title_arsonist
+    nameKey: card_name_exid
+    cardEffectId: card_effect_exid_ur
+    imagePath: 
+  - id: card_creva_ur
+    clubType: 32
+    gradeType: 2
+    basePower: 11
+    amount: 4
+    titleKey: title_boss
+    nameKey: card_name_creva
+    cardEffectId: card_effect_creva_ur
+    imagePath: 
+  - id: card_corinth_ur
+    clubType: 32
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_drifter
+    nameKey: card_name_corinth
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_ayame_te
+    clubType: 64
+    gradeType: 0
+    basePower: 2
+    amount: 4
+    titleKey: title_deer_spirit
+    nameKey: card_name_ayame
+    cardEffectId: card_effect_ayame_te
+    imagePath: 
+  - id: card_yukari_te
+    clubType: 64
+    gradeType: 0
+    basePower: 3
+    amount: 2
+    titleKey: title_fox_spirit
+    nameKey: card_name_yukari
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_kohane_te
+    clubType: 64
+    gradeType: 0
+    basePower: 1
+    amount: 4
+    titleKey: title_long-tailed_tit
+    nameKey: card_name_kohane
+    cardEffectId: card_effect_kohane_te
+    imagePath: 
+  - id: card_hiyori_te
+    clubType: 64
+    gradeType: 1
+    basePower: 1
+    amount: 4
+    titleKey: title_squirrel_spirit
+    nameKey: card_name_hiyori
+    cardEffectId: card_effect_hiyori_te
+    imagePath: 
+  - id: card_suzuho_te
+    clubType: 64
+    gradeType: 1
+    basePower: 5
+    amount: 2
+    titleKey: title_cat_spirit
+    nameKey: card_name_suzuho
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_kanade_te
+    clubType: 64
+    gradeType: 1
+    basePower: 1
+    amount: 4
+    titleKey: title_dog_spirit
+    nameKey: card_name_kanade
+    cardEffectId: card_effect_kanade_te
+    imagePath: 
+  - id: card_suiren_te
+    clubType: 64
+    gradeType: 2
+    basePower: 1
+    amount: 4
+    titleKey: title_sheep_spirit
+    nameKey: card_name_suiren
+    cardEffectId: card_effect_suiren_te
+    imagePath: 
+  - id: card_towa_te
+    clubType: 64
+    gradeType: 2
+    basePower: 7
+    amount: 2
+    titleKey: title_dragon_spirit
+    nameKey: card_name_towa
+    cardEffectId: card_effect_elite
+    imagePath: 
+  - id: card_shirahane_te
+    clubType: 64
+    gradeType: 2
+    basePower: 1
+    amount: 4
+    titleKey: title_swan_spirit
+    nameKey: card_name_shirahane
+    cardEffectId: card_effect_shirahane_te
+    imagePath: 
+  - id: card_creva_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 7
+    amount: 1
+    titleKey: title_inspector
+    nameKey: card_name_creva
+    cardEffectId: 
+    imagePath: 
+  - id: card_suiren_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 5
+    amount: 1
+    titleKey: title_inspector
+    nameKey: card_name_suiren
+    cardEffectId: card_effect_suiren_ex
+    imagePath: 
+  - id: card_orca_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 1
+    amount: 1
+    titleKey: title_inspector
+    nameKey: card_name_orca
+    cardEffectId: card_effect_orca_ex
+    imagePath: 
+  - id: card_cassia_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 1
+    amount: 1
+    titleKey: title_inspector
+    nameKey: card_name_cassia
+    cardEffectId: card_effect_cassia_ex
+    imagePath: 
+  - id: card_astra_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 3
+    amount: 1
+    titleKey: title_inspector
+    nameKey: card_name_astra
+    cardEffectId: card_effect_astra_ex
+    imagePath: 
+  - id: card_sophine_ex
+    clubType: 128
+    gradeType: 2
+    basePower: 3
+    amount: 1
+    titleKey: title_inspector
+    nameKey: card_name_sophine
+    cardEffectId: card_effect_sophine_ex
+    imagePath: 
+  recruitData:
+  - round: 1
+    recruitGradeType: 0
+    amount: 1
+  - round: 2
+    recruitGradeType: 0
+    amount: 2
+  - round: 3
+    recruitGradeType: 0
+    amount: 2
+  - round: 3
+    recruitGradeType: 1
+    amount: 1
+  - round: 4
+    recruitGradeType: 0
+    amount: 2
+  - round: 4
+    recruitGradeType: 1
+    amount: 2
+  - round: 5
+    recruitGradeType: 1
+    amount: 2
+  - round: 6
+    recruitGradeType: 1
+    amount: 2
+  - round: 6
+    recruitGradeType: 2
+    amount: 1
+  - round: 7
+    recruitGradeType: 2
+    amount: 2
+  winPointData:
+  - round: 1
+    winPoint: 2
+    weight: 3
+  - round: 1
+    winPoint: 3
+    weight: 1
+  - round: 2
+    winPoint: 2
+    weight: 2
+  - round: 2
+    winPoint: 3
+    weight: 2
+  - round: 3
+    winPoint: 3
+    weight: 2
+  - round: 3
+    winPoint: 4
+    weight: 2
+  - round: 4
+    winPoint: 5
+    weight: 2
+  - round: 4
+    winPoint: 6
+    weight: 2
+  - round: 5
+    winPoint: 6
+    weight: 3
+  - round: 5
+    winPoint: 7
+    weight: 1
+  - round: 6
+    winPoint: 7
+    weight: 3
+  - round: 6
+    winPoint: 8
+    weight: 1
+  - round: 7
+    winPoint: 9
+    weight: 2
+  - round: 7
+    winPoint: 10
+    weight: 2
+  cardEffectData:
+  - id: card_effect_amelie_hc
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_specific_grade_cards_from_piles_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_specific_grade_cards_from_piles_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788612
+          - rid: 7078914611111788613
+      - key: target_grade
+        value:
+          type: 0
+          strValue: 1st
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_astra_ba
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_both_side_field_amount
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_both_side_field_amount
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788614
+          - rid: 7078914611111788615
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788616
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_astra_ex
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_opponent_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_opponent_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788617
+          - rid: 7078914611111788618
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788619
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_ayame_te
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788620
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788621
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788622
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788623
+          - rid: 7078914611111788624
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_cassia_ex
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_opponent_won_count
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_opponent_won_count
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788625
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788626
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_cassia_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_won_count
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_won_count
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788627
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788628
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_cosmi_ba
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788629
+          - rid: 7078914611111788630
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788631
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788632
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_creva_ur
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_deck_to_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_deck_to_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788633
+          - rid: 7078914611111788634
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_elara_ba
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788635
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788636
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788637
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788638
+          - rid: 7078914611111788639
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_elicia_co
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_gain_win_points_with_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_gain_win_points_with_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788640
+          - rid: 7078914611111788641
+      - key: club_excludes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788642
+      - key: necessary_club_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 3
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: gain_win_points
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_elite
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_elite
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_elite
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_erida_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_gain_win_points_on_success_attack
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_gain_win_points_on_success_attack
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788643
+      - key: gain_win_points
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_exid_ur
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_deck_to_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_deck_to_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788644
+          - rid: 7078914611111788645
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_flag_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_by_last_match
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_if_won_last_match
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788646
+          - rid: 7078914611111788647
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788648
+      - key: enable_last_result
+        value:
+          type: 0
+          strValue: Win
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_glitch_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_gain_win_points_by_last_match
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_gain_win_points_if_lost_last_match
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788649
+          - rid: 7078914611111788650
+      - key: enable_last_result
+        value:
+          type: 0
+          strValue: Lose
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: gain_win_points
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_hiyori_te
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_card_types_belong_clubs
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_card_types_belong_clubs
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788651
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788652
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788653
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_kanade_te
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_random_cards_to_field
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_random_cards_to_field
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788654
+          - rid: 7078914611111788655
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_kohane_te
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_specific_power_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_specific_power_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788656
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788657
+      - key: power_criteria
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_libre_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_replace_movement_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_replace_movement_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788658
+  - id: card_effect_lisenna_co
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_shuffle_lowest_power_cards_to_top_of_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_shuffle_lowest_power_cards_to_top_of_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788659
+          - rid: 7078914611111788660
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_melisa_ba
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_specific_power_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_specific_power_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788661
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788662
+      - key: power_criteria
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_mocha_hc
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_by_deck_stock
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_by_deck_stock
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788663
+          - rid: 7078914611111788664
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788665
+      - key: deck_stock
+        value:
+          type: 1
+          strValue: 
+          intValue: 11
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 3
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_morras_ur
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_down_while_state_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_down_while_state_from_infirmary_while_attack
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788666
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788667
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788668
+      - key: power_down_penalty
+        value:
+          type: 1
+          strValue: 
+          intValue: -1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_neria_ba
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_while_match_state
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_while_defending
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788669
+          - rid: 7078914611111788670
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788671
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788672
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 5
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_nirvel_ur
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_if_attack_alone
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_if_attack_alone
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788673
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788674
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_orca_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_infirmary_slots
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_infirmary_slots
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788675
+          - rid: 7078914611111788676
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788677
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_orca_ex
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_opponent_cards_deck_to_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_opponent_cards_deck_to_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788678
+          - rid: 7078914611111788679
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_orphia_co
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788680
+          - rid: 7078914611111788681
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788682
+      - key: club_excludes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788683
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_script_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_disabler_both_side_for_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_disabler_both_side_for_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788684
+          - rid: 7078914611111788685
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788686
+  - id: card_effect_selina_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_random_cards_belong_clubs_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788687
+          - rid: 7078914611111788688
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788689
+  - id: card_effect_selina_ex
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_round
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_round
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788690
+          - rid: 7078914611111788691
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788692
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_selina_hc
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_random_cards_belong_clubs_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788693
+          - rid: 7078914611111788694
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788695
+  - id: card_effect_serano_ur
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788696
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788697
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788698
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788699
+          - rid: 7078914611111788700
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_seredy_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788701
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788702
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788703
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788704
+          - rid: 7078914611111788705
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_shirahane_te
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_cards_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_cards_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788706
+          - rid: 7078914611111788707
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788708
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_silin_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_low_base_power_cards_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_low_base_power_cards_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788709
+          - rid: 7078914611111788710
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_criteria
+        value:
+          type: 1
+          strValue: 
+          intValue: 3
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_sophine_ex
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_by_opponent_deck_stock
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_by_opponent_deck_stock
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788711
+          - rid: 7078914611111788712
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788713
+      - key: opponent_deck_stock
+        value:
+          type: 1
+          strValue: 
+          intValue: 15
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 6
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_sophine_hc
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_specific_grade_cards_from_piles_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_specific_grade_cards_from_piles_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788714
+          - rid: 7078914611111788715
+      - key: target_grade
+        value:
+          type: 0
+          strValue: 1st
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 3
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_spica_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_infirmary_slots
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_infirmary_slots
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788716
+          - rid: 7078914611111788717
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788718
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_stella_ba
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_give_power_up_to_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_give_power_up_to_belong_clubs_from_infirmary_while_attack
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788719
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788720
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788721
+      - key: enable_match_states
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788722
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_suiren_ex
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_grade_of_opponent_field_last
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_grade_of_opponent_field_last
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788723
+          - rid: 7078914611111788724
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788725
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_suiren_te
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_as_each_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_as_each_belong_clubs_from_infirmary
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788726
+          - rid: 7078914611111788727
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788728
+      - key: club_includes
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788729
+      - key: power_up_ratio
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_tarmotte_hc
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_by_deck_stock
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_by_deck_stock
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788730
+          - rid: 7078914611111788731
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788732
+      - key: deck_stock
+        value:
+          type: 1
+          strValue: 
+          intValue: 15
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 3
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_tibera_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_gain_win_points_on_recruit
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_gain_win_points_on_recruit
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: gain_win_points
+        value:
+          type: 1
+          strValue: 
+          intValue: 2
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_velvet_gd
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_power_up_self_by_last_match
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_power_up_self_if_won_last_match
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788733
+          - rid: 7078914611111788734
+      - key: cancel_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788735
+      - key: enable_last_result
+        value:
+          type: 0
+          strValue: Win
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_up_bonus
+        value:
+          type: 1
+          strValue: 
+          intValue: 5
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  - id: card_effect_yunette_cl
+    json:
+      fields:
+      - key: card_effect_id
+        value:
+          type: 0
+          strValue: effect_move_low_base_power_cards_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: desc_key
+        value:
+          type: 0
+          strValue: desc_effect_move_low_base_power_cards_from_infirmary_to_deck
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: apply_triggers
+        value:
+          type: 6
+          strValue: 
+          intValue: 0
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr:
+          - rid: 7078914611111788736
+          - rid: 7078914611111788737
+      - key: cards_amount
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+      - key: power_criteria
+        value:
+          type: 1
+          strValue: 
+          intValue: 1
+          floatValue: 0
+          boolValue: 0
+          obj:
+            rid: -2
+          arr: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7078914611111788612
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788613
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788614
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788615
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788616
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788617
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788618
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788619
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788620
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788621
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788622
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: TraditionExperience
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788623
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788624
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788625
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788626
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788627
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788628
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788629
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788630
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788631
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788632
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Band
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788633
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788634
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788635
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788636
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788637
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Band
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788638
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788639
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788640
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788641
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788642
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788643
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnSwitchToDefend
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788644
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788645
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788646
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788647
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788648
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788649
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFIeldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788650
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788651
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788652
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788653
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: TraditionExperience
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788654
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788655
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788656
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788657
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788658
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788659
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788660
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788661
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788662
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788663
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788664
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788665
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788666
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788667
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788668
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788669
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788670
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788671
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788672
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788673
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788674
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788675
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788676
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788677
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788678
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788679
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788680
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788681
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788682
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788683
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788684
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788685
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788686
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788687
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788688
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788689
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788690
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788691
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788692
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788693
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788694
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788695
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Council
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788696
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788697
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788698
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Unregistered
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788699
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788700
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788701
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788702
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788703
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Coastline
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788704
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788705
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Defending
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788706
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788707
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788708
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788709
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788710
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788711
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788712
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788713
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788714
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788715
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788716
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788717
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788718
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788719
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788720
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveInfirmary
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788721
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Band
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788722
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: Attacking
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788723
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788724
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788725
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788726
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788727
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788728
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788729
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: TraditionExperience
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788730
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788731
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788732
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788733
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788734
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788735
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnLeaveField
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788736
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsAttacker
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
+    - rid: 7078914611111788737
+      type: {class: JsonValue, ns: ProjectABC.Data, asm: ProjectABC.Data}
+      data:
+        type: 0
+        strValue: OnEnterFieldAsDefender
+        intValue: 0
+        floatValue: 0
+        boolValue: 0
+        obj:
+          rid: -2
+        arr: []
