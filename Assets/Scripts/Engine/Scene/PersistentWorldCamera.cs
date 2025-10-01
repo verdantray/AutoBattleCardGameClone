@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -10,38 +9,36 @@ namespace ProjectABC.Engine.Scene
 {
     public sealed class PersistentWorldCamera : MonoSingleton<PersistentWorldCamera>
     {
-        private const float MIN_FOCUS_DIST = 0.1f;
-        private const float MIN_FOCAL_LEN = 1.0f;
+        [Serializable]
+        private class StrengthPoint
+        {
+            public float focusDistance;
+            public float fStop;
+        }
         
         [SerializeField] private Camera worldCamera;
         [SerializeField] private Volume volume;
-        [SerializeField][Min(MIN_FOCUS_DIST)] private float focusDistance;
-        [SerializeField][Range(1.0f, 300.0f)] private float maxFocalLength;
-        [SerializeField] private AnimationCurve curve;      // will replace to DoTween
+        [SerializeField] private StrengthPoint neutralPoint;
+        [SerializeField] private StrengthPoint targetPoint;
+        [SerializeField] private AnimationCurve focusDistCurve;
+        [SerializeField] private AnimationCurve apertureCurve;
+        [SerializeField] private float fixedFocalLength;
 
         protected override bool SetPersistent => false;
 
         public Camera WorldCamera => worldCamera;
         
-        private DepthOfField _depthOfField;
-        private Coroutine _tweenRoutine;
+        private DepthOfField _depthOfField = null;
+        private Coroutine _tweenRoutine = null;
 
         private void OnDisable()
         {
-            if (_tweenRoutine != null)
-            {
-                StopCoroutine(_tweenRoutine);
-                _tweenRoutine = null;
-            }
+            StopTween();
         }
 
         private void OnDestroy()
         {
-            if (_tweenRoutine != null)
-            {
-                StopCoroutine(_tweenRoutine);
-                _tweenRoutine = null;
-            }
+            StopTween();
         }
 
         protected override void Awake()
@@ -53,75 +50,88 @@ namespace ProjectABC.Engine.Scene
                 return;
             }
             
-            if (volume == null || !volume.profile.TryGet(out _depthOfField))
+            InitialDoF();
+        }
+
+        private void InitialDoF()
+        {
+            if (!(bool)volume || !volume.profile.TryGet(out _depthOfField))
             {
                 Debug.LogError($"{nameof(PersistentWorldCamera)} : need DepthOfField override on Volume Profile...");
                 return;
             }
 
             _depthOfField.mode.value = DepthOfFieldMode.Bokeh;
-            _depthOfField.focusDistance.value = focusDistance;
-            _depthOfField.focusDistance.value = MIN_FOCAL_LEN;
+            _depthOfField.active = true;
+            
+            SetStrength(0.0f);
         }
 
-        private async void Start()
+        public void BlurOn(float duration = 1.0f, bool useUnscaledTime = true, Action onComplete = null)
         {
-            await Task.Delay(2 * 1000);
-            
-            Debug.Log("BlurOn");
-            BlurOn();
-
-            await Task.Delay(2 * 1000);
-            
-            Debug.Log("BlurOff");
-            BlurOff();
+            StopTween();
+            _tweenRoutine = StartCoroutine(TweenStrength(0.0f, 1.0f, duration, useUnscaledTime, onComplete));
         }
 
-        public void BlurOn(float duration = 1.0f, Action onComplete = null, bool useUnscaledTime = true)
-            => BlurTo(maxFocalLength, duration, onComplete, useUnscaledTime);
+        public void BlurOff(float duration = 1.0f, bool useUnscaledTime = true, Action onComplete = null)
+        {
+            StopTween();
+            _tweenRoutine = StartCoroutine(TweenStrength(1.0f, 0.0f, duration, useUnscaledTime, onComplete));
+        }
 
-        public void BlurOff(float duration = 1.0f, Action onComplete = null, bool useUnscaledTime = true)
-            => BlurTo(MIN_FOCAL_LEN, duration, onComplete, useUnscaledTime);
+        public void BlurTo(float strength)
+        {
+            StopTween();
+            SetStrength(strength);
+        }
 
-        public void BlurTo(float targetLength, float duration, Action onComplete, bool useUnscaledTime)
+        private IEnumerator TweenStrength(float from, float to, float duration, bool useUnscaledTime, Action onComplete)
+        {
+            float elapsed = 0.0f;
+            while (elapsed < duration)
+            {
+                elapsed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+                SetStrength(Mathf.Lerp(from, to, elapsed / duration));
+                
+                yield return null;
+            }
+            
+            SetStrength(to);
+            onComplete?.Invoke();
+            
+            _tweenRoutine = null;
+        }
+
+        private void StopTween()
         {
             if (_tweenRoutine != null)
             {
                 StopCoroutine(_tweenRoutine);
             }
 
-            float currentFocalLength = _depthOfField.focalLength.value;
-            _tweenRoutine = StartCoroutine(TweenBlur(currentFocalLength, targetLength, duration, onComplete, useUnscaledTime));
+            _tweenRoutine = null;
         }
 
-        private IEnumerator TweenBlur(float from, float to, float duration, Action onComplete, bool useUnscaledTime)
+        private void SetStrength(float strength)
         {
-            if (duration <= 0.0f)
-            {
-                OnComplete();
-                yield break;
-            }
-
-            float normalizedTime = 0.0f;
-            while (normalizedTime < 1.0f)
-            {
-                float deltaTime = useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-                normalizedTime += deltaTime / duration;
-
-                float interpolated = curve.Evaluate(normalizedTime);
-                _depthOfField.focalLength.value = Mathf.Clamp(interpolated, from, to);
-                
-                yield return null;
-            }
+            strength = Mathf.Clamp01(strength);
             
-            _tweenRoutine = null;
-            yield break;
+            float focusDistInterpolated =  focusDistCurve.Evaluate(strength);
+            float fStopInterpolated = apertureCurve.Evaluate(strength);
 
-            void OnComplete()
-            {
-                _depthOfField.gaussianMaxRadius.value = to;
-                onComplete?.Invoke();
-            }
+            _depthOfField.focusDistance.value = Mathf.Lerp(
+                neutralPoint.focusDistance,
+                targetPoint.focusDistance,
+                focusDistInterpolated
+            );
+
+            _depthOfField.aperture.value = Mathf.Lerp(
+                neutralPoint.fStop,
+                targetPoint.fStop,
+                fStopInterpolated
+            );
+
+            _depthOfField.focalLength.value = fixedFocalLength;
         }
     }
 }

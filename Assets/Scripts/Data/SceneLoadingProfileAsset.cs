@@ -1,10 +1,21 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
-namespace ProjectABC.Core
+namespace ProjectABC.Data
 {
-    [CreateAssetMenu(fileName = "SceneLoadingProfileAsset", menuName = "Scripting/ScriptableObject Script Menu/SceneLoadingProfile")]
-    public class SceneLoadingProfileAsset : ScriptableObject
+    public enum EScene
     {
+        Lobby,
+        InGame
+    }
+    
+    public abstract class SceneLoadingProfileAsset : ScriptableObject
+    {
+        public abstract Task LoadingAssetsAsync();
         
+        public virtual void OnSceneLoaded()
+        {
+            
+        }
     }
 }
