@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
+using ProjectABC.Engine.Scene.PostFX;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using ProjectABC.Utils;
 
 namespace ProjectABC.Engine.Scene
@@ -10,25 +10,32 @@ namespace ProjectABC.Engine.Scene
     public sealed class PersistentWorldCamera : MonoSingleton<PersistentWorldCamera>
     {
         [Serializable]
-        private class StrengthPoint
+        private class BandFeather
         {
-            public float focusDistance;
-            public float fStop;
+            public float bandHalfWidth;
+            public float feather;
+
+            public static BandFeather Lerp(BandFeather from, BandFeather to, float t)
+            {
+                return new BandFeather
+                {
+                    bandHalfWidth = Mathf.Lerp(from.bandHalfWidth, to.bandHalfWidth, t),
+                    feather = Mathf.Lerp(from.feather, to.feather, t)
+                };
+            }
         }
         
         [SerializeField] private Camera worldCamera;
         [SerializeField] private Volume volume;
-        [SerializeField] private StrengthPoint neutralPoint;
-        [SerializeField] private StrengthPoint targetPoint;
-        [SerializeField] private AnimationCurve focusDistCurve;
-        [SerializeField] private AnimationCurve apertureCurve;
-        [SerializeField] private float fixedFocalLength;
+        [SerializeField] private BandFeather neutralBandFeather;
+        [SerializeField] private BandFeather targetBandFeather;
+        [SerializeField] private AnimationCurve blurCurve;
 
         protected override bool SetPersistent => false;
 
         public Camera WorldCamera => worldCamera;
-        
-        private DepthOfField _depthOfField = null;
+
+        private TiltShift _tiltShift;
         private Coroutine _tweenRoutine = null;
 
         private void OnDisable()
@@ -45,26 +52,21 @@ namespace ProjectABC.Engine.Scene
         {
             base.Awake();
 
-            if (!IsInstance)
+            if (IsInstance)
             {
-                return;
+                InitialTiltShift();
             }
-            
-            InitialDoF();
         }
 
-        private void InitialDoF()
+        private void InitialTiltShift()
         {
-            if (!(bool)volume || !volume.profile.TryGet(out _depthOfField))
+            if (volume == null || !volume.profile.TryGet(out _tiltShift))
             {
-                Debug.LogError($"{nameof(PersistentWorldCamera)} : need DepthOfField override on Volume Profile...");
+                Debug.LogError($"{nameof(PersistentWorldCamera)} : need TiltShift override on Volume Profile...");
                 return;
             }
-
-            _depthOfField.mode.value = DepthOfFieldMode.Bokeh;
-            _depthOfField.active = true;
             
-            SetStrength(0.0f);
+            SetBandFeather(0.0f);
         }
 
         public void BlurOn(float duration = 1.0f, bool useUnscaledTime = true, Action onComplete = null)
@@ -79,10 +81,10 @@ namespace ProjectABC.Engine.Scene
             _tweenRoutine = StartCoroutine(TweenStrength(1.0f, 0.0f, duration, useUnscaledTime, onComplete));
         }
 
-        public void BlurTo(float strength)
+        public void BlurTo(float normalizedTime)
         {
             StopTween();
-            SetStrength(strength);
+            SetBandFeather(normalizedTime);
         }
 
         private IEnumerator TweenStrength(float from, float to, float duration, bool useUnscaledTime, Action onComplete)
@@ -91,12 +93,12 @@ namespace ProjectABC.Engine.Scene
             while (elapsed < duration)
             {
                 elapsed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-                SetStrength(Mathf.Lerp(from, to, elapsed / duration));
+                SetBandFeather(Mathf.Lerp(from, to, elapsed / duration));
                 
                 yield return null;
             }
             
-            SetStrength(to);
+            SetBandFeather(to);
             onComplete?.Invoke();
             
             _tweenRoutine = null;
@@ -112,26 +114,12 @@ namespace ProjectABC.Engine.Scene
             _tweenRoutine = null;
         }
 
-        private void SetStrength(float strength)
+        private void SetBandFeather(float normalizedTime)
         {
-            strength = Mathf.Clamp01(strength);
-            
-            float focusDistInterpolated =  focusDistCurve.Evaluate(strength);
-            float fStopInterpolated = apertureCurve.Evaluate(strength);
+            var lerpBandFeather = BandFeather.Lerp(neutralBandFeather, targetBandFeather, normalizedTime);
 
-            _depthOfField.focusDistance.value = Mathf.Lerp(
-                neutralPoint.focusDistance,
-                targetPoint.focusDistance,
-                focusDistInterpolated
-            );
-
-            _depthOfField.aperture.value = Mathf.Lerp(
-                neutralPoint.fStop,
-                targetPoint.fStop,
-                fStopInterpolated
-            );
-
-            _depthOfField.focalLength.value = fixedFocalLength;
+            _tiltShift.bandHalfWidth.value = lerpBandFeather.bandHalfWidth;
+            _tiltShift.feather.value = lerpBandFeather.feather;
         }
     }
 }

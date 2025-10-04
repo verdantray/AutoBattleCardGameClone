@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PersistentWorld Camera Profile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 1420622492141093447}
---- !u!114 &1420622492141093447
+  - {fileID: 1719926496382787879}
+--- !u!114 &1719926496382787879
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23,40 +23,46 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
-  m_Name: DepthOfField
+  m_Script: {fileID: 11500000, guid: f35345caa9e3c68438050e5a3ad8ac74, type: 3}
+  m_Name: TiltShift
   m_EditorClassIdentifier: 
   active: 1
-  mode:
+  method:
     m_OverrideState: 1
-    m_Value: 2
-  gaussianStart:
-    m_OverrideState: 0
-    m_Value: 10
-  gaussianEnd:
-    m_OverrideState: 0
-    m_Value: 30
-  gaussianMaxRadius:
-    m_OverrideState: 1
-    m_Value: 0.5
-  highQualitySampling:
-    m_OverrideState: 0
-    m_Value: 0
-  focusDistance:
-    m_OverrideState: 1
-    m_Value: 30
-  aperture:
-    m_OverrideState: 1
-    m_Value: 32
-  focalLength:
-    m_OverrideState: 1
-    m_Value: 35
-  bladeCount:
-    m_OverrideState: 0
-    m_Value: 5
-  bladeCurvature:
-    m_OverrideState: 0
     m_Value: 1
-  bladeRotation:
+  maxStrength:
+    m_OverrideState: 1
+    m_Value: 1.2
+  tiltCenter:
+    m_OverrideState: 1
+    m_Value: {x: 0.5, y: 0.5}
+  tiltAngle:
+    m_OverrideState: 1
+    m_Value: 0
+  bandHalfWidth:
+    m_OverrideState: 1
+    m_Value: 0.2
+  feather:
+    m_OverrideState: 1
+    m_Value: 0.3
+  kernelRadius:
+    m_OverrideState: 0
+    m_Value: 24
+  quality:
+    m_OverrideState: 0
+    m_Value: 4
+  useAnamorphic:
     m_OverrideState: 0
     m_Value: 0
+  anamorphXY:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1}
+  kawaseStep:
+    m_OverrideState: 1
+    m_Value: 1.4
+  iterations:
+    m_OverrideState: 1
+    m_Value: 4
+  downsample:
+    m_OverrideState: 1
+    m_Value: 1
