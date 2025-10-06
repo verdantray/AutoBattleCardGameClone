@@ -6,11 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Loading.unity
-    guid: 03e2b4fc712cf5f43a97ede0e26c060d
-  - enabled: 1
-    path: Assets/Scenes/PersistentWorld.unity
-    guid: 8cf8f58850d9d47408543f561b8674e0
+    path: Assets/Scenes/Initializer.unity
+    guid: 8742c2cae84dee74bbaf3658b320577e
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ff60517440838594186563bf8767ad04, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
