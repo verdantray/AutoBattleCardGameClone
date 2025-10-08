@@ -42,15 +42,22 @@ Shader "Hidden/URP/TiltShift"
         
         float blurWeight(float2 uv)
         {
+            // Special case: band width == 0 and feather == 0 -> uniform blur (no sharp seam line)
+            if (_BandHalfWidth <= 1e-4 && _Feather <= 1e-4)
+            {
+                return 1.0; // fully blurred mask
+            }
+
             float s = sin(_TiltAngleRad);
             float c = cos(_TiltAngleRad);
             float2 d = uv - _TiltCenter;
             float y = (s * d.x) + (c * d.y);
             float dist = abs(y) - max(_BandHalfWidth, 0.0);
 
-            float aa = fwidth(y) * 1.5;
+            // Harden the minimum AA to avoid a 1px unblurred line when feather is ~0
+            float aa = max(fwidth(y) * 1.5, 1e-4);
             float denom = max(_Feather, aa);
-            float w = saturate(dist / max(denom, 1e-5));
+            float w = saturate(dist / denom);
             return w;
         }
 
@@ -128,7 +135,12 @@ Shader "Hidden/URP/TiltShift"
             float3 blur = SAMPLE_TEXTURE2D_X(_BlurTex,     sampler_BlurTex,     uv).rgb;
 
             float w = blurWeight(uv) * _MaxStrength;
-            if (_BandHalfWidth <= 0 && _Feather <= 0)
+            // Near-zero case: bypass lerp entirely to avoid any seam
+            if (_BandHalfWidth <= 1e-4 && _Feather <= 1e-4)
+            {
+                return float4(blur, 1);
+            }
+            if (_BandHalfWidth <= 1e-4 && _Feather <= 1e-4)
             {
                 w = _MaxStrength;
             }
