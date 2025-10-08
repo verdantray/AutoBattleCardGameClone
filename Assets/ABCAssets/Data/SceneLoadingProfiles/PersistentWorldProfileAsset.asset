@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2583b002b130d754182fda3b59a4e807, type: 3}
+  m_Name: PersistentWorldProfileAsset
+  m_EditorClassIdentifier: 
+  sceneReference:
+    m_AssetGUID: 8cf8f58850d9d47408543f561b8674e0
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  assetRefsForPreload:
+  - m_AssetGUID: 6be04df3653eaef41bf3abd35cc2af61
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
+  assetRefsForPostLoad: []

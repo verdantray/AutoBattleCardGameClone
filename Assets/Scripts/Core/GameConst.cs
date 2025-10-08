@@ -18,10 +18,7 @@ namespace ProjectABC.Core
 
         public static class SceneName
         {
-            public const string PERSISTENT_WORLD = "PersistentWorld";
-            public const string LOADING = "Loading";
-            public const string TITLE = "Title";
-            public const string IN_GAME = "InGame";
+            
         }
 
         public static class GameOption

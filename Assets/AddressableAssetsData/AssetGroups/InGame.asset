@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: InGame
+  m_EditorClassIdentifier: 
+  m_GroupName: InGame
+  m_GUID: c6d31ac1a93653e488291b7a062d11c4
+  m_SerializeEntries:
+  - m_GUID: b512182c2139de247b9608a894c5a3b4
+    m_Address: InGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fb21346315ead5f4ebb0166c6f37452e
+    m_Address: Assets/ABCAssets/temp/static_mesh_desk.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 99f314e9ea06a484eb94238a888aa4f8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 27315973103a5874386559d3049c312d, type: 2}
+    - {fileID: 11400000, guid: 22018c5d038017341acd61536882a73e, type: 2}

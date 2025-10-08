@@ -1,3 +1,14 @@
 {
-	"name": "ProjectABC.Utils"
+    "name": "ProjectABC.Utils",
+    "rootNamespace": "ProjectABC.Utils",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

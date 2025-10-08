@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: 92e0ecc6a7718774cb85dcc2f4f83a8f
-  m_SerializeEntries:
-  - m_GUID: 6be04df3653eaef41bf3abd35cc2af61
-    m_Address: Assets/ABCAssets/temp/static_mesh_test_Scene.fbx
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 99f314e9ea06a484eb94238a888aa4f8, type: 2}
   m_SchemaSet:

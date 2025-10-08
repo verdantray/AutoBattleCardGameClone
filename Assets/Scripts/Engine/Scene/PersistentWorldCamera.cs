@@ -4,6 +4,7 @@ using ProjectABC.Engine.Scene.PostFX;
 using UnityEngine;
 using UnityEngine.Rendering;
 using ProjectABC.Utils;
+using UnityEngine.Rendering.Universal;
 
 namespace ProjectABC.Engine.Scene
 {
@@ -26,6 +27,7 @@ namespace ProjectABC.Engine.Scene
         }
         
         [SerializeField] private Camera worldCamera;
+        [SerializeField] private Camera uiCamera;
         [SerializeField] private Volume volume;
         [SerializeField] private BandFeather neutralBandFeather;
         [SerializeField] private BandFeather targetBandFeather;
@@ -34,6 +36,7 @@ namespace ProjectABC.Engine.Scene
         protected override bool SetPersistent => false;
 
         public Camera WorldCamera => worldCamera;
+        public Camera UICamera => uiCamera;
 
         private TiltShift _tiltShift;
         private Coroutine _tweenRoutine = null;

@@ -1,105 +1,57 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using ProjectABC.Core;
+using ProjectABC.Data;
 using ProjectABC.Utils;
+using UnityEngine.SceneManagement;
 
 namespace ProjectABC.Engine.Scene
 {
     public sealed class SceneLoader : MonoSingleton<SceneLoader>
     {
-        private void Start()
-        {
-            
-        }
+        [SerializeField] private SceneLoadingProfileAsset persistentWorldProfile;
+        [SerializeField] private SceneLoadingProfileAsset[] sceneLoadingProfiles;
 
         public async Task LoadSceneAsync(string targetSceneName)
         {
-            #region 1. Open and active loading scene
-
-            if (!IsSceneLoaded(GameConst.SceneName.LOADING))
+            if (!persistentWorldProfile.IsLoaded)
             {
-                var loadingSceneHandle = SceneManager.LoadSceneAsync(GameConst.SceneName.LOADING, LoadSceneMode.Additive);
-                loadingSceneHandle!.allowSceneActivation = true;
-
-                await loadingSceneHandle;
+                await persistentWorldProfile.LoadSceneAndAssetsAsync(LoadSceneMode.Additive, true);
+                await Task.Yield(); // wait 1frame more for awake
+                
+                // PersistentWorldCamera.Instance.BlurTo(1.0f);
             }
-
-            var loadingScene = SceneManager.GetSceneByName(GameConst.SceneName.LOADING);
-            SceneManager.SetActiveScene(loadingScene);
-
-            #endregion
-
-            #region 2. Unload unuse scenes
-
-            List<Task> unloadingTasks = new List<Task>();
-            for (int i = 0; i < SceneManager.sceneCount; i++)
+            // else
             {
-                var scene = SceneManager.GetSceneAt(i);
-                bool isUnloadable = scene.name != GameConst.SceneName.LOADING
-                                    && scene.name != GameConst.SceneName.PERSISTENT_WORLD
-                                    && scene.name != targetSceneName;
-
-                if (!isUnloadable)
-                {
-                    continue;
-                }
-
-                unloadingTasks.Add(GetSceneUnloadingTask(scene.name));
+                PersistentWorldCamera.Instance.BlurOn(0.5f);
             }
             
-            await Task.WhenAll(unloadingTasks);
-
-            #endregion
-
-            #region 3. Load persistent word scene if not loaded
-
-            Task persistentWorldLoadingTask = Task.CompletedTask;
-            if (!IsSceneLoaded(GameConst.SceneName.PERSISTENT_WORLD))
+            SceneLoadingProfileAsset targetSceneProfile = sceneLoadingProfiles.FirstOrDefault(profile => profile.ProfileName == targetSceneName);
+            if (targetSceneProfile == null)
             {
-                persistentWorldLoadingTask = GetSceneLoadingTask(GameConst.SceneName.PERSISTENT_WORLD);
+                Debug.LogError($"Can't find target scene {targetSceneName}");
+                PersistentWorldCamera.Instance.BlurOff();
+                
+                return;
             }
 
-            #endregion
-            
-            // 4. load target scene and wait until loading complete
-            Task targetSceneLoadingTask = GetSceneLoadingTask(targetSceneName);
-            
-            await Task.WhenAll(persistentWorldLoadingTask, targetSceneLoadingTask);
-
-            var target = SceneManager.GetSceneByName(targetSceneName);
-            if (target.IsValid() && target.isLoaded)
+            List<Task> tasks = new List<Task>
             {
-                SceneManager.SetActiveScene(target);
-            }
+                Task.Delay(TimeSpan.FromSeconds(0.5)),  // await for blur
+                targetSceneProfile.LoadSceneAndAssetsAsync(),
+            };
 
-            // 5. unload and close loading scene
-            await SceneManager.UnloadSceneAsync(loadingScene);
-        }
+            var unloadPreloadedScenesTasks = sceneLoadingProfiles
+                .Where(profile => profile.IsLoaded && profile.ProfileName != targetSceneName)
+                .Select(profile => profile.UnloadSceneAndAssetsAsync());
+            tasks.AddRange(unloadPreloadedScenesTasks);
 
-        private static bool IsSceneLoaded(string sceneName)
-        {
-            if (string.IsNullOrEmpty(sceneName))
-            {
-                return false;
-            }
+            await Task.WhenAll(tasks);
+            await targetSceneProfile.ActivateSceneAsync();
 
-            var scene = SceneManager.GetSceneByName(sceneName);
-            return scene.IsValid() && scene.isLoaded;
-        }
-
-        private static async Task GetSceneLoadingTask(string sceneName)
-        {
-            var asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            asyncOperation!.allowSceneActivation = true;
-            
-            await asyncOperation;
-        }
-
-        private static async Task GetSceneUnloadingTask(string sceneName)
-        {
-            await SceneManager.UnloadSceneAsync(sceneName);
+            targetSceneProfile.GetPostLoadingTask().Forget();
         }
     }
 }

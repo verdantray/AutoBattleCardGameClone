@@ -1,14 +1,14 @@
 {
     "name": "ProjectABC.Core",
-    "rootNamespace": "",
+    "rootNamespace": "ProjectABC.Core",
     "references": [
-        "ProjectABC.Data",
-        "ProjectABC.Utils"
+        "GUID:5288581da62483f44bbf624653a19d3c",
+        "GUID:9c6067752ef96234e86fdbb93cd13695"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
+    "overrideReferences": false,
     "precompiledReferences": [
         "PCG32RNG.dll"
     ],
