@@ -27,33 +27,47 @@ namespace ProjectABC.Core
             }
 
             _simulationContext = new SimulationContext(playerList);
-            InitializeGamePhases();
         }
 
-        private void InitializeGamePhases()
+        public void EnqueueGamePhase(IGamePhase gamePhase)
+        {
+            _gamePhases.Enqueue(gamePhase);
+        }
+
+        public void ClearGamePhases()
         {
             _gamePhases.Clear();
-            _gamePhases.Enqueue(new DeckConstructionPhase());
+        }
+
+        public void InitializeTestPhases()
+        {
+            ClearGamePhases();
+            EnqueueGamePhase(new DeckConstructionTestPhase());
             
             for (int round = 1; round <= GameConst.GameOption.MAX_ROUND; round++)
             {
-                _gamePhases.Enqueue(new PreparationPhase(round));
+                EnqueueGamePhase(new PreparationTestPhase(round));
             
                 // TODO: use schedule data
                 if (round is 3 or 7)
                 {
-                    _gamePhases.Enqueue(new DeletionPhase());
+                    EnqueueGamePhase(new DeletionTestPhase());
                 }
                 
-                _gamePhases.Enqueue(new RecruitPhase());
-                _gamePhases.Enqueue(new BattlePhase());
+                EnqueueGamePhase(new RecruitTestPhase());
+                EnqueueGamePhase(new BattleTestPhase());
             }
             
-            _gamePhases.Enqueue(new SettlementPhase());
+            EnqueueGamePhase(new SettlementTestPhase());
         }
 
         public async Task RunAsync()
         {
+            if (_gamePhases.Count == 0)
+            {
+                throw new ArgumentException("No game phases found");
+            }
+            
             while (_gamePhases.Count > 0)
             {
                 var phase = _gamePhases.Dequeue();

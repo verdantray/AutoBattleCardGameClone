@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
-    public class SettlementPhase : IGamePhase
+    public class SettlementTestPhase : IGamePhase
     {
         public Task ExecutePhaseAsync(SimulationContext simulationContext)
         {

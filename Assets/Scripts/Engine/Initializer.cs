@@ -1,4 +1,5 @@
 using System;
+using ProjectABC.Core;
 using UnityEngine;
 using ProjectABC.Engine.Scene;
 using ProjectABC.Utils;
@@ -9,7 +10,7 @@ namespace ProjectABC.Engine
     {
         private void Start()
         {
-            SceneLoader.Instance.LoadSceneAsync("InGame").Forget();
+            SceneLoader.Instance.LoadSceneAsync(GameConst.SceneName.IN_GAME).Forget();
         }
     }
 }

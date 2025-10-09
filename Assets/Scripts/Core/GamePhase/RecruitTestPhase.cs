@@ -6,7 +6,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-	public class RecruitPhase : IGamePhase
+	public class RecruitTestPhase : IGamePhase
     {
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {

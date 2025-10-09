@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
-    public class DeckConstructionPhase : IGamePhase
+    public class DeckConstructionTestPhase : IGamePhase
     {
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {

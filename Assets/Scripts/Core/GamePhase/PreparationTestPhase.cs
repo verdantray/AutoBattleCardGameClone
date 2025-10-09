@@ -2,11 +2,11 @@ using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
-    public class PreparationPhase : IGamePhase
+    public class PreparationTestPhase : IGamePhase
     {
         private readonly int _round;
         
-        public PreparationPhase(int round)
+        public PreparationTestPhase(int round)
         {
             _round = round;
         }

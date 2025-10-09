@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
-    public class DeletionPhase : IGamePhase
+    public class DeletionTestPhase : IGamePhase
     {
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {

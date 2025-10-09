@@ -18,7 +18,8 @@ namespace ProjectABC.Core
 
         public static class SceneName
         {
-            
+            public const string INITIALIZER = "Initializer";
+            public const string IN_GAME = "InGame";
         }
 
         public static class GameOption
