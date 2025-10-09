@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AdditiveFonts
+  m_EditorClassIdentifier: 
+  m_GroupName: AdditiveFonts
+  m_GUID: 6d38c6240832f314fb059fc85255d320
+  m_SerializeEntries:
+  - m_GUID: 5f9997707df346741abbcdd81672ff7a
+    m_Address: GyeonggiMillenniumTitle_Medium
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - AdditiveFont
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 99f314e9ea06a484eb94238a888aa4f8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 752e7f4d21e6a7a45aceaa7fab431d7a, type: 2}
+    - {fileID: 11400000, guid: f9115a9fd0cf4af4d8db8f45e436b2ef, type: 2}
