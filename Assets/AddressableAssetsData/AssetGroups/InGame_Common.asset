@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: PersistentWorld
+  m_Name: InGame_Common
   m_EditorClassIdentifier: 
-  m_GroupName: PersistentWorld
-  m_GUID: b2f3f80d25a6d8944b76891dcb5868fa
+  m_GroupName: InGame_Common
+  m_GUID: c6d31ac1a93653e488291b7a062d11c4
   m_SerializeEntries:
-  - m_GUID: 6be04df3653eaef41bf3abd35cc2af61
-    m_Address: Assets/ABCAssets/temp/static_mesh_test_Scene.fbx
+  - m_GUID: b512182c2139de247b9608a894c5a3b4
+    m_Address: InGame
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8cf8f58850d9d47408543f561b8674e0
-    m_Address: PersistentWorld
+  - m_GUID: fb21346315ead5f4ebb0166c6f37452e
+    m_Address: Assets/ABCAssets/temp/static_mesh_desk.fbx
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -29,5 +29,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 99f314e9ea06a484eb94238a888aa4f8, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: f7bad1abae6d05b4793ebbb1edadf265, type: 2}
-    - {fileID: 11400000, guid: 4fec948921aafe54384ead7a10b3118a, type: 2}
+    - {fileID: 11400000, guid: 27315973103a5874386559d3049c312d, type: 2}
+    - {fileID: 11400000, guid: 22018c5d038017341acd61536882a73e, type: 2}

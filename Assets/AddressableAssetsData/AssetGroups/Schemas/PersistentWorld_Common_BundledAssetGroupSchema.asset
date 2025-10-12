@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d17a21594effb4e9591490b009e7aa, type: 3}
-  m_Name: InGame_BundledAssetGroupSchema
+  m_Name: PersistentWorld_Common_BundledAssetGroupSchema
   m_EditorClassIdentifier: 
-  m_Group: {fileID: 11400000, guid: 6a8160015d6a88a4284bdb928e0e58f2, type: 2}
+  m_Group: {fileID: 11400000, guid: 05a5bb080f072c84fa9137d206c66519, type: 2}
   m_InternalBundleIdMode: 1
   m_Compression: 1
   m_IncludeAddressInCatalog: 1

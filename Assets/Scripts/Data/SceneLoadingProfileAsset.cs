@@ -14,16 +14,13 @@ namespace ProjectABC.Data
         [SerializeField] protected AssetReference sceneReference;
         [SerializeField] protected AssetReferenceGameObject[] assetRefsForPreload;
         [SerializeField] protected AssetReferenceGameObject[] assetRefsForPostLoad;
-
-        protected readonly Dictionary<string, AsyncOperationHandle> AssetHandles = new Dictionary<string, AsyncOperationHandle>();
-        protected readonly HashSet<string> RegisteredAssetGUIDs = new HashSet<string>();
-        
-        protected AsyncOperationHandle<SceneInstance> SceneHandle = default;
         
         public abstract string ProfileName { get; }
         public bool IsLoaded => IsSceneLoaded && IsAssetsPreLoaded;
-        public bool IsSceneLoaded => IsHandleLoaded(SceneHandle);
+        public bool IsSceneLoaded => IsHandleLoaded(sceneReference.OperationHandle);
         public bool IsAssetsPreLoaded => IsAssetsLoaded(assetRefsForPreload);
+
+        protected AsyncOperationHandle<SceneInstance> SceneHandle = default;
 
         public virtual async Task LoadSceneAndAssetsAsync(LoadSceneMode mode = LoadSceneMode.Additive, bool activateOnLoad = false)
         {
@@ -31,7 +28,7 @@ namespace ProjectABC.Data
             
             if (!SceneHandle.IsValid())
             {
-                SceneHandle = GetLoadingSceneHandle(mode, activateOnLoad);
+                 SceneHandle = LoadSceneAsync(mode, activateOnLoad);
             }
 
             if (!SceneHandle.IsDone)
@@ -39,8 +36,7 @@ namespace ProjectABC.Data
                 loadingTasks.Add(SceneHandle.Task);
             }
             
-            RegisterLoadingHandles(assetRefsForPreload);
-            loadingTasks.AddRange(AssetHandles.Values.Select(handle => handle.Task));
+            loadingTasks.AddRange(assetRefsForPreload.Select(GetAssetLoadingTask));
             
             await Task.WhenAll(loadingTasks);
 
@@ -65,40 +61,24 @@ namespace ProjectABC.Data
 
         public Task GetPostLoadingTask()
         {
-            var postLoadingAssetGUIDs = assetRefsForPostLoad
-                .Select(assetRef => assetRef.AssetGUID)
-                .Distinct()
-                .ToArray();
-            
-            RegisterLoadingHandles(assetRefsForPostLoad);
-            var tasks = AssetHandles
-                .Where(kvPair => postLoadingAssetGUIDs.Contains(kvPair.Key))
-                .Select(kvPair => kvPair.Value.Task);
-            
-            return Task.WhenAll(tasks);
+            return Task.WhenAll(assetRefsForPostLoad.Select(GetAssetLoadingTask));
         }
 
-        protected AsyncOperationHandle<SceneInstance> GetLoadingSceneHandle(LoadSceneMode mode, bool activateOnLoad)
+        protected AsyncOperationHandle<SceneInstance> LoadSceneAsync(LoadSceneMode mode, bool activateOnLoad)
         {
             return Addressables.LoadSceneAsync(sceneReference, mode, activateOnLoad);
         }
 
-        protected void RegisterLoadingHandles(AssetReferenceGameObject[] assetReferences)
+        protected Task GetAssetLoadingTask<TObject>(AssetReferenceT<TObject> assetReference) where TObject : Object
         {
-            foreach (var assetRefOnSceneUsed in assetReferences)
+            if (!assetReference.IsValid())
             {
-                if (RegisteredAssetGUIDs.Contains(assetRefOnSceneUsed.AssetGUID))
-                {
-                    Debug.LogWarning($"{nameof(SceneLoadingProfileAsset)} : duplicate asset guid {assetRefOnSceneUsed.AssetGUID}.. check fields");
-                    continue;
-                }
-
-                string key = assetRefOnSceneUsed.AssetGUID;
-                var handle = Addressables.LoadAssetAsync<GameObject>(assetRefOnSceneUsed);
-
-                RegisteredAssetGUIDs.Add(key);
-                AssetHandles.Add(key, handle);
+                Addressables.LoadAssetAsync<TObject>(assetReference);
             }
+
+            return assetReference.IsDone
+                ? Task.CompletedTask
+                : assetReference.OperationHandle.Task;
         }
 
         public virtual async Task UnloadSceneAndAssetsAsync()
@@ -109,22 +89,33 @@ namespace ProjectABC.Data
                 await unloadSceneHandle.Task;
             }
 
-            if (AssetHandles.Count > 0)
+            List<Task> tasksLoadingYet = new List<Task>();
+            
+            tasksLoadingYet.AddRange(assetRefsForPreload.Where(assetRef => assetRef.IsValid()).Select(GetAssetLoadingTask));
+            tasksLoadingYet.AddRange(assetRefsForPostLoad.Where(assetRef => assetRef.IsValid()).Select(GetAssetLoadingTask));
+            
+            await Task.WhenAll(tasksLoadingYet);
+
+            ReleaseSceneAssets(assetRefsForPreload);
+            ReleaseSceneAssets(assetRefsForPostLoad);
+        }
+
+        protected void ReleaseSceneAssets<T>(params T[] assetReferences) where T : AssetReference
+        {
+            foreach (var assetRef in assetReferences)
             {
-                await Task.WhenAll(AssetHandles.Values.Where(handle => !handle.IsDone).Select(handle => handle.Task));
-                UnregisterLoadingHandles();
+                ReleaseSceneAsset(assetRef);
             }
         }
 
-        protected void UnregisterLoadingHandles()
+        protected void ReleaseSceneAsset(AssetReference assetRef)
         {
-            foreach (var handle in AssetHandles.Values.Where(handle => handle.IsValid()))
+            if (!assetRef.IsValid())
             {
-                Addressables.Release(handle);
+                return;
             }
             
-            RegisteredAssetGUIDs.Clear();
-            AssetHandles.Clear();
+            Addressables.Release(assetRef);
         }
 
         private static bool IsHandleLoaded(AsyncOperationHandle handle)
@@ -134,15 +125,7 @@ namespace ProjectABC.Data
         
         private bool IsAssetsLoaded(params AssetReferenceGameObject[] assetReferences)
         {
-            var assetGuids = assetReferences
-                .Select(assetRef => assetRef.AssetGUID)
-                .Distinct()
-                .ToArray();
-            
-            return RegisteredAssetGUIDs.IsSupersetOf(assetGuids)
-                   && AssetHandles
-                       .Where(kvPair => assetGuids.Contains(kvPair.Key))
-                       .All(kvPair => IsHandleLoaded(kvPair.Value));
+            return assetReferences.All(assetRef => IsHandleLoaded(assetRef.OperationHandle));
         }
     }
 }

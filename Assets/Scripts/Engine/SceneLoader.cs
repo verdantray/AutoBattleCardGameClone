@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjectABC.Core;
 using UnityEngine;
-using ProjectABC.Data;
-using ProjectABC.Utils;
 using UnityEngine.SceneManagement;
+using ProjectABC.Core;
+using ProjectABC.Data;
+using ProjectABC.Engine.Scene;
+using ProjectABC.Utils;
 
-namespace ProjectABC.Engine.Scene
+namespace ProjectABC.Engine
 {
     public sealed class SceneLoader : MonoSingleton<SceneLoader>
     {
@@ -50,6 +51,10 @@ namespace ProjectABC.Engine.Scene
             {
                 Task.Delay(TimeSpan.FromSeconds(1)),  // await for blur
                 targetSceneProfile.LoadSceneAndAssetsAsync(),
+                
+                // global asset load task will run depending on LoadSceneAndAssetsAsync of target scene profile
+                GlobalAssetBinder.Instance.AtlasBinder.GetAssetLoadingTask(),
+                GlobalAssetBinder.Instance.AtlasBinder.GetAssetLoadingTask()
             };
 
             var unloadPreloadedScenesTasks = sceneLoadingProfiles

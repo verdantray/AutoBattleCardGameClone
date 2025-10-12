@@ -834,6 +834,7 @@ PlayerSettings:
     PS4: DOTWEEN
     PS5: DOTWEEN
     QNX: DOTWEEN
+    Server: 
     Standalone: ALLIN13DSHADER_URP;DOTWEEN
     VisionOS: DOTWEEN
     WebGL: DOTWEEN
