@@ -28,6 +28,10 @@ namespace ProjectABC.Data
             }
             
             loadingTasks.AddRange(assetRefsForPreload.Select(GetAssetLoadingTask));
+            foreach (var atlasBindingEntry in sceneAtlasEntries)
+            {
+                GlobalAssetBinder.Instance.AtlasBinder.AddAssetBindingEntry(atlasBindingEntry);
+            }
             
             await Task.WhenAll(loadingTasks);
 

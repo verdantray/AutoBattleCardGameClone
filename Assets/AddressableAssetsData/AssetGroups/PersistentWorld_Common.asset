@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: b2f3f80d25a6d8944b76891dcb5868fa
   m_SerializeEntries:
   - m_GUID: 6be04df3653eaef41bf3abd35cc2af61
-    m_Address: Assets/ABCAssets/temp/static_mesh_test_Scene.fbx
+    m_Address: static_mesh_classroom
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

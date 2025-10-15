@@ -21,7 +21,6 @@ namespace ProjectABC.Data
         
         private void OnEnable()
         {
-            SpriteAtlasManager.atlasRequested -= OnAtlasRequested;
             SpriteAtlasManager.atlasRequested += OnAtlasRequested;
         }
 

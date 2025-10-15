@@ -82,7 +82,7 @@ namespace ProjectABC.Core
         public string Name => Card.Name;
         public string Description => Card.CardEffect.Description;
         
-        public CardSnapshot(Card card, CardBuffArgs args)
+        public CardSnapshot(Card card, CardBuffArgs args = null)
         {
             Id = card.Id;
             ClubType = card.ClubType;
@@ -90,6 +90,12 @@ namespace ProjectABC.Core
             BasePower = card.BasePower;
             
             Card = card;
+
+            if (args == null)
+            {
+                Buffs = new List<BuffSnapshot>();
+                return;
+            }
 
             List<BuffSnapshot> buffSnapshots = new List<BuffSnapshot>();
             CardBuff[] disablerBuffs = card.AppliedCardBuffs

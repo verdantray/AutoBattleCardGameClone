@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ProjectABC.Utils;
 using UnityEngine;
 
@@ -16,6 +17,11 @@ namespace ProjectABC.Data
         public bool IsAllHandlesLoaded()
         {
             return atlasBinder.IsAllBindingHandlesLoaded() && fontBinder.IsAllBindingHandlesLoaded();
+        }
+
+        public Task GetAssetBindingTask()
+        {
+            return Task.WhenAll(atlasBinder.GetAssetLoadingTask(), fontBinder.GetAssetLoadingTask());
         }
     }
 }

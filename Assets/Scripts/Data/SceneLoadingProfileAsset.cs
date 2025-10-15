@@ -17,10 +17,11 @@ namespace ProjectABC.Data
         
         public abstract string ProfileName { get; }
         public bool IsLoaded => IsSceneLoaded && IsAssetsPreLoaded;
-        public bool IsSceneLoaded => IsHandleLoaded(sceneReference.OperationHandle);
+        public bool IsSceneLoaded => IsHandleLoaded(SceneHandle);
         public bool IsAssetsPreLoaded => IsAssetsLoaded(assetRefsForPreload);
 
         protected AsyncOperationHandle<SceneInstance> SceneHandle = default;
+        protected readonly Dictionary<string, AsyncOperationHandle> AssetHandles = new Dictionary<string, AsyncOperationHandle>();
 
         public virtual async Task LoadSceneAndAssetsAsync(LoadSceneMode mode = LoadSceneMode.Additive, bool activateOnLoad = false)
         {
@@ -29,6 +30,7 @@ namespace ProjectABC.Data
             if (!SceneHandle.IsValid())
             {
                  SceneHandle = LoadSceneAsync(mode, activateOnLoad);
+                 Debug.Log($"load scene / {SceneHandle.IsValid()}");
             }
 
             if (!SceneHandle.IsDone)
@@ -39,7 +41,9 @@ namespace ProjectABC.Data
             loadingTasks.AddRange(assetRefsForPreload.Select(GetAssetLoadingTask));
             
             await Task.WhenAll(loadingTasks);
-
+            
+            Debug.Log($"Loaded : {IsLoaded} / SceneLoaded : {IsSceneLoaded} / Preloaded : {IsAssetsPreLoaded}");
+            
             if (!activateOnLoad)
             {
                 return;
@@ -71,14 +75,13 @@ namespace ProjectABC.Data
 
         protected Task GetAssetLoadingTask<TObject>(AssetReferenceT<TObject> assetReference) where TObject : Object
         {
-            if (!assetReference.IsValid())
+            if (!AssetHandles.TryGetValue(assetReference.AssetGUID, out var handle) || !handle.IsValid())
             {
-                Addressables.LoadAssetAsync<TObject>(assetReference);
+                handle =  Addressables.LoadAssetAsync<TObject>(assetReference);
+                AssetHandles.Add(assetReference.AssetGUID, handle);
             }
 
-            return assetReference.IsDone
-                ? Task.CompletedTask
-                : assetReference.OperationHandle.Task;
+            return handle.Task;
         }
 
         public virtual async Task UnloadSceneAndAssetsAsync()
@@ -125,7 +128,7 @@ namespace ProjectABC.Data
         
         private bool IsAssetsLoaded(params AssetReferenceGameObject[] assetReferences)
         {
-            return assetReferences.All(assetRef => IsHandleLoaded(assetRef.OperationHandle));
+            return assetReferences.All(assetRef => AssetHandles.TryGetValue(assetRef.AssetGUID, out var handle) && IsHandleLoaded(handle));
         }
     }
 }

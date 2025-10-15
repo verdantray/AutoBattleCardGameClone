@@ -15,13 +15,38 @@ MonoBehaviour:
   m_GroupName: InGame_Common
   m_GUID: c6d31ac1a93653e488291b7a062d11c4
   m_SerializeEntries:
+  - m_GUID: 0c5ef6cc446d3dc43ab948c71ca009f0
+    m_Address: card_onboard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4025eef1ddc9d34428c8a8c68022bc1a
+    m_Address: atlas_card_low
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 751a5da53429fb44eae1c5e50045e63d
+    m_Address: card_onboard_plane
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b512182c2139de247b9608a894c5a3b4
     m_Address: InGame
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b7357f7911b01bf46a829a2764fab3ea
+    m_Address: atlas_card_medium
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9959644ab98ccc4595e756f85fb6bd4
+    m_Address: atlas_card_high
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb21346315ead5f4ebb0166c6f37452e
-    m_Address: Assets/ABCAssets/temp/static_mesh_desk.fbx
+    m_Address: static_mesh_desk
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -53,8 +53,7 @@ namespace ProjectABC.Engine
                 targetSceneProfile.LoadSceneAndAssetsAsync(),
                 
                 // global asset load task will run depending on LoadSceneAndAssetsAsync of target scene profile
-                GlobalAssetBinder.Instance.AtlasBinder.GetAssetLoadingTask(),
-                GlobalAssetBinder.Instance.AtlasBinder.GetAssetLoadingTask()
+                GlobalAssetBinder.Instance.GetAssetBindingTask(),
             };
 
             var unloadPreloadedScenesTasks = sceneLoadingProfiles

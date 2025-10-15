@@ -25,3 +25,5 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   assetRefsForPostLoad: []
+  sceneAtlasEntries:
+  - atlasCommonName: atlas_card
