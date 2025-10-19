@@ -19,7 +19,7 @@ namespace ProjectABC.Core
                 MatchContextConsoleEvent matchContextConsoleEvent = MatchContextConsoleEvent.RunMatch(currentState, playerAState, playerBState);
                 
                 matchContextConsoleEvent.Publish();
-                simulationContext.CollectedEvents.Add(matchContextConsoleEvent);
+                simulationContext.CollectedEvents.AddEvent(matchContextConsoleEvent);
                 
                 currentState.MatchResults.AddMatchResult(matchContextConsoleEvent.Result);
                 

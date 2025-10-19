@@ -8,24 +8,9 @@ namespace ProjectABC.Core
         public string Name { get; }
 
         // temporary implements, DeckConstructAsync will implement each inherits after add more club types
-        public Task<DeckConstructAction> DeckConstructAsync()
-        {
-            ClubType selectedSetFlag = ClubType.Council
-                                       | ClubType.Coastline
-                                       | ClubType.Band
-                                       | ClubType.GameDevelopment
-                                       | ClubType.HauteCuisine
-                                       | ClubType.Unregistered
-                                       | ClubType.TraditionExperience;
-
-            DeckConstructAction action = new DeckConstructAction(this, selectedSetFlag);
-            Task<DeckConstructAction> task = Task.FromResult(action);
-
-            return task;
-        }
-        
-        public Task<RecruitCardsAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
-        public Task<DeleteCardsAction> DeleteCardsAsync(PlayerState myState);
+        public Task<IPlayerAction<IContextEvent>> DeckConstructAsync();
+        public Task<IPlayerAction<IContextEvent>> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
+        public Task<IPlayerAction<IContextEvent>> DeleteCardsAsync(PlayerState myState);
         public Task WaitUntilConfirmToProceed();
     }
 
@@ -35,8 +20,16 @@ namespace ProjectABC.Core
         public void ApplyState(GameState state);
     }
 
-    public interface IPlayerAction<out T> : IPlayerAction where T : IContextEvent
+    public interface IPlayerAction<out T> : IPlayerAction where T : class, IContextEvent
     {
         public T GetContextEvent();
+        
+        public void ApplyContextEvent(SimulationContextEvents events)
+        {
+            var contextEvent = GetContextEvent();
+            contextEvent.Publish();
+            
+            events.AddEvent(contextEvent);
+        }
     }
 }

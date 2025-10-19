@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ProjectABC.Engine
 {
-    public sealed class CameraSwap : MonoSingleton<CameraSwap>
+    public sealed class CameraPoints : MonoSingleton<CameraPoints>
     {
         [Serializable]
         private class CameraPoint

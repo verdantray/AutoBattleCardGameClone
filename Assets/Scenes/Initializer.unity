@@ -350,8 +350,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicFontAddressableNames:
-  - Fredoka_Medium
-  - Roboto_Medium
+  - fredoka_medium
+  - roboto_medium
 --- !u!114 &1723727200
 MonoBehaviour:
   m_ObjectHideFlags: 0

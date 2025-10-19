@@ -14,7 +14,7 @@ namespace ProjectABC.Core
             RecruitOnRound recruitOnRound = new RecruitOnRound(currentState.Round);
                 
             List<PlayerState> allPlayerStates = currentState.PlayerStates;
-            List<Task<RecruitCardsAction>> tasks = new List<Task<RecruitCardsAction>>();
+            List<Task<IPlayerAction<IContextEvent>>> tasks = new List<Task<IPlayerAction<IContextEvent>>>();
 
             foreach (PlayerState playerState in allPlayerStates)
             {
@@ -26,25 +26,10 @@ namespace ProjectABC.Core
                 
             await Task.WhenAll(tasks);
 
-            foreach (RecruitCardsAction action in tasks.Select(task => task.Result))
+            foreach (var action in tasks.Select(task => task.Result))
             {
                 action.ApplyState(currentState);
-
-                RecruitConsoleEvent contextEvent = action.GetContextEvent();
-                contextEvent.Publish();
-
-                simulationContext.CollectedEvents.Add(contextEvent);
-
-                foreach (var cardRecruited in action.DrawnCards)
-                {
-                    if (!cardRecruited.CardEffect.TryApplyEffectOnRecruit(action.Player, currentState, out var recruitCardEffectEvent))
-                    {
-                        continue;
-                    }
-                    
-                    recruitCardEffectEvent.Publish();
-                    simulationContext.CollectedEvents.Add(recruitCardEffectEvent);
-                }
+                action.ApplyContextEvent(simulationContext.CollectedEvents);
             }
         }
     }

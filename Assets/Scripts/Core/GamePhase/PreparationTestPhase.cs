@@ -18,7 +18,7 @@ namespace ProjectABC.Core
             var contextEvent = new CommonConsoleEvent($"{_round} 라운드 준비");
             contextEvent.Publish();
             
-            simulationContext.CollectedEvents.Add(contextEvent);
+            simulationContext.CollectedEvents.AddEvent(contextEvent);
                 
             return Task.CompletedTask;
         }

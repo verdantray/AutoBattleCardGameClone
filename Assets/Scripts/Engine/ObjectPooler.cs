@@ -27,7 +27,7 @@ namespace ProjectABC.Engine
         {
             gameObject.name = _objectToPool != null
                 ? $"Pool_{_objectToPool.name}"
-                : $"Pool_empty";
+                : "Pool_empty";
         }
 
         public bool IsValid() => _handle.IsValid();

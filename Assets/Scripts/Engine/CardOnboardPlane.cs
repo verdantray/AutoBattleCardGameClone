@@ -1,3 +1,5 @@
+using System.Globalization;
+using ProjectABC.Data;
 using TMPro;
 using UnityEngine;
 
@@ -12,19 +14,34 @@ namespace ProjectABC.Engine
         [SerializeField] private TMP_Text rollText;
         [SerializeField] private TMP_Text nameText;
         
+        private CardSpawnArgs _spawnArgs;
+        
         public override void OnSpawned(CardSpawnArgs args)
         {
-            throw new System.NotImplementedException();
+            ApplyArgs(args);
+            transform.position = args.Position;
+            transform.rotation = args.Rotation;
         }
 
         public override void OnDespawned()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void ApplyArgs(CardSpawnArgs args)
         {
-            throw new System.NotImplementedException();
+            _spawnArgs = args;
+            if (_spawnArgs == null)
+            {
+                return;
+            }
+
+            string gradeSpriteName = $"grade_{_spawnArgs.CardSnapshot.GradeType.GradeTypeToOrdinalString()}";
+            
+            gradeRenderer.sprite = GlobalAssetBinder.Instance.AtlasBinder.GetCardSprite(gradeSpriteName);
+            powerText.text = _spawnArgs.CardSnapshot.Power.ToString(CultureInfo.InvariantCulture);
+            rollText.text = _spawnArgs.CardSnapshot.Title;
+            nameText.text = _spawnArgs.CardSnapshot.Name;
         }
     }
 }

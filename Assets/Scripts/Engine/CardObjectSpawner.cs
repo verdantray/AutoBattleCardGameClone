@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
-using ProjectABC.Utils;
 using UnityEngine;
 
 namespace ProjectABC.Engine
@@ -13,7 +12,14 @@ namespace ProjectABC.Engine
         public readonly Quaternion Rotation;
         public readonly CardSnapshot CardSnapshot;
 
-        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardSnapshot cardSnapshot)
+        public CardSpawnArgs(Transform target, CardSnapshot cardSnapshot = null)
+        {
+            Position =  target.position;
+            Rotation = target.rotation;
+            CardSnapshot = cardSnapshot;
+        }
+
+        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardSnapshot cardSnapshot = null)
         {
             Position = position;
             Rotation = rotation;
@@ -31,11 +37,9 @@ namespace ProjectABC.Engine
         protected abstract void ApplyArgs(CardSpawnArgs args);
     }
     
-    public sealed class CardObjectSpawner : MonoSingleton<CardObjectSpawner>, IObjectSpawner<CardSpawnArgs>
+    public sealed class CardObjectSpawner : MonoBehaviour, IObjectSpawner<CardSpawnArgs>
     {
         [SerializeField] private string[] cardAddressableNames;
-        
-        protected override bool SetPersistent => false;
         
         private readonly Dictionary<string, ObjectPooler> _poolers = new Dictionary<string, ObjectPooler>();
 

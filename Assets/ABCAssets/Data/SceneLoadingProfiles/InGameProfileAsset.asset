@@ -25,5 +25,8 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
   assetRefsForPostLoad: []
-  sceneAtlasEntries:
-  - atlasCommonName: atlas_card
+  cardAtlasEntry:
+    atlasCommonName: atlas_card
+  additiveFontEntry:
+    targetLocale: 0
+    fontAddressableName: gyeonggimillenniumtitle_medium

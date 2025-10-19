@@ -79,25 +79,55 @@ namespace ProjectABC.Core
     {
         public IPlayer Player { get; private set; }
 
-        public readonly GradeType SelectedGrade;
-        public readonly List<Card> DrawnCards;
+        private readonly GradeType _selectedGrade;
+        private readonly List<Card> _drawnCards;
+        private readonly List<IContextEvent> _recruitContextEvents = new List<IContextEvent>();
 
         public RecruitCardsAction(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
         {
             Player = player;
-            SelectedGrade = selectedGrade;
-            DrawnCards = drawnCards;
+            _selectedGrade = selectedGrade;
+            _drawnCards = drawnCards;
         }
         
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
-            playerState.Deck.AddRange(DrawnCards);
+            playerState.Deck.AddRange(_drawnCards);
+
+            foreach (var card in _drawnCards)
+            {
+                if (!card.CardEffect.TryApplyEffectOnRecruit(Player, state, out var recruitEvent))
+                {
+                    continue;
+                }
+                
+                _recruitContextEvents.Add(recruitEvent);
+            }
         }
         
         public RecruitConsoleEvent GetContextEvent()
         {
-            return new RecruitConsoleEvent(Player, SelectedGrade, DrawnCards);
+            return new RecruitConsoleEvent(Player, _selectedGrade, _drawnCards);
+        }
+
+        public void ApplyContextEvent(SimulationContextEvents events)
+        {
+            var contextEvent = GetContextEvent();
+            contextEvent.Publish();
+            
+            events.AddEvent(contextEvent);
+
+            if (_recruitContextEvents.Count == 0)
+            {
+                return;
+            }
+            
+            foreach (var recruitEvent in _recruitContextEvents)
+            {
+                recruitEvent.Publish();
+                events.AddEvent(recruitEvent);
+            }
         }
     }
     
@@ -105,29 +135,29 @@ namespace ProjectABC.Core
     {
         public IPlayer Player { get; private set; }
 
-        public readonly List<Card> DeleteCards;
+        private readonly List<Card> _deleteCards;
         
         public DeleteCardsAction(IPlayer player, List<Card> deleteCards)
         {
             Player = player;
-            DeleteCards = deleteCards;
+            _deleteCards = deleteCards;
         }
         
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
 
-            foreach (var card in DeleteCards)
+            foreach (var card in _deleteCards)
             {
                 playerState.Deck.Remove(card);
             }
             
-            playerState.Deleted.AddRange(DeleteCards);
+            playerState.Deleted.AddRange(_deleteCards);
         }
         
         public DeleteCardsConsoleEvent GetContextEvent()
         {
-            return new DeleteCardsConsoleEvent(Player, DeleteCards);
+            return new DeleteCardsConsoleEvent(Player, _deleteCards);
         }
     }
 }

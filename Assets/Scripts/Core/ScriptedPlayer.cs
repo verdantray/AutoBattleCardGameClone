@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
@@ -13,8 +14,25 @@ namespace ProjectABC.Core
         {
             Name = name;
         }
-        
-        public Task<RecruitCardsAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
+
+
+        public Task<IPlayerAction<IContextEvent>> DeckConstructAsync()
+        {
+            ClubType selectedSetFlag = ClubType.Council
+                                       | ClubType.Coastline
+                                       | ClubType.Band
+                                       | ClubType.GameDevelopment
+                                       | ClubType.HauteCuisine
+                                       | ClubType.Unregistered
+                                       | ClubType.TraditionExperience;
+
+            IPlayerAction<IContextEvent> action = new DeckConstructAction(this, selectedSetFlag);
+            Task<IPlayerAction<IContextEvent>> task = Task.FromResult(action);
+
+            return task;
+        }
+
+        public Task<IPlayerAction<IContextEvent>> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
         {
             // TODO : use PCG32
             Random random = new Random();
@@ -54,13 +72,13 @@ namespace ProjectABC.Core
 
             myState.GradeCardPiles[level].Shuffle();
             
-            RecruitCardsAction action = new RecruitCardsAction(this, level, cardsToDraw);
-            Task<RecruitCardsAction> task = Task.FromResult(action);
+            IPlayerAction<IContextEvent> action = new RecruitCardsAction(this, level, cardsToDraw);
+            Task<IPlayerAction<IContextEvent>> task = Task.FromResult(action);
             
             return task;
         }
 
-        public Task<DeleteCardsAction> DeleteCardsAsync(PlayerState myState)
+        public Task<IPlayerAction<IContextEvent>> DeleteCardsAsync(PlayerState myState)
         {
             // TODO : use PCG32
             Random random = new Random();
@@ -68,8 +86,8 @@ namespace ProjectABC.Core
             int deleteAmount = Enumerable.Range(0, myState.Deck.Count - 1).OrderBy(_ => random.Next()).First();
             List<Card> cardsToDelete = myState.Deck.OrderBy(_ => random.Next()).Take(deleteAmount).ToList();
 
-            DeleteCardsAction action = new DeleteCardsAction(this, cardsToDelete);
-            Task<DeleteCardsAction> task = Task.FromResult(action);
+            IPlayerAction<IContextEvent> action = new DeleteCardsAction(this, cardsToDelete);
+            Task<IPlayerAction<IContextEvent>> task = Task.FromResult(action);
             
             return task;
         }

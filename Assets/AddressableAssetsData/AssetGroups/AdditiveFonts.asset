@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 6d38c6240832f314fb059fc85255d320
   m_SerializeEntries:
   - m_GUID: 5f9997707df346741abbcdd81672ff7a
-    m_Address: GyeonggiMillenniumTitle_Medium
+    m_Address: gyeonggimillenniumtitle_medium
     m_ReadOnly: 0
     m_SerializedLabels:
     - AdditiveFont

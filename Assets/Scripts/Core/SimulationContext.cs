@@ -1,12 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
-    public class SimulationContext
+    public sealed class SimulationContext
     {
-        public readonly List<IContextEvent> CollectedEvents = new List<IContextEvent>();
+        public readonly SimulationContextEvents CollectedEvents = new SimulationContextEvents();
         public readonly List<IPlayer> Participants = new List<IPlayer>();
         
         public readonly GameState CurrentState;
@@ -21,6 +22,40 @@ namespace ProjectABC.Core
         {
             return Participants.Select(player => player.WaitUntilConfirmToProceed());
         }
+
+        private static class InstanceRegister<T> where T : class, new()
+        {
+            public static T Instance = new T();
+        }
+
+        public T GetModel<T>() where T : class, new()
+        {
+            return InstanceRegister<T>.Instance;
+        }
+
+        public void SetModel<T>(T model) where T : class, new()
+        {
+            InstanceRegister<T>.Instance = model;
+        }
+    }
+
+    public class SimulationContextEvents : IReadOnlyList<IContextEvent>
+    {
+        private readonly List<IContextEvent> _collectedEvents = new List<IContextEvent>();
+
+        public void AddEvent(IContextEvent contextEvent)
+        {
+            _collectedEvents.Add(contextEvent);
+        }
+
+        #region inherits of  IReadOnlyList<IContextEvent>
+
+        public int Count => _collectedEvents.Count;
+        public IContextEvent this[int index] => _collectedEvents[index];
+        public IEnumerator<IContextEvent> GetEnumerator() => _collectedEvents.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _collectedEvents.GetEnumerator();
+
+        #endregion
     }
 
     public class GameState

@@ -16,13 +16,13 @@ MonoBehaviour:
   m_GUID: e9f40b1b38695f448aef4f7d0606bb2d
   m_SerializeEntries:
   - m_GUID: 1ac1bf4e9892dbb4da9f890cdacb583f
-    m_Address: Fredoka_Medium
+    m_Address: fredoka_medium
     m_ReadOnly: 0
     m_SerializedLabels:
     - BasicFont
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 62bcbacc73d7e2d499aa15f14edbbe8b
-    m_Address: Roboto_Medium
+    m_Address: roboto_medium
     m_ReadOnly: 0
     m_SerializedLabels:
     - BasicFont

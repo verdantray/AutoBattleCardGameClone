@@ -52,6 +52,25 @@ namespace ProjectABC.Data
             schedule.Run(this);
         }
 
+        public Sprite GetCardSprite(string spriteName, string fallbackSpriteName = "")
+        {
+            AtlasIdentifier identifier = new AtlasIdentifier("atlas_card", CurrentQualitySetting);
+            if (!_atlasHandles.TryGetValue(identifier, out var handle))
+            {
+                Debug.LogError($"{nameof(AtlasBinder)} : atlas '{identifier.AtlasName}' not bind yet...");
+                return null;
+            }
+
+            Sprite targetSprite = handle.Result.GetSprite(spriteName);
+            if (targetSprite == null)
+            {
+                Debug.LogWarning($"{nameof(AtlasBinder)} : Can't find sprite '{spriteName}'...)");
+                targetSprite = handle.Result.GetSprite(fallbackSpriteName);
+            }
+            
+            return targetSprite;
+        }
+
         public Task GetAssetLoadingTask()
         {
             var tasks = _atlasHandles.Values

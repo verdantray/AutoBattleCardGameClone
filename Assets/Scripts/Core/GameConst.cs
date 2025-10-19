@@ -5,15 +5,16 @@ namespace ProjectABC.Core
     {
         public static class Address
         {
-            public const string GAME_DATA_ASSET = "GameDataAsset";
-            public const string LOCALIZATION_DATA_ASSET = "LocalizationDataAsset";
+            public const string GAME_DATA_ASSET = "game_data";
+            public const string LOCALIZATION_DATA_ASSET = "localization_data";
         }
         
         public static class AssetPath
         {
             public const string CARD_BACK_PATH = "material_card_back";
             public const string CARD_FRONT_FALLBACK_PATH = "material_card_fallback";
-
+            public const string CARD_ONBOARD = "card_onboard";
+            public const string CARD_ONBOARD_PLANE = "card_onboard_plane";
         }
 
         public static class SceneName

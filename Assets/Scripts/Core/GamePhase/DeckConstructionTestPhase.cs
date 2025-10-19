@@ -9,7 +9,7 @@ namespace ProjectABC.Core
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;
-            List<Task<DeckConstructAction>> tasks = new List<Task<DeckConstructAction>>();
+            List<Task<IPlayerAction<IContextEvent>>> tasks = new List<Task<IPlayerAction<IContextEvent>>>();
             
             foreach (PlayerState playerState in currentState.PlayerStates)
             {
@@ -22,11 +22,7 @@ namespace ProjectABC.Core
             foreach (var action in tasks.Select(task => task.Result))
             {
                 action.ApplyState(currentState);
-
-                DeckConstructionConsoleEvent contextEvent = action.GetContextEvent();
-                contextEvent.Publish();
-                
-                simulationContext.CollectedEvents.Add(contextEvent);
+                action.ApplyContextEvent(simulationContext.CollectedEvents);
             }
         }
     }

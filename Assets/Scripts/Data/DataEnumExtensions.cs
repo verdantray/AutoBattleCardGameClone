@@ -15,6 +15,17 @@ namespace ProjectABC.Data
             };
         }
 
+        public static string GradeTypeToOrdinalString(this GradeType gradeType)
+        {
+            return gradeType switch
+            {
+                GradeType.First => "1st",
+                GradeType.Second => "2nd",
+                GradeType.Third => "3rd",
+                _ => throw new ArgumentException($"'{gradeType}' is unknown grade type")
+            };
+        }
+
         public static string GetLocalizationKey(this GradeType gradeType)
         {
             return $"grade_{gradeType.ToString().ToLowerInvariant()}";

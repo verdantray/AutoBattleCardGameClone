@@ -9,7 +9,8 @@ namespace ProjectABC.Data
     [CreateAssetMenu(fileName = nameof(InGameProfileAsset), menuName = "Scripting/ScriptableObject Script Menu/SceneLoadingProfileAsset/InGame")]
     public sealed class InGameProfileAsset : SceneLoadingProfileAsset
     {
-        [SerializeField] private AtlasBindingEntry[] sceneAtlasEntries;
+        [SerializeField] private AtlasBindingEntry cardAtlasEntry;
+        [SerializeField] private AdditiveFontBindingEntry additiveFontEntry;
         
         public override string ProfileName => "InGame";
 
@@ -28,10 +29,10 @@ namespace ProjectABC.Data
             }
             
             loadingTasks.AddRange(assetRefsForPreload.Select(GetAssetLoadingTask));
-            foreach (var atlasBindingEntry in sceneAtlasEntries)
-            {
-                GlobalAssetBinder.Instance.AtlasBinder.AddAssetBindingEntry(atlasBindingEntry);
-            }
+            
+            // TODO : load while enter title or lobby instead of in game
+            GlobalAssetBinder.Instance.AtlasBinder.AddAssetBindingEntry(cardAtlasEntry);
+            GlobalAssetBinder.Instance.FontBinder.AddAssetBindingEntry(additiveFontEntry);
             
             await Task.WhenAll(loadingTasks);
 

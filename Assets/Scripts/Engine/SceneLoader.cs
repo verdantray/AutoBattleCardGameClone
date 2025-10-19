@@ -17,6 +17,8 @@ namespace ProjectABC.Engine
         [SerializeField] private SceneLoadingProfileAsset[] sceneLoadingProfiles;
 
         protected override bool SetPersistent => true;
+
+        private SceneLoadingProfileAsset _targetSceneProfileAsset = null;
         
         public async Task LoadSceneAsync(string targetSceneName)
         {
@@ -38,8 +40,8 @@ namespace ProjectABC.Engine
                 await SceneManager.UnloadSceneAsync(initializerScene);
             }
             
-            SceneLoadingProfileAsset targetSceneProfile = sceneLoadingProfiles.FirstOrDefault(profile => profile.ProfileName == targetSceneName);
-            if (targetSceneProfile == null)
+            _targetSceneProfileAsset = sceneLoadingProfiles.FirstOrDefault(profile => profile.ProfileName == targetSceneName);
+            if (_targetSceneProfileAsset == null)
             {
                 Debug.LogError($"Can't find target scene {targetSceneName}");
                 PersistentWorldCamera.Instance.BlurOff();
@@ -50,10 +52,7 @@ namespace ProjectABC.Engine
             List<Task> tasks = new List<Task>
             {
                 Task.Delay(TimeSpan.FromSeconds(1)),  // await for blur
-                targetSceneProfile.LoadSceneAndAssetsAsync(),
-                
-                // global asset load task will run depending on LoadSceneAndAssetsAsync of target scene profile
-                GlobalAssetBinder.Instance.GetAssetBindingTask(),
+                _targetSceneProfileAsset.LoadSceneAndAssetsAsync(),
             };
 
             var unloadPreloadedScenesTasks = sceneLoadingProfiles
@@ -62,9 +61,16 @@ namespace ProjectABC.Engine
             tasks.AddRange(unloadPreloadedScenesTasks);
 
             await Task.WhenAll(tasks);
-            await targetSceneProfile.ActivateSceneAsync();
+            await _targetSceneProfileAsset.ActivateSceneAsync();
 
-            targetSceneProfile.GetPostLoadingTask().Forget();
+            _targetSceneProfileAsset.GetPostLoadingTask().Forget();
+        }
+
+        public Task GetPostSceneLoadingTask()
+        {
+            return _targetSceneProfileAsset != null
+                ? _targetSceneProfileAsset.GetPostLoadingTask()
+                : Task.CompletedTask;
         }
     }
 }
