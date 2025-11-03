@@ -14,7 +14,7 @@ namespace ProjectABC.Core
             RecruitOnRound recruitOnRound = new RecruitOnRound(currentState.Round);
                 
             List<PlayerState> allPlayerStates = currentState.PlayerStates;
-            List<Task<IPlayerAction<IContextEvent>>> tasks = new List<Task<IPlayerAction<IContextEvent>>>();
+            List<Task<IPlayerAction>> tasks = new List<Task<IPlayerAction>>();
 
             foreach (PlayerState playerState in allPlayerStates)
             {

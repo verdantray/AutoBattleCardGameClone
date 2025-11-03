@@ -35,5 +35,19 @@ namespace ProjectABC.Data
         {
             return $"club_{clubType.ToString().ToLowerInvariant()}";
         }
+        
+        public static int CountFlags(this Enum value)
+        {
+            int v = Convert.ToInt32(value);
+            int count = 0;
+
+            while (v != 0)
+            {
+                v &= v - 1;
+                count++;
+            }
+            
+            return count;
+        }
     }
 }

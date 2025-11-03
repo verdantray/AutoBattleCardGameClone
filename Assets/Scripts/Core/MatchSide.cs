@@ -7,8 +7,8 @@ namespace ProjectABC.Core
     [Flags]
     public enum MatchState
     {
-        Attacking = 1 << 0,
-        Defending = 1 << 1,
+        Attacking = 1 << 1,
+        Defending = 1 << 2,
     }
     
     public class MatchSide

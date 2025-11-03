@@ -30,3 +30,18 @@ MonoBehaviour:
   additiveFontEntry:
     targetLocale: 0
     fontAddressableName: gyeonggimillenniumtitle_medium
+  atlasEntries:
+  - atlasCommonName: atlas_ingame_ui
+  uIEntries:
+  - uiReference:
+      m_AssetGUID: 90b0cee2dededb84e99311540a5d51af
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - uiReference:
+      m_AssetGUID: 9611980c4aeede44b9fdabb28a59db20
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0

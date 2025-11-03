@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
+using ProjectABC.Engine.Scene;
 using ProjectABC.Utils;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -35,7 +36,15 @@ namespace ProjectABC.Engine
 
         public void Initialize()
         {
-            _simulation ??= new Simulation();
+            string[] tempPlayerNames = new string[GameConst.GameOption.MAX_MATCHING_PLAYERS - 1];
+
+            for (int i = 0; i < (GameConst.GameOption.MAX_MATCHING_PLAYERS - 1); i++)
+            {
+                tempPlayerNames[i] = $"Player {(char)('A' + i)}";
+                // Debug.Log(tempPlayerNames[i]);
+            }
+            
+            _simulation ??= new Simulation(Model.player, tempPlayerNames);
             _simulation.ClearGamePhases();
 
             foreach (var phase in phases)
@@ -48,6 +57,8 @@ namespace ProjectABC.Engine
         {
             Task preloadingTask = GetPreloadingTask();
             await preloadingTask;
+
+            await BlurOffWhileDurationAsync(0.5f);
             
             await _simulation.RunAsync();
         }
@@ -68,6 +79,12 @@ namespace ProjectABC.Engine
             };
             
             return Task.WhenAll(tasks);
+        }
+
+        private async Task BlurOffWhileDurationAsync(float duration)
+        {
+            PersistentWorldCamera.Instance.BlurOff(duration);
+            await Task.Delay(TimeSpan.FromSeconds(duration));
         }
 
         private static Task GetDataAssetsLoadingTask()

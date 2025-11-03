@@ -9,6 +9,7 @@ namespace ProjectABC.Core
     public class ScriptedPlayer : IPlayer
     {
         public string Name { get; private set; }
+        public bool IsLocalPlayer => false;
 
         public ScriptedPlayer(string name)
         {
@@ -16,7 +17,7 @@ namespace ProjectABC.Core
         }
 
 
-        public Task<IPlayerAction<IContextEvent>> DeckConstructAsync()
+        public Task<IPlayerAction> DeckConstructAsync(ClubType fixedClubFlag, ClubType selectableClubFlag)
         {
             ClubType selectedSetFlag = ClubType.Council
                                        | ClubType.Coastline
@@ -26,13 +27,13 @@ namespace ProjectABC.Core
                                        | ClubType.Unregistered
                                        | ClubType.TraditionExperience;
 
-            IPlayerAction<IContextEvent> action = new DeckConstructAction(this, selectedSetFlag);
-            Task<IPlayerAction<IContextEvent>> task = Task.FromResult(action);
+            IPlayerAction action = new DeckConstructAction(this, selectedSetFlag);
+            Task<IPlayerAction> task = Task.FromResult(action);
 
             return task;
         }
 
-        public Task<IPlayerAction<IContextEvent>> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
+        public Task<IPlayerAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
         {
             // TODO : use PCG32
             Random random = new Random();
@@ -72,13 +73,13 @@ namespace ProjectABC.Core
 
             myState.GradeCardPiles[level].Shuffle();
             
-            IPlayerAction<IContextEvent> action = new RecruitCardsAction(this, level, cardsToDraw);
-            Task<IPlayerAction<IContextEvent>> task = Task.FromResult(action);
+            IPlayerAction action = new RecruitCardsAction(this, level, cardsToDraw);
+            Task<IPlayerAction> task = Task.FromResult(action);
             
             return task;
         }
 
-        public Task<IPlayerAction<IContextEvent>> DeleteCardsAsync(PlayerState myState)
+        public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState)
         {
             // TODO : use PCG32
             Random random = new Random();
@@ -86,8 +87,8 @@ namespace ProjectABC.Core
             int deleteAmount = Enumerable.Range(0, myState.Deck.Count - 1).OrderBy(_ => random.Next()).First();
             List<Card> cardsToDelete = myState.Deck.OrderBy(_ => random.Next()).Take(deleteAmount).ToList();
 
-            IPlayerAction<IContextEvent> action = new DeleteCardsAction(this, cardsToDelete);
-            Task<IPlayerAction<IContextEvent>> task = Task.FromResult(action);
+            IPlayerAction action = new DeleteCardsAction(this, cardsToDelete);
+            Task<IPlayerAction> task = Task.FromResult(action);
             
             return task;
         }

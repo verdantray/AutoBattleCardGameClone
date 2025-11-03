@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 32c77f4fcd4b772478c136d8310fbe68
+AssetOrigin:
+  serializedVersion: 1
+  productId: 307739
+  packageName: UI Animation
+  packageVersion: 1.1
+  assetPath: Assets/UIAnimation/Art/UI/whiteBG.png
+  uploadId: 749090
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -135,7 +142,7 @@ TextureImporter:
         height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 48, y: 48, z: 48, w: 48}
       customData: 
       outline: []
       physicsShape: []
@@ -151,7 +158,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 7cfecd8fafd088c439500ef421f6d89a
     internalID: 0
     vertices: []
     indices: 
@@ -167,10 +174,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 307739
-  packageName: UI Animation
-  packageVersion: 1.1
-  assetPath: Assets/UIAnimation/Art/UI/whiteBG.png
-  uploadId: 749090

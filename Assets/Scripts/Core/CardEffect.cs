@@ -7,13 +7,13 @@ namespace ProjectABC.Core
     [Flags]
     public enum EffectTriggerEvent
     {
-        OnEnterFieldAsAttacker = 1 << 0,   // drawn to field by attacker
-        OnEnterFieldAsDefender = 1 << 1,   // drawn to field by defender
-        OnRemainField = 1 << 2,            // remain field either switch position (attack -> defend)
-        OnSwitchToDefend = 1 << 3,         // switch position as defend (last one of field)
-        OnLeaveField = 1 << 4,
-        OnEnterInfirmary = 1 << 5,
-        OnLeaveInfirmary = 1 << 6,
+        OnEnterFieldAsAttacker = 1 << 1,   // drawn to field by attacker
+        OnEnterFieldAsDefender = 1 << 2,   // drawn to field by defender
+        OnRemainField = 1 << 3,            // remain field either switch position (attack -> defend)
+        OnSwitchToDefend = 1 << 4,         // switch position as defend (last one of field)
+        OnLeaveField = 1 << 5,
+        OnEnterInfirmary = 1 << 6,
+        OnLeaveInfirmary = 1 << 7,
     }
 
     public abstract class CardEffect

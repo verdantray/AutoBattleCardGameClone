@@ -4,6 +4,7 @@ using ProjectABC.Engine.Scene.PostFX;
 using UnityEngine;
 using UnityEngine.Rendering;
 using ProjectABC.Utils;
+using Unity.Cinemachine;
 using UnityEngine.Rendering.Universal;
 
 namespace ProjectABC.Engine.Scene
@@ -29,14 +30,21 @@ namespace ProjectABC.Engine.Scene
         [SerializeField] private Camera worldCamera;
         [SerializeField] private Camera uiCamera;
         [SerializeField] private Volume volume;
+        [SerializeField] private CinemachineBrain cineMachineBrain;
         [SerializeField] private BandFeather neutralBandFeather;
         [SerializeField] private BandFeather targetBandFeather;
         [SerializeField] private AnimationCurve blurCurve;
-
+        
         protected override bool SetPersistent => false;
 
         public Camera WorldCamera => worldCamera;
         public Camera UICamera => uiCamera;
+
+        public float DefaultBlendDuration
+        {
+            get => cineMachineBrain.DefaultBlend.Time;
+            set => cineMachineBrain.DefaultBlend.Time = value;
+        }
 
         private TiltShift _tiltShift;
         private Coroutine _tweenRoutine = null;

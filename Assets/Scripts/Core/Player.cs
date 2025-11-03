@@ -6,11 +6,12 @@ namespace ProjectABC.Core
     public interface IPlayer
     {
         public string Name { get; }
+        public bool IsLocalPlayer { get; }
 
         // temporary implements, DeckConstructAsync will implement each inherits after add more club types
-        public Task<IPlayerAction<IContextEvent>> DeckConstructAsync();
-        public Task<IPlayerAction<IContextEvent>> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
-        public Task<IPlayerAction<IContextEvent>> DeleteCardsAsync(PlayerState myState);
+        public Task<IPlayerAction> DeckConstructAsync(ClubType fixedClubFlag, ClubType selectableClubFlag);
+        public Task<IPlayerAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
+        public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState);
         public Task WaitUntilConfirmToProceed();
     }
 
@@ -18,18 +19,6 @@ namespace ProjectABC.Core
     {
         public IPlayer Player { get; }
         public void ApplyState(GameState state);
-    }
-
-    public interface IPlayerAction<out T> : IPlayerAction where T : class, IContextEvent
-    {
-        public T GetContextEvent();
-        
-        public void ApplyContextEvent(SimulationContextEvents events)
-        {
-            var contextEvent = GetContextEvent();
-            contextEvent.Publish();
-            
-            events.AddEvent(contextEvent);
-        }
+        public void ApplyContextEvent(SimulationContextEvents events);
     }
 }

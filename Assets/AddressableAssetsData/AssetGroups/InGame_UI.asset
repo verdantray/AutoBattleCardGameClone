@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: InGame_UI
+  m_EditorClassIdentifier: 
+  m_GroupName: InGame_UI
+  m_GUID: 05deaaeb2dc489a4bb5b7cd4667ce863
+  m_SerializeEntries:
+  - m_GUID: 52656dd4d71c81d4e8eea2afc7501f01
+    m_Address: PlayerSelectedClubItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8a95f13c5b90c8642bb942f5b743a433
+    m_Address: CardUIItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 90b0cee2dededb84e99311540a5d51af
+    m_Address: SelectClubsUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9611980c4aeede44b9fdabb28a59db20
+    m_Address: DeckConstructionResultUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a25c451ab8c247746814839b835d9cc9
+    m_Address: ClubToggleItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 99f314e9ea06a484eb94238a888aa4f8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8c1e1ceeaaa5017458df256c616f2a12, type: 2}
+    - {fileID: 11400000, guid: 5ef584110d67d394a9fe3a125fd4f729, type: 2}

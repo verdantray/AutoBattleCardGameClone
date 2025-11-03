@@ -14,14 +14,14 @@ namespace ProjectABC.Data
     [Flags]
     public enum ClubType
     {
-        Council = 1 << 0,
-        Coastline = 1 << 1,
-        Band = 1 << 2,
-        GameDevelopment = 1 << 3,
-        HauteCuisine = 1 << 4,
-        Unregistered = 1 << 5,
-        TraditionExperience = 1 << 6,
-        Examiners = 1 << 7,
+        Council = 1 << 1,
+        Coastline = 1 << 2,
+        Band = 1 << 3,
+        GameDevelopment = 1 << 4,
+        HauteCuisine = 1 << 5,
+        Unregistered = 1 << 6,
+        TraditionExperience = 1 << 7,
+        Examiners = 1 << 8,
     }
     
     public enum GradeType

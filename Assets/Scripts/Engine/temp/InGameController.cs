@@ -40,8 +40,8 @@ namespace ProjectABC.Engine
         }
         private void Start()
         {
-            UIManager.Instance.DEBUGLayoutInGame.OnFinishRecruitLevelAmount += OnFinishRecruitLevelAmount;
-            UIManager.Instance.DEBUGLayoutInGame.OnFinishDrawCard += OnFinishDrawCard;
+            UIManagerTemp.Instance.DEBUGLayoutInGame.OnFinishRecruitLevelAmount += OnFinishRecruitLevelAmount;
+            UIManagerTemp.Instance.DEBUGLayoutInGame.OnFinishDrawCard += OnFinishDrawCard;
         }
         private void OnDestroy()
         {
@@ -58,7 +58,7 @@ namespace ProjectABC.Engine
             _recruitLevelAmountIndex = -1;
             _isRecruitLevelAmountFinished = false;
             _isBattleFinished = false;
-            UIManager.Instance.DEBUGLayoutInGame.OnStartRecruitLevelAmount(pair);
+            UIManagerTemp.Instance.DEBUGLayoutInGame.OnStartRecruitLevelAmount(pair);
         }
         public void OnFinishRecruitLevelAmount(int index)
         {
@@ -70,7 +70,7 @@ namespace ProjectABC.Engine
         {
             DrawCards.Clear();
             _isDrawCardFinished = false;
-            UIManager.Instance.DEBUGLayoutInGame.OnStartDrawCard(state, gradeType, amount);
+            UIManagerTemp.Instance.DEBUGLayoutInGame.OnStartDrawCard(state, gradeType, amount);
         }
 
         public void OnFinishDrawCard(List<Card> drawCards)

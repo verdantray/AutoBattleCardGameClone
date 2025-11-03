@@ -4,7 +4,7 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class DeckConstructAction : IPlayerAction<DeckConstructionConsoleEvent>
+    public class DeckConstructAction : IPlayerAction
     {
         public IPlayer Player { get; private set; }
         
@@ -47,6 +47,14 @@ namespace ProjectABC.Core
             }
         }
 
+        public void ApplyContextEvent(SimulationContextEvents events)
+        {
+            DeckConstructionEvent consoleEvent = new DeckConstructionEvent(Player, _selectedClubsFlag);
+            
+            consoleEvent.Publish();
+            events.AddEvent(consoleEvent);
+        }
+
         private bool ClubFilter(CardData cardData)
         {
             return _selectedClubsFlag.HasFlag(cardData.clubType);
@@ -63,19 +71,9 @@ namespace ProjectABC.Core
 
             return cards;
         }
-        
-        public DeckConstructionConsoleEvent GetContextEvent()
-        {
-            return new DeckConstructionConsoleEvent(
-                Player,
-                _selectedClubsFlag,
-                _cardDataForPiles,
-                _cardDataForStarting
-            );
-        }
     }
     
-    public class RecruitCardsAction : IPlayerAction<RecruitConsoleEvent>
+    public class RecruitCardsAction : IPlayerAction
     {
         public IPlayer Player { get; private set; }
 
@@ -131,7 +129,7 @@ namespace ProjectABC.Core
         }
     }
     
-    public class DeleteCardsAction : IPlayerAction<DeleteCardsConsoleEvent>
+    public class DeleteCardsAction : IPlayerAction
     {
         public IPlayer Player { get; private set; }
 
@@ -154,10 +152,13 @@ namespace ProjectABC.Core
             
             playerState.Deleted.AddRange(_deleteCards);
         }
-        
-        public DeleteCardsConsoleEvent GetContextEvent()
+
+        public void ApplyContextEvent(SimulationContextEvents events)
         {
-            return new DeleteCardsConsoleEvent(Player, _deleteCards);
+            DeleteCardsConsoleEvent consoleEvent = new DeleteCardsConsoleEvent(Player, _deleteCards);
+            
+            consoleEvent.Publish();
+            events.AddEvent(consoleEvent);
         }
     }
 }

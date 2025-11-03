@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace ProjectABC.Engine
         private AsyncOperationHandle<GameObject> _handle;
         private PoolableObject _objectToPool;
         private ObjectPool<PoolableObject> _pool;
+
+        public int Size => _objectToPool.PoolSize;
 
         private void Awake()
         {
@@ -37,12 +40,13 @@ namespace ProjectABC.Engine
             return _handle.Task;
         }
 
-        public void InitializePooler(object key)
+        public void InitializePooler(object key, Action<AsyncOperationHandle<GameObject>> callback = null)
         {
             DestroyPool();
 
             _handle = Addressables.LoadAssetAsync<GameObject>(key);
             _handle.Completed += OnHandleCompleted;
+            _handle.Completed += callback;
         }
 
         public PoolableObject Get()

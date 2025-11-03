@@ -81,8 +81,19 @@ namespace ProjectABC.Core
         public string Title => Card.Title;
         public string Name => Card.Name;
         public string Description => Card.CardEffect.Description;
+
+        public CardSnapshot(CardData cardData)
+        {
+            Id = cardData.id;
+            ClubType = cardData.clubType;
+            GradeType = cardData.gradeType;
+            BasePower = cardData.basePower;
+
+            Card = new Card(cardData);  // for avoid NRE
+            Buffs = new List<BuffSnapshot>();
+        }
         
-        public CardSnapshot(Card card, CardBuffArgs args = null)
+        public CardSnapshot(Card card, CardBuffArgs args)
         {
             Id = card.Id;
             ClubType = card.ClubType;
@@ -90,12 +101,6 @@ namespace ProjectABC.Core
             BasePower = card.BasePower;
             
             Card = card;
-
-            if (args == null)
-            {
-                Buffs = new List<BuffSnapshot>();
-                return;
-            }
 
             List<BuffSnapshot> buffSnapshots = new List<BuffSnapshot>();
             CardBuff[] disablerBuffs = card.AppliedCardBuffs

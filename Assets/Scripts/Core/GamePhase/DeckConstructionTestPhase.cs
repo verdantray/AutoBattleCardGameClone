@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
@@ -9,11 +10,19 @@ namespace ProjectABC.Core
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;
-            List<Task<IPlayerAction<IContextEvent>>> tasks = new List<Task<IPlayerAction<IContextEvent>>>();
+            List<Task<IPlayerAction>> tasks = new List<Task<IPlayerAction>>();
             
             foreach (PlayerState playerState in currentState.PlayerStates)
             {
-                var playerActionTask = playerState.Player.DeckConstructAsync();
+                ClubType fixedClubFlag = ClubType.Council;
+                ClubType selectableClubFlag = ClubType.Coastline
+                                           | ClubType.Band
+                                           | ClubType.GameDevelopment
+                                           | ClubType.HauteCuisine
+                                           | ClubType.Unregistered
+                                           | ClubType.TraditionExperience;
+                
+                var playerActionTask = playerState.Player.DeckConstructAsync(fixedClubFlag, selectableClubFlag);
                 tasks.Add(playerActionTask);
             }
 

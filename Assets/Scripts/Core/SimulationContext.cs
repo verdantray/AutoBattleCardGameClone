@@ -48,7 +48,7 @@ namespace ProjectABC.Core
             _collectedEvents.Add(contextEvent);
         }
 
-        #region inherits of  IReadOnlyList<IContextEvent>
+        #region inherits of IReadOnlyList<IContextEvent>
 
         public int Count => _collectedEvents.Count;
         public IContextEvent this[int index] => _collectedEvents[index];

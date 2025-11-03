@@ -10,9 +10,9 @@ namespace ProjectABC.Engine
         
         public virtual void StopPhase()
         {
-            if (CameraPoints.HasInstance)
+            if (PersistentWorldCameraPoints.HasInstance)
             {
-                CameraPoints.Instance.SwapPoint("Default");
+                PersistentWorldCameraPoints.Instance.SwapPoint("Default");
             }
         }
     }

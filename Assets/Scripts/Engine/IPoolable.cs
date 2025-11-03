@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace ProjectABC.Engine
 {
@@ -15,7 +17,7 @@ namespace ProjectABC.Engine
 
     public interface IPooler
     {
-        public void InitializePooler(object key);
+        public void InitializePooler(object key, Action<AsyncOperationHandle<GameObject>> callback = null);
         public Task GetInitializingTask();
         public void DestroyPool();
         public void Prewarm(int count);

@@ -27,7 +27,7 @@ namespace ProjectABC.Core
         {
             public const int MAX_MATCHING_PLAYERS = 8;
             public const int MAX_ROUND = 7;
-            public const int SELECT_CLUB_TYPES_AMOUNT = 6;
+            public const int SELECT_CLUB_TYPES_AMOUNT = 7;
             public const string DEFAULT_CLUB_TYPE = "Council";
             public const int MULLIGAN_DEFAULT_AMOUNT = 2;
             public const int RECRUIT_HAND_AMOUNT = 5;

@@ -10,7 +10,7 @@ namespace ProjectABC.Core
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             List<PlayerState> playerStates = simulationContext.CurrentState.PlayerStates;
-            List<Task<IPlayerAction<IContextEvent>>> tasks = new List<Task<IPlayerAction<IContextEvent>>>();
+            List<Task<IPlayerAction>> tasks = new List<Task<IPlayerAction>>();
             
             foreach (var playerState in playerStates)
             {

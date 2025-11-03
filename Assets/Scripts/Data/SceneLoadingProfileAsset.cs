@@ -30,7 +30,7 @@ namespace ProjectABC.Data
             if (!SceneHandle.IsValid())
             {
                  SceneHandle = LoadSceneAsync(mode, activateOnLoad);
-                 Debug.Log($"load scene / {SceneHandle.IsValid()}");
+                 // Debug.Log($"load scene / {SceneHandle.IsValid()}");
             }
 
             if (!SceneHandle.IsDone)
@@ -42,7 +42,7 @@ namespace ProjectABC.Data
             
             await Task.WhenAll(loadingTasks);
             
-            Debug.Log($"Loaded : {IsLoaded} / SceneLoaded : {IsSceneLoaded} / Preloaded : {IsAssetsPreLoaded}");
+            // Debug.Log($"Loaded : {IsLoaded} / SceneLoaded : {IsSceneLoaded} / Preloaded : {IsAssetsPreLoaded}");
             
             if (!activateOnLoad)
             {

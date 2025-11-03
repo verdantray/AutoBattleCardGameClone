@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: InGame_Atlas
+  m_EditorClassIdentifier: 
+  m_GroupName: InGame_Atlas
+  m_GUID: 7db26467423011742bf4ac4036c440fd
+  m_SerializeEntries:
+  - m_GUID: 27d4a1aa61154374eb818b31d0535070
+    m_Address: atlas_ingame_ui_low
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4e6346ac2ab225248998525071c3409b
+    m_Address: atlas_ingame_ui_medium
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b5b18fe521126147a214762b6d112a1
+    m_Address: atlas_ingame_ui_high
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 99f314e9ea06a484eb94238a888aa4f8, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1792d379e0d26c240956e35dfc8c24d8, type: 2}
+    - {fileID: 11400000, guid: dfb74e770daf133499fa39d390a08424, type: 2}
