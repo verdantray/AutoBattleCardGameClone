@@ -62,18 +62,20 @@ namespace ProjectABC.Engine.UI
             }
 
             _itemSize = item.RectTransform.sizeDelta;
-            
-            if (_itemSize.x <= 0.0f)
-            {
-                _itemSize.x = ViewportWidth * (item.RectTransform.anchorMax.x - item.RectTransform.anchorMin.x);
-            }
-            
             Initialized = true;
             
-            Debug.Log($"itemSize : {_itemSize}");
+            // Debug.Log($"itemSize : {_itemSize}");
             
             CalculateContents();
             OnMoveScroll(Vector2.zero);
+        }
+
+        protected override ScrollListItem<T> GetItem()
+        {
+            var item = base.GetItem();
+            item.RectTransform.sizeDelta = _itemSize;
+
+            return item;
         }
 
         protected override void CalculateContents()
@@ -93,7 +95,7 @@ namespace ProjectABC.Engine.UI
 
         protected override void AdjustElements(float scrollPosition)
         {
-            if (Data.Count == 0 || _itemSize.x <= 0.0f || _itemSize.y <= 0.0f)
+            if (Data.Count == 0 || _itemSize.y <= 0.0f)
             {
                 return;
             }
@@ -136,7 +138,6 @@ namespace ProjectABC.Engine.UI
                 int col = dataIndex % _columnsPerRows;
 
                 Vector2 itemPosition = Vector2.zero;
-                
                 
                 itemPosition.x = leftBase + (col * CellWidth) + (_itemSize.x * 0.5f);  // for center pivot
                 itemPosition.y = row * CellHeight * -1.0f;

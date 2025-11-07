@@ -52,7 +52,7 @@ namespace ProjectABC.Data
             await ActivateSceneAsync();
         }
 
-        public AsyncOperation ActivateSceneAsync()
+        public virtual AsyncOperation ActivateSceneAsync()
         {
             if (!IsLoaded)
             {

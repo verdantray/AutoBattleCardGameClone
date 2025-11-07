@@ -56,7 +56,7 @@ namespace ProjectABC.Engine.UI
             Data.Clear();
             Data.AddRange(data);
             
-            Debug.Log($"Data count : {Data.Count} / Initialized : {Initialized}");
+            // Debug.Log($"Data count : {Data.Count} / Initialized : {Initialized}");
 
             if (!Initialized)
             {
@@ -116,9 +116,10 @@ namespace ProjectABC.Engine.UI
 
         protected virtual ScrollListItem<T> GetItem()
         {
-            ScrollListItem<T> item = Pooler.Get().GetComponent<ScrollListItem<T>>();
+            var get = Pooler.Get();
+            get.gameObject.SetActive(true);
             
-            item.gameObject.SetActive(true);
+            ScrollListItem<T> item = get.GetComponent<ScrollListItem<T>>();
             item.transform.SetParent(scrollRect.content, false);
             
             ActiveItems.Add(item);

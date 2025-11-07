@@ -19,7 +19,16 @@ namespace ProjectABC.Engine
         protected override bool SetPersistent => true;
 
         private SceneLoadingProfileAsset _targetSceneProfileAsset = null;
-        
+
+        private void Start()
+        {
+            var currentScene = SceneManager.GetActiveScene();
+            if (currentScene.name != GameConst.SceneName.INITIALIZER)
+            {
+                SceneManager.LoadScene(GameConst.SceneName.INITIALIZER);
+            }
+        }
+
         public async Task LoadSceneAsync(string targetSceneName)
         {
             if (!persistentWorldProfile.IsLoaded)
@@ -31,7 +40,7 @@ namespace ProjectABC.Engine
             }
             else
             {
-                PersistentWorldCamera.Instance.BlurOn(0.5f);
+                PersistentWorldCamera.Instance.BlurOn(0.25f);
             }
 
             UnityEngine.SceneManagement.Scene initializerScene = SceneManager.GetSceneByName(GameConst.SceneName.INITIALIZER);
@@ -51,18 +60,19 @@ namespace ProjectABC.Engine
 
             List<Task> tasks = new List<Task>
             {
-                Task.Delay(TimeSpan.FromSeconds(1)),  // await for blur
+                Task.Delay(TimeSpan.FromSeconds(0.25)),  // await for blur
                 _targetSceneProfileAsset.LoadSceneAndAssetsAsync(),
             };
 
             var unloadPreloadedScenesTasks = sceneLoadingProfiles
                 .Where(profile => profile.IsLoaded && profile.ProfileName != targetSceneName)
                 .Select(profile => profile.UnloadSceneAndAssetsAsync());
+            
             tasks.AddRange(unloadPreloadedScenesTasks);
 
             await Task.WhenAll(tasks);
             await _targetSceneProfileAsset.ActivateSceneAsync();
-
+            
             _targetSceneProfileAsset.GetPostLoadingTask().Forget();
         }
 

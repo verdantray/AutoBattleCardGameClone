@@ -97,7 +97,7 @@ namespace ProjectABC.Core
         {
             MatchContextConsoleEvent matchContextEvent = new MatchContextConsoleEvent(currentState.Round);
 
-            var (defender, attacker) = GetMatchSidesOnStart(currentState, playerStates);
+            var (defender, attacker, reason) = IMatchContextEvent.GetMatchSidesOnStart(currentState, playerStates);
             defender.SetMatchState(MatchState.Defending);
             attacker.SetMatchState(MatchState.Attacking);
 
@@ -134,7 +134,7 @@ namespace ProjectABC.Core
                 return matchContextEvent;
             }
             
-            CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+            IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
 
             while (true)
             {
@@ -169,7 +169,7 @@ namespace ProjectABC.Core
                         return matchContextEvent;
                     }
             
-                    CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+                    IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
                 }
 
                 string successAttackMessage = $"{attacker.Player.Name}의 공격이 성공하였습니다.\n"
@@ -205,7 +205,7 @@ namespace ProjectABC.Core
                     // replace movement instead put to infirmary
                     if (isMovementReplaced)
                     {
-                        CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+                        IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
                         continue;
                     }
                     
@@ -236,7 +236,7 @@ namespace ProjectABC.Core
 
                 #endregion
                 
-                CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+                IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
                 
                 // changes position between two players
                 (defender, attacker) = (attacker, defender);
@@ -271,41 +271,8 @@ namespace ProjectABC.Core
                 SwitchPositionMessageEvent switchPositionEvent = new SwitchPositionMessageEvent(defender.Player, attacker.Player);
                 switchPositionEvent.RegisterEvent(matchContextEvent);
                 
-                CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+                IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
             }
-        }
-
-        private static (MatchSide defender, MatchSide attacker) GetMatchSidesOnStart(GameState gameState, params PlayerState[] playerStates)
-        {
-            var orderedPlayerStates = playerStates
-                .OrderByDescending(WinPointsSelector)
-                .ToArray();
-            
-            bool isSameWinPoints = WinPointsSelector(orderedPlayerStates[0]) == WinPointsSelector(orderedPlayerStates[1]);
-            if (isSameWinPoints)
-            {
-                // TODO: use PCG32
-                Random random = new Random();
-                orderedPlayerStates = orderedPlayerStates.OrderBy(_ => random.Next()).ToArray();
-            }
-
-            MatchSide defender = new MatchSide(orderedPlayerStates[0]);
-            MatchSide attacker = new MatchSide(orderedPlayerStates[1]);
-            
-            return (defender, attacker);
-
-            int WinPointsSelector(PlayerState playerState)
-            {
-                return gameState.ScoreBoard.GetTotalWinPoints(playerState.Player);
-            }
-        }
-
-        private static void CheckApplyBuffs(GameState gameState, IMatchContextEvent matchContextEvent, params MatchSide[] matchSide)
-        {
-            matchSide[0].CheckApplyCardBuffs(matchSide[1], gameState);
-            matchSide[1].CheckApplyCardBuffs(matchSide[0], gameState);
-            
-            // TODO: register match event if need to announce applying buffs
         }
     }
 }

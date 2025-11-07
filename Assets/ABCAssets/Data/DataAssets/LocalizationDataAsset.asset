@@ -24,7 +24,46 @@ MonoBehaviour:
       sheetName: 99. localization_card_effect
       startCell: A02
       endCell: E52
+  - updateFieldName: Localization Data
+    sheetReader:
+      sheetName: 99. localization_ui
+      startCell: A02
+      endCell: E10
   localizationData:
+  - key: btn_confirm
+    ko: "\uD655\uC778"
+    en: Confirm
+    ja: 
+  - key: btn_cancel
+    ko: "\uCDE8\uC18C"
+    en: Cancel
+    ja: 
+  - key: btn_next
+    ko: "\uB2E4\uC74C"
+    en: Next
+    ja: 
+  - key: btn_prev
+    ko: "\uC774\uC804"
+    en: Prev
+    ja: 
+  - key: ui_recruit_card_pool_announce
+    ko: "\uC601\uC785\uD560 \uD559\uC0DD\uC758 \uD559\uB144\uACFC \uC778\uC6D0 \uC218\uB97C
+      \uC120\uD0DD\uD574\uC8FC\uC138\uC694."
+    en: Please select the grade and number of students you wish to recruit.
+    ja: 
+  - key: ui_recruit_card_announce
+    ko: "\uD559\uC0DD\uC744 \uC120\uD0DD\uD574\uC11C \uC601\uC785\uD558\uAC70\uB098
+      \uBAA9\uB85D\uC73C\uB85C \uB2E4\uC2DC \uAC00\uC838\uC624\uC138\uC694."
+    en: Select students to recruit or reroll.
+    ja: 
+  - key: ui_recruit_card_recruit_students
+    ko: "\uC601\uC785\uD558\uAE30 ({0}/{1})"
+    en: Recruit ({0}/{1})
+    ja: 
+  - key: ui_recruit_card_reroll
+    ko: "\uB2E4\uC2DC \uAC00\uC838\uC624\uAE30 ({0})"
+    en: Reroll ({0})
+    ja: 
   - key: desc_effect_condition_on_recruit
     ko: "\uC601\uC785 \uC2DC :"
     en: 

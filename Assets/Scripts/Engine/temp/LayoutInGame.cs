@@ -132,7 +132,7 @@ namespace ProjectABC.Engine
             _gradeType = gradeType;
             _amount = amount;
             
-            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            var hasMulliganChance = _mulliganChance < _state.RerollChance.RemainRerollChance;
             _btnRerollCard.gameObject.SetActive(hasMulliganChance);
             _btnRerollCard.interactable = hasMulliganChance;
             
@@ -163,7 +163,7 @@ namespace ProjectABC.Engine
         {
             _mulliganChance += 1;
             
-            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            var hasMulliganChance = _mulliganChance < _state.RerollChance.RemainRerollChance;
             _btnRerollCard.gameObject.SetActive(hasMulliganChance);
             
             CardPile targetCardPile = _state.GradeCardPiles[_gradeType];
@@ -204,7 +204,7 @@ namespace ProjectABC.Engine
             var isCardSelected = _cardsSelectedInHand.Count > 0;
             _btnSelectCard.interactable = isCardSelected;
 
-            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
+            var hasMulliganChance = _mulliganChance < _state.RerollChance.RemainRerollChance;
             _btnRerollCard.interactable = !isCardSelected && hasMulliganChance;
         }
         private void SetButtonCardSelects(List<Card> cards)
@@ -226,8 +226,8 @@ namespace ProjectABC.Engine
                 button.gameObject.SetActive(true);
             }
 
-            var hasMulliganChance = _mulliganChance < _state.MulliganChances;
-            var leftMulliganChance = _state.MulliganChances - _mulliganChance;
+            var hasMulliganChance = _mulliganChance < _state.RerollChance.RemainRerollChance;
+            var leftMulliganChance = _state.RerollChance.RemainRerollChance - _mulliganChance;
             _btnRerollCard.interactable = hasMulliganChance;
             _textRerollCard.text = $"Reroll({leftMulliganChance})";
             

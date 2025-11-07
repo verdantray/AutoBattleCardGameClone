@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ProjectABC.Engine.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -44,7 +46,7 @@ namespace ProjectABC.Engine
         {
             DestroyPool();
 
-            _handle = Addressables.LoadAssetAsync<GameObject>(key);
+            _handle = Addressables.InstantiateAsync(key);
             _handle.Completed += OnHandleCompleted;
             _handle.Completed += callback;
         }
@@ -87,6 +89,9 @@ namespace ProjectABC.Engine
             _objectToPool = objectToPool.GetComponent<PoolableObject>();
             _objectToPool.gameObject.SetActive(false);
             
+            var textComponents = _objectToPool.transform.GetComponentsInChildren<TMP_Text>(true);
+            TMPFontSwapTool.SwapFontToFallbackApplied(textComponents);
+            
             _pool = new ObjectPool<PoolableObject>(CreateInstance, OnGet, OnRelease);
 
             int poolSize = _objectToPool.PoolSize;
@@ -99,8 +104,13 @@ namespace ProjectABC.Engine
 
             for (int i = 0; i < count; i++)
             {
-                var gotObject = _pool.Get();
-                created.Add(gotObject);
+                var get = _pool.Get();
+                if (get == null)
+                {
+                    Debug.Log("null occured while prewarm");
+                }
+                
+                created.Add(get);
             }
 
             foreach (var obj in created)

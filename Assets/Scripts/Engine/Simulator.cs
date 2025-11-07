@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
@@ -13,8 +14,15 @@ namespace ProjectABC.Engine
 {
     public sealed class Simulator : MonoSingleton<Simulator>
     {
+        [Serializable]
+        private class RoundPhase
+        {
+            public int targetRound;
+            public GamePhaseAsset[] phases;
+        }
+        
         [SerializeField] private ABCModel model;
-        [SerializeField] private GamePhaseAsset[] phases;
+        [SerializeField] private RoundPhase[] roundPhases;
 
         public static ABCModel Model => Instance.model;
         protected override bool SetPersistent => false;
@@ -46,10 +54,13 @@ namespace ProjectABC.Engine
             
             _simulation ??= new Simulation(Model.player, tempPlayerNames);
             _simulation.ClearGamePhases();
-
-            foreach (var phase in phases)
+            
+            foreach (var roundPhase in roundPhases.OrderBy(roundPhase => roundPhase.targetRound))
             {
-                _simulation.EnqueueGamePhase(phase);
+                foreach (var gamePhase in roundPhase.phases)
+                {
+                    _simulation.EnqueueGamePhase(gamePhase);
+                }
             }
         }
 
@@ -58,7 +69,7 @@ namespace ProjectABC.Engine
             Task preloadingTask = GetPreloadingTask();
             await preloadingTask;
 
-            await BlurOffWhileDurationAsync(0.5f);
+            await BlurOffWhileDurationAsync(0.25f);
             
             await _simulation.RunAsync();
         }

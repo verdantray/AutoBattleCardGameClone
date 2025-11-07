@@ -14,8 +14,8 @@ namespace ProjectABC.Core
         public Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             simulationContext.CurrentState.SetRound(_round);
-            
-            var contextEvent = new CommonConsoleEvent($"{_round} 라운드 준비");
+
+            var contextEvent = new PrepareRoundEvent(_round);
             contextEvent.Publish();
             
             simulationContext.CollectedEvents.AddEvent(contextEvent);

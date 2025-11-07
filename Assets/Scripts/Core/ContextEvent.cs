@@ -42,6 +42,16 @@ namespace ProjectABC.Core
         }
     }
 
+    public class PrepareRoundEvent : IContextEvent
+    {
+        public readonly int Round;
+        
+        public PrepareRoundEvent(int round)
+        {
+            Round = round;
+        }
+    }
+
     public class RecruitConsoleEvent : ConsoleContextEventBase
     {
         public RecruitConsoleEvent(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)

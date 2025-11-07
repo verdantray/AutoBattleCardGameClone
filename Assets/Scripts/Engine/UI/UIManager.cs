@@ -49,6 +49,8 @@ namespace ProjectABC.Engine.UI
         
         protected override bool SetPersistent => true;
 
+        public Canvas Canvas => canvas;
+
         public T OpenUI<T>() where T : UIElement
         {
             T uiObject = GetUI<T>();
@@ -99,6 +101,19 @@ namespace ProjectABC.Engine.UI
             }
 
             return element.gameObject.activeInHierarchy;
+        }
+
+        public void Refresh()
+        {
+            foreach (var uiElement in _uiElements.Values)
+            {
+                if (!uiElement.gameObject.activeInHierarchy)
+                {
+                    continue;
+                }
+                
+                uiElement.Refresh();
+            }
         }
         
         private void Update()

@@ -103,7 +103,7 @@ namespace ProjectABC.Core
             
             _stopSimulationTokenSource = new CancellationTokenSource();
             
-            while (_gamePhases.Count > 0)
+            while (_gamePhases.Count > 0 && !_stopSimulationTokenSource.IsCancellationRequested)
             {
                 var phase = _gamePhases.Dequeue();
                 await phase.ExecutePhaseAsync(_simulationContext, _stopSimulationTokenSource.Token);
@@ -128,7 +128,7 @@ namespace ProjectABC.Core
             {
                 await ExecutePhaseAsync(simulationContext);
             }
-            catch (OperationCanceledException e) when (token.IsCancellationRequested)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
                 StopPhase();
             }

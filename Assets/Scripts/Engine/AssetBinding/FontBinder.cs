@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ProjectABC.Core;
 using ProjectABC.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 namespace ProjectABC.Engine
 {
@@ -23,13 +25,24 @@ namespace ProjectABC.Engine
         
         private readonly Dictionary<string, AsyncOperationHandle<TMP_FontAsset>> _basicFontHandles = new Dictionary<string, AsyncOperationHandle<TMP_FontAsset>>();
         private readonly Dictionary<string, AsyncOperationHandle<TMP_FontAsset>> _additiveFontHandles = new Dictionary<string, AsyncOperationHandle<TMP_FontAsset>>();
+
+        private readonly Dictionary<TMP_FontAsset, TMP_FontAsset> _cloneMap = new Dictionary<TMP_FontAsset, TMP_FontAsset>();
         
         private readonly Dictionary<LocaleType, List<AdditiveFontBindingEntry>> _fontBindingEntriesMap = new Dictionary<LocaleType, List<AdditiveFontBindingEntry>>();
-
         private readonly Queue<AssetHandleSchedule<AdditiveFontBindingEntry>> _schedules = new Queue<AssetHandleSchedule<AdditiveFontBindingEntry>>();
 
         // TODO : get locale from user setting
         private LocaleType CurrentLocaleSetting { get; } = LocaleType.Ko;
+
+        private void Awake()
+        {
+            SceneManager.sceneLoaded += SwapFontOnSceneLoaded;
+        }
+
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= SwapFontOnSceneLoaded;
+        }
 
         private void Start()
         {
@@ -51,6 +64,29 @@ namespace ProjectABC.Engine
                 _schedules.Enqueue(releaseSchedule);
             }
         }
+
+        public bool TryGetCloneFontAsset(TMP_FontAsset fontAsset, out TMP_FontAsset cloned)
+        {
+            return _cloneMap.TryGetValue(fontAsset, out cloned);
+        }
+
+        private void SwapFontOnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+        {
+            string[] validSceneNames = new[]
+            {
+                GameConst.SceneName.IN_GAME,
+            };
+
+            if (!validSceneNames.Contains(scene.name))
+            {
+                return;
+            }
+
+            var all = FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            TMPFontSwapTool.SwapFontToFallbackApplied(all);
+            
+            // Debug.Log($"{nameof(FontBinder)} : swap font of components in {scene.name} scene");
+        }
         
         private void BindBasicFonts()
         {
@@ -63,8 +99,27 @@ namespace ProjectABC.Engine
                 }
                 
                 var handle = Addressables.LoadAssetAsync<TMP_FontAsset>(basicFontAddressableName);
+                handle.Completed += CloneBasicFontsOnCompleted;
+                
                 _basicFontHandles.Add(basicFontAddressableName, handle);
             }
+        }
+
+        private void CloneBasicFontsOnCompleted(AsyncOperationHandle<TMP_FontAsset> handle)
+        {
+            TMP_FontAsset originFont = handle.Result;
+
+            if (_cloneMap.TryGetValue(originFont, out TMP_FontAsset clone) && clone != null)
+            {
+                Debug.Log($"{nameof(FontBinder)} : {originFont.name} has already been bind");
+                return;
+            }
+            
+            clone = Instantiate(originFont);
+            clone.name = originFont.name + " (Runtime)";
+            clone.hideFlags = HideFlags.DontSave | HideFlags.DontSaveInEditor;
+                
+            _cloneMap[originFont] = clone;
         }
 
         private void Update()
@@ -175,11 +230,19 @@ namespace ProjectABC.Engine
         
         private void RegisterFallbackFontTableOnCompleted(AsyncOperationHandle<TMP_FontAsset> handle)
         {
-            TMP_FontAsset fontAsset = handle.Result;
+            TMP_FontAsset fallbackFont = handle.Result;
+            fallbackFont.ReadFontAssetDefinition();
+            // Debug.Log($"{nameof(FontBinder)} : register fallback '{fallbackFont.name}'");
 
-            foreach (var basicFontHandle in _basicFontHandles.Values)
+            foreach (var clonedBaseFont in _cloneMap.Values)
             {
-                basicFontHandle.Result.fallbackFontAssetTable.Add(fontAsset);
+                if (clonedBaseFont.fallbackFontAssetTable.Contains(fallbackFont))
+                {
+                    continue;
+                }
+                
+                clonedBaseFont.fallbackFontAssetTable.Add(fallbackFont);
+                clonedBaseFont.ReadFontAssetDefinition();
             }
         }
 
@@ -198,9 +261,9 @@ namespace ProjectABC.Engine
                 return;
             }
 
-            foreach (var basicFontHandle in _basicFontHandles.Values)
+            foreach (var clonedBaseFont in _cloneMap.Values)
             {
-                basicFontHandle.Result.fallbackFontAssetTable.Remove(handle.Result);
+                clonedBaseFont.fallbackFontAssetTable.Remove(handle.Result);
             }
 
             _additiveFontHandles.Remove(addressableName);

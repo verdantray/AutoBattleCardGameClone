@@ -93,7 +93,7 @@ namespace ProjectABC.Core
             Buffs = new List<BuffSnapshot>();
         }
         
-        public CardSnapshot(Card card, CardBuffArgs args)
+        public CardSnapshot(Card card, CardBuffArgs args = null)
         {
             Id = card.Id;
             ClubType = card.ClubType;
@@ -103,17 +103,21 @@ namespace ProjectABC.Core
             Card = card;
 
             List<BuffSnapshot> buffSnapshots = new List<BuffSnapshot>();
-            CardBuff[] disablerBuffs = card.AppliedCardBuffs
-                .Where(buff => buff.Type == BuffType.Disabler && buff.IsBuffActive(card, args))
-                .ToArray();
 
-            foreach (var buff in card.AppliedCardBuffs)
+            if (args != null)
             {
-                bool isDisabled = !disablerBuffs.Contains(buff)
-                                  && disablerBuffs.Any(disabler => disabler.ShouldDisable(buff, card, args));
+                CardBuff[] disablerBuffs = card.AppliedCardBuffs
+                    .Where(buff => buff.Type == BuffType.Disabler && buff.IsBuffActive(card, args))
+                    .ToArray();
 
-                BuffSnapshot snapshot = new BuffSnapshot(buff, card, args, isDisabled);
-                buffSnapshots.Add(snapshot);
+                foreach (var buff in card.AppliedCardBuffs)
+                {
+                    bool isDisabled = !disablerBuffs.Contains(buff)
+                                      && disablerBuffs.Any(disabler => disabler.ShouldDisable(buff, card, args));
+
+                    BuffSnapshot snapshot = new BuffSnapshot(buff, card, args, isDisabled);
+                    buffSnapshots.Add(snapshot);
+                }
             }
             
             Buffs = buffSnapshots;

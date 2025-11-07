@@ -102,8 +102,7 @@ namespace ProjectABC.Core
     {
         public readonly IPlayer Player;
 
-        public int MulliganChances { get; private set; } = GameConst.GameOption.MULLIGAN_DEFAULT_AMOUNT;
-
+        public readonly RerollChance RerollChance =  new RerollChance();
         public readonly GradeCardPiles GradeCardPiles = new GradeCardPiles();
         public readonly List<Card> Deck = new List<Card>();
         public readonly List<Card> Deleted = new List<Card>();

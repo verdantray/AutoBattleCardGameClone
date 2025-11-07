@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: InGame_UI
   m_GUID: 05deaaeb2dc489a4bb5b7cd4667ce863
   m_SerializeEntries:
+  - m_GUID: 19c1308ecfdba2d479213b819e1c797a
+    m_Address: SelectRecruitCardPoolUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52656dd4d71c81d4e8eea2afc7501f01
     m_Address: PlayerSelectedClubItem
     m_ReadOnly: 0
@@ -37,6 +42,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a25c451ab8c247746814839b835d9cc9
     m_Address: ClubToggleItem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6d92adae217f1e45ae37652fcf0b678
+    m_Address: RecruitCardUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f79021a03e2478b4292002c2a8773239
+    m_Address: RoundAnnounceUI
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

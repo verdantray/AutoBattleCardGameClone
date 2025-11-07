@@ -15,6 +15,8 @@ namespace ProjectABC.Engine
         
         public override async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
+            PersistentWorldCameraPoints.Instance.SwapPoint("Default");
+            
             GameState currentState = simulationContext.CurrentState;
             List<Task<IPlayerAction>> tasks = simulationContext.Participants
                 .Select(player => player.DeckConstructAsync(fixedClubFlag, selectableClubFlag))
@@ -28,8 +30,7 @@ namespace ProjectABC.Engine
                 playerAction.ApplyContextEvent(simulationContext.CollectedEvents);
             }
 
-            await Task.WhenAll(simulationContext.Participants.Select(player => player.WaitUntilConfirmToProceed()));
-            PersistentWorldCameraPoints.Instance.SwapPoint("Onboard");
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
         }
     }
 }

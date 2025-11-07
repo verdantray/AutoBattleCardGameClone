@@ -37,23 +37,21 @@ namespace ProjectABC.Core
         {
             // TODO : use PCG32
             Random random = new Random();
-            var (level, amount) = recruitOnRound.GetRecruitLevelAmountPairs()
+            var (level, amount) = recruitOnRound.GetRecruitGradeAmountPairs()
                 .OrderBy(_ => random.Next())
                 .First();
             
             List<Card> cardsToDraw = new List<Card>();
                 
-            int remainMulliganChances = myState.MulliganChances;
+            RerollChance rerollChance = myState.RerollChance;
 
             while (cardsToDraw.Count < amount)
             {
-                remainMulliganChances--;
-
                 var cardPile = myState.GradeCardPiles[level];
-                int handSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - cardsToDraw.Count;
-                List<Card> cardPool = cardPile.DrawCards(handSize);
+                int drawSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - cardsToDraw.Count;
+                List<Card> cardPool = rerollChance.GetRerollCards(cardPile, drawSize);
 
-                bool isLastChance = remainMulliganChances == 0;
+                bool isLastChance = rerollChance.RemainRerollChance == 0;
                 int remainAmount = amount - cardsToDraw.Count;
                     
                 int drawAmount = isLastChance

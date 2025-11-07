@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +31,9 @@ namespace ProjectABC.Engine
         private void InitializeEventUIHandlers()
         {
             DisposeEventUIHandlers();
+            
             _contextEventUIHandlers.Add(new DeckConstructionEventHandler());
+            _contextEventUIHandlers.Add(new PrepareRoundEventHandler());
         }
 
         private void DisposeEventUIHandlers()
@@ -54,9 +57,25 @@ namespace ProjectABC.Engine
             return action;
         }
 
-        public Task<IPlayerAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
+        public async Task<IPlayerAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
         {
-            throw new System.NotImplementedException();
+            var gradeAmountPairs =  recruitOnRound.GetRecruitGradeAmountPairs();
+            var selectCardPoolUI = UIManager.Instance.OpenUI<SelectRecruitCardPoolUI>();
+            selectCardPoolUI.SetRecruitCardPools(gradeAmountPairs);
+
+            await selectCardPoolUI.WaitUntilCloseAsync();
+
+            int selectedPoolIndex = selectCardPoolUI.FocusIndex;
+            var (grade, amount) = gradeAmountPairs[selectedPoolIndex];
+            
+            var recruitCardUI = UIManager.Instance.OpenUI<RecruitCardUI>();
+            var param = new RecruitCardUI.RecruitCardParam(amount, myState.GradeCardPiles[grade], myState.RerollChance);
+            
+            recruitCardUI.SetRecruit(param);
+            var cards = await recruitCardUI.GetRecruitCardsAsync();
+            
+            IPlayerAction action = new RecruitCardsAction(this, grade, cards);
+            return action;
         }
 
         public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState)

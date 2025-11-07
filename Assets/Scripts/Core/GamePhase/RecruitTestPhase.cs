@@ -51,7 +51,7 @@ namespace ProjectABC.Core
             return new Tuple<GradeType, int>(recruitData.recruitGradeType, recruitData.amount);
         }
 
-        public IReadOnlyList<Tuple<GradeType, int>> GetRecruitLevelAmountPairs()
+        public IReadOnlyList<Tuple<GradeType, int>> GetRecruitGradeAmountPairs()
         {
             return _recruitLevelAndAmounts;
         }
