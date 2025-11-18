@@ -66,41 +66,49 @@ namespace ProjectABC.Core
                 otherSide,
                 gameState
             );
-            
-            for (int i = 0; i < _cardsAmount; i++)
+
+            foreach (var cardToMove in cardsBelongClubsInInfirmary)
             {
-                if (cardsBelongClubsInInfirmary.Length <= i)
+                string slotKey = cardToMove.CardData.nameKey;
+                
+                if (!ownSide.Infirmary.TryGetValue(slotKey, out var cardPile))
                 {
-                    break;
+                    continue;
                 }
-                
-                Card cardToMove = cardsBelongClubsInInfirmary[i];
-                
-                for (int j = ownSide.Infirmary.Count - 1; j >= 0; j--)
+
+                int indexOfSlot = cardPile.IndexOf(cardToMove);
+                CardLocation infirmaryLocation = new InfirmaryLocation(ownSide.Player, slotKey, indexOfSlot);
+
+                cardPile.Remove(cardToMove);
+                if (cardPile.Count == 0)
                 {
-                    if (!ownSide.Infirmary[j].Contains(cardToMove))
-                    {
-                        continue;
-                    }
-                    
-                    ownSide.Infirmary[j].Remove(cardToMove);
-                    if (ownSide.Infirmary[j].Count == 0)
-                    {
-                        ownSide.Infirmary.RemoveByIndex(j);
-                    }
+                    ownSide.Infirmary.Remove(slotKey);
                 }
                 
                 ownSide.Deck.Add(cardToMove);
+
+                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+                
+                var appliedCard = new CardReference(cardToMove, buffArgs);
+                var activatedCard = new CardReference(CallCard, buffArgs);
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(appliedCard, activatedCard);
+
+                CardLocation curLocation = new DeckLocation(ownSide.Player, ownSide.Deck.Count - 1);
+                CardMovementInfo movementInfo = new CardMovementInfo(infirmaryLocation, curLocation);
+                
+                SendToDeckFromInfirmaryEvent sendCardEvent = new SendToDeckFromInfirmaryEvent(appliedInfo, movementInfo);
+                sendCardEvent.RegisterEvent(matchContextEvent);
+                    
+                // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{cardToMove}";
+                // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
+                // moveCardEffectEvent.RegisterEvent(matchContextEvent);
+                
                 cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
 
                 if (matchContextEvent.MatchFinished)
                 {
                     return;
                 }
-                    
-                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{cardToMove}";
-                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
-                moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
 

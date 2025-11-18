@@ -10,20 +10,20 @@ namespace ProjectABC.Engine
     {
         public readonly Vector3 Position;
         public readonly Quaternion Rotation;
-        public readonly CardSnapshot CardSnapshot;
+        public readonly CardReference CardReference;
 
-        public CardSpawnArgs(Transform target, CardSnapshot cardSnapshot = null)
+        public CardSpawnArgs(Transform target, CardReference card = null)
         {
             Position =  target.position;
             Rotation = target.rotation;
-            CardSnapshot = cardSnapshot;
+            CardReference = card;
         }
 
-        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardSnapshot cardSnapshot = null)
+        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardReference card = null)
         {
             Position = position;
             Rotation = rotation;
-            CardSnapshot = cardSnapshot;
+            CardReference = card;
         }
     }
 

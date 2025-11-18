@@ -45,41 +45,67 @@ namespace ProjectABC.Core
             {
                 if (!otherSide.Deck.TryDraw(out Card cardToMove))
                 {
-                    MatchFinishMessageEvent finishByEmptyDeckEvent = new MatchFinishMessageEvent(
+                    MatchFinishEvent finishByEmptyDeck = new MatchFinishEvent(
                         ownSide.Player,
                         otherSide.Player,
                         MatchEndReason.EndByEmptyDeck
                     );
                     
-                    finishByEmptyDeckEvent.RegisterEvent(matchContextEvent);
+                    finishByEmptyDeck.RegisterEvent(matchContextEvent);
+                    
+                    // MatchFinishMessageEvent finishByEmptyDeckEvent = new MatchFinishMessageEvent(
+                    //     ownSide.Player,
+                    //     otherSide.Player,
+                    //     MatchEndReason.EndByEmptyDeck
+                    // );
+                    //
+                    // finishByEmptyDeckEvent.RegisterEvent(matchContextEvent);
                     return;
                 }
 
                 bool isMovementReplaced = cardToMove.CardEffect.TryReplaceMovement(leaveOpponentFieldEffectArgs, matchContextEvent);
                 if (isMovementReplaced)
                 {
-                    ownSide.CheckApplyCardBuffs(otherSide, gameState);
-                    otherSide.CheckApplyCardBuffs(ownSide, gameState);
-
-                    // TODO: register match event if need to announce applying buffs
+                    IMatchContextEvent.CheckApplyBuffs(gameState, matchContextEvent, ownSide, otherSide);
                     continue;
                 }
                 
-                otherSide.Infirmary.PutCard(cardToMove);
+                otherSide.Infirmary.PutCard(cardToMove, out var infirmaryLocation);
 
-                string putCardToInfirmaryMessage = $"{otherSide.Player.Name}가 카드를 양호실에 넣음. \n{cardToMove}";
-                CommonMatchMessageEvent putCardToInfirmaryEvent = new CommonMatchMessageEvent(putCardToInfirmaryMessage);
-                putCardToInfirmaryEvent.RegisterEvent(matchContextEvent);
+                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+                
+                var appliedCard = new CardReference(cardToMove, buffArgs);
+                var activatedCard = new CardReference(CallCard, buffArgs);
+
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(appliedCard, activatedCard);
+
+                CardLocation prevLocation = new DeckLocation(otherSide.Player, otherSide.Deck.Count);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, infirmaryLocation);
+                
+                SendToInfirmaryFromDeckEvent sendCardEvent = new SendToInfirmaryFromDeckEvent(appliedInfo, movementInfo);
+                sendCardEvent.RegisterEvent(matchContextEvent);
+                
+                // string putCardToInfirmaryMessage = $"{otherSide.Player.Name}가 카드를 양호실에 넣음. \n{cardToMove}";
+                // CommonMatchMessageEvent putCardToInfirmaryEvent = new CommonMatchMessageEvent(putCardToInfirmaryMessage);
+                // putCardToInfirmaryEvent.RegisterEvent(matchContextEvent);
 
                 if (!otherSide.Infirmary.IsSlotRemains)
                 {
-                    MatchFinishMessageEvent finishByFullOfInfirmaryEvent = new MatchFinishMessageEvent(
+                    MatchFinishEvent finishByFullInfirmary = new MatchFinishEvent(
                         ownSide.Player,
                         otherSide.Player,
                         MatchEndReason.EndByFullOfInfirmary
                     );
                     
-                    finishByFullOfInfirmaryEvent.RegisterEvent(matchContextEvent);
+                    finishByFullInfirmary.RegisterEvent(matchContextEvent);
+                    
+                    // MatchFinishMessageEvent finishByFullOfInfirmaryEvent = new MatchFinishMessageEvent(
+                    //     ownSide.Player,
+                    //     otherSide.Player,
+                    //     MatchEndReason.EndByFullOfInfirmary
+                    // );
+                    //
+                    // finishByFullOfInfirmaryEvent.RegisterEvent(matchContextEvent);
                     return;
                 }
                 

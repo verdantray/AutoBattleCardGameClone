@@ -53,7 +53,7 @@ namespace ProjectABC.Engine.UI
 
         public void SetCard(Card card)
         {
-            cardUIItem.ApplyData(new CardSnapshot(card));
+            cardUIItem.ApplyData(new CardReference(card.Id));
         }
 
         public void MoveToPosition(Vector2 from, Vector2 target, float delay = 0.0f, float duration = 0.05f, Action callback = null)

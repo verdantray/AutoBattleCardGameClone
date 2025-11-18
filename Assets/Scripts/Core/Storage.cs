@@ -11,7 +11,10 @@ namespace ProjectABC.Core
         public IReadOnlyList<CardData> CardDataForPiles;
         public IReadOnlyList<RecruitData> RecruitData;
         public IReadOnlyList<WinPointData> WinPointData;
+        
         public IReadOnlyDictionary<string, CardEffectData> CardEffectData;
+        
+        private readonly Dictionary<string, CardData> _cardIdMap;
 
         private void Initialize(GameDataAsset gameDataAsset)
         {
@@ -20,6 +23,21 @@ namespace ProjectABC.Core
             RecruitData = new List<RecruitData>(gameDataAsset.RecruitData);
             WinPointData = new List<WinPointData>(gameDataAsset.WinPointData);
             CardEffectData = gameDataAsset.CardEffectData.ToDictionary(data => data.id);
+
+            foreach (var cardData in CardDataForStarting)
+            {
+                _cardIdMap.TryAdd(cardData.id, cardData);
+            }
+
+            foreach (var cardData in CardDataForPiles)
+            {
+                _cardIdMap.TryAdd(cardData.id, cardData);
+            }
+        }
+
+        public CardData GetCardData(string cardId)
+        {
+            return _cardIdMap.GetValueOrDefault(cardId);
         }
 
         public static Storage CreateInstance(GameDataAsset gameDataAsset)

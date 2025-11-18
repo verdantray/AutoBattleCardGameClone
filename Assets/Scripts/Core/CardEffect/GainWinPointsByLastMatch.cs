@@ -49,8 +49,17 @@ namespace ProjectABC.Core
 
             if (!isEnableResultLastMatch)
             {
-                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
-                failEffectEvent.RegisterEvent(matchContextEvent);
+                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+
+                FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    failedCard,
+                    FailToActivateEffectReason.NoMeetCondition
+                );
+                
+                failToActivateEvent.RegisterEvent(matchContextEvent);
+                
+                // FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
+                // failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 

@@ -48,6 +48,8 @@ namespace ProjectABC.Core
         {
             _cardList.Shuffle(seed);
         }
+        
+        public int IndexOf(Card card) => _cardList.IndexOf(card);
     }
 
     public class Infirmary : IReadOnlyDictionary<string, CardPile>
@@ -87,24 +89,24 @@ namespace ProjectABC.Core
             _cardMap.Clear();
         }
 
-        public void PutCard(Card card)
+        public void PutCard(Card card, out CardLocation location)
         {
             string cardNameKey = card.CardData.nameKey;
                 
             if (_nameKeyList.Contains(cardNameKey))
             {
                 _cardMap[cardNameKey].Add(card);
-                return;
-            }
-
-            if (RemainSlotCount <= 0)
-            {
-                this[SlotLimit - 1].Add(card);
+                
+                int index = _cardMap[cardNameKey].IndexOf(card);
+                location = new InfirmaryLocation(card.Owner, cardNameKey, index);
+                
                 return;
             }
 
             _nameKeyList.Add(cardNameKey);
             _cardMap[cardNameKey] = new CardPile { card };
+
+            location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
         }
 
         public bool RemoveByIndex(int index)
@@ -130,16 +132,15 @@ namespace ProjectABC.Core
         public ClubType ClubType { get; private set; }
         public GradeType GradeType { get; private set; }
 
-        public string Title => LocalizationHelper.Instance.Localize(CardData.titleKey);
-        public string Name => LocalizationHelper.Instance.Localize(CardData.nameKey);
-        
+        public readonly IPlayer Owner;
         public readonly CardData CardData;
         public readonly CardEffect CardEffect;
 
         public readonly List<CardBuff> AppliedCardBuffs = new List<CardBuff>();
 
-        public Card(CardData cardData)
+        public Card(IPlayer owner, CardData cardData)
         {
+            Owner = owner;
             CardData = cardData;
 
             ClubType = CardData.clubType;
@@ -187,7 +188,7 @@ namespace ProjectABC.Core
 
         public override string ToString()
         {
-            return $"{Title} {Name} ({Id} / {BasePower} / {CardEffect.Description})";
+            return $"{CardData.titleKey} {CardData.nameKey} ({Id} / {BasePower} / {CardEffect.Description})";
         }
     }
 }

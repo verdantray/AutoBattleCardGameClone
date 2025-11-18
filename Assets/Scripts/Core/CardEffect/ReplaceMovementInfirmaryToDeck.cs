@@ -23,12 +23,25 @@ namespace ProjectABC.Core
                 return false;
             }
 
+            int indexOfField = ownSide.Field.IndexOf(CallCard);
+            CardLocation prevLocation = new FieldLocation(ownSide.Player, indexOfField);
             ownSide.Field.Remove(CallCard);
+            
             ownSide.Deck.Add(CallCard);
+            int indexOfDeck = ownSide.Deck.Count - 1;
+            CardLocation curLocation = new DeckLocation(ownSide.Player, indexOfDeck);
 
-            string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{CallCard}";
-            var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
-            moveCardEffectEvent.RegisterEvent(matchContextEvent);
+            CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+            CardReference cardReference = new CardReference(CallCard, buffArgs);
+            CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(cardReference);
+            CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
+            
+            SendToDeckInsteadOfInfirmaryEvent cardSendEvent = new SendToDeckInsteadOfInfirmaryEvent(appliedInfo, movementInfo);
+            cardSendEvent.RegisterEvent(matchContextEvent);
+
+            // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{CallCard}";
+            // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
+            // moveCardEffectEvent.RegisterEvent(matchContextEvent);
             
             return true;
         }

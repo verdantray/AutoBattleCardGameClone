@@ -49,7 +49,7 @@ namespace ProjectABC.Core
             }
         }
 
-        protected static void CheckApplyBuffs(GameState gameState, IMatchContextEvent matchContextEvent, params MatchSide[] matchSide)
+        public static void CheckApplyBuffs(GameState gameState, IMatchContextEvent matchContextEvent, params MatchSide[] matchSide)
         {
             matchSide[0].CheckApplyCardBuffs(matchSide[1], gameState);
             matchSide[1].CheckApplyCardBuffs(matchSide[0], gameState);
@@ -84,7 +84,8 @@ namespace ProjectABC.Core
             defender.SetMatchState(MatchState.Defending);
             attacker.SetMatchState(MatchState.Attacking);
 
-            MatchStartEvent startEvent = new MatchStartEvent(attacker.Player, defender.Player, reason);
+            MatchSnapshot matchSnapshotOnStart = new MatchSnapshot(currentState, defender, attacker);
+            MatchStartEvent startEvent = new MatchStartEvent(attacker.Player, defender.Player, reason, matchSnapshotOnStart);
             startEvent.RegisterEvent(matchContextEvent);
 
             if (!defender.TryDraw(out Card drawnByDefender))
@@ -99,12 +100,7 @@ namespace ProjectABC.Core
                 return matchContextEvent;
             }
 
-            MatchSnapshot snapshotForDefenderDraw = new MatchSnapshot(currentState, defender, attacker);
-            snapshotForDefenderDraw.TryGetMatchSideSnapshot(defender.Player, out var defenderSideSnapshot);
-            var defenderDrawnCard = defenderSideSnapshot.Field[^1];
-
-            CardDrawEvent defenderDrawEvent = new CardDrawEvent(defender.Player, defenderDrawnCard, snapshotForDefenderDraw);
-            defenderDrawEvent.RegisterEvent(matchContextEvent);
+            RegisterDrawCardEvent(defender, matchContextEvent);
 
             CardEffectArgs defenderDrawnEffectArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnEnterFieldAsDefender,
@@ -137,12 +133,7 @@ namespace ProjectABC.Core
                         return matchContextEvent;
                     }
 
-                    MatchSnapshot snapShotForAttackerDraw = new MatchSnapshot(currentState, defender, attacker);
-                    snapShotForAttackerDraw.TryGetMatchSideSnapshot(attacker.Player, out var attackerSideSnapshot);
-                    var attackerDrawnCard = attackerSideSnapshot.Field[^1];
-
-                    CardDrawEvent attackerDrawEvent = new CardDrawEvent(attacker.Player, attackerDrawnCard, snapShotForAttackerDraw);
-                    attackerDrawEvent.RegisterEvent(matchContextEvent);
+                    RegisterDrawCardEvent(attacker, matchContextEvent);
                     
                     CardEffectArgs attackerDrawnEffectArgs = new CardEffectArgs(
                         EffectTriggerEvent.OnEnterFieldAsAttacker,
@@ -182,6 +173,8 @@ namespace ProjectABC.Core
                 while (defender.Field.Count > 0)
                 {
                     Card cardToMove = defender.Field[^1];
+                    int indexOfField = defender.Field.IndexOf(cardToMove);
+                    
                     defender.Field.Remove(cardToMove);
 
                     bool isMovementReplaced = cardToMove.CardEffect.TryReplaceMovement(leaveFieldEffectArgs, matchContextEvent);
@@ -193,14 +186,83 @@ namespace ProjectABC.Core
                         continue;
                     }
                     
-                    defender.Infirmary.PutCard(cardToMove);
+                    defender.Infirmary.PutCard(cardToMove, out var infirmaryLocation);
+
+                    CardLocation prevLocation = new FieldLocation(defender.Player, indexOfField);
+                    CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, infirmaryLocation);
+
+                    SendToInfirmaryEvent sendInfirmaryEvent = new SendToInfirmaryEvent(defender.Player, movementInfo);
+                    sendInfirmaryEvent.RegisterEvent(matchContextEvent);
+
+                    if (!defender.Infirmary.IsSlotRemains)
+                    {
+                        MatchFinishEvent finishByFullOfInfirmary = new MatchFinishEvent(
+                            attacker.Player,
+                            defender.Player,
+                            MatchEndReason.EndByFullOfInfirmary
+                        );
+                        
+                        finishByFullOfInfirmary.RegisterEvent(matchContextEvent);
+                        return matchContextEvent;
+                    }
                     
-                    MatchSnapshot snapshotForPutInfirmary = new MatchSnapshot(currentState, defender, attacker);
-                    // snapshotForPutInfirmary.TryGetMatchSideSnapshot(defender.Player, out var defenderSideSnapshot);
+                    cardToMove.CardEffect.CheckApplyEffect(enterInfirmaryEffectArgs, matchContextEvent);
+                    if (matchContextEvent.MatchFinished)
+                    {
+                        return matchContextEvent;
+                    }
                 }
 
                 #endregion
+                
+                IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+                
+                // changes position between two players
+                (defender, attacker) = (attacker, defender);
+                defender.SetMatchState(MatchState.Defending);
+                attacker.SetMatchState(MatchState.Attacking);
+
+                #region Trigger defender's cards on field
+
+                CardEffectArgs remainFieldEffectArgs = new CardEffectArgs(
+                    EffectTriggerEvent.OnRemainField,
+                    defender,
+                    attacker,
+                    currentState
+                );
+                
+                foreach (var cardOnField in defender.Field.SkipLast(1))
+                {
+                    cardOnField.CardEffect.CheckApplyEffect(remainFieldEffectArgs, matchContextEvent);
+                }
+
+                CardEffectArgs switchToDefendEffectArgs = new CardEffectArgs(
+                    EffectTriggerEvent.OnSwitchToDefend,
+                    defender,
+                    attacker,
+                    currentState
+                );
+                
+                defender.Field[^1].CardEffect.CheckApplyEffect(switchToDefendEffectArgs, matchContextEvent);
+
+                #endregion
+                
+                IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
+
+                MatchSnapshot matchSnapshotOnSwitch = new MatchSnapshot(currentState, defender, attacker);
+                SwitchPositionEvent switchPositionEvent = new SwitchPositionEvent(defender.Player, attacker.Player, matchSnapshotOnSwitch);
+                switchPositionEvent.RegisterEvent(matchContextEvent);
             }
+        }
+
+        private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchContextEvent matchContextEvent)
+        {
+            CardLocation prevLocation = new DeckLocation(drawnSide.Player, 0);
+            CardLocation curLocation = new FieldLocation(drawnSide.Player, drawnSide.Field.Count - 1);
+            CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
+            
+            DrawCardToFieldEvent toFieldEvent = new DrawCardToFieldEvent(drawnSide.Player, movementInfo);
+            toFieldEvent.RegisterEvent(matchContextEvent);
         }
     }
 }

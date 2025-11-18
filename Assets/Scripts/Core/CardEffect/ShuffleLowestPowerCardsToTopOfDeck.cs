@@ -65,10 +65,19 @@ namespace ProjectABC.Core
 
                 ownSide.Deck.Remove(cardToShuffle);
                 ownSide.Deck.AddToTop(cardToShuffle);
+
+                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+
+                var appliedCard = new CardReference(cardToShuffle, buffArgs);
+                var activatedCard = new CardReference(CallCard, buffArgs);
+
+                CardEffectAppliedInfo info = new CardEffectAppliedInfo(appliedCard, activatedCard);
+                ShuffleDeckEvent shuffleDeckEvent = new ShuffleDeckEvent(info);
+                shuffleDeckEvent.RegisterEvent(matchContextEvent);
                 
-                string moveCardToTopOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 위로 보냄\n{cardToShuffle}";
-                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToTopOfDeckMessage);
-                moveCardEffectEvent.RegisterEvent(matchContextEvent);
+                // string moveCardToTopOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 위로 보냄\n{cardToShuffle}";
+                // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToTopOfDeckMessage);
+                // moveCardEffectEvent.RegisterEvent(matchContextEvent);
                 
                 moveCount++;
             }

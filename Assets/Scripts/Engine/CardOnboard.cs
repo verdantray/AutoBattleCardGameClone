@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Globalization;
+using System.Linq;
+using ProjectABC.Core;
 using ProjectABC.Data;
 using TMPro;
 using UnityEngine;
@@ -43,13 +45,19 @@ namespace ProjectABC.Engine
             {
                 return;
             }
+
+            CardData cardData = _spawnArgs.CardReference.CardData;
             
-            string gradeSpriteName = $"grade_{_spawnArgs.CardSnapshot.GradeType.GradeTypeToOrdinalString()}";
+            string gradeSpriteName = $"grade_{cardData.gradeType.GradeTypeToOrdinalString()}";
             
             gradeRenderer.sprite = GlobalAssetBinder.Instance.AtlasBinder.GetCardSprite(gradeSpriteName);
-            powerText.text = _spawnArgs.CardSnapshot.Power.ToString(CultureInfo.InvariantCulture);
-            rollText.text = _spawnArgs.CardSnapshot.Title;
-            nameText.text = _spawnArgs.CardSnapshot.Name;
+
+            int totalPower = cardData.basePower;
+            totalPower += args.CardReference.Buffs.Sum(buff => buff.AdditivePower);
+            
+            powerText.text = totalPower.ToString(CultureInfo.InvariantCulture);
+            rollText.text = LocalizationHelper.Instance.Localize(cardData.titleKey);
+            nameText.text = LocalizationHelper.Instance.Localize(cardData.nameKey);
         }
 
         private void ChangeMainTextureOfMesh(MeshRenderer meshRenderer, Sprite sprite)

@@ -60,13 +60,13 @@ namespace ProjectABC.Core
             return _selectedClubsFlag.HasFlag(cardData.clubType);
         }
 
-        private static IEnumerable<Card> CreateCardsFromData(CardData cardData)
+        private IEnumerable<Card> CreateCardsFromData(CardData cardData)
         {
             List<Card> cards = new List<Card>();
             
             for (int i = 0; i < cardData.amount; i++)
             {
-                cards.Add(new Card(cardData));
+                cards.Add(new Card(Player, cardData));
             }
 
             return cards;

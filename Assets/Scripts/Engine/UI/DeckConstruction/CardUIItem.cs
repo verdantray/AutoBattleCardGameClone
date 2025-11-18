@@ -1,3 +1,4 @@
+using System.Linq;
 using ProjectABC.Core;
 using ProjectABC.Data;
 using TMPro;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace ProjectABC.Engine.UI
 {
-    public class CardUIItem : ScrollListItem<CardSnapshot>
+    public class CardUIItem : ScrollListItem<CardReference>
     {
         [SerializeField] private TextMeshProUGUI txtPower;
         [SerializeField] private TextMeshProUGUI txtGrade;
@@ -14,17 +15,28 @@ namespace ProjectABC.Engine.UI
         [SerializeField] private TextMeshProUGUI txtDesc;
         [SerializeField] private GameObject descAreaLayer;
 
-        public override void ApplyData(CardSnapshot data)
+        public override void ApplyData(CardReference data)
         {
             base.ApplyData(data);
+            CardData cardData = data.CardData;
+
+            int totalPower = cardData.basePower;
+            totalPower += data.Buffs.Sum(buff => buff.AdditivePower);
             
-            txtPower.text = $"{data.Power}";
-            txtGrade.text = LocalizationHelper.Instance.Localize(data.GradeType.GetLocalizationKey());
-            txtName.text = data.Name;
-            txtTitle.text = data.Title;
-            txtDesc.text = data.Description;
+            txtPower.text = $"{totalPower}";
+            txtGrade.text = LocalizationHelper.Instance.Localize(cardData.gradeType.GetLocalizationKey());
+            txtName.text = LocalizationHelper.Instance.Localize(cardData.nameKey);
+            txtTitle.text = LocalizationHelper.Instance.Localize(cardData.titleKey);
+
+            var cardEffect = Storage.Instance.CardEffectData[cardData.cardEffectId];
+            var descField = cardEffect.json.fields.FirstOrDefault(field => field.key == GameConst.CardEffect.EFFECT_DESC_KEY);
+            string desc = descField != null
+                ? LocalizationHelper.Instance.Localize(descField.value.strValue)
+                : string.Empty;
+
+            txtDesc.text = desc;
             
-            bool isDescEmpty = string.IsNullOrEmpty(data.Description);
+            bool isDescEmpty = string.IsNullOrEmpty(desc);
             descAreaLayer.SetActive(!isDescEmpty);
         }
     }

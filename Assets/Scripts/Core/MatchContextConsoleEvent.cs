@@ -209,7 +209,7 @@ namespace ProjectABC.Core
                         continue;
                     }
                     
-                    defender.Infirmary.PutCard(cardToMove);
+                    defender.Infirmary.PutCard(cardToMove, out var location);
                     
                     string putCardToInfirmaryMessage = $"{defender.Player.Name}가 카드를 양호실에 넣음. \n{cardToMove}";
                     CommonMatchMessageEvent putCardToInfirmaryEvent = new CommonMatchMessageEvent(putCardToInfirmaryMessage);

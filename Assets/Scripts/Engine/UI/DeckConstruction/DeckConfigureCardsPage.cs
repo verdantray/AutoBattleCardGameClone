@@ -98,8 +98,8 @@ namespace ProjectABC.Engine.UI
         
         private class CardSnapshotProviderByOption
         {
-            private readonly List<CardSnapshot> _startingMembers = new List<CardSnapshot>();
-            private readonly List<CardSnapshot> _recruitableMembers = new List<CardSnapshot>();
+            private readonly List<CardReference> _startingMembers = new List<CardReference>();
+            private readonly List<CardReference> _recruitableMembers = new List<CardReference>();
             
             public CardSnapshotProviderByOption(ClubType selectedClubFlag)
             {
@@ -115,7 +115,7 @@ namespace ProjectABC.Engine.UI
                 _recruitableMembers.AddRange(recruitableMembers);
             }
 
-            public IReadOnlyCollection<CardSnapshot> GetCardSnapshots(CardListOption option)
+            public IReadOnlyCollection<CardReference> GetCardSnapshots(CardListOption option)
             {
                 return option switch
                 {
@@ -125,13 +125,13 @@ namespace ProjectABC.Engine.UI
                 };
             }
 
-            private static IEnumerable<CardSnapshot> GetCardSnapshotsFromData(CardData data)
+            private static IEnumerable<CardReference> GetCardSnapshotsFromData(CardData data)
             {
-                List<CardSnapshot> result = new List<CardSnapshot>();
+                List<CardReference> result = new List<CardReference>();
 
                 for (int i = 0; i < data.amount; i++)
                 {
-                    result.Add(new CardSnapshot(data));
+                    result.Add(new CardReference(data.id));
                 }
 
                 return result;

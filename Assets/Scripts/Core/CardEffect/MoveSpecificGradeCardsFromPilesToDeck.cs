@@ -57,19 +57,30 @@ namespace ProjectABC.Core
                 int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).FirstOrDefault();
                 ownSide.Deck.Insert(randomIndex, drawnCard);
                 
+                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+                
                 // additive-recruit is not trigger card effect of drawn card...
-                // drawnCard.CardEffect.TryApplyEffectOnRecruit(ownPlayer, gameState, out var contextEvent);
+                var appliedCard = new CardReference(drawnCard, buffArgs);
+                var activatedCard = new CardReference(CallCard, buffArgs);
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(appliedCard, activatedCard);
 
-                string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {randomIndex}번째 위치로 보냄\n{drawnCard}";
-                var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
-                moveCardEffectEvent.RegisterEvent(matchContextEvent);
+                CardLocation prevLocation = new CardPileLocation(ownPlayer);
+                CardLocation curLocation = new DeckLocation(ownPlayer, randomIndex);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
+                
+                DrawCardByEffectEvent drawCardEvent = new DrawCardByEffectEvent(appliedInfo, movementInfo);
+                drawCardEvent.RegisterEvent(matchContextEvent);
+
+                // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {randomIndex}번째 위치로 보냄\n{drawnCard}";
+                // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
+                // moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
 
         protected override string GetDescription()
         {
             string gradeText = LocalizationHelper.Instance.Localize(_targetGrade.GetLocalizationKey());
-
+            
             return LocalizationHelper.Instance.Localize(DescriptionKey, gradeText, _cardsAmount);
         }
     }
