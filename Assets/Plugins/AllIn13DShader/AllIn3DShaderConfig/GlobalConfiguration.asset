@@ -18,16 +18,16 @@ MonoBehaviour:
   toonMaterial: {fileID: 2100000, guid: deae43ec6cafe38498ce343202e24586, type: 2}
   allIn13dDShaderLookMaterial: {fileID: 2100000, guid: c47ffb1264d98194ca46e4502b86c74f, type: 2}
   defaultPreset: {fileID: 2100000, guid: fed1698affe6c124c8eece7c36b256f0, type: 2}
-  rootPluginPath: Assets\External Assets\AllIn13DShader
-  globalConfigFolderPath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig
-  exportFolderPath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export
-  materialSavePath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export\Materials
-  renderImageSavePath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export\Images
-  normalMapSavePath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export\Normal
+  rootPluginPath: Assets\Plugins\AllIn13DShader
+  globalConfigFolderPath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig
+  exportFolderPath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export
+  materialSavePath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export\Materials
+  renderImageSavePath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export\Images
+  normalMapSavePath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export\Normal
     Maps
-  gradientSavePath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export\Gradients
-  atlasesSavePath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export\Atlases
-  noiseSavePath: Assets\External Assets\AllIn13DShader\AllIn3DShaderConfig\Export\Noises
+  gradientSavePath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export\Gradients
+  atlasesSavePath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export\Atlases
+  noiseSavePath: Assets\Plugins\AllIn13DShader\AllIn3DShaderConfig\Export\Noises
   renderImageScale: 0
   projectConfiguredFirstTime: 1
   urpConfiguredFirstTime: 1
