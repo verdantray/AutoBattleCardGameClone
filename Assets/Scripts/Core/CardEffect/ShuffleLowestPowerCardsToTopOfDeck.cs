@@ -36,8 +36,17 @@ namespace ProjectABC.Core
             // if amount of remain hands less than _cardsAmount, then no need to move cards to top of deck...
             if (ownSide.Deck.Count < _cardsAmount)
             {
-                var failedEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoDeckRemains);
-                failedEffectEvent.RegisterEvent(matchContextEvent);
+                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+
+                FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    failedCard,
+                    FailToActivateEffectReason.NoDeckRemains
+                );
+                
+                failToActivateEvent.RegisterEvent(matchContextEvent);
+                
+                // var failedEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoDeckRemains);
+                // failedEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 

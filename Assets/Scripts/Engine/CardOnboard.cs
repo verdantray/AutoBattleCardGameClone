@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
 using TMPro;
@@ -66,14 +68,12 @@ namespace ProjectABC.Engine
             mat.SetTexture(MAIN_TEX_PROPERTY, sprite.texture);
         }
 
-        public void MoveFollowingSpline(SplineContainer splineContainer, float duration, Action callback)
+        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, float duration, CancellationToken token)
         {
-            splineAnimate.Completed -= OnSplineAnimateCompleted;
             splineAnimate.Pause();
-            
             splineAnimate.Container = splineContainer;
             splineAnimate.Duration = duration;
-
+            
             splineAnimate.ObjectUpAxis = SplineComponent.AlignAxis.YAxis;
             splineAnimate.ObjectForwardAxis = SplineComponent.AlignAxis.ZAxis;
             splineAnimate.Alignment = SplineAnimate.AlignmentMode.SplineObject;
@@ -82,15 +82,21 @@ namespace ProjectABC.Engine
             splineAnimate.Easing = SplineAnimate.EasingMode.EaseInOut;
             splineAnimate.Loop = SplineAnimate.LoopMode.Once;
 
-            splineAnimate.Completed += OnSplineAnimateCompleted;
-            splineAnimate.Play();
-
-            return;
-            void OnSplineAnimateCompleted()
+            try
             {
-                splineAnimate.Completed -= OnSplineAnimateCompleted;
-                callback?.Invoke();
+                splineAnimate.Play();
+                await Task.Delay(TimeSpan.FromSeconds(duration), token);
             }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                splineAnimate.Pause();
+            }
+        }
+
+        public void MoveTo(Transform targetTransform)
+        {
+            transform.position = targetTransform.position;
+            transform.rotation = targetTransform.rotation;
         }
 
         public void MoveLinear(Transform destination, float duration, float delay = 0.0f, Action callback = null)

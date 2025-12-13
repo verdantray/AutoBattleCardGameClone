@@ -23,20 +23,20 @@ namespace ProjectABC.Core
             return Participants.Select(player => player.WaitUntilConfirmToProceed());
         }
 
-        private static class InstanceRegister<T> where T : class, new()
-        {
-            public static T Instance = new T();
-        }
-
-        public T GetModel<T>() where T : class, new()
-        {
-            return InstanceRegister<T>.Instance;
-        }
-
-        public void SetModel<T>(T model) where T : class, new()
-        {
-            InstanceRegister<T>.Instance = model;
-        }
+        // private static class InstanceRegister<T> where T : class, new()
+        // {
+        //     public static T Instance = new T();
+        // }
+        //
+        // public T GetModel<T>() where T : class, new()
+        // {
+        //     return InstanceRegister<T>.Instance;
+        // }
+        //
+        // public void SetModel<T>(T model) where T : class, new()
+        // {
+        //     InstanceRegister<T>.Instance = model;
+        // }
     }
 
     public class SimulationContextEvents : IReadOnlyList<IContextEvent>

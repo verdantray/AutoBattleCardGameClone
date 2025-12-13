@@ -28,16 +28,24 @@ namespace ProjectABC.Engine.UI
             txtName.text = LocalizationHelper.Instance.Localize(cardData.nameKey);
             txtTitle.text = LocalizationHelper.Instance.Localize(cardData.titleKey);
 
-            var cardEffect = Storage.Instance.CardEffectData[cardData.cardEffectId];
-            var descField = cardEffect.json.fields.FirstOrDefault(field => field.key == GameConst.CardEffect.EFFECT_DESC_KEY);
-            string desc = descField != null
-                ? LocalizationHelper.Instance.Localize(descField.value.strValue)
-                : string.Empty;
-
-            txtDesc.text = desc;
+            bool isCardEffectExists = !string.IsNullOrEmpty(cardData.cardEffectId);
             
-            bool isDescEmpty = string.IsNullOrEmpty(desc);
-            descAreaLayer.SetActive(!isDescEmpty);
+            if (isCardEffectExists)
+            {
+                var cardEffect = Storage.Instance.CardEffectData[cardData.cardEffectId];
+                var descField = cardEffect.json.fields.FirstOrDefault(field => field.key == GameConst.CardEffect.EFFECT_DESC_KEY);
+                string desc = descField != null
+                    ? LocalizationHelper.Instance.Localize(descField.value.strValue)
+                    : string.Empty;
+                
+                txtDesc.text = desc;
+            }
+            else
+            {
+                txtDesc.text = "";
+            }
+            
+            descAreaLayer.SetActive(isCardEffectExists);
         }
     }
 }

@@ -47,12 +47,12 @@ namespace ProjectABC.Core
                 ? lastMatchResult.Winner == ownPlayer
                 : lastMatchResult.Loser == ownPlayer;
 
+            CardReference reference = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+            
             if (!isEnableResultLastMatch)
             {
-                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
-
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
-                    failedCard,
+                    reference,
                     FailToActivateEffectReason.NoMeetCondition
                 );
                 
@@ -66,8 +66,18 @@ namespace ProjectABC.Core
             ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(ownPlayer, scoreEntry);
             
-            GainWinPointsByCardEffectEvent gainWinPointEvent = new GainWinPointsByCardEffectEvent(ownPlayer, _gainWinPoints);
-            gainWinPointEvent.RegisterEvent(matchContextEvent);
+            int totalWinPoints = gameState.ScoreBoard.GetTotalWinPoints(ownPlayer);
+            GainWinPointsByCardEffectEvent gainWinPointsEvent = new GainWinPointsByCardEffectEvent(
+                ownPlayer,
+                reference,
+                _gainWinPoints,
+                totalWinPoints
+            );
+            
+            gainWinPointsEvent.RegisterEvent(matchContextEvent);
+            
+            // GainWinPointsByCardEffectMessageEvent gainWinPointEvent = new GainWinPointsByCardEffectMessageEvent(ownPlayer, _gainWinPoints);
+            // gainWinPointEvent.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()

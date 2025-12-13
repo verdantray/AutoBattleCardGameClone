@@ -104,12 +104,12 @@ namespace ProjectABC.Core
         }
     }
     
-    public class GainWinPointsByCardEffectEvent : MatchMessageEvent
+    public class GainWinPointsByCardEffectMessageEvent : MatchMessageEvent
     {
         public readonly IPlayer GainedPlayer;
         public readonly int WinPoints;
             
-        public GainWinPointsByCardEffectEvent(IPlayer player, int winPoints)
+        public GainWinPointsByCardEffectMessageEvent(IPlayer player, int winPoints)
         {
             GainedPlayer = player;
             WinPoints = winPoints;

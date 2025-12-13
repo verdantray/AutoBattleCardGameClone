@@ -46,8 +46,17 @@ namespace ProjectABC.Core
             {
                 if (!gradeCardPiles[_targetGrade].TryDraw(out Card drawnCard))
                 {
-                    FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoCardPileRemains);
-                    failEffectEvent.RegisterEvent(matchContextEvent);
+                    var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+
+                    FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                        failedCard,
+                        FailToActivateEffectReason.NoCardPileRemains
+                    );
+                
+                    failToActivateEvent.RegisterEvent(matchContextEvent);
+                    
+                    // FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoCardPileRemains);
+                    // failEffectEvent.RegisterEvent(matchContextEvent);
                     break;
                 }
                 

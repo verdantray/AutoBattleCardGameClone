@@ -11,10 +11,9 @@ namespace ProjectABC.Core
         public IReadOnlyList<CardData> CardDataForPiles;
         public IReadOnlyList<RecruitData> RecruitData;
         public IReadOnlyList<WinPointData> WinPointData;
-        
         public IReadOnlyDictionary<string, CardEffectData> CardEffectData;
-        
-        private readonly Dictionary<string, CardData> _cardIdMap;
+
+        private readonly Dictionary<string, CardData> _cardIdMap = new Dictionary<string, CardData>();
 
         private void Initialize(GameDataAsset gameDataAsset)
         {

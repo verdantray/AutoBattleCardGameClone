@@ -56,20 +56,37 @@ namespace ProjectABC.Core
                 .Distinct()
                 .Count();
 
+            var reference = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+            
             if (clubsInInfirmary < _necessaryClubAmount)
             {
-                var failedApplyEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
-                failedApplyEffectEvent.RegisterEvent(matchContextEvent);
+                FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    reference,
+                    FailToActivateEffectReason.NoMeetCondition
+                );
+                
+                failToActivateEvent.RegisterEvent(matchContextEvent);
+                
+                // var failedApplyEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
+                // failedApplyEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
-            gameState.ScoreBoard.RegisterScoreEntry(
+            ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
+            gameState.ScoreBoard.RegisterScoreEntry(ownSide.Player, scoreEntry);
+            
+            int totalWinPoints = gameState.ScoreBoard.GetTotalWinPoints(ownSide.Player);
+            GainWinPointsByCardEffectEvent gainWinPointsEvent = new GainWinPointsByCardEffectEvent(
                 ownSide.Player,
-                new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect)
+                reference,
+                _gainWinPoints,
+                totalWinPoints
             );
             
-            var gainWinPointsEventEffect = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints);
-            gainWinPointsEventEffect.RegisterEvent(matchContextEvent);
+            gainWinPointsEvent.RegisterEvent(matchContextEvent);
+            
+            // var gainWinPointsEventEffect = new GainWinPointsByCardEffectMessageEvent(ownSide.Player, _gainWinPoints);
+            // gainWinPointsEventEffect.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()

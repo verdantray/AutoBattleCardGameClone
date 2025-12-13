@@ -41,7 +41,7 @@ namespace ProjectABC.Core
                     case FailToApplyCardEffectEvent failToApplyCardEffect:
                         stringBuilder.AppendLine($"{failToApplyCardEffect.Message}\n");
                         break;
-                    case GainWinPointsByCardEffectEvent gainWinPointsByCardEffect:
+                    case GainWinPointsByCardEffectMessageEvent gainWinPointsByCardEffect:
                         stringBuilder.AppendLine($"{gainWinPointsByCardEffect.Message}\n");
                         break;
                     case CommonMatchMessageEvent commonMessage:
@@ -75,7 +75,7 @@ namespace ProjectABC.Core
                     case FailToApplyCardEffectEvent failToApplyCardEffect:
                         stringBuilder.AppendLine($"{failToApplyCardEffect.Message}\n");
                         break;
-                    case GainWinPointsByCardEffectEvent gainWinPointsByCardEffect:
+                    case GainWinPointsByCardEffectMessageEvent gainWinPointsByCardEffect:
                         stringBuilder.AppendLine($"{gainWinPointsByCardEffect.Message}\n");
                         break;
                     case CommonMatchMessageEvent commonMessage:

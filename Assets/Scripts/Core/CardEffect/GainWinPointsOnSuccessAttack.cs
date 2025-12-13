@@ -29,18 +29,37 @@ namespace ProjectABC.Core
                 return;
             }
 
+            var reference = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+            
             if (ownSide.Field[^1] != CallCard)
             {
-                FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
-                failEffectEvent.RegisterEvent(matchContextEvent);
+                FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    reference,
+                    FailToActivateEffectReason.NoMeetCondition
+                );
+                
+                failToActivateEvent.RegisterEvent(matchContextEvent);
+                
+                // FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
+                // failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 
             ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(ownSide.Player, scoreEntry);
 
-            GainWinPointsByCardEffectEvent matchEvent = new GainWinPointsByCardEffectEvent(ownSide.Player, _gainWinPoints);
-            matchEvent.RegisterEvent(matchContextEvent);
+            int totalWinPoints = gameState.ScoreBoard.GetTotalWinPoints(ownSide.Player);
+            GainWinPointsByCardEffectEvent gainWinPointsEvent = new GainWinPointsByCardEffectEvent(
+                ownSide.Player,
+                reference,
+                _gainWinPoints,
+                totalWinPoints
+            );
+            
+            gainWinPointsEvent.RegisterEvent(matchContextEvent);
+
+            // GainWinPointsByCardEffectMessageEvent matchEvent = new GainWinPointsByCardEffectMessageEvent(ownSide.Player, _gainWinPoints);
+            // matchEvent.RegisterEvent(matchContextEvent);
         }
 
         protected override string GetDescription()

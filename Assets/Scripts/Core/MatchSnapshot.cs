@@ -30,6 +30,7 @@ namespace ProjectABC.Core
     public class MatchSideSnapshot
     {
         public readonly IPlayer Player;
+        public readonly int Score;
         public readonly MatchState State;
         
         public readonly IReadOnlyList<CardReference> Deck;
@@ -43,9 +44,12 @@ namespace ProjectABC.Core
             CardBuffArgs args = new CardBuffArgs(ownSide, otherSide, gameState);
             
             Player = ownSide.Player;
+            Score = gameState.ScoreBoard.GetTotalWinPoints(Player);
             State = ownSide.State;
-            
-            
+
+            Deck = ownSide.Deck.Select(card => new CardReference(card, args)).ToList();
+            Field = ownSide.Field.Select(card => new CardReference(card, args)).ToList();
+            Infirmary = ownSide.Infirmary.GetSnapshotInstance(args);
         }
     }
 

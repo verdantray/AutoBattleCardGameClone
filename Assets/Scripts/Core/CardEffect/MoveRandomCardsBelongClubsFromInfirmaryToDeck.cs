@@ -55,8 +55,17 @@ namespace ProjectABC.Core
 
             if (cardsBelongClubsInInfirmary.Length == 0)
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains);
-                failEffectEvent.RegisterEvent(matchContextEvent);
+                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+
+                FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    failedCard,
+                    FailToActivateEffectReason.NoMeetCondition
+                );
+                
+                failToActivateEvent.RegisterEvent(matchContextEvent);
+                
+                // var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoInfirmaryRemains);
+                // failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
 

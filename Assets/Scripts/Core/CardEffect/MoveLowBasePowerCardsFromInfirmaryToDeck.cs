@@ -39,8 +39,17 @@ namespace ProjectABC.Core
             var cardsInInfirmary = ownSide.Infirmary.GetAllCards();
             if (!cardsInInfirmary.Any(card => card.BasePower <= _powerCriteria))
             {
-                var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
-                failEffectEvent.RegisterEvent(matchContextEvent);
+                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+
+                FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    failedCard,
+                    FailToActivateEffectReason.NoMeetCondition
+                );
+                
+                failToActivateEvent.RegisterEvent(matchContextEvent);
+                
+                // var failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoMeetCondition);
+                // failEffectEvent.RegisterEvent(matchContextEvent);
                 return;
             }
             

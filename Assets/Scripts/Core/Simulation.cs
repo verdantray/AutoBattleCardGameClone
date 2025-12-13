@@ -57,10 +57,10 @@ namespace ProjectABC.Core
             _simulationContext = new SimulationContext(playerList);
         }
 
-        public void SetModel<T>(T model) where T : class, new()
-        {
-            _simulationContext.SetModel(model);
-        }
+        // public void SetModel<T>(T model) where T : class, new()
+        // {
+        //     _simulationContext.SetModel(model);
+        // }
 
         public void EnqueueGamePhase(IGamePhase gamePhase)
         {

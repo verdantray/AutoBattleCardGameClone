@@ -25,6 +25,7 @@ namespace ProjectABC.Engine
         [SerializeField] private RoundPhase[] roundPhases;
 
         public static ABCModel Model => Instance.model;
+        
         protected override bool SetPersistent => false;
         
         private Simulation _simulation;

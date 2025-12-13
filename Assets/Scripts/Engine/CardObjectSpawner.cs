@@ -30,10 +30,13 @@ namespace ProjectABC.Engine
     public abstract class CardObject : PoolableObject, ISpawnable<CardSpawnArgs>
     {
         [SerializeField] private int poolSize;
+        
         public override int PoolSize => poolSize;
+        
         public abstract void OnSpawned(CardSpawnArgs args);
 
         public abstract void OnDespawned();
+        
         protected abstract void ApplyArgs(CardSpawnArgs args);
     }
     

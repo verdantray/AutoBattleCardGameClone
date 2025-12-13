@@ -4,7 +4,15 @@ namespace ProjectABC.Core
 {
     public interface IMatchEvent
     {
-        public void RegisterEvent(IMatchContextEvent matchContextEvent);
+        public void RegisterEvent(IMatchContextEvent matchContextEvent)
+        {
+            if (matchContextEvent.MatchFinished)
+            {
+                return;
+            }
+            
+            matchContextEvent.MatchEvents.Add(this);
+        }
     }
 
     public abstract class MatchEvent : IMatchEvent
@@ -175,6 +183,22 @@ namespace ProjectABC.Core
         public ShuffleDeckEvent(CardEffectAppliedInfo appliedInfo)
         {
             AppliedInfo = appliedInfo;
+        }
+    }
+
+    public class GainWinPointsByCardEffectEvent : MatchEvent
+    {
+        public readonly IPlayer Player;
+        public readonly CardReference ActivateCard;
+        public readonly int GainPoints;
+        public readonly int TotalPoints;
+
+        public GainWinPointsByCardEffectEvent(IPlayer player, CardReference card, int gainPoints, int totalPoints)
+        {
+            Player = player;
+            ActivateCard = card;
+            GainPoints = gainPoints;
+            TotalPoints = totalPoints;
         }
     }
 
