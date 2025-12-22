@@ -64,273 +64,6 @@ MonoBehaviour:
     ko: "\uB2E4\uC2DC \uAC00\uC838\uC624\uAE30 ({0})"
     en: Reroll ({0})
     ja: 
-  - key: desc_effect_condition_on_recruit
-    ko: "\uC601\uC785 \uC2DC :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_appear
-    ko: "\uB4F1\uC7A5 \uC2DC :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_while_field
-    ko: "\uD544\uB4DC\uC5D0 \uC788\uC744 \uB54C :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_leave_field
-    ko: "\uD544\uB4DC\uC5D0\uC11C \uBC97\uC5B4\uB0A0 \uB54C :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_while_infirmary
-    ko: "\uC591\uD638\uC2E4\uC5D0 \uC788\uC744 \uB54C :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_attack
-    ko: "\uACF5\uACA9\uD560 \uB54C :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_defend
-    ko: "\uC218\uBE44\uD560 \uB54C :"
-    en: 
-    ja: 
-  - key: desc_effect_condition_on_success_attack
-    ko: "\uACF5\uACA9\uC774 \uC131\uACF5\uD588\uC744 \uB54C :"
-    en: 
-    ja: 
-  - key: desc_effect_elite
-    ko: "\uC815\uC608"
-    en: 
-    ja: 
-  - key: desc_effect_gain_win_points_with_clubs_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0
-      \uC788\uB294 \uCE74\uB4DC\uB4E4\uC758 \uC18C\uC18D \uC911 {0}\uB97C \uC81C\uC678\uD55C
-      \uC18C\uC18D\uC774 {1}\uC885 \uC774\uC0C1\uC774\uBA74 \uC2B9\uC810\uC744 +{2}
-      \uC5BB\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_shuffle_lowest_power_cards_to_top_of_deck
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uB371
-      \uC911 \uD30C\uC6CC\uAC00 \uAC00\uC7A5 \uB0AE\uC740 \uCE74\uB4DC {0}\uC7A5\uC744
-      \uB371 \uB9E8 \uC704\uB85C \uB123\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_clubs_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
-      \uC591\uD638\uC2E4\uC5D0 \uC788\uB294 \uCE74\uB4DC\uB4E4\uC758 \uC18C\uC18D
-      \uC911 {0}\uB97C \uC81C\uC678\uD55C \uC18C\uC18D \uC218\uB9CC\uD07C \uB0B4
-      \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_move_low_base_power_cards_from_infirmary_to_deck
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
-      \uAE30\uBCF8 \uD30C\uC6CC\uAC00 {0} \uC774\uD558\uC778 \uCE74\uB4DC {1}\uC7A5\uC744
-      \uB371 \uB9E8 \uC544\uB798\uB85C \uB123\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
-      {0} \uC18C\uC18D \uCE74\uB4DC {1}\uC7A5\uC744 \uBB34\uC791\uC704\uB85C \uC120\uD0DD\uD574
-      \uB371 \uB9E8 \uC544\uB798\uB85C \uB123\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_give_power_up_to_belong_clubs_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
-      \uD544\uB4DC\uC5D0 \uC788\uB294 {0} \uC18C\uC18D \uCE74\uB4DC\uB4E4\uC758 \uD30C\uC6CC\uAC00
-      +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_infirmary_slots
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4
-      \uBE48 \uCE78\uB2F9 \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_replace_movement_infirmary_to_deck
-    ko: "%localization_key:desc_effect_condition_on_leave_field% \uC790\uC2E0\uC758
-      \uC591\uD638\uC2E4\uB85C \uC774\uB3D9\uD558\uB294 \uB300\uC2E0 \uB371 \uB9E8
-      \uC544\uB798\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_belong_clubs_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
-      \uC591\uD638\uC2E4\uC5D0 {0} \uC18C\uC18D \uCE74\uB4DC\uAC00 \uC788\uC73C\uBA74
-      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_give_power_up_to_specific_power_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
-      \uD544\uB4DC\uC5D0 \uC788\uB294 \uCE74\uB4DC \uC911 \uAE30\uBCF8 \uD30C\uC6CC\uAC00
-      {0}\uC778 \uCE74\uB4DC\uB4E4\uC758 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_give_power_up_to_belong_clubs_from_infirmary_while_attack
-    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
-      \uD544\uB4DC\uC5D0 \uC788\uB294 {0} \uC18C\uC18D \uCE74\uB4DC\uB4E4\uC774 \uACF5\uACA9\uD560
-      \uB54C \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_while_defending
-    ko: "%localization_key:desc_effect_condition_on_defend% \uB0B4 \uD30C\uC6CC\uAC00
-      {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_both_side_field_amount
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uACFC
-      \uC0C1\uB300 \uD544\uB4DC\uC758 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C \uB0B4
-      \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_if_won_last_match
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC774
-      \uC9C0\uB09C \uB77C\uC6B4\uB4DC\uC5D0\uC11C \uC2B9\uB9AC\uD588\uB2E4\uBA74
-      \uB0B4 \uD30C\uC6CC\uAC00 {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_gain_win_points_on_recruit
-    ko: "%localization_key:desc_effect_condition_on_recruit% \uC2B9\uC810\uC744 +{0}
-      \uC5BB\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_gain_win_points_on_success_attack
-    ko: "%localization_key:desc_effect_condition_on_success_attack% \uC774 \uCE74\uB4DC\uB97C
-      \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uB0C8\uB2E4\uBA74 \uC2B9\uC810\uC744 +{0} \uC5BB\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_gain_win_points_if_lost_last_match
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC774 \uC9C0\uB09C
-      \uB77C\uC6B4\uB4DC\uC5D0\uC11C \uD328\uBC30\uD588\uB2E4\uBA74 \uC2B9\uC810\uC744
-      +{0} \uC5BB\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_give_disabler_both_side_for_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uACFC
-      \uC0C1\uB300 \uC591\uD638\uC2E4\uC758 \uCE74\uB4DC \uD6A8\uACFC\uAC00 \uBAA8\uB450
-      \uBB34\uD6A8\uAC00 \uB429\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_won_count
-    ko: "%localization_key:desc_effect_condition_on_attack% \uC790\uC2E0\uC758 \uB9E4\uCE58
-      \uC2B9\uB9AC \uD69F\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_by_deck_stock
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
-      \uB371\uC758 \uB0A8\uC740 \uCE74\uB4DC\uAC00 {0}\uC7A5 \uC774\uC0C1\uC774\uBA74
-      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_move_specific_grade_cards_from_piles_to_deck
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0\uC11C
-      {0} \uCE74\uB4DC {1}\uC7A5\uC744 \uBF51\uC544 \uB371\uC758 \uBB34\uC791\uC704
-      \uC704\uCE58\uC5D0 \uB123\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_if_attack_alone
-    ko: "%localization_key:desc_effect_condition_on_attack% \uC790\uC2E0\uC758 \uD544\uB4DC\uC758
-      \uC720\uC77C\uD55C \uCE74\uB4DC\uB77C\uBA74 \uB0B4 \uD30C\uC6CC\uAC00 +{0}
-      \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_give_power_down_while_state_from_infirmary_while_attack
-    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
-      \uD544\uB4DC\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uCE74\uB4DC\uB4E4\uC774 \uACF5\uACA9\uD560
-      \uB54C \uD30C\uC6CC\uAC00 -{0} \uAC10\uC18C\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_move_deck_to_infirmary
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uB371
-      \uB9E8 \uC704\uC758 \uCE74\uB4DC {0}\uC7A5\uC744 \uC591\uD638\uC2E4\uB85C \uBCF4\uB0C5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_card_types_belong_clubs
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
-      \uC591\uD638\uC2E4\uC758 {0} \uC18C\uC18D\uC778 \uCE74\uB4DC \uC885\uB958\uB9C8\uB2E4
-      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_move_random_cards_to_field
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
-      \uBB34\uC791\uC704 \uCE74\uB4DC {0}\uC7A5\uC744 \uAC00\uC838\uC640 \uC774 \uCE74\uB4DC
-      \uC544\uB798\uC5D0 \uB461\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_belong_clubs_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
-      \uC591\uD638\uC2E4\uC758 {0} \uC18C\uC18D\uC778 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C
-      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_cards_from_infirmary
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
-      \uC591\uD638\uC2E4\uC758 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
-      +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_round
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uD604\uC7AC \uB77C\uC6B4\uB4DC
-      \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_grade_of_opponent_field_last
-    ko: "%localization_key:desc_effect_condition_on_while_field% \uC0C1\uB300\uAC00
-      \uD544\uB4DC\uC5D0 \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uB0B8 \uCE74\uB4DC\uC758
-      \uD559\uB144 \uC218\uCE58\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_move_opponent_cards_deck_to_infirmary
-    ko: "%localization_key:desc_effect_condition_on_appear% \uC0C1\uB300\uC758 \uB371
-      \uB9E8 \uC704\uC758 \uCE74\uB4DC {0}\uC7A5\uC744 \uC0C1\uB300\uC758 \uC591\uD638\uC2E4\uB85C
-      \uBCF4\uB0C5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_opponent_won_count
-    ko: "%localization_key:desc_effect_condition_on_attack% \uC0C1\uB300\uC758 \uB9E4\uCE58
-      \uC2B9\uB9AC \uD69F\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_as_each_opponent_belong_clubs_from_infirmary
-    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300 \uC591\uD638\uC2E4\uC758
-      \uB3D9\uC544\uB9AC \uC18C\uC18D \uC885\uB958 \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
-      +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_power_up_self_by_opponent_deck_stock
-    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300\uC758 \uB371\uC758
-      \uB0A8\uC740 \uCE74\uB4DC\uAC00 {0}\uC7A5 \uC774\uC0C1\uC778 \uACBD\uC6B0 \uC790\uC2E0\uC758
-      \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_deck_remains
-    ko: "\uC790\uC2E0\uC758 \uB371\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_opponent_deck_remains
-    ko: "\uC0C1\uB300\uC758 \uB371\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_card_pile_remains
-    ko: "\uC790\uC2E0\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
-      \uC5C6\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_opponent_card_pile_remains
-    ko: "\uC0C1\uB300\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
-      \uC5C6\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_infirmary_remains
-    ko: "\uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
-      \uC5C6\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_opponent_infirmary_remains
-    ko: "\uC0C1\uB300\uC758 \uC591\uD638\uC2E4\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
-      \uC5C6\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
-  - key: desc_effect_fail_no_meet_condition
-    ko: "\uCE74\uB4DC\uAC00 \uC694\uAD6C\uD558\uB294 \uC870\uAC74\uC744 \uB9CC\uC871\uD558\uC9C0
-      \uBABB\uD588\uC2B5\uB2C8\uB2E4."
-    en: 
-    ja: 
   - key: grade_first
     ko: "1\uD559\uB144"
     en: 1st Grade
@@ -375,7 +108,7 @@ MonoBehaviour:
     ko: "\uC2DC\uD5D8\uCD9C\uC81C\uBD80"
     en: Examiners
     ja: 
-  - key: card_name_Irian
+  - key: card_name_irian
     ko: "\uC774\uB9AC\uC548"
     en: Irian
     ja: 
@@ -854,4 +587,271 @@ MonoBehaviour:
   - key: title_swan_spirit
     ko: "\uBC31\uC870"
     en: Swan Spirit
+    ja: 
+  - key: desc_effect_condition_on_recruit
+    ko: "\uC601\uC785 \uC2DC :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_appear
+    ko: "\uB4F1\uC7A5 \uC2DC :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_while_field
+    ko: "\uD544\uB4DC\uC5D0 \uC788\uC744 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_leave_field
+    ko: "\uD544\uB4DC\uC5D0\uC11C \uBC97\uC5B4\uB0A0 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_while_infirmary
+    ko: "\uC591\uD638\uC2E4\uC5D0 \uC788\uC744 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_attack
+    ko: "\uACF5\uACA9\uD560 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_defend
+    ko: "\uC218\uBE44\uD560 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_condition_on_success_attack
+    ko: "\uACF5\uACA9\uC774 \uC131\uACF5\uD588\uC744 \uB54C :"
+    en: 
+    ja: 
+  - key: desc_effect_elite
+    ko: "\uC815\uC608"
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_with_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0
+      \uC788\uB294 \uCE74\uB4DC\uB4E4\uC758 \uC18C\uC18D \uC911 {0}\uB97C \uC81C\uC678\uD55C
+      \uC18C\uC18D\uC774 {1}\uC885 \uC774\uC0C1\uC774\uBA74 \uC2B9\uC810\uC744 +{2}
+      \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_shuffle_lowest_power_cards_to_top_of_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uB371
+      \uC911 \uD30C\uC6CC\uAC00 \uAC00\uC7A5 \uB0AE\uC740 \uCE74\uB4DC {0}\uC7A5\uC744
+      \uB371 \uB9E8 \uC704\uB85C \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC5D0 \uC788\uB294 \uCE74\uB4DC\uB4E4\uC758 \uC18C\uC18D
+      \uC911 {0}\uB97C \uC81C\uC678\uD55C \uC18C\uC18D \uC218\uB9CC\uD07C \uB0B4
+      \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_low_base_power_cards_from_infirmary_to_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
+      \uAE30\uBCF8 \uD30C\uC6CC\uAC00 {0} \uC774\uD558\uC778 \uCE74\uB4DC {1}\uC7A5\uC744
+      \uB371 \uB9E8 \uC544\uB798\uB85C \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_random_cards_belong_clubs_from_infirmary_to_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
+      {0} \uC18C\uC18D \uCE74\uB4DC {1}\uC7A5\uC744 \uBB34\uC791\uC704\uB85C \uC120\uD0DD\uD574
+      \uB371 \uB9E8 \uC544\uB798\uB85C \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_up_to_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 {0} \uC18C\uC18D \uCE74\uB4DC\uB4E4\uC758 \uD30C\uC6CC\uAC00
+      +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_infirmary_slots
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4
+      \uBE48 \uCE78\uB2F9 \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_replace_movement_infirmary_to_deck
+    ko: "%localization_key:desc_effect_condition_on_leave_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uB85C \uC774\uB3D9\uD558\uB294 \uB300\uC2E0 \uB371 \uB9E8
+      \uC544\uB798\uB85C \uC774\uB3D9\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC5D0 {0} \uC18C\uC18D \uCE74\uB4DC\uAC00 \uC788\uC73C\uBA74
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_up_to_specific_power_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 \uCE74\uB4DC \uC911 \uAE30\uBCF8 \uD30C\uC6CC\uAC00
+      {0}\uC778 \uCE74\uB4DC\uB4E4\uC758 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_up_to_belong_clubs_from_infirmary_while_attack
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 {0} \uC18C\uC18D \uCE74\uB4DC\uB4E4\uC774 \uACF5\uACA9\uD560
+      \uB54C \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_while_defending
+    ko: "%localization_key:desc_effect_condition_on_defend% \uB0B4 \uD30C\uC6CC\uAC00
+      {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_both_side_field_amount
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uACFC
+      \uC0C1\uB300 \uD544\uB4DC\uC758 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C \uB0B4
+      \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_if_won_last_match
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC774
+      \uC9C0\uB09C \uB77C\uC6B4\uB4DC\uC5D0\uC11C \uC2B9\uB9AC\uD588\uB2E4\uBA74
+      \uB0B4 \uD30C\uC6CC\uAC00 {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_on_recruit
+    ko: "%localization_key:desc_effect_condition_on_recruit% \uC2B9\uC810\uC744 +{0}
+      \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_on_success_attack
+    ko: "%localization_key:desc_effect_condition_on_success_attack% \uC774 \uCE74\uB4DC\uB97C
+      \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uB0C8\uB2E4\uBA74 \uC2B9\uC810\uC744 +{0} \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_gain_win_points_if_lost_last_match
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC774 \uC9C0\uB09C
+      \uB77C\uC6B4\uB4DC\uC5D0\uC11C \uD328\uBC30\uD588\uB2E4\uBA74 \uC2B9\uC810\uC744
+      +{0} \uC5BB\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_disabler_both_side_for_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uACFC
+      \uC0C1\uB300 \uC591\uD638\uC2E4\uC758 \uCE74\uB4DC \uD6A8\uACFC\uAC00 \uBAA8\uB450
+      \uBB34\uD6A8\uAC00 \uB429\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_won_count
+    ko: "%localization_key:desc_effect_condition_on_attack% \uC790\uC2E0\uC758 \uB9E4\uCE58
+      \uC2B9\uB9AC \uD69F\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_by_deck_stock
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uB371\uC758 \uB0A8\uC740 \uCE74\uB4DC\uAC00 {0}\uC7A5 \uC774\uC0C1\uC774\uBA74
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_specific_grade_cards_from_piles_to_deck
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0\uC11C
+      {0} \uCE74\uB4DC {1}\uC7A5\uC744 \uBF51\uC544 \uB371\uC758 \uBB34\uC791\uC704
+      \uC704\uCE58\uC5D0 \uB123\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_if_attack_alone
+    ko: "%localization_key:desc_effect_condition_on_attack% \uC790\uC2E0\uC758 \uD544\uB4DC\uC758
+      \uC720\uC77C\uD55C \uCE74\uB4DC\uB77C\uBA74 \uB0B4 \uD30C\uC6CC\uAC00 +{0}
+      \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_give_power_down_while_state_from_infirmary_while_attack
+    ko: "%localization_key:desc_effect_condition_on_while_infirmary% \uC790\uC2E0\uC758
+      \uD544\uB4DC\uC5D0 \uC788\uB294 \uBAA8\uB4E0 \uCE74\uB4DC\uB4E4\uC774 \uACF5\uACA9\uD560
+      \uB54C \uD30C\uC6CC\uAC00 -{0} \uAC10\uC18C\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_deck_to_infirmary
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uB371
+      \uB9E8 \uC704\uC758 \uCE74\uB4DC {0}\uC7A5\uC744 \uC591\uD638\uC2E4\uB85C \uBCF4\uB0C5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_card_types_belong_clubs
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC758 {0} \uC18C\uC18D\uC778 \uCE74\uB4DC \uC885\uB958\uB9C8\uB2E4
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_random_cards_to_field
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0\uC11C
+      \uBB34\uC791\uC704 \uCE74\uB4DC {0}\uC7A5\uC744 \uAC00\uC838\uC640 \uC774 \uCE74\uB4DC
+      \uC544\uB798\uC5D0 \uB461\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC758 {0} \uC18C\uC18D\uC778 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C
+      \uB0B4 \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_cards_from_infirmary
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC790\uC2E0\uC758
+      \uC591\uD638\uC2E4\uC758 \uCE74\uB4DC \uC7A5\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
+      +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_round
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uD604\uC7AC \uB77C\uC6B4\uB4DC
+      \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_grade_of_opponent_field_last
+    ko: "%localization_key:desc_effect_condition_on_while_field% \uC0C1\uB300\uAC00
+      \uD544\uB4DC\uC5D0 \uB9C8\uC9C0\uB9C9\uC73C\uB85C \uB0B8 \uCE74\uB4DC\uC758
+      \uD559\uB144 \uC218\uCE58\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 {0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_move_opponent_cards_deck_to_infirmary
+    ko: "%localization_key:desc_effect_condition_on_appear% \uC0C1\uB300\uC758 \uB371
+      \uB9E8 \uC704\uC758 \uCE74\uB4DC {0}\uC7A5\uC744 \uC0C1\uB300\uC758 \uC591\uD638\uC2E4\uB85C
+      \uBCF4\uB0C5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_opponent_won_count
+    ko: "%localization_key:desc_effect_condition_on_attack% \uC0C1\uB300\uC758 \uB9E4\uCE58
+      \uC2B9\uB9AC \uD69F\uC218\uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00 +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_as_each_opponent_belong_clubs_from_infirmary
+    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300 \uC591\uD638\uC2E4\uC758
+      \uB3D9\uC544\uB9AC \uC18C\uC18D \uC885\uB958 \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
+      +{0} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_power_up_self_by_opponent_deck_stock
+    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300\uC758 \uB371\uC758
+      \uB0A8\uC740 \uCE74\uB4DC\uAC00 {0}\uC7A5 \uC774\uC0C1\uC778 \uACBD\uC6B0 \uC790\uC2E0\uC758
+      \uD30C\uC6CC\uAC00 +{1} \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_deck_remains
+    ko: "\uC790\uC2E0\uC758 \uB371\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_opponent_deck_remains
+    ko: "\uC0C1\uB300\uC758 \uB371\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_card_pile_remains
+    ko: "\uC790\uC2E0\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_opponent_card_pile_remains
+    ko: "\uC0C1\uB300\uC758 \uCE74\uB4DC\uB354\uBBF8\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_infirmary_remains
+    ko: "\uC790\uC2E0\uC758 \uC591\uD638\uC2E4\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_opponent_infirmary_remains
+    ko: "\uC0C1\uB300\uC758 \uC591\uD638\uC2E4\uC5D0 \uB0A8\uC740 \uCE74\uB4DC\uAC00
+      \uC5C6\uC2B5\uB2C8\uB2E4."
+    en: 
+    ja: 
+  - key: desc_effect_fail_no_meet_condition
+    ko: "\uCE74\uB4DC\uAC00 \uC694\uAD6C\uD558\uB294 \uC870\uAC74\uC744 \uB9CC\uC871\uD558\uC9C0
+      \uBABB\uD588\uC2B5\uB2C8\uB2E4."
+    en: 
     ja: 

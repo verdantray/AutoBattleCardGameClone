@@ -1,7 +1,9 @@
 {
     "name": "ProjectABC.Utils",
     "rootNamespace": "ProjectABC.Utils",
-    "references": [],
+    "references": [
+        ""
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

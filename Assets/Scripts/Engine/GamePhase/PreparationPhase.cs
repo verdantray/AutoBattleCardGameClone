@@ -7,20 +7,21 @@ namespace ProjectABC.Engine
     [CreateAssetMenu(fileName = nameof(PreparationPhase), menuName = "Scripting/ScriptableObject Script Menu/GamePhaseAsset/PreparationPhase")]
     public sealed class PreparationPhase : GamePhaseAsset
     {
-        [SerializeField] private int round;
-        
         public override async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             PersistentWorldCameraPoints.Instance.SwapPoint("Default");
+
+            int prevRound = simulationContext.CurrentState.Round;
+            int currentRound = prevRound += 1;
             
-            simulationContext.CurrentState.SetRound(round);
+            simulationContext.CurrentState.SetRound(currentRound);
             
-            IContextEvent contextEvent = new PrepareRoundEvent(round);
+            IContextEvent contextEvent = new PrepareRoundEvent(currentRound);
             
             contextEvent.Publish();
             simulationContext.CollectedEvents.AddEvent(contextEvent);
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
         }
     }
 }

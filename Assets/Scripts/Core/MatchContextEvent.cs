@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using log4net.Appender;
 
 namespace ProjectABC.Core
 {
@@ -80,8 +81,8 @@ namespace ProjectABC.Core
             MatchContextEvent matchContextEvent = new MatchContextEvent(currentState.Round);
 
             var (defender, attacker, reason) = IMatchContextEvent.GetMatchSidesOnStart(currentState, playerStates);
-            defender.SetMatchState(MatchState.Defending);
-            attacker.SetMatchState(MatchState.Attacking);
+            defender.SetMatchState(MatchPosition.Defending);
+            attacker.SetMatchState(MatchPosition.Attacking);
 
             MatchSnapshot matchSnapshotOnStart = new MatchSnapshot(currentState, defender, attacker);
             MatchStartEvent startEvent = new MatchStartEvent(attacker.Player, defender.Player, reason, matchSnapshotOnStart);
@@ -99,7 +100,7 @@ namespace ProjectABC.Core
                 return matchContextEvent;
             }
 
-            RegisterDrawCardEvent(defender, matchContextEvent);
+            RegisterDrawCardEvent(defender, attacker, currentState, matchContextEvent);
 
             CardEffectArgs defenderDrawnEffectArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnEnterFieldAsDefender,
@@ -132,7 +133,7 @@ namespace ProjectABC.Core
                         return matchContextEvent;
                     }
 
-                    RegisterDrawCardEvent(attacker, matchContextEvent);
+                    RegisterDrawCardEvent(attacker, defender, currentState, matchContextEvent);
                     
                     CardEffectArgs attackerDrawnEffectArgs = new CardEffectArgs(
                         EffectTriggerEvent.OnEnterFieldAsAttacker,
@@ -218,8 +219,8 @@ namespace ProjectABC.Core
                 
                 // changes position between two players
                 (defender, attacker) = (attacker, defender);
-                defender.SetMatchState(MatchState.Defending);
-                attacker.SetMatchState(MatchState.Attacking);
+                defender.SetMatchState(MatchPosition.Defending);
+                attacker.SetMatchState(MatchPosition.Attacking);
 
                 #region Trigger defender's cards on field
 
@@ -254,13 +255,12 @@ namespace ProjectABC.Core
             }
         }
 
-        private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchContextEvent matchContextEvent)
+        private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchSide otherSide, GameState gameState, MatchContextEvent matchContextEvent)
         {
-            CardLocation prevLocation = new DeckLocation(drawnSide.Player, 0);
-            CardLocation curLocation = new FieldLocation(drawnSide.Player, drawnSide.Field.Count - 1);
-            CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
+            CardBuffArgs buffArgs = new CardBuffArgs(drawnSide, otherSide, gameState);
+            CardReference drawnCard = new CardReference(drawnSide.Field[^1], buffArgs);
             
-            DrawCardToFieldEvent toFieldEvent = new DrawCardToFieldEvent(drawnSide.Player, movementInfo);
+            DrawCardToFieldEvent toFieldEvent = new DrawCardToFieldEvent(drawnSide.Player, drawnCard);
             toFieldEvent.RegisterEvent(matchContextEvent);
         }
     }

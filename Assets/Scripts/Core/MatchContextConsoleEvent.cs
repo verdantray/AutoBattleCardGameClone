@@ -98,8 +98,8 @@ namespace ProjectABC.Core
             MatchContextConsoleEvent matchContextEvent = new MatchContextConsoleEvent(currentState.Round);
 
             var (defender, attacker, reason) = IMatchContextEvent.GetMatchSidesOnStart(currentState, playerStates);
-            defender.SetMatchState(MatchState.Defending);
-            attacker.SetMatchState(MatchState.Attacking);
+            defender.SetMatchState(MatchPosition.Defending);
+            attacker.SetMatchState(MatchPosition.Attacking);
 
             string matchStartMessage = $"매치 시작 : {defender.Player.Name} vs {attacker.Player.Name}";
             CommonMatchMessageEvent matchStartEvent = new CommonMatchMessageEvent(matchStartMessage);
@@ -240,8 +240,8 @@ namespace ProjectABC.Core
                 
                 // changes position between two players
                 (defender, attacker) = (attacker, defender);
-                defender.SetMatchState(MatchState.Defending);
-                attacker.SetMatchState(MatchState.Attacking);
+                defender.SetMatchState(MatchPosition.Defending);
+                attacker.SetMatchState(MatchPosition.Attacking);
 
                 #region Trigger defender's cards on field
 

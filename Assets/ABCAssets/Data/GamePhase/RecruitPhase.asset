@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30676b9e652f442fa093ecb2d16d914a, type: 3}
   m_Name: RecruitPhase
   m_EditorClassIdentifier: 
+  gamePhase: 2

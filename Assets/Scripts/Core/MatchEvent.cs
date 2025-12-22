@@ -84,12 +84,12 @@ namespace ProjectABC.Core
     public class DrawCardToFieldEvent : MatchEvent
     {
         public readonly IPlayer Owner;
-        public readonly CardMovementInfo MovementInfo;
+        public readonly CardReference DrawnCard;
 
-        public DrawCardToFieldEvent(IPlayer owner, CardMovementInfo movementInfo)
+        public DrawCardToFieldEvent(IPlayer owner, CardReference drawnCard)
         {
             Owner = owner;
-            MovementInfo = movementInfo;
+            DrawnCard = drawnCard;
         }
     }
 

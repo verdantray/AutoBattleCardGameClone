@@ -5,13 +5,13 @@ using ProjectABC.Engine.UI;
 
 namespace ProjectABC.Engine
 {
-    public class DeckConstructionEventHandler : IContextEventUIHandler<DeckConstructionEvent>
+    public class DeckConstructionConfirmHandler : IConfirmHandler<DeckConstructionEvent>
     {
         public bool IsWaitConfirm { get; private set; }
         
         private readonly List<DeckConstructionEvent> _deckConstructionEvents = new List<DeckConstructionEvent>();
 
-        public DeckConstructionEventHandler()
+        public DeckConstructionConfirmHandler()
         {
             this.StartListening();
         }

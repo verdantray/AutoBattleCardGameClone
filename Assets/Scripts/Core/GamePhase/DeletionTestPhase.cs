@@ -7,6 +7,8 @@ namespace ProjectABC.Core
 {
     public class DeletionTestPhase : IGamePhase
     {
+        public GamePhase Phase => GamePhase.Deletion;
+        
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             List<PlayerState> playerStates = simulationContext.CurrentState.PlayerStates;

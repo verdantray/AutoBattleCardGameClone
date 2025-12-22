@@ -90,7 +90,7 @@ MonoBehaviour:
     basePower: 1
     amount: 3
     titleKey: title_clerk
-    nameKey: card_name_Irian
+    nameKey: card_name_irian
     cardEffectId: 
     imagePath: material_card_irian_co
   - id: card_mirea_co

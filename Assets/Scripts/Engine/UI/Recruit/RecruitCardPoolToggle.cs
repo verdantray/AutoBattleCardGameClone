@@ -33,7 +33,7 @@ namespace ProjectABC.Engine.UI
                 txtGrade.text = localizedGrade;
             }
 
-            txtGradeAmountPair.text = $"{localizedGrade} × {amount}";
+            txtGradeAmountPair.text = $"{localizedGrade} X {amount}";
             
             toggle.onValueChanged.AddListener(callback.Invoke);
             toggle.isOn = false;

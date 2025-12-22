@@ -31,13 +31,13 @@ namespace ProjectABC.Core
     {
         public readonly IPlayer Player;
         public readonly int Score;
-        public readonly MatchState State;
+        public readonly MatchPosition Position;
         
         public readonly IReadOnlyList<CardReference> Deck;
         public readonly IReadOnlyList<CardReference> Field;
         public readonly InfirmaryInstance Infirmary;
         
-        public bool IsAttacking => State == MatchState.Attacking;
+        public bool IsAttacking => Position == MatchPosition.Attacking;
 
         public MatchSideSnapshot(MatchSide ownSide, MatchSide otherSide, GameState gameState)
         {
@@ -45,7 +45,7 @@ namespace ProjectABC.Core
             
             Player = ownSide.Player;
             Score = gameState.ScoreBoard.GetTotalWinPoints(Player);
-            State = ownSide.State;
+            Position = ownSide.Position;
 
             Deck = ownSide.Deck.Select(card => new CardReference(card, args)).ToList();
             Field = ownSide.Field.Select(card => new CardReference(card, args)).ToList();

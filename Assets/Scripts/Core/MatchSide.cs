@@ -5,7 +5,7 @@ using System.Linq;
 namespace ProjectABC.Core
 {
     [Flags]
-    public enum MatchState
+    public enum MatchPosition
     {
         Attacking = 1 << 1,
         Defending = 1 << 2,
@@ -22,9 +22,9 @@ namespace ProjectABC.Core
         
         public readonly List<CardBuffHandleEntry> CardBuffHandlers = new List<CardBuffHandleEntry>();
         
-        public MatchState State { get; private set; } = MatchState.Attacking;
+        public MatchPosition Position { get; private set; } = MatchPosition.Attacking;
         
-        public bool IsAttacking => State == MatchState.Attacking;
+        public bool IsAttacking => Position == MatchPosition.Attacking;
         
         public MatchSide(PlayerState playerState)
         {
@@ -38,7 +38,7 @@ namespace ProjectABC.Core
             Deck.Shuffle();
         }
 
-        public void SetMatchState(MatchState state) => State = state;
+        public void SetMatchState(MatchPosition position) => Position = position;
 
         public bool TryDraw(out Card drawn)
         {

@@ -8,7 +8,7 @@
   "cancel_triggers": [
     "OnLeaveField"
   ],
-  "enable_match_states": [
+  "enable_match_positions": [
     "Defending"
   ],
   "power_up_bonus": 5

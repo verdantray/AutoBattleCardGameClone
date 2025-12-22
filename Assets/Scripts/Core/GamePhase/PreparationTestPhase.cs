@@ -4,6 +4,8 @@ namespace ProjectABC.Core
 {
     public class PreparationTestPhase : IGamePhase
     {
+        public GamePhase Phase => GamePhase.Preparation;
+
         private readonly int _round;
         
         public PreparationTestPhase(int round)

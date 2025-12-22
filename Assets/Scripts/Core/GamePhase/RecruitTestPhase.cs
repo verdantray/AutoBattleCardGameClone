@@ -8,6 +8,8 @@ namespace ProjectABC.Core
 {
 	public class RecruitTestPhase : IGamePhase
     {
+        public GamePhase Phase => GamePhase.Recruit;
+        
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;

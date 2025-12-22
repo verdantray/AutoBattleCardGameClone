@@ -88,7 +88,7 @@ namespace ProjectABC.Core
                 }
                 
                 EnqueueGamePhase(new RecruitTestPhase());
-                EnqueueGamePhase(new BattleTestPhase());
+                EnqueueGamePhase(new MatchTestPhase());
             }
             
             EnqueueGamePhase(new SettlementTestPhase());
@@ -117,9 +117,20 @@ namespace ProjectABC.Core
             _stopSimulationTokenSource = null;
         }
     }
+
+    public enum GamePhase
+    {
+        DeckConstruction,
+        Preparation,
+        Recruit,
+        Deletion,
+        Match,
+    }
     
     public interface IGamePhase
     {
+        public GamePhase Phase { get; }
+        
         public Task ExecutePhaseAsync(SimulationContext simulationContext);
         
         public async Task ExecutePhaseAsync(SimulationContext simulationContext, CancellationToken token)

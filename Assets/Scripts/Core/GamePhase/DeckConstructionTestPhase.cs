@@ -7,6 +7,8 @@ namespace ProjectABC.Core
 {
     public class DeckConstructionTestPhase : IGamePhase
     {
+        public GamePhase Phase => GamePhase.DeckConstruction;
+        
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;

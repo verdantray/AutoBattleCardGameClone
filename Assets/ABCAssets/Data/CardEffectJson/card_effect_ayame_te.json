@@ -10,7 +10,7 @@
   "club_includes": [
     "TraditionExperience"
   ],
-  "enable_match_states": [
+  "enable_match_positions": [
     "Attacking",
     "Defending"
   ],

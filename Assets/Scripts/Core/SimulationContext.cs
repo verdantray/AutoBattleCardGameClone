@@ -18,9 +18,9 @@ namespace ProjectABC.Core
             CurrentState = new GameState(players);
         }
         
-        public IEnumerable<Task> GetTasksOfAllPlayersConfirmToProceed()
+        public IEnumerable<Task> GetTasksOfAllPlayersConfirmToProceed(GamePhase phase)
         {
-            return Participants.Select(player => player.WaitUntilConfirmToProceed());
+            return Participants.Select(player => player.WaitUntilConfirmToProceed(phase));
         }
 
         // private static class InstanceRegister<T> where T : class, new()

@@ -55,7 +55,7 @@ namespace ProjectABC.Engine.UI
         {
             T uiObject = GetUI<T>();
             
-            if (uiObject != null)
+            if (uiObject != null && !uiObject.gameObject.activeInHierarchy)
             {
                 uiObject.gameObject.SetActive(true);
                 uiObject.OnOpen();

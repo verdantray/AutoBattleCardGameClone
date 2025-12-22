@@ -27,7 +27,7 @@ namespace ProjectABC.Engine
         private CardOnboard _ownCardOfDeck = null;
         private CardOnboard _otherCardOfDeck = null;
 
-        public async Task SetCardsToDeckPileAsync(OnboardSide side, int cardsAmount, float delay, float duration, CancellationToken token = default)
+        public async Task SetCardsToDeckPileAsync(OnboardSide side, int cardsAmount, ScaledTime delay, ScaledTime duration, CancellationToken token = default)
         {
             await Task.Delay(TimeSpan.FromSeconds(delay), token);
 
@@ -36,7 +36,7 @@ namespace ProjectABC.Engine
             string assetPath = GameConst.AssetPath.CARD_ONBOARD;
             CardSpawnArgs args = new CardSpawnArgs(boardPoints.comeToDeckSpline.transform);
 
-            float interval = duration / cardsAmount;
+            ScaledTime interval = duration / cardsAmount;
             for (int i = 0; i < cardsAmount; i++)
             {
                 var card = Simulator.Model.cardObjectSpawner.Spawn<CardOnboard>(assetPath, args);

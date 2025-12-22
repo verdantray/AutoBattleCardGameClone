@@ -30,7 +30,7 @@ namespace ProjectABC.Engine
                 playerAction.ApplyContextEvent(simulationContext.CollectedEvents);
             }
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
         }
     }
 }

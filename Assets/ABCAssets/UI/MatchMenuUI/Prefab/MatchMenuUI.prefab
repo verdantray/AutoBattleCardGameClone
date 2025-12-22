@@ -614,6 +614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtTimeScale: {fileID: 2700053733050314938}
+  txtPause: {fileID: 961797947147895217}
   btnTimeScale: {fileID: 1330544566247466336}
   btnSkip: {fileID: 7655959146934345329}
   btnPause: {fileID: 8159029215597734412}
@@ -698,7 +699,7 @@ GameObject:
   - component: {fileID: 3223333900270981105}
   - component: {fileID: 961797947147895217}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txt_pause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

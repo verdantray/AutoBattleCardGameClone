@@ -43,7 +43,7 @@ namespace ProjectABC.Engine
         protected override void ApplyArgs(CardSpawnArgs args)
         {
             _spawnArgs = args;
-            if (_spawnArgs == null)
+            if (_spawnArgs?.CardReference?.CardData == null)
             {
                 return;
             }
@@ -68,29 +68,82 @@ namespace ProjectABC.Engine
             mat.SetTexture(MAIN_TEX_PROPERTY, sprite.texture);
         }
 
-        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, float duration, CancellationToken token)
+        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, ScaledTime duration, CancellationToken token = default)
         {
-            splineAnimate.Pause();
-            splineAnimate.Container = splineContainer;
-            splineAnimate.Duration = duration;
+            float scaledDuration = duration;
+            if (scaledDuration < 0.0f)
+            {
+                ApplySplineAnimateSettings(splineContainer);
+                splineAnimate.NormalizedTime = 1.0f;
+                splineAnimate.Update();
+                splineAnimate.Pause();
+                return;
+            }
             
-            splineAnimate.ObjectUpAxis = SplineComponent.AlignAxis.YAxis;
-            splineAnimate.ObjectForwardAxis = SplineComponent.AlignAxis.ZAxis;
-            splineAnimate.Alignment = SplineAnimate.AlignmentMode.SplineObject;
-            splineAnimate.StartOffset = 0.0f;
-            splineAnimate.AnimationMethod = SplineAnimate.Method.Time;
-            splineAnimate.Easing = SplineAnimate.EasingMode.EaseInOut;
-            splineAnimate.Loop = SplineAnimate.LoopMode.Once;
+            ApplySplineAnimateSettings(splineContainer);
+            
+            splineAnimate.Pause();
+            splineAnimate.NormalizedTime = 0.0f;
+            splineAnimate.Update();
+
+            float t = 0.0f;
 
             try
             {
-                splineAnimate.Play();
-                await Task.Delay(TimeSpan.FromSeconds(duration), token);
+                while (t < 1.0f)
+                {
+                    token.ThrowIfCancellationRequested();
+                    await Task.Yield();
+                    
+                    float timescale = MatchSimulationTimeScaler.Timescale;
+
+                    if (timescale <= 0.0f)
+                    {
+                        continue;
+                    }
+                    
+                    float delta = Time.deltaTime * timescale;
+
+                    t += delta / scaledDuration;
+                    t = Mathf.Min(1.0f, t);
+
+                    float easedT = ApplyEasing(splineAnimate.Easing, t);
+
+                    splineAnimate.NormalizedTime = easedT;
+                    splineAnimate.Update();
+                }
             }
             catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
-                splineAnimate.Pause();
+                
             }
+        }
+
+        private void ApplySplineAnimateSettings(SplineContainer splineContainer)
+        {
+            splineAnimate.Container = splineContainer;
+            splineAnimate.Duration = 1.0f;                  // actual animation time will controlled by normalized time
+            splineAnimate.StartOffset = 0.0f;
+            
+            splineAnimate.AnimationMethod = SplineAnimate.Method.Time;
+            splineAnimate.Loop = SplineAnimate.LoopMode.Once;
+            splineAnimate.ObjectUpAxis = SplineComponent.AlignAxis.YAxis;
+            splineAnimate.ObjectForwardAxis = SplineComponent.AlignAxis.ZAxis;
+            splineAnimate.Alignment = SplineAnimate.AlignmentMode.SplineObject;
+        }
+
+        private float ApplyEasing(SplineAnimate.EasingMode mode, float t)
+        {
+            t = Mathf.Clamp01(t);
+
+            return mode switch
+            {
+                SplineAnimate.EasingMode.None => t,
+                SplineAnimate.EasingMode.EaseIn => t * t,
+                SplineAnimate.EasingMode.EaseOut => 1.0f - ((1.0f - t) * (1.0f - t)),
+                SplineAnimate.EasingMode.EaseInOut => t * t * (3.0f - (2.0f * t)),
+                _ => t,
+            };
         }
 
         public void MoveTo(Transform targetTransform)

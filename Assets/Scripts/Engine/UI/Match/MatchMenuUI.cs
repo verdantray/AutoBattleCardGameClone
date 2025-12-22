@@ -8,6 +8,7 @@ namespace ProjectABC.Engine.UI
     {
         [Header("Components")]
         [SerializeField] private TextMeshProUGUI txtTimeScale;
+        [SerializeField] private TextMeshProUGUI txtPause;
         [SerializeField] private Button btnTimeScale;
         [SerializeField] private Button btnSkip;
         [SerializeField] private Button btnPause;
@@ -16,6 +17,12 @@ namespace ProjectABC.Engine.UI
         [SerializeField] private float[] targetTimeScales;
         
         private int _timeScaleIndex = 0;
+
+        private void Awake()
+        {
+            btnTimeScale.onClick.AddListener(OnChangeTimeScale);
+            btnPause.onClick.AddListener(OnPause);
+        }
 
         public override void OnOpen()
         {
@@ -26,6 +33,15 @@ namespace ProjectABC.Engine.UI
         {
             float timeScale = targetTimeScales[_timeScaleIndex];
             ApplyTimeScale(timeScale);
+
+            var timeScaler = MatchSimulationTimeScaler.CreateInstance();
+            ApplyPause(timeScaler.Paused);
+        }
+
+        public override void OnClose()
+        {
+            btnSkip.onClick.RemoveAllListeners();
+            btnPause.onClick.RemoveAllListeners();
         }
 
         private void OnChangeTimeScale()
@@ -42,10 +58,18 @@ namespace ProjectABC.Engine.UI
 
         private void ApplyTimeScale(float timeScale)
         {
-            var timeScaler = MatchPlayTimeScaler.CreateInstance();
-            timeScaler.SetScaleTimes(timeScale);
+            var timeScaler = MatchSimulationTimeScaler.CreateInstance();
+            timeScaler.SetTimescale(timeScale);
 
             txtTimeScale.text = $"X {timeScale:F1}";
+        }
+
+        private void ApplyPause(bool pause)
+        {
+            var timeScaler = MatchSimulationTimeScaler.CreateInstance();
+            timeScaler.SetPause(pause);
+
+            txtPause.text = pause ? "Resume" : "Pause";
         }
 
         private void OnSkip()
@@ -55,7 +79,8 @@ namespace ProjectABC.Engine.UI
 
         private void OnPause()
         {
-            
+            var timeScaler = MatchSimulationTimeScaler.CreateInstance();
+            ApplyPause(!timeScaler.Paused);
         }
     }
 }

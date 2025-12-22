@@ -6,8 +6,10 @@ using ProjectABC.Data;
 
 namespace ProjectABC.Core
 {
-    public class BattleTestPhase : IGamePhase
+    public class MatchTestPhase : IGamePhase
     {
+        public GamePhase Phase => GamePhase.Match;
+
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             var matchingPairs = simulationContext.CurrentState.GetMatchingPairs();
@@ -32,7 +34,7 @@ namespace ProjectABC.Core
                 // TODO: publish ContextEvent here for announce win points what winner gained on round and total win points
             }
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
         }
     }
     

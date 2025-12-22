@@ -1,0 +1,20 @@
+{
+    "name": "ProjectABC.Editor",
+    "rootNamespace": "ProjectABC.Editor",
+    "references": [
+        "GUID:285836d10c01a55419730e640c4a6333",
+        "GUID:5288581da62483f44bbf624653a19d3c",
+        "GUID:2a656073250d3c64b9c64378d0708f5f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using log4net.Appender;
 using ProjectABC.Data;
 using ProjectABC.Utils;
 
@@ -99,14 +100,14 @@ namespace ProjectABC.Core
                 
                 int index = _cardMap[cardNameKey].IndexOf(card);
                 location = new InfirmaryLocation(card.Owner, cardNameKey, index);
-                
-                return;
             }
+            else
+            {
+                _nameKeyList.Add(cardNameKey);
+                _cardMap.Add(cardNameKey, new CardPile { card });
 
-            _nameKeyList.Add(cardNameKey);
-            _cardMap[cardNameKey] = new CardPile { card };
-
-            location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
+                location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
+            }
         }
 
         public bool RemoveByIndex(int index)

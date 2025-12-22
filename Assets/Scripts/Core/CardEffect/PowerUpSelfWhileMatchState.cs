@@ -11,7 +11,7 @@ namespace ProjectABC.Core
     public sealed class PowerUpSelfWhileMatchState : CardEffect
     {
         private readonly EffectTriggerEvent _cancelTriggerFlag;
-        private readonly MatchState _enableStateFlag;
+        private readonly MatchPosition _enablePositionFlag;
         private readonly int _powerUpBonus;
         
         public PowerUpSelfWhileMatchState(Card card, JsonObject json) : base(card, json)
@@ -31,16 +31,16 @@ namespace ProjectABC.Core
 
                         _cancelTriggerFlag = flag;
                         break;
-                    case "enable_match_state":
+                    case "enable_match_positions":
                         
-                        MatchState stateFlag = 0;
+                        MatchPosition positionFlag = 0;
 
                         foreach (var element in field.value.arr)
                         {
-                            stateFlag |= Enum.Parse<MatchState>(element.strValue, true);
+                            positionFlag |= Enum.Parse<MatchPosition>(element.strValue, true);
                         }
 
-                        _enableStateFlag = stateFlag;
+                        _enablePositionFlag = positionFlag;
                         break;
                     case "power_up_bonus":
                         _powerUpBonus = field.value.intValue;
@@ -82,7 +82,7 @@ namespace ProjectABC.Core
             // case : buff not active yet, and effect triggered
             if (!isBuffActive && isApplyTrigger)
             {
-                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _enableStateFlag, _powerUpBonus);
+                ExclusiveCardBuff cardBuff = new ExclusiveCardBuff(CallCard, _enablePositionFlag, _powerUpBonus);
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
@@ -105,12 +105,12 @@ namespace ProjectABC.Core
         {
             public override BuffType Type => BuffType.Positive;
 
-            private readonly MatchState _enableStateFlag;
+            private readonly MatchPosition _enablePositionFlag;
             private readonly int _powerUpBonus;
             
-            public ExclusiveCardBuff(Card callCard, MatchState enableStateFlag, int powerUpBonus) : base(callCard)
+            public ExclusiveCardBuff(Card callCard, MatchPosition enablePositionFlag, int powerUpBonus) : base(callCard)
             {
-                _enableStateFlag = enableStateFlag;
+                _enablePositionFlag = enablePositionFlag;
                 _powerUpBonus = powerUpBonus;
             }
             
@@ -124,7 +124,7 @@ namespace ProjectABC.Core
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
                 return args.OwnSide.IsEffectiveStandOnField(target)
-                       && _enableStateFlag.HasFlag(args.OwnSide.State);
+                       && _enablePositionFlag.HasFlag(args.OwnSide.Position);
             }
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)

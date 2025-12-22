@@ -103,6 +103,7 @@ namespace ProjectABC.Engine
 
             T cardObject = pooled.GetComponent<T>();
             cardObject.gameObject.SetActive(true);
+            cardObject.gameObject.name = objectName;
             cardObject.OnSpawned(args);
 
             return cardObject;

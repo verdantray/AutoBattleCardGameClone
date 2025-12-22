@@ -2,7 +2,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DG.Tweening;
 using ProjectABC.Core;
+using ProjectABC.Utils;
 using TMPro;
 using UnityEngine;
 
@@ -10,24 +12,41 @@ namespace ProjectABC.Engine.UI
 {
     public sealed class MatchPlayersAnnounceUI : UIElement
     {
+        [Header("Components")]
         [SerializeField] private TextMeshProUGUI txtOwnPlayerName;
         [SerializeField] private TextMeshProUGUI txtOtherPlayerName;
-        [SerializeField] private float duration;
-
+        [SerializeField] private RectTransform ownPlayerTag;
+        [SerializeField] private RectTransform otherPlayerTag;
+        [SerializeField] private CanvasGroup canvasGroup;
+        
+        [Header("Tween Values")]
+        [SerializeField] private float moveDistance;
+        [SerializeField] private ScaledTime duration;
+        [SerializeField] private ScaledTime remainingDelay;
+        
         private IPlayer[] _participants = null;
 
         public static async Task ShowMatchPlayersAsync(IPlayer[] participants, CancellationToken token = default)
         {
-            var matchPlayersAnnounceUI = UIManager.Instance.OpenUI<MatchPlayersAnnounceUI>();
-            matchPlayersAnnounceUI.SetParticipants(participants);
-            matchPlayersAnnounceUI.Refresh();
+            try
+            {
+                var matchPlayersAnnounceUI = UIManager.Instance.OpenUI<MatchPlayersAnnounceUI>();
+                matchPlayersAnnounceUI.SetParticipants(participants);
+                matchPlayersAnnounceUI.Refresh();
 
-            await Task.Delay(TimeSpan.FromSeconds(matchPlayersAnnounceUI.duration), token);
-            
-            UIManager.Instance.CloseUI<MatchPlayersAnnounceUI>();
+                await matchPlayersAnnounceUI.ShowMatchPlayersAsync(token);
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                
+            }
+            finally
+            {
+                UIManager.Instance.CloseUI<MatchPlayersAnnounceUI>();
+            }
         }
 
-        public void SetParticipants(IPlayer[] participants)
+        private void SetParticipants(IPlayer[] participants)
         {
             _participants = participants;
         }
@@ -39,6 +58,9 @@ namespace ProjectABC.Engine.UI
 
         public override void Refresh()
         {
+            ownPlayerTag.anchoredPosition = Vector2.up * moveDistance;
+            otherPlayerTag.anchoredPosition = Vector2.down * moveDistance;
+            
             if (_participants == null)
             {
                 return;
@@ -54,6 +76,96 @@ namespace ProjectABC.Engine.UI
 
             txtOwnPlayerName.text = ownPlayer.Name;
             txtOtherPlayerName.text = otherPlayer.Name;
+        }
+
+        private async Task ShowMatchPlayersAsync(CancellationToken token = default)
+        {
+            var ownTagTween = DOTween
+                .To(
+                    () => ownPlayerTag.anchoredPosition,
+                    pos => ownPlayerTag.anchoredPosition = pos,
+                    Vector2.zero,
+                    duration
+                )
+                .SetUpdate(UpdateType.Manual);
+            ownTagTween.Pause();
+
+            var otherTagTween = DOTween
+                .To(
+                    () => otherPlayerTag.anchoredPosition,
+                    pos => otherPlayerTag.anchoredPosition = pos,
+                    Vector2.zero,
+                    duration
+                )
+                .SetUpdate(UpdateType.Manual);
+            otherTagTween.Pause();
+
+            var alphaTween = DOTween
+                .To(
+                    () => canvasGroup.alpha,
+                    alpha => canvasGroup.alpha = alpha,
+                    1.0f,
+                    duration
+                )
+                .SetUpdate(UpdateType.Manual);
+            alphaTween.Pause();
+
+            try
+            {
+                ownTagTween.Play();
+                otherTagTween.Play();
+                alphaTween.Play();
+
+                while (true)
+                {
+                    token.ThrowIfCancellationRequested();
+                    await Task.Yield();
+
+                    float timescale = MatchSimulationTimeScaler.Timescale;
+                    if (timescale <= 0.0f)
+                    {
+                        continue;
+                    }
+
+                    float delta = Time.deltaTime * timescale;
+
+                    if (ownTagTween.IsActiveAndPlaying())
+                    {
+                        ownTagTween.ManualUpdate(delta, delta);
+                    }
+
+                    if (otherTagTween.IsActiveAndPlaying())
+                    {
+                        otherTagTween.ManualUpdate(delta, delta);
+                    }
+
+                    if (alphaTween.IsActiveAndPlaying())
+                    {
+                        alphaTween.ManualUpdate(delta, delta);
+                    }
+
+                    bool isAllCompleted = !ownTagTween.IsActiveAndPlaying()
+                                          && !otherTagTween.IsActiveAndPlaying()
+                                          && !alphaTween.IsActiveAndPlaying();
+
+                    if (isAllCompleted)
+                    {
+                        break;
+                    }
+                }
+
+                await remainingDelay.WaitScaledTimeAsync(token);
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+
+            }
+            finally
+            {
+                ownTagTween.Kill(true);
+                otherTagTween.Kill(true);
+                alphaTween.Kill(true);
+            }
         }
     }
 }

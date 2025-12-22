@@ -12,38 +12,33 @@ namespace ProjectABC.Engine
     public sealed class PlayerController : MonoBehaviour, IPlayer
     {
         [SerializeField] private string temporaryName;
+        [SerializeField] private MatchEventRunner matchEventRunner;
 
         public string Name => temporaryName;
         public bool IsLocalPlayer => true;
 
-        private readonly List<IContextEventUIHandler> _contextEventUIHandlers = new List<IContextEventUIHandler>();
+        private readonly Dictionary<GamePhase, List<IConfirmHandler>> _confirmHandlers = new();
 
         private void Awake()
         {
-            InitializeEventUIHandlers();
+            RegisterConfirmHandlers();
         }
 
         private void OnDestroy()
         {
-            DisposeEventUIHandlers();
+            UnregisterConfirmHandlers();
         }
 
-        private void InitializeEventUIHandlers()
+        private void RegisterConfirmHandlers()
         {
-            DisposeEventUIHandlers();
-            
-            _contextEventUIHandlers.Add(new DeckConstructionEventHandler());
-            _contextEventUIHandlers.Add(new PrepareRoundEventHandler());
+            _confirmHandlers.Add(GamePhase.DeckConstruction, new List<IConfirmHandler> { new DeckConstructionConfirmHandler() });
+            _confirmHandlers.Add(GamePhase.Preparation, new List<IConfirmHandler> { new PrepareRoundConfirmHandler() });
+            _confirmHandlers.Add(GamePhase.Match, new List<IConfirmHandler> { matchEventRunner });
         }
 
-        private void DisposeEventUIHandlers()
+        private void UnregisterConfirmHandlers()
         {
-            foreach (var contextEventUIHandler in _contextEventUIHandlers)
-            {
-                contextEventUIHandler.Dispose();
-            }
-
-            _contextEventUIHandlers.Clear();
+            _confirmHandlers.Clear();
         }
 
         public async Task<IPlayerAction> DeckConstructAsync(ClubType fixedClubFlag, ClubType selectableClubFlag)
@@ -83,12 +78,18 @@ namespace ProjectABC.Engine
             throw new System.NotImplementedException();
         }
 
-        public Task WaitUntilConfirmToProceed()
+        public Task WaitUntilConfirmToProceed(GamePhase phase)
         {
-            var waitTasks = _contextEventUIHandlers
+            if (!_confirmHandlers.TryGetValue(phase, out List<IConfirmHandler> handlers))
+            {
+                Debug.LogWarning($"{nameof(PlayerController)} : No confirm handlers for {phase}");
+                return Task.CompletedTask;
+            }
+            
+            var waitTasks = handlers
                 .Where(handler => handler.IsWaitConfirm)
                 .Select(handler => handler.WaitUntilConfirmAsync());
-
+            
             return Task.WhenAll(waitTasks);
         }
     }

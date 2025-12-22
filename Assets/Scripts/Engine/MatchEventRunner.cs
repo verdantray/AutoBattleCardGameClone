@@ -9,18 +9,23 @@ using UnityEngine;
 
 namespace ProjectABC.Engine
 {
-    public sealed class MatchEventListener : MonoBehaviour, IContextEventListener<MatchContextEvent>
+    public sealed class MatchEventRunner : MonoBehaviour, IConfirmHandler<MatchContextEvent>
     {
+        public bool IsWaitConfirm { get; private set; }
+        
         private readonly List<IMatchEvent> _matchEvents = new List<IMatchEvent>();
 
         private readonly Dictionary<Type, IMatchEventProcessor> _matchEventProcessors = new()
         {
             { typeof(MatchStartEvent), new MatchStartProcessor() },
+            { typeof(DrawCardToFieldEvent), new DrawCardToFieldProcessor() },
         };
 
         private CancellationTokenSource _cts;
-        private int _eventIndex = 0;
+        private Task _currentRunningMatchTask;
         
+        private int _eventIndex = 0;
+
         private void Awake()
         {
             this.StartListening();
@@ -31,23 +36,33 @@ namespace ProjectABC.Engine
             this.StopListening();
         }
 
-        public async Task RunMatchAsync()
+        public void RunMatch()
         {
-            _cts ??= new CancellationTokenSource();
+            _currentRunningMatchTask = RunMatchAsync();
+            _currentRunningMatchTask.Forget();
+        }
 
+        private async Task RunMatchAsync()
+        {
             try
             {
+                _cts ??= new CancellationTokenSource();
+                
                 while (!_cts.IsCancellationRequested && _eventIndex < _matchEvents.Count)
                 {
                     var matchEvent = _matchEvents[_eventIndex];
                     if (!_matchEventProcessors.TryGetValue(matchEvent.GetType(), out var matchEventProcessor))
                     {
-                        throw new KeyNotFoundException($"No IMatchEventProcessor for type {matchEvent.GetType()}");
+                        // throw new KeyNotFoundException($"No IMatchEventProcessor for type {matchEvent.GetType()}");
+                        Debug.LogWarning($"No IMatchEventProcessor for type {matchEvent.GetType()}");
+                        continue;
                     }
-                    
+
                     await matchEventProcessor.ProcessEventAsync(matchEvent, _cts.Token);
                     _eventIndex++;
                 }
+
+                IsWaitConfirm = false;
             }
             catch (OperationCanceledException) when (_cts.IsCancellationRequested)
             {
@@ -55,22 +70,21 @@ namespace ProjectABC.Engine
             }
             catch (Exception e)
             {
-                Debug.LogError($"{nameof(MatchEventListener)} has thrown an exception: {e.Message}");
+                Debug.LogError($"{nameof(MatchEventRunner)} has thrown an exception: {e}");
                 throw;
+            }
+            finally
+            {
+                _currentRunningMatchTask = null;
             }
         }
 
-        public void Pause()
+        public async Task WaitUntilConfirmAsync()
         {
-            RequestCancel();
-            
-            var currentEvent = _matchEvents[_eventIndex];
-            if (!_matchEventProcessors.TryGetValue(currentEvent.GetType(), out var matchEventProcessor))
+            while (IsWaitConfirm)
             {
-                throw new KeyNotFoundException($"No IMatchEventProcessor for type {currentEvent.GetType()}");
+                await Task.Yield();
             }
-            
-            matchEventProcessor.SkipEvent(currentEvent);
         }
 
         public void Stop()
@@ -96,7 +110,9 @@ namespace ProjectABC.Engine
             _matchEvents.AddRange(contextEvent.MatchEvents);
             _eventIndex = 0;
             
-            RunMatchAsync().Forget();
+            IsWaitConfirm = true;
+            
+            RunMatch();
         }
     }
 }

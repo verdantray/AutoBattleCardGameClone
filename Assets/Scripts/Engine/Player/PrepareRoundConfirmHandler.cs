@@ -4,11 +4,11 @@ using ProjectABC.Engine.UI;
 
 namespace ProjectABC.Engine
 {
-    public sealed class PrepareRoundEventHandler : IContextEventUIHandler<PrepareRoundEvent>
+    public sealed class PrepareRoundConfirmHandler : IConfirmHandler<PrepareRoundEvent>
     { 
         public bool IsWaitConfirm { get; private set; }
 
-        public PrepareRoundEventHandler()
+        public PrepareRoundConfirmHandler()
         {
             this.StartListening();
         }

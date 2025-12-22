@@ -10,7 +10,7 @@
   "club_includes": [
     "Coastline"
   ],
-  "enable_match_states": [
+  "enable_match_positions": [
     "Attacking",
     "Defending"
   ],

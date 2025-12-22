@@ -91,7 +91,7 @@ namespace ProjectABC.Core
             return task;
         }
 
-        public Task WaitUntilConfirmToProceed()
+        public Task WaitUntilConfirmToProceed(GamePhase phase)
         {
             return Task.CompletedTask;
         }

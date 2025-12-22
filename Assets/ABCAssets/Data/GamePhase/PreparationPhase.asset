@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d77cb48bbb42dc933f83f2d03dfab7, type: 3}
   m_Name: PreparationPhase
   m_EditorClassIdentifier: 
-  round: 1
+  gamePhase: 1

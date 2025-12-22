@@ -10,7 +10,7 @@
   "club_includes": [
     "Unregistered"
   ],
-  "enable_match_states": [
+  "enable_match_positions": [
     "Attacking",
     "Defending"
   ],

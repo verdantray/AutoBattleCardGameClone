@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace ProjectABC.Engine
 {
-    [CreateAssetMenu(fileName = nameof(BattlePhase), menuName = "Scripting/ScriptableObject Script Menu/GamePhaseAsset/BattlePhase")]
-    public sealed class BattlePhase : GamePhaseAsset
+    [CreateAssetMenu(fileName = nameof(MatchPhase), menuName = "Scripting/ScriptableObject Script Menu/GamePhaseAsset/MatchPhase")]
+    public sealed class MatchPhase : GamePhaseAsset
     {
         public override async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
@@ -34,7 +34,7 @@ namespace ProjectABC.Engine
                 scoreEntries.Add(winnerEntry);
             }
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed());
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
 
             foreach (var scoreEntry in scoreEntries)
             {
