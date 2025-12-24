@@ -63,7 +63,16 @@ namespace ProjectABC.Core
         public bool IsSlotRemains => RemainSlotCount > 0;
         
         public CardPile this[int index] => _cardMap[_nameKeyList[index]];
-        public bool Remove(string nameKey) => _cardMap.Remove(nameKey);
+        public bool Remove(string nameKey)
+        {
+            bool isSuccess = _cardMap.Remove(nameKey);
+            if (isSuccess)
+            {
+                _nameKeyList.Remove(nameKey);
+            }
+
+            return isSuccess;
+        }
 
         #region inherits of IReadOnlyDictionary
 
@@ -100,18 +109,13 @@ namespace ProjectABC.Core
                 
                 int index = _cardMap[cardNameKey].IndexOf(card);
                 location = new InfirmaryLocation(card.Owner, cardNameKey, index);
+                return;
             }
-            else
-            {
-                var cardPile = new CardPile();
-                cardPile.Add(card);
+            
+            _cardMap.Add(cardNameKey, new CardPile { card });
+            location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
                 
-                _cardMap.Add(cardNameKey, cardPile);
-
-                location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
-                
-                _nameKeyList.Add(cardNameKey);
-            }
+            _nameKeyList.Add(cardNameKey);
         }
 
         public bool RemoveByIndex(int index)
