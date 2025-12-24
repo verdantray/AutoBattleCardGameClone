@@ -66,8 +66,10 @@ namespace ProjectABC.Engine
             mat.SetTexture(MAIN_TEX_PROPERTY, sprite.texture);
         }
 
-        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, ScaledTime duration, CancellationToken token = default)
+        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, ScaledTime duration, ScaledTime delay, CancellationToken token = default)
         {
+            await delay.WaitScaledTimeAsync(token);
+            
             float scaledDuration = duration;
             if (scaledDuration < 0.0f)
             {
@@ -127,7 +129,7 @@ namespace ProjectABC.Engine
             splineAnimate.Loop = SplineAnimate.LoopMode.Once;
             splineAnimate.ObjectUpAxis = SplineComponent.AlignAxis.YAxis;
             splineAnimate.ObjectForwardAxis = SplineComponent.AlignAxis.ZAxis;
-            splineAnimate.Alignment = SplineAnimate.AlignmentMode.SplineObject;
+            splineAnimate.Alignment = SplineAnimate.AlignmentMode.None;
         }
 
         private float ApplyEasing(SplineAnimate.EasingMode mode, float t)

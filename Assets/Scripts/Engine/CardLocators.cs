@@ -8,15 +8,15 @@ namespace ProjectABC.Engine
 {
     public sealed class CardObjectLocator : ICardLocator<CardObject>
     {
-        // not use on card object locator
-        public ICardHolder<CardObject> Deck => null;
+        public ICardHolder<CardObject> Deck => _deck;
         public ICardHolder<CardObject> Field => _field;
         public ICardHolder<string, CardObject> Infirmary =>  _infirmary;
-        
+
+        private readonly CardHolder<CardObject> _deck = new CardHolder<CardObject>();
         private readonly CardHolder<CardObject> _field = new CardHolder<CardObject>();
         private readonly CardHolder<string, CardObject> _infirmary = new CardHolder<string, CardObject>();
     }
-    
+
     public sealed class CardReferenceLocator : ICardLocator<CardReference>
     {
         public ICardHolder<CardReference> Deck => _deck;

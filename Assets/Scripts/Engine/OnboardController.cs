@@ -25,48 +25,77 @@ namespace ProjectABC.Engine
         [SerializeField] private OnboardPoints ownSide;
         [SerializeField] private OnboardPoints otherSide;
 
-        private CardOnboard _ownCardOfDeck = null;
-        private CardOnboard _otherCardOfDeck = null;
+        private readonly Dictionary<OnboardSide, CardReferenceLocator> _cardReferenceLocators =
+            new Dictionary<OnboardSide, CardReferenceLocator>()
+            {
+                { OnboardSide.Own, new CardReferenceLocator() },
+                { OnboardSide.Other, new CardReferenceLocator() },
+            };
+
+        private readonly Dictionary<OnboardSide, CardObjectLocator> _cardObjectLocators =
+            new Dictionary<OnboardSide, CardObjectLocator>()
+            {
+                { OnboardSide.Own, new CardObjectLocator() },
+                { OnboardSide.Other, new CardObjectLocator() },
+            };
+
+        private readonly Dictionary<OnboardSide, CardOnboard> _cardObjectsOnDeck =
+            new Dictionary<OnboardSide, CardOnboard>()
+            {
+                { OnboardSide.Own, null },
+                { OnboardSide.Other, null }
+            };
 
         public async Task SetCardsToDeckPileAsync(OnboardSide side, IReadOnlyList<CardReference> deckCards, ScaledTime delay, ScaledTime duration, CancellationToken token = default)
         {
-            await Task.Delay(TimeSpan.FromSeconds(delay), token);
-
-            var boardPoints = GetSide(side);
-
             string assetPath = GameConst.AssetPath.CARD_ONBOARD;
+            OnboardPoints boardPoints = GetOnboardPointsOfSide(side);
+            CardReferenceLocator cardReferenceLocator = _cardReferenceLocators[side];
+            CardObjectLocator cardObjectLocator = _cardObjectLocators[side];
             
-            int deckCount = deckCards.Count;
-            ScaledTime interval = duration / deckCount;
-            for (int i = 0; i < deckCount; i++)
+            try
             {
-                CardSpawnArgs args = new CardSpawnArgs(boardPoints.comeToDeckSpline.transform, deckCards[i]);
-                var card = Simulator.Model.cardObjectSpawner.Spawn<CardOnboard>(assetPath, args);
+                await Task.Delay(TimeSpan.FromSeconds(delay), token);
 
-                try
+                int deckCount = deckCards.Count;
+                ScaledTime interval = duration / deckCount;
+
+                var tasks = new List<Task>();
+
+                for (int i = 0; i < deckCount; i++)
                 {
-                    await card.MoveFollowingSplineAsync(boardPoints.comeToDeckSpline, interval, token);
+                    var cardReference = deckCards[i];
+                    cardReferenceLocator.Deck.Insert(i, cardReference);
+
+                    CardSpawnArgs args = new CardSpawnArgs(boardPoints.deckPoint, cardReference);
+                    var cardOnboard = Simulator.Model.cardObjectSpawner.Spawn<CardOnboard>(assetPath, args);
+                    cardObjectLocator.Deck.Insert(i, cardOnboard);
+
+                    float delayPerCard = interval * i;
+                    ScaledTime scaledDelay = delayPerCard;
+
+                    var task = cardOnboard.MoveFollowingSplineAsync(boardPoints.comeToDeckSpline, interval, scaledDelay, token);
+                    tasks.Add(task);
                 }
-                catch (OperationCanceledException) when (token.IsCancellationRequested)
+
+                await Task.WhenAll(tasks);
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                // pass
+            }
+            finally
+            {
+                for (int i = cardObjectLocator.Deck.Count - 1; i >= 0; i--)
                 {
-                    // pass
+                    var cardOnboard = cardObjectLocator.Deck.Pop(i);
+                    Simulator.Model.cardObjectSpawner.Despawn(cardOnboard);
                 }
-                finally
+
+                if (cardReferenceLocator.Deck.Count > 0 && _cardObjectsOnDeck[side] == null)
                 {
-                    switch (side)
-                    {
-                        case OnboardSide.Own when _ownCardOfDeck == null:
-                            _ownCardOfDeck = card;
-                            _ownCardOfDeck.MoveToTransform(boardPoints.deckPoint);
-                            break;
-                        case OnboardSide.Other when _otherCardOfDeck == null:
-                            _otherCardOfDeck = card;
-                            _otherCardOfDeck.MoveToTransform(boardPoints.deckPoint);
-                            break;
-                        default:
-                            Simulator.Model.cardObjectSpawner.Despawn(card);
-                            break;
-                    }
+                    CardSpawnArgs args = new CardSpawnArgs(boardPoints.deckPoint, null);
+                    _cardObjectsOnDeck[side] = Simulator.Model.cardObjectSpawner.Spawn<CardOnboard>(assetPath, args);
                 }
             }
         }
@@ -75,7 +104,7 @@ namespace ProjectABC.Engine
         {
             try
             {
-                OnboardPoints onboardPoints = GetSide(side);
+                OnboardPoints onboardPoints = GetOnboardPointsOfSide(side);
                 
                 if (moveInfo.PreviousLocation.CardZone == CardZone.Deck)
                 {
@@ -89,7 +118,7 @@ namespace ProjectABC.Engine
             }
         }
 
-        private OnboardPoints GetSide(OnboardSide side)
+        private OnboardPoints GetOnboardPointsOfSide(OnboardSide side)
         {
             return side == OnboardSide.Own ? ownSide : otherSide;
         }

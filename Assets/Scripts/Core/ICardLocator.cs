@@ -11,12 +11,14 @@ namespace ProjectABC.Core
 
     public interface ICardHolder<T> where T : class
     {
+        public int Count { get; }
         public T Pop(int index);
         public void Insert(int index, T element);
     }
 
     public interface ICardHolder<in TKey, T> where TKey : IComparable where T : class
     {
+        public int Count { get; }
         public T Pop(TKey key, int index);
         public void Insert(TKey key, int index, T element);
     }
