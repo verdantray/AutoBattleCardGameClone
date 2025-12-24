@@ -8,9 +8,9 @@ namespace ProjectABC.Engine
     {
         private readonly ScaledTime _drawDuration = 0.5f;
         
-        public override async Task ProcessEventAsync(DrawCardToFieldEvent matchEvent, CancellationToken token = default)
+        public override Task ProcessEventAsync(DrawCardToFieldEvent matchEvent, CancellationToken token = default)
         {
-            
+            return Task.CompletedTask;
         }
     }
 }

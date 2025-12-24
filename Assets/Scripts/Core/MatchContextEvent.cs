@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using log4net.Appender;
 
 namespace ProjectABC.Core
 {
@@ -100,7 +99,7 @@ namespace ProjectABC.Core
                 return matchContextEvent;
             }
 
-            RegisterDrawCardEvent(defender, attacker, currentState, matchContextEvent);
+            RegisterDrawCardEvent(defender, matchContextEvent);
 
             CardEffectArgs defenderDrawnEffectArgs = new CardEffectArgs(
                 EffectTriggerEvent.OnEnterFieldAsDefender,
@@ -133,7 +132,7 @@ namespace ProjectABC.Core
                         return matchContextEvent;
                     }
 
-                    RegisterDrawCardEvent(attacker, defender, currentState, matchContextEvent);
+                    RegisterDrawCardEvent(attacker, matchContextEvent);
                     
                     CardEffectArgs attackerDrawnEffectArgs = new CardEffectArgs(
                         EffectTriggerEvent.OnEnterFieldAsAttacker,
@@ -255,12 +254,14 @@ namespace ProjectABC.Core
             }
         }
 
-        private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchSide otherSide, GameState gameState, MatchContextEvent matchContextEvent)
+        private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchContextEvent matchContextEvent)
         {
-            CardBuffArgs buffArgs = new CardBuffArgs(drawnSide, otherSide, gameState);
-            CardReference drawnCard = new CardReference(drawnSide.Field[^1], buffArgs);
+            CardLocation prevLocation = new DeckLocation(drawnSide.Player, drawnSide.Deck.Count - 1);
+            CardLocation curLocation = new FieldLocation(drawnSide.Player, drawnSide.Field.Count);
+
+            CardMovementInfo cardMovementInfo = new CardMovementInfo(prevLocation, curLocation);
             
-            DrawCardToFieldEvent toFieldEvent = new DrawCardToFieldEvent(drawnSide.Player, drawnCard);
+            DrawCardToFieldEvent toFieldEvent = new DrawCardToFieldEvent(drawnSide.Player, cardMovementInfo);
             toFieldEvent.RegisterEvent(matchContextEvent);
         }
     }

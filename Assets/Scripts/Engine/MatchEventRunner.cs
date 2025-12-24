@@ -53,9 +53,9 @@ namespace ProjectABC.Engine
                     var matchEvent = _matchEvents[_eventIndex];
                     if (!_matchEventProcessors.TryGetValue(matchEvent.GetType(), out var matchEventProcessor))
                     {
-                        // throw new KeyNotFoundException($"No IMatchEventProcessor for type {matchEvent.GetType()}");
-                        Debug.LogWarning($"No IMatchEventProcessor for type {matchEvent.GetType()}");
-                        continue;
+                        throw new KeyNotFoundException($"No IMatchEventProcessor for type {matchEvent.GetType()}");
+                        // Debug.LogWarning($"No IMatchEventProcessor for type {matchEvent.GetType()}");
+                        // continue;
                     }
 
                     await matchEventProcessor.ProcessEventAsync(matchEvent, _cts.Token);

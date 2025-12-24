@@ -86,9 +86,8 @@ namespace ProjectABC.Engine.UI
                     pos => ownPlayerTag.anchoredPosition = pos,
                     Vector2.zero,
                     duration
-                )
-                .SetUpdate(UpdateType.Manual);
-            ownTagTween.Pause();
+                );
+            var ownTagTask = MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(ownTagTween, token);
 
             var otherTagTween = DOTween
                 .To(
@@ -96,9 +95,8 @@ namespace ProjectABC.Engine.UI
                     pos => otherPlayerTag.anchoredPosition = pos,
                     Vector2.zero,
                     duration
-                )
-                .SetUpdate(UpdateType.Manual);
-            otherTagTween.Pause();
+                );
+            var otherTagTask = MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(otherTagTween, token);
 
             var alphaTween = DOTween
                 .To(
@@ -106,66 +104,11 @@ namespace ProjectABC.Engine.UI
                     alpha => canvasGroup.alpha = alpha,
                     1.0f,
                     duration
-                )
-                .SetUpdate(UpdateType.Manual);
-            alphaTween.Pause();
-
-            try
-            {
-                ownTagTween.Play();
-                otherTagTween.Play();
-                alphaTween.Play();
-
-                while (true)
-                {
-                    token.ThrowIfCancellationRequested();
-                    await Task.Yield();
-
-                    float timescale = MatchSimulationTimeScaler.Timescale;
-                    if (timescale <= 0.0f)
-                    {
-                        continue;
-                    }
-
-                    float delta = Time.deltaTime * timescale;
-
-                    if (ownTagTween.IsActiveAndPlaying())
-                    {
-                        ownTagTween.ManualUpdate(delta, delta);
-                    }
-
-                    if (otherTagTween.IsActiveAndPlaying())
-                    {
-                        otherTagTween.ManualUpdate(delta, delta);
-                    }
-
-                    if (alphaTween.IsActiveAndPlaying())
-                    {
-                        alphaTween.ManualUpdate(delta, delta);
-                    }
-
-                    bool isAllCompleted = !ownTagTween.IsActiveAndPlaying()
-                                          && !otherTagTween.IsActiveAndPlaying()
-                                          && !alphaTween.IsActiveAndPlaying();
-
-                    if (isAllCompleted)
-                    {
-                        break;
-                    }
-                }
-
-                await remainingDelay.WaitScaledTimeAsync(token);
-            }
-            catch (OperationCanceledException) when (token.IsCancellationRequested)
-            {
-
-            }
-            finally
-            {
-                ownTagTween.Kill(true);
-                otherTagTween.Kill(true);
-                alphaTween.Kill(true);
-            }
+                );
+            var alphaTask = MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(alphaTween, token);
+            
+            await Task.WhenAll(ownTagTask, otherTagTask, alphaTask, otherTagTask);
+            await remainingDelay.WaitScaledTimeAsync(token);
         }
     }
 }

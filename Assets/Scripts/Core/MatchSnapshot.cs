@@ -56,7 +56,6 @@ namespace ProjectABC.Core
     public record CardReference
     {
         public readonly string CardId;
-        public readonly CardLocation CardLocation;
         public readonly IReadOnlyList<BuffSnapshot> Buffs;
 
         public CardData CardData => Storage.Instance.GetCardData(CardId);
@@ -65,16 +64,12 @@ namespace ProjectABC.Core
         public CardReference(string cardId)
         {
             CardId = cardId;
-            CardLocation = null;
             Buffs = new List<BuffSnapshot>();
         }
         
         public CardReference(Card card, CardBuffArgs args)
         {
             CardId = card.Id;
-            
-            card.TryGetCardLocation(args.OwnSide, out CardLocation);
-
             List<BuffSnapshot> buffSnapshots = new List<BuffSnapshot>();
             
             CardBuff[] disablerBuffs = card.AppliedCardBuffs

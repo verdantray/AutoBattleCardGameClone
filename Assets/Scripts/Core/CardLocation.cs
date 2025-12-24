@@ -15,50 +15,84 @@ namespace ProjectABC.Core
         public abstract CardZone CardZone { get; }
         public readonly IPlayer Player;
         
-        protected  CardLocation(IPlayer player)
+        protected CardLocation(IPlayer player)
         {
             Player = player;
         }
+
+        public abstract T PopFromLocation<T>(ICardLocator<T> locator) where T : class;
+        public abstract void InsertToLocation<T>(ICardLocator<T> locator, T element) where T : class;
     }
 
     public record CardPileLocation : CardLocation
     {
         public override CardZone CardZone => CardZone.CardPile;
-        
+
         public CardPileLocation(IPlayer player) : base(player)
         {
             
+        }
+        
+        public override T PopFromLocation<T>(ICardLocator<T> locator)
+        {
+            // not use on this class
+            return null;
+        }
+
+        public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            // do nothing
         }
     }
     
     public record DeckLocation : CardLocation
     {
         public override CardZone CardZone => CardZone.Deck;
-        
+
         public readonly int IndexOfDeck;
 
         public DeckLocation(IPlayer owner, int indexOfDeck) : base(owner)
         {
             IndexOfDeck = indexOfDeck;
         }
+        
+        public override T PopFromLocation<T>(ICardLocator<T> locator)
+        {
+            return locator.Deck.Pop(IndexOfDeck);
+        }
+
+        public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            locator.Deck.Insert(IndexOfDeck, element);
+        }
     }
 
     public record FieldLocation : CardLocation
     {
         public override CardZone CardZone => CardZone.Field;
-        
+
         public readonly int IndexOfField;
 
         public FieldLocation(IPlayer owner, int indexOfField) : base(owner)
         {
             IndexOfField = indexOfField;
         }
+        
+        public override T PopFromLocation<T>(ICardLocator<T> locator)
+        {
+            return locator.Field.Pop(IndexOfField);
+        }
+
+        public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            locator.Field.Insert(IndexOfField, element);
+        }
     }
 
     public record InfirmaryLocation : CardLocation
     {
         public override CardZone CardZone => CardZone.Infirmary;
-        
+
         public readonly string SlotKey;
         public readonly int IndexOfInfirmarySlot;
 
@@ -66,6 +100,16 @@ namespace ProjectABC.Core
         {
             SlotKey = slotKey;
             IndexOfInfirmarySlot = indexOfInfirmarySlot;
+        }
+        
+        public override T PopFromLocation<T>(ICardLocator<T> locator)
+        {
+            return locator.Infirmary.Pop(SlotKey, IndexOfInfirmarySlot);
+        }
+
+        public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            locator.Infirmary.Insert(SlotKey, IndexOfInfirmarySlot, element);
         }
     }
 

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -26,7 +25,6 @@ namespace ProjectABC.Engine
         [SerializeField] private SplineAnimate splineAnimate;
 
         private CardSpawnArgs _spawnArgs;
-        private Coroutine _moveLinearRoutine;
         
         public override void OnSpawned(CardSpawnArgs args)
         {
@@ -37,9 +35,9 @@ namespace ProjectABC.Engine
 
         public override void OnDespawned()
         {
-            CancelMovingLinear();
+            
         }
-        
+
         protected override void ApplyArgs(CardSpawnArgs args)
         {
             _spawnArgs = args;
@@ -52,7 +50,7 @@ namespace ProjectABC.Engine
             
             string gradeSpriteName = $"grade_{cardData.gradeType.GradeTypeToOrdinalString()}";
             
-            gradeRenderer.sprite = GlobalAssetBinder.Instance.AtlasBinder.GetCardSprite(gradeSpriteName);
+            // gradeRenderer.sprite = GlobalAssetBinder.Instance.AtlasBinder.GetCardSprite(gradeSpriteName);
 
             int totalPower = cardData.basePower;
             totalPower += args.CardReference.Buffs.Sum(buff => buff.AdditivePower);
@@ -146,66 +144,10 @@ namespace ProjectABC.Engine
             };
         }
 
-        public void MoveTo(Transform targetTransform)
+        public void MoveToTransform(Transform targetTransform)
         {
             transform.position = targetTransform.position;
             transform.rotation = targetTransform.rotation;
-        }
-
-        public void MoveLinear(Transform destination, float duration, float delay = 0.0f, Action callback = null)
-        {
-            MoveLinear(destination.position, destination.rotation, duration, delay, callback);
-        }
-
-        public void MoveLinear(Vector3 position, Quaternion rotation, float duration, float delay = 0.0f, Action callback = null)
-        {
-            CancelMovingLinear();
-            _moveLinearRoutine = StartCoroutine(Move(position, rotation, duration, delay, callback));
-        }
-
-        private void CancelMovingLinear()
-        {
-            if (_moveLinearRoutine != null)
-            {
-                StopCoroutine(_moveLinearRoutine);
-            }
-            
-            _moveLinearRoutine = null;
-        }
-
-        private IEnumerator Move(Vector3 position, Quaternion rotation, float duration, float delay = 0.0f, Action callback = null)
-        {
-            if (delay > 0.0f)
-            {
-                yield return new WaitForSeconds(delay);
-            }
-
-            if (duration > 0.0f)
-            {
-                float elapsedTime = 0.0f;
-            
-                Vector3 startPosition = transform.position;
-                Quaternion startRotation = transform.rotation;
-            
-                while (elapsedTime < duration)
-                {
-                    elapsedTime += Time.deltaTime;
-                
-                    Vector3 interpolatedPosition = Vector3.Lerp(startPosition, position, elapsedTime / duration);
-                    Quaternion interpolatedRotation = Quaternion.Lerp(startRotation, rotation, elapsedTime / duration);
-
-                    transform.position = interpolatedPosition;
-                    transform.rotation = interpolatedRotation;
-                
-                    yield return null;
-                }
-            }
-
-            transform.position = position;
-            transform.rotation = rotation;
-            
-            callback?.Invoke();
-            CancelMovingLinear();
         }
     }
 }

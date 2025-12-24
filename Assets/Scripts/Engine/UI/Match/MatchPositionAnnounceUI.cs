@@ -1,9 +1,7 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using DG.Tweening;
 using ProjectABC.Core;
-using ProjectABC.Utils;
 using TMPro;
 using UnityEngine;
 
@@ -31,10 +29,6 @@ namespace ProjectABC.Engine.UI
                 await matchPositionAnnounceUI.FlipAsync(token);
                 await matchPositionAnnounceUI.FadeAsync(token);
             }
-            catch (OperationCanceledException) when (token.IsCancellationRequested)
-            {
-                
-            }
             finally
             {
                 UIManager.Instance.CloseUI<MatchPositionAnnounceUI>();
@@ -58,109 +52,37 @@ namespace ProjectABC.Engine.UI
                     flipPosition => txtMatchPosition.rectTransform.eulerAngles = flipPosition,
                     Vector3.zero,
                     flipDuration
-                )
-                .SetUpdate(UpdateType.Manual);
-                
-            flipTween.Pause();
+                );
 
-            try
-            {
-                await flipDelay.WaitScaledTimeAsync(token);
-
-                flipTween.Play();
-
-                while (flipTween.IsActiveAndPlaying())
-                {
-                    token.ThrowIfCancellationRequested();
-                    await Task.Yield();
-
-                    float timescale = MatchSimulationTimeScaler.Timescale;
-                    if (timescale <= 0.0f)
-                    {
-                        continue;
-                    }
-
-                    float delta = Time.deltaTime * timescale;
-                    flipTween.ManualUpdate(delta, delta);
-                }
-            }
-            catch (OperationCanceledException) when (token.IsCancellationRequested)
-            {
-
-            }
-            finally
-            {
-                flipTween.Kill(true);
-            }
+            await flipDelay.WaitScaledTimeAsync(token);
+            await MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(flipTween, token);
         }
 
         private async Task FadeAsync(CancellationToken token = default)
         {
+            await fadeDelay.WaitScaledTimeAsync(token);
+            
             var moveTween = DOTween
                 .To(
                     () => txtMatchPosition.rectTransform.anchoredPosition,
                     pos => txtMatchPosition.rectTransform.anchoredPosition = pos,
                     fadePosition,
                     fadeDuration
-                )
-                .SetUpdate(UpdateType.Manual);
-            moveTween.Pause();
+                );
             
+            var moveTask = MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(moveTween, token);
+
             var fadeTween = DOTween
                 .To(
                     () => txtMatchPosition.color,
                     col => txtMatchPosition.color = col,
                     Color.clear,
                     fadeDuration
-                )
-                .SetUpdate(UpdateType.Manual);
-            fadeTween.Pause();
-
-            try
-            {
-                await fadeDelay.WaitScaledTimeAsync(token);
-
-                moveTween.Play();
-                fadeTween.Play();
-
-                while (true)
-                {
-                    token.ThrowIfCancellationRequested();
-                    await Task.Yield();
-
-                    float timescale = MatchSimulationTimeScaler.Timescale;
-                    if (timescale <= 0.0f)
-                    {
-                        continue;
-                    }
-
-                    float delta = Time.deltaTime * timescale;
-
-                    if (moveTween.IsActiveAndPlaying())
-                    {
-                        moveTween.ManualUpdate(delta, delta);
-                    }
-
-                    if (fadeTween.IsActiveAndPlaying())
-                    {
-                        fadeTween.ManualUpdate(delta, delta);
-                    }
-
-                    if (!moveTween.IsActiveAndPlaying() && !fadeTween.IsActiveAndPlaying())
-                    {
-                        break;
-                    }
-                }
-            }
-            catch (OperationCanceledException) when (token.IsCancellationRequested)
-            {
-
-            }
-            finally
-            {
-                moveTween.Kill(true);
-                fadeTween.Kill(true);
-            }
+                );
+            
+            var fadeTask = MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(fadeTween, token);
+            
+            await Task.WhenAll(moveTask, fadeTask);
         }
 
         public override void Refresh()

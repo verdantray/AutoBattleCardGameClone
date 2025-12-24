@@ -12,14 +12,14 @@ namespace ProjectABC.Engine
         public readonly Quaternion Rotation;
         public readonly CardReference CardReference;
 
-        public CardSpawnArgs(Transform target, CardReference card = null)
+        public CardSpawnArgs(Transform target, CardReference card)
         {
             Position =  target.position;
             Rotation = target.rotation;
             CardReference = card;
         }
 
-        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardReference card = null)
+        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardReference card)
         {
             Position = position;
             Rotation = rotation;

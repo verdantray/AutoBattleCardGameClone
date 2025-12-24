@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using DG.Tweening;
 using ProjectABC.Utils;
 using UnityEngine;
 
@@ -60,6 +61,39 @@ namespace ProjectABC.Engine
                 remaining -= Time.deltaTime * scale;
             }
         }
+
+        public static async Task PlayTweenWhileScaledTimeAsync(Tween tween, CancellationToken token = default)
+        {
+            try
+            {
+                tween.SetUpdate(UpdateType.Manual);
+                tween.Pause();
+                tween.Play();
+
+                while (tween.IsActiveAndPlaying())
+                {
+                    token.ThrowIfCancellationRequested();
+                    await Task.Yield();
+
+                    float timescale = Timescale;
+                    if (timescale <= 0.0f)
+                    {
+                        continue;
+                    }
+                    
+                    float delta = Time.deltaTime * timescale;
+                    tween.ManualUpdate(delta, delta);
+                }
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+
+            }
+            finally
+            {
+                tween.Kill(true);
+            }
+        }
     }
 
     [Serializable]
@@ -71,6 +105,8 @@ namespace ProjectABC.Engine
         {
             this.time = time;
         }
+        
+        public static ScaledTime Zero => new ScaledTime(0.0f);
         
         public static implicit operator ScaledTime(float time) => new ScaledTime(time);
 

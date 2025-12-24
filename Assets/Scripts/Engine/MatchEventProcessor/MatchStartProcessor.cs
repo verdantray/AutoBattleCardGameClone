@@ -39,10 +39,15 @@ namespace ProjectABC.Engine
                 OnboardController.OnboardSide onboardSide = isLocalPlayer
                     ? OnboardController.OnboardSide.Own
                     : OnboardController.OnboardSide.Other;
+
+                var task = onboardController.SetCardsToDeckPileAsync(
+                    onboardSide,
+                    matchSideSnapshot.Deck,
+                    _deckSetDelay,
+                    _deckSetDuration,
+                    token
+                );
                 
-                int cardsAmount = matchSideSnapshot.Deck.Count;
-                
-                var task = onboardController.SetCardsToDeckPileAsync(onboardSide, cardsAmount, _deckSetDelay, _deckSetDuration,  token);
                 deckTasks.Add(task);
             }
             

@@ -103,10 +103,14 @@ namespace ProjectABC.Core
             }
             else
             {
-                _nameKeyList.Add(cardNameKey);
-                _cardMap.Add(cardNameKey, new CardPile { card });
+                var cardPile = new CardPile();
+                cardPile.Add(card);
+                
+                _cardMap.Add(cardNameKey, cardPile);
 
                 location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
+                
+                _nameKeyList.Add(cardNameKey);
             }
         }
 
