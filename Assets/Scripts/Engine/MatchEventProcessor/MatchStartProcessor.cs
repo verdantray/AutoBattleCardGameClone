@@ -35,13 +35,8 @@ namespace ProjectABC.Engine
             
             foreach (var (player, matchSideSnapshot) in matchEvent.MatchMatchSnapshot.MatchSideSnapShots)
             {
-                bool isLocalPlayer = ReferenceEquals(player, Simulator.Model.player);
-                OnboardController.OnboardSide onboardSide = isLocalPlayer
-                    ? OnboardController.OnboardSide.Own
-                    : OnboardController.OnboardSide.Other;
-
                 var task = onboardController.SetCardsToDeckPileAsync(
-                    onboardSide,
+                    player,
                     matchSideSnapshot.Deck,
                     _deckSetDelay,
                     _deckSetDuration,

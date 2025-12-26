@@ -10,13 +10,8 @@ namespace ProjectABC.Engine
         
         public override Task ProcessEventAsync(SendToInfirmaryEvent matchEvent, CancellationToken token)
         {
-            bool isOwnPlayer = ReferenceEquals(matchEvent.Owner, Simulator.Model.player);
-            OnboardController.OnboardSide onboardSide = isOwnPlayer
-                ? OnboardController.OnboardSide.Own
-                : OnboardController.OnboardSide.Other;
-            
             return Simulator.Model.onboardController.SendCardToInfirmaryAsync(
-                onboardSide,
+                matchEvent.Owner,
                 matchEvent.MovementInfo,
                 _moveDuration,
                 token

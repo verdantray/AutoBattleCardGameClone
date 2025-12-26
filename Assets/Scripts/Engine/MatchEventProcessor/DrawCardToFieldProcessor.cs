@@ -12,15 +12,8 @@ namespace ProjectABC.Engine
         
         public override Task ProcessEventAsync(DrawCardToFieldEvent matchEvent, CancellationToken token)
         {
-            bool isOwnPlayer = ReferenceEquals(matchEvent.Owner, Simulator.Model.player);
-            OnboardController.OnboardSide onboardSide = isOwnPlayer
-                ? OnboardController.OnboardSide.Own
-                : OnboardController.OnboardSide.Other;
-
-
-
             return Simulator.Model.onboardController.DrawCardToFieldAsync(
-                onboardSide,
+                matchEvent.Owner,
                 matchEvent.MovementInfo,
                 _revealDuration,
                 _remainDelay,

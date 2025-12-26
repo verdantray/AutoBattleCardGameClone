@@ -6,26 +6,61 @@ using UnityEngine;
 
 namespace ProjectABC.Engine
 {
-    public sealed class CardOnboardLocator : ICardLocator<CardOnboard>
+    public sealed class CardLocator<T> : ICardLocator<T> where T : class
     {
-        public ICardHolder<CardOnboard> Deck => _deck;
-        public ICardHolder<CardOnboard> Field => _field;
-        public ICardHolder<string, CardOnboard> Infirmary =>  _infirmary;
+        private readonly Dictionary<IPlayer, SideLocator<T>> _sideLocators = new Dictionary<IPlayer, SideLocator<T>>();
 
-        private readonly CardHolder<CardOnboard> _deck = new CardHolder<CardOnboard>();
-        private readonly CardHolder<CardOnboard> _field = new CardHolder<CardOnboard>();
-        private readonly CardHolder<string, CardOnboard> _infirmary = new CardHolder<string, CardOnboard>();
+
+        public ISideLocator<T> this[IPlayer player] => GetSideLocator(player);
+
+        public bool Contains(IPlayer player)
+        {
+            return  _sideLocators.ContainsKey(player);
+        }
+
+        public ISideLocator<T> GetSideLocator(IPlayer player)
+        {
+            return _sideLocators[player];
+        }
+
+        public void RegisterSideLocator(IPlayer player, IEnumerable<T> deckCards = null)
+        {
+            _sideLocators.Add(player, deckCards == null ? new SideLocator<T>() : new SideLocator<T>(deckCards));
+        }
+
+        public void Clear()
+        {
+            foreach (var sideLocator in _sideLocators.Values)
+            {
+                sideLocator.Clear();
+            }
+            
+            _sideLocators.Clear();
+        }
     }
 
-    public sealed class CardReferenceLocator : ICardLocator<CardReference>
+    public sealed class SideLocator<T> : ISideLocator<T> where T : class
     {
-        public ICardHolder<CardReference> Deck => _deck;
-        public ICardHolder<CardReference> Field => _field;
-        public ICardHolder<string, CardReference> Infirmary => _infirmary;
+        public ICardHolder<T> Deck { get; }
+        public ICardHolder<T> Field { get; } = new CardHolder<T>();
+        public ICardHolder<string, T> Infirmary { get; } = new CardHolder<string, T>();
 
-        private readonly CardHolder<CardReference> _deck = new CardHolder<CardReference>();
-        private readonly CardHolder<CardReference> _field = new CardHolder<CardReference>();
-        private readonly CardHolder<string, CardReference> _infirmary = new CardHolder<string, CardReference>();
+        public SideLocator()
+        {
+            Deck = new CardHolder<T>();
+        }
+
+        public SideLocator(IEnumerable<T> deckCards)
+        {
+            Deck = new CardHolder<T>(deckCards);
+        }
+
+        public void Clear()
+        {
+            Deck.Clear();
+            Field.Clear();
+            Infirmary.Clear();
+        }
     }
     
     public sealed class CardHolder<T> : ICardHolder<T>, IEnumerable<T> where T : class
@@ -33,6 +68,16 @@ namespace ProjectABC.Engine
         private readonly List<T> _cardObjects = new List<T>();
         
         public int Count => _cardObjects.Count;
+        
+        public CardHolder()
+        {
+            
+        }
+
+        public CardHolder(IEnumerable<T> initialCards)
+        {
+            _cardObjects.AddRange(initialCards);
+        }
         
         public T Peek(int index)
         {

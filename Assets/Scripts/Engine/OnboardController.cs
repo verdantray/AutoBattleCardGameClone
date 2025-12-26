@@ -27,17 +27,8 @@ namespace ProjectABC.Engine
         [SerializeField] private OnboardPoints ownSide;
         [SerializeField] private OnboardPoints otherSide;
 
-        private readonly Dictionary<OnboardSide, CardReferenceLocator> _cardReferenceLocators = new()
-        {
-            { OnboardSide.Own, new CardReferenceLocator() },
-            { OnboardSide.Other, new CardReferenceLocator() },
-        };
-
-        private readonly Dictionary<OnboardSide, CardOnboardLocator> _cardOnboardLocators = new()
-        {
-            { OnboardSide.Own, new CardOnboardLocator() },
-            { OnboardSide.Other, new CardOnboardLocator() },
-        };
+        private readonly CardLocator<CardReference> _cardReferenceLocator = new CardLocator<CardReference>();
+        private readonly CardLocator<CardOnboard> _cardOnboardLocator = new CardLocator<CardOnboard>();
 
         private readonly Dictionary<OnboardSide, CardOnboard> _cardObjectsOnDeck = new()
         {
@@ -45,11 +36,23 @@ namespace ProjectABC.Engine
             { OnboardSide.Other, null }
         };
 
-        public async Task SetCardsToDeckPileAsync(OnboardSide side, IReadOnlyList<CardReference> deckCards, ScaledTime delay, ScaledTime duration, CancellationToken token)
+        public async Task SetCardsToDeckPileAsync(IPlayer owner, IReadOnlyList<CardReference> deckCards, ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
-            OnboardPoints boardPoints = GetOnboardPointsOfSide(side);
-            CardReferenceLocator cardReferenceLocator = _cardReferenceLocators[side];
-            CardOnboardLocator cardOnboardLocator = _cardOnboardLocators[side];
+            OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
+            OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
+
+            if (!_cardReferenceLocator.Contains(owner))
+            {
+                _cardReferenceLocator.RegisterSideLocator(owner, deckCards);
+            }
+
+            if (!_cardOnboardLocator.Contains(owner))
+            {
+                _cardOnboardLocator.RegisterSideLocator(owner);
+            }
+
+            var cardReferenceDeck = _cardReferenceLocator[owner].Deck;
+            var cardOnboardDeck = _cardOnboardLocator[owner].Deck;
             
             try
             {
@@ -63,16 +66,16 @@ namespace ProjectABC.Engine
                 for (int i = 0; i < deckCount; i++)
                 {
                     var cardReference = deckCards[i];
-                    cardReferenceLocator.Deck.Insert(i, cardReference);
+                    cardReferenceDeck.Insert(i, cardReference);
 
-                    CardSpawnArgs args = new CardSpawnArgs(boardPoints.deckPoint, cardReference);
+                    CardSpawnArgs args = new CardSpawnArgs(onboardPoints.deckPoint, cardReference);
                     var cardOnboard = SpawnCardOnboard(args);
-                    cardOnboardLocator.Deck.Insert(i, cardOnboard);
+                    cardOnboardDeck.Insert(i, cardOnboard);
 
                     float delayPerCard = interval * i;
                     ScaledTime scaledDelay = delayPerCard;
 
-                    var task = cardOnboard.MoveFollowingSplineAsync(boardPoints.comeToDeckSpline, interval, scaledDelay, token);
+                    var task = cardOnboard.MoveFollowingSplineAsync(onboardPoints.comeToDeckSpline, interval, scaledDelay, token);
                     tasks.Add(task);
                 }
 
@@ -84,37 +87,38 @@ namespace ProjectABC.Engine
             }
             finally
             {
-                for (int i = cardOnboardLocator.Deck.Count - 1; i >= 0; i--)
+                for (int i = cardOnboardDeck.Count - 1; i >= 0; i--)
                 {
-                    var cardOnboard = cardOnboardLocator.Deck.Pop(i);
+                    var cardOnboard = cardOnboardDeck.Pop(i);
                     DespawnCardObject(cardOnboard);
                 }
-
-                if (cardReferenceLocator.Deck.Count > 0 && _cardObjectsOnDeck[side] == null)
+                
+                if (cardReferenceDeck.Count > 0 && _cardObjectsOnDeck[onboardSide] == null)
                 {
-                    CardSpawnArgs args = new CardSpawnArgs(boardPoints.deckPoint, null);
-                    _cardObjectsOnDeck[side] = SpawnCardOnboard(args);
+                    CardSpawnArgs args = new CardSpawnArgs(onboardPoints.deckPoint, null);
+                    _cardObjectsOnDeck[onboardSide] = SpawnCardOnboard(args);
                 }
             }
         }
 
-        public async Task DrawCardToFieldAsync(OnboardSide side, CardMovementInfo moveInfo, ScaledTime revealDuration, ScaledTime remainDelay, ScaledTime alignDuration, CancellationToken token)
+        public async Task DrawCardToFieldAsync(IPlayer owner, CardMovementInfo moveInfo, ScaledTime revealDuration, ScaledTime remainDelay, ScaledTime alignDuration, CancellationToken token)
         {
-            OnboardPoints onboardPoints = GetOnboardPointsOfSide(side);
-            CardReference targetCardRef = moveInfo.PreviousLocation.PopFromLocation(_cardReferenceLocators[side]);
+            OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
+            OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
+            CardReference targetCardRef = moveInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
 
             CardSpawnArgs args = new CardSpawnArgs(onboardPoints.deckPoint, targetCardRef);
             CardOnboard drawnCardOnboard = SpawnCardOnboard(args);
             
-            moveInfo.CurrentLocation.InsertToLocation(_cardReferenceLocators[side], targetCardRef);
-            moveInfo.CurrentLocation.InsertToLocation(_cardOnboardLocators[side], drawnCardOnboard);
+            moveInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
+            moveInfo.CurrentLocation.InsertToLocation(_cardOnboardLocator, drawnCardOnboard);
 
             try
             {
-                if (_cardReferenceLocators[side].Deck.Count == 0 && _cardObjectsOnDeck[side] != null)
+                if (_cardReferenceLocator[owner].Deck.Count == 0 && _cardObjectsOnDeck[onboardSide] != null)
                 {
-                    DespawnCardObject(_cardObjectsOnDeck[side]);
-                    _cardObjectsOnDeck[side] = null;
+                    DespawnCardObject(_cardObjectsOnDeck[onboardSide]);
+                    _cardObjectsOnDeck[onboardSide] = null;
                 }
 
                 await drawnCardOnboard.MoveToTargetAsync(onboardPoints.revealCardPoint, revealDuration, token);
@@ -122,10 +126,10 @@ namespace ProjectABC.Engine
 
                 var tasks = new List<Task>();
                 
-                int fieldCount = _cardReferenceLocators[side].Field.Count;
+                int fieldCount = _cardReferenceLocator[owner].Field.Count;
                 for (int i = fieldCount - 1; i >= 0; i--)
                 {
-                    var cardOnField = _cardOnboardLocators[side].Field.Peek(i);
+                    var cardOnField = _cardOnboardLocator[owner].Field.Peek(i);
                     Vector3 alignedPosition = GetHorizontalAlignedPosition(
                         fieldCount,
                         i,
@@ -145,10 +149,10 @@ namespace ProjectABC.Engine
             }
             finally
             {
-                int fieldCount = _cardReferenceLocators[side].Field.Count;
+                int fieldCount = _cardReferenceLocator[owner].Field.Count;
                 for (int i = fieldCount - 1; i >= 0; i--)
                 {
-                    var cardOnField = _cardOnboardLocators[side].Field.Peek(i);
+                    var cardOnField = _cardOnboardLocator[owner].Field.Peek(i);
                     Vector3 alignedPosition = GetHorizontalAlignedPosition(
                         fieldCount,
                         i,
@@ -161,7 +165,7 @@ namespace ProjectABC.Engine
             }
         }
 
-        private Vector3 GetHorizontalAlignedPosition(int totalCount, int index, Vector3 origin, Vector3 direction)
+        private static Vector3 GetHorizontalAlignedPosition(int totalCount, int index, Vector3 origin, Vector3 direction)
         {
             int centerIndex = totalCount / 2;
             Vector3 alignedPosition = centerIndex == index
@@ -171,22 +175,23 @@ namespace ProjectABC.Engine
             return alignedPosition;
         }
 
-        public async Task SendCardToInfirmaryAsync(OnboardSide side, CardMovementInfo moveInfo, ScaledTime moveDuration, CancellationToken token = default)
+        public async Task SendCardToInfirmaryAsync(IPlayer owner, CardMovementInfo moveInfo, ScaledTime moveDuration, CancellationToken token = default)
         {
-            OnboardPoints onboardPoints = GetOnboardPointsOfSide(side);
+            OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
+            OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
             
-            CardReference targetCardRef = moveInfo.PreviousLocation.PopFromLocation(_cardReferenceLocators[side]);
-            CardOnboard cardToInfirmary = moveInfo.PreviousLocation.PopFromLocation(_cardOnboardLocators[side]);
+            CardReference targetCardRef = moveInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
+            CardOnboard cardToInfirmary = moveInfo.PreviousLocation.PopFromLocation(_cardOnboardLocator);
             
-            moveInfo.CurrentLocation.InsertToLocation(_cardReferenceLocators[side], targetCardRef);
-            moveInfo.CurrentLocation.InsertToLocation(_cardOnboardLocators[side], cardToInfirmary);
+            moveInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
+            moveInfo.CurrentLocation.InsertToLocation(_cardOnboardLocator, cardToInfirmary);
 
             try
             {
                 var tasks =  new List<Task>();
 
-                int indexOfKey = _cardOnboardLocators[side].Infirmary.IndexOfKey(targetCardRef.CardData.nameKey);
-                var cardOnInfirmaryHolder = _cardOnboardLocators[side].Infirmary[indexOfKey];
+                int indexOfKey = _cardOnboardLocator[owner].Infirmary.IndexOfKey(targetCardRef.CardData.nameKey);
+                var cardOnInfirmaryHolder = _cardOnboardLocator[owner].Infirmary[indexOfKey];
                 var target = onboardPoints.infirmaryPoints[indexOfKey];
                 
                 int infirmarySlotCount = cardOnInfirmaryHolder.Count;
@@ -207,8 +212,8 @@ namespace ProjectABC.Engine
             }
             finally
             {
-                int indexOfKey = _cardOnboardLocators[side].Infirmary.IndexOfKey(targetCardRef.CardData.nameKey);
-                var cardOnInfirmaryHolder = _cardOnboardLocators[side].Infirmary[indexOfKey];
+                int indexOfKey = _cardOnboardLocator[owner].Infirmary.IndexOfKey(targetCardRef.CardData.nameKey);
+                var cardOnInfirmaryHolder = _cardOnboardLocator[owner].Infirmary[indexOfKey];
                 var target = onboardPoints.infirmaryPoints[indexOfKey];
                 
                 int infirmarySlotCount = cardOnInfirmaryHolder.Count;
@@ -222,11 +227,17 @@ namespace ProjectABC.Engine
             }
         }
 
-        private Vector3 GetVerticalAlignedPosition(int index, Vector3 origin, Vector3 direction)
+        private static Vector3 GetVerticalAlignedPosition(int index, Vector3 origin, Vector3 direction)
         {
             return origin + (direction * index);
         }
 
+        private static OnboardSide GetOnboardSideOfPlayer(IPlayer player)
+        {
+            bool isOwnPlayer = ReferenceEquals(player, Simulator.Model.player);
+            return isOwnPlayer ? OnboardSide.Own : OnboardSide.Other;
+        }
+        
         private OnboardPoints GetOnboardPointsOfSide(OnboardSide side)
         {
             return side == OnboardSide.Own ? ownSide : otherSide;

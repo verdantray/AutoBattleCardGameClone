@@ -13,11 +13,11 @@ namespace ProjectABC.Core
     public abstract record CardLocation
     {
         public abstract CardZone CardZone { get; }
-        public readonly IPlayer Player;
+        public readonly IPlayer Owner;
         
-        protected CardLocation(IPlayer player)
+        protected CardLocation(IPlayer owner)
         {
-            Player = player;
+            Owner = owner;
         }
 
         public abstract T PopFromLocation<T>(ICardLocator<T> locator) where T : class;
@@ -28,7 +28,7 @@ namespace ProjectABC.Core
     {
         public override CardZone CardZone => CardZone.CardPile;
 
-        public CardPileLocation(IPlayer player) : base(player)
+        public CardPileLocation(IPlayer owner) : base(owner)
         {
             
         }
@@ -58,12 +58,12 @@ namespace ProjectABC.Core
         
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
-            return locator.Deck.Pop(IndexOfDeck);
+            return locator[Owner].Deck.Pop(IndexOfDeck);
         }
 
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
-            locator.Deck.Insert(IndexOfDeck, element);
+            locator[Owner].Deck.Insert(IndexOfDeck, element);
         }
     }
 
@@ -80,12 +80,12 @@ namespace ProjectABC.Core
         
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
-            return locator.Field.Pop(IndexOfField);
+            return locator[Owner].Field.Pop(IndexOfField);
         }
 
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
-            locator.Field.Insert(IndexOfField, element);
+            locator[Owner].Field.Insert(IndexOfField, element);
         }
     }
 
@@ -104,12 +104,12 @@ namespace ProjectABC.Core
         
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
-            return locator.Infirmary.Pop(SlotKey, IndexOfInfirmarySlot);
+            return locator[Owner].Infirmary.Pop(SlotKey, IndexOfInfirmarySlot);
         }
 
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
-            locator.Infirmary.Insert(SlotKey, IndexOfInfirmarySlot, element);
+            locator[Owner].Infirmary.Insert(SlotKey, IndexOfInfirmarySlot, element);
         }
     }
 
