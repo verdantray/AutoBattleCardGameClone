@@ -30,10 +30,8 @@ namespace ProjectABC.Core
             ownSide.Deck.Add(CallCard);
             int indexOfDeck = ownSide.Deck.Count - 1;
             CardLocation curLocation = new DeckLocation(ownSide.Player, indexOfDeck);
-
-            CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
-            CardReference cardReference = new CardReference(CallCard, buffArgs);
-            CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(cardReference);
+            
+            CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevLocation);
             CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
             
             SendToDeckInsteadOfInfirmaryEvent cardSendEvent = new SendToDeckInsteadOfInfirmaryEvent(appliedInfo, movementInfo);

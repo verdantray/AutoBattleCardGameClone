@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
@@ -185,12 +186,12 @@ namespace ProjectABC.Engine
             
             moveInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
             moveInfo.CurrentLocation.InsertToLocation(_cardOnboardLocator, cardToInfirmary);
-
             try
             {
                 var tasks =  new List<Task>();
 
                 int indexOfKey = _cardOnboardLocator[owner].Infirmary.IndexOfKey(targetCardRef.CardData.nameKey);
+                
                 var cardOnInfirmaryHolder = _cardOnboardLocator[owner].Infirmary[indexOfKey];
                 var target = onboardPoints.infirmaryPoints[indexOfKey];
                 

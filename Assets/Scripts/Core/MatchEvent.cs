@@ -95,7 +95,12 @@ namespace ProjectABC.Core
 
     public class SuccessAttackEvent : MatchEvent
     {
-        
+        public readonly IPlayer Attacker;
+
+        public SuccessAttackEvent(IPlayer attacker)
+        {
+            Attacker = attacker;
+        }
     }
 
     public class SendToInfirmaryEvent : MatchEvent
@@ -112,19 +117,33 @@ namespace ProjectABC.Core
 
     public class CardEffectAppliedInfo
     {
-        public readonly CardReference AppliedCard;
-        public readonly CardReference ActivatedCard;
+        public readonly CardLocation AppliedCardLocation;
+        public readonly CardLocation ActivatedCardLocation;
 
-        public CardEffectAppliedInfo(CardReference selfActivatedCard)
+        public CardEffectAppliedInfo(CardLocation selfActivatedCardLocation)
         {
-            AppliedCard = selfActivatedCard;
-            ActivatedCard =  selfActivatedCard;
+            AppliedCardLocation = selfActivatedCardLocation;
+            ActivatedCardLocation = selfActivatedCardLocation;
         }
 
-        public CardEffectAppliedInfo(CardReference appliedCard, CardReference activatedCard)
+        public CardEffectAppliedInfo(CardLocation appliedCardLocation, CardLocation activatedCardLocation)
         {
-            AppliedCard = appliedCard;
-            ActivatedCard = activatedCard;
+            AppliedCardLocation = appliedCardLocation;
+            ActivatedCardLocation = activatedCardLocation;
+        }
+    }
+    
+    public class DrawCardFromPileEvent : MatchEvent
+    {
+        public readonly CardLocation ActivatedCardLocation;
+        public readonly CardReference DrawnCard;
+        public readonly CardMovementInfo MovementInfo;
+        
+        public DrawCardFromPileEvent(CardLocation activatedCardLocation, CardReference drawnCard, CardMovementInfo movementInfo)
+        {
+            ActivatedCardLocation = activatedCardLocation;
+            DrawnCard = drawnCard;
+            MovementInfo = movementInfo;
         }
     }
 
@@ -152,18 +171,6 @@ namespace ProjectABC.Core
         }
     }
 
-    public class DrawCardByEffectEvent : MatchEvent
-    {
-        public readonly CardEffectAppliedInfo AppliedInfo;
-        public readonly CardMovementInfo MovementInfo;
-        
-        public DrawCardByEffectEvent(CardEffectAppliedInfo appliedInfo, CardMovementInfo movementInfo)
-        {
-            AppliedInfo = appliedInfo;
-            MovementInfo = movementInfo;
-        }
-    }
-
     public class SendToDeckInsteadOfInfirmaryEvent : MatchEvent
     {
         public readonly CardEffectAppliedInfo AppliedInfo;
@@ -179,10 +186,12 @@ namespace ProjectABC.Core
     public class ShuffleDeckEvent : MatchEvent
     {
         public readonly CardEffectAppliedInfo AppliedInfo;
+        public readonly CardMovementInfo MovementInfo;
         
-        public ShuffleDeckEvent(CardEffectAppliedInfo appliedInfo)
+        public ShuffleDeckEvent(CardEffectAppliedInfo appliedInfo, CardMovementInfo movementInfo)
         {
             AppliedInfo = appliedInfo;
+            MovementInfo = movementInfo;
         }
     }
 

@@ -1133,7 +1133,7 @@ MonoBehaviour:
     - {fileID: 15098906}
     - {fileID: 199658646}
     comeToDeckSpline: {fileID: 456044450}
-    horizontalAlignDirection: {x: 0, y: 0, z: 0.5}
+    horizontalAlignDirection: {x: 0, y: 0, z: 0.75}
     verticalAlignDirection: {x: 0.3, y: 0.02, z: 0}
   otherSide:
     deckPoint: {fileID: 537446129}
@@ -1147,7 +1147,7 @@ MonoBehaviour:
     - {fileID: 953711166}
     - {fileID: 105105068}
     comeToDeckSpline: {fileID: 1751678795}
-    horizontalAlignDirection: {x: 0, y: 0, z: -0.5}
+    horizontalAlignDirection: {x: 0, y: 0, z: -0.75}
     verticalAlignDirection: {x: -0.3, y: 0.02, z: 0}
 --- !u!1 &1035601374
 GameObject:

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using log4net.Appender;
 using ProjectABC.Data;
 using ProjectABC.Utils;
 
@@ -39,8 +38,8 @@ namespace ProjectABC.Core
 
         public List<Card> DrawCards(int amount)
         {
-            List<Card> toDraw = _cardList.GetRange(0, amount);
-            _cardList.RemoveRange(0, amount);
+            List<Card> toDraw = _cardList.GetRange(_cardList.Count - amount, amount);
+            _cardList.RemoveRange(_cardList.Count - amount, amount);
 
             return toDraw;
         }
@@ -106,16 +105,17 @@ namespace ProjectABC.Core
             if (_nameKeyList.Contains(cardNameKey))
             {
                 _cardMap[cardNameKey].Add(card);
-                
-                int index = _cardMap[cardNameKey].IndexOf(card);
+
+                int index = _cardMap[cardNameKey].Count - 1;
                 location = new InfirmaryLocation(card.Owner, cardNameKey, index);
-                return;
             }
-            
-            _cardMap.Add(cardNameKey, new CardPile { card });
-            location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
+            else
+            {
+                _cardMap.Add(cardNameKey, new CardPile { card });
+                location = new InfirmaryLocation(card.Owner, cardNameKey, 0);
                 
-            _nameKeyList.Add(cardNameKey);
+                _nameKeyList.Add(cardNameKey);
+            }
         }
 
         public bool RemoveByIndex(int index)

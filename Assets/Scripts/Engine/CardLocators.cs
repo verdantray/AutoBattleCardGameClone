@@ -9,8 +9,7 @@ namespace ProjectABC.Engine
     public sealed class CardLocator<T> : ICardLocator<T> where T : class
     {
         private readonly Dictionary<IPlayer, SideLocator<T>> _sideLocators = new Dictionary<IPlayer, SideLocator<T>>();
-
-
+        
         public ISideLocator<T> this[IPlayer player] => GetSideLocator(player);
 
         public bool Contains(IPlayer player)
@@ -145,10 +144,20 @@ namespace ProjectABC.Engine
             {
                 Debug.LogWarning($"{nameof(CardHolder<TKey, T>)} : can't find key '{key}'");
             }
-            
-            return _cardObjects.TryGetValue(key, out var cardHolder)
-                ? cardHolder.Pop(index)
-                : null;
+
+            if (!_cardObjects.TryGetValue(key, out var cardHolder))
+            {
+                return null;
+            }
+
+            T popped = cardHolder.Pop(index);
+            if (cardHolder.Count == 0)
+            {
+                _cardObjects.Remove(key);
+                _keyList.Remove(key);
+            }
+
+            return popped;
         }
 
         public void Insert(TKey key, int index, T element)

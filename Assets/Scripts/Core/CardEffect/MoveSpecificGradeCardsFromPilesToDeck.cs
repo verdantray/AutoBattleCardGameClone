@@ -65,19 +65,18 @@ namespace ProjectABC.Core
                 // if deck is empty then return default value of int (= 0)
                 int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).FirstOrDefault();
                 ownSide.Deck.Insert(randomIndex, drawnCard);
-                
-                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+
+                CallCard.TryGetCardLocation(ownSide, out var activatedCardLocation);
                 
                 // additive-recruit is not trigger card effect of drawn card...
+                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
                 var appliedCard = new CardReference(drawnCard, buffArgs);
-                var activatedCard = new CardReference(CallCard, buffArgs);
-                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(appliedCard, activatedCard);
 
                 CardLocation prevLocation = new CardPileLocation(ownPlayer);
                 CardLocation curLocation = new DeckLocation(ownPlayer, randomIndex);
                 CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
                 
-                DrawCardByEffectEvent drawCardEvent = new DrawCardByEffectEvent(appliedInfo, movementInfo);
+                DrawCardFromPileEvent drawCardEvent = new DrawCardFromPileEvent(activatedCardLocation, appliedCard, movementInfo);
                 drawCardEvent.RegisterEvent(matchContextEvent);
 
                 // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {randomIndex}번째 위치로 보냄\n{drawnCard}";

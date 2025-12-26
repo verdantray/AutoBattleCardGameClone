@@ -70,17 +70,12 @@ namespace ProjectABC.Core
                     continue;
                 }
                 
+                CardLocation prevAppliedCardLocation = new DeckLocation(otherSide.Player, otherSide.Deck.Count);
                 otherSide.Infirmary.PutCard(cardToMove, out var infirmaryLocation);
 
-                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
-                
-                var appliedCard = new CardReference(cardToMove, buffArgs);
-                var activatedCard = new CardReference(CallCard, buffArgs);
-
-                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(appliedCard, activatedCard);
-
-                CardLocation prevLocation = new DeckLocation(otherSide.Player, otherSide.Deck.Count);
-                CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, infirmaryLocation);
+                CallCard.TryGetCardLocation(ownSide, out CardLocation activatedCardLocation);
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, infirmaryLocation);
                 
                 SendToInfirmaryFromDeckEvent sendCardEvent = new SendToInfirmaryFromDeckEvent(appliedInfo, movementInfo);
                 sendCardEvent.RegisterEvent(matchContextEvent);

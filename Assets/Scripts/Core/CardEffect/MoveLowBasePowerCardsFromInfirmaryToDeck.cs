@@ -77,7 +77,7 @@ namespace ProjectABC.Core
 
                 int indexOfSlot = ownSide.Infirmary[i].IndexOf(cardToMove);
                 string slotKey = cardToMove.CardData.nameKey;
-                CardLocation prevLocation = new InfirmaryLocation(ownSide.Player, slotKey, indexOfSlot);
+                CardLocation prevAppliedCardLocation = new InfirmaryLocation(ownSide.Player, slotKey, indexOfSlot);
                 
                 ownSide.Infirmary[i].Remove(cardToMove);
                 if (ownSide.Infirmary[i].Count == 0)
@@ -89,17 +89,14 @@ namespace ProjectABC.Core
                 cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
                 
                 moveCount++;
-
-                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
                 
-                var sentCard = new CardReference(cardToMove, buffArgs);
-                var activatedCard = new CardReference(CallCard, buffArgs);
-                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(sentCard, activatedCard);
+                CallCard.TryGetCardLocation(ownSide, out CardLocation activatedCardLocation);
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
 
                 int indexOfDeck = ownSide.Deck.IndexOf(cardToMove);
                 CardLocation curLocation = new DeckLocation(ownSide.Player, indexOfDeck);
 
-                CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, curLocation);
 
                 SendToDeckFromInfirmaryEvent sendCardEvent = new SendToDeckFromInfirmaryEvent(appliedInfo, movementInfo);
                 sendCardEvent.RegisterEvent(matchContextEvent);

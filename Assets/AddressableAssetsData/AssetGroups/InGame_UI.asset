@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ae7618ef8de56b468248bde14c45eae
+    m_Address: MatchLogUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52656dd4d71c81d4e8eea2afc7501f01
     m_Address: PlayerSelectedClubItem
     m_ReadOnly: 0

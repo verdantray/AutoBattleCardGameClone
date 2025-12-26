@@ -30,17 +30,10 @@ namespace ProjectABC.Engine
         
         private Simulation _simulation;
 
-        private async void Start()
+        private void Start()
         {
-            try
-            {
-                Initialize();
-                await RunAsync();
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"{nameof(Simulator)} : An error occured.. {e}");
-            }
+            Initialize();
+            RunAsync().Forget();
         }
 
         public void Initialize()
@@ -67,12 +60,20 @@ namespace ProjectABC.Engine
 
         public async Task RunAsync()
         {
-            Task preloadingTask = GetPreloadingTask();
-            await preloadingTask;
+            try
+            {
+                Task preloadingTask = GetPreloadingTask();
+                await preloadingTask;
 
-            await BlurOffWhileDurationAsync(0.25f);
-            
-            await _simulation.RunAsync();
+                await BlurOffWhileDurationAsync(0.25f);
+
+                await _simulation.RunAsync();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Simulator has error occurred : {e}");
+                throw;
+            }
         }
 
         public void Stop()

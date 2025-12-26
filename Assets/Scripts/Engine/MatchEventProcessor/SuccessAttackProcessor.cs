@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
-using UnityEngine;
+using ProjectABC.Engine.UI;
 
 namespace ProjectABC.Engine
 {
@@ -9,7 +9,8 @@ namespace ProjectABC.Engine
     {
         public override Task ProcessEventAsync(SuccessAttackEvent matchEvent, CancellationToken token)
         {
-            Debug.Log("공격자가 공격에 성공");
+            MatchLogUI.SendLog($"{matchEvent.Attacker.Name}이(가) 공격에 성공");
+            
             return Task.CompletedTask;
         }
     }

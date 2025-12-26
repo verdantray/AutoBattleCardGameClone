@@ -32,6 +32,7 @@ namespace ProjectABC.Core
 
     public interface ICardHolder<in TKey, T> where TKey : IComparable where T : class
     {
+        public int Count { get; }
         public ICardHolder<T> this[int keyIndex] { get; }
         public ICardHolder<T> this[TKey key] { get; }
         public int IndexOfKey(TKey key);

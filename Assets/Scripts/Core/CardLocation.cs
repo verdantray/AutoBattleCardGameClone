@@ -22,6 +22,10 @@ namespace ProjectABC.Core
 
         public abstract T PopFromLocation<T>(ICardLocator<T> locator) where T : class;
         public abstract void InsertToLocation<T>(ICardLocator<T> locator, T element) where T : class;
+        public override string ToString()
+        {
+            return $"Zone : {CardZone} / Owner : {Owner.Name}";
+        }
     }
 
     public record CardPileLocation : CardLocation
@@ -65,6 +69,11 @@ namespace ProjectABC.Core
         {
             locator[Owner].Deck.Insert(IndexOfDeck, element);
         }
+
+        public override string ToString()
+        {
+            return $"Zone : {CardZone} / Index : {IndexOfDeck} / Owner : {Owner.Name}";
+        }
     }
 
     public record FieldLocation : CardLocation
@@ -86,6 +95,11 @@ namespace ProjectABC.Core
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
             locator[Owner].Field.Insert(IndexOfField, element);
+        }
+
+        public override string ToString()
+        {
+            return $"Zone : {CardZone} / Index : {IndexOfField} / Owner : {Owner.Name}";
         }
     }
 
@@ -110,6 +124,11 @@ namespace ProjectABC.Core
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
             locator[Owner].Infirmary.Insert(SlotKey, IndexOfInfirmarySlot, element);
+        }
+
+        public override string ToString()
+        {
+            return $"Zone : {CardZone} / SlotKey : {SlotKey} / Index : {IndexOfInfirmarySlot} / Owner : {Owner.Name}";
         }
     }
 

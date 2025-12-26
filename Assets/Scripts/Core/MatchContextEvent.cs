@@ -150,7 +150,7 @@ namespace ProjectABC.Core
                     IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
                 }
 
-                SuccessAttackEvent successAttackEvent = new SuccessAttackEvent();
+                SuccessAttackEvent successAttackEvent = new SuccessAttackEvent(attacker.Player);
                 successAttackEvent.RegisterEvent(matchContextEvent);
 
                 #region Put cards of defender from field to infirmary
@@ -172,7 +172,7 @@ namespace ProjectABC.Core
                 while (defender.Field.Count > 0)
                 {
                     Card cardToMove = defender.Field[^1];
-                    int indexOfField = defender.Field.IndexOf(cardToMove);
+                    int indexOfField = defender.Field.Count - 1;
                     
                     defender.Field.Remove(cardToMove);
 
@@ -256,7 +256,7 @@ namespace ProjectABC.Core
 
         private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchContextEvent matchContextEvent)
         {
-            CardLocation prevLocation = new DeckLocation(drawnSide.Player, drawnSide.Deck.Count - 1);
+            CardLocation prevLocation = new DeckLocation(drawnSide.Player, drawnSide.Deck.Count);
             CardLocation curLocation = new FieldLocation(drawnSide.Player, drawnSide.Field.Count - 1);
 
             CardMovementInfo cardMovementInfo = new CardMovementInfo(prevLocation, curLocation);

@@ -26,8 +26,7 @@ namespace ProjectABC.Engine.UI
                 var matchPositionAnnounceUI = UIManager.Instance.OpenUI<MatchPositionAnnounceUI>();
                 matchPositionAnnounceUI.SetOwnPlayerPosition(ownPlayerPosition);
 
-                await matchPositionAnnounceUI.FlipAsync(token);
-                await matchPositionAnnounceUI.FadeAsync(token);
+                await matchPositionAnnounceUI.ShowAsync(token);
             }
             finally
             {
@@ -44,8 +43,10 @@ namespace ProjectABC.Engine.UI
             txtMatchPosition.color = Color.white;
         }
 
-        private async Task FlipAsync(CancellationToken token = default)
+        private async Task ShowAsync(CancellationToken token)
         {
+            await flipDelay.WaitScaledTimeAsync(token);
+            
             var flipTween = DOTween
                 .To(
                     () => txtMatchPosition.rectTransform.eulerAngles,
@@ -53,13 +54,9 @@ namespace ProjectABC.Engine.UI
                     Vector3.zero,
                     flipDuration
                 );
-
-            await flipDelay.WaitScaledTimeAsync(token);
+            
             await MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(flipTween, token);
-        }
-
-        private async Task FadeAsync(CancellationToken token = default)
-        {
+            
             await fadeDelay.WaitScaledTimeAsync(token);
             
             var moveTween = DOTween

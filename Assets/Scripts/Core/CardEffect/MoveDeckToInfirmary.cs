@@ -65,14 +65,12 @@ namespace ProjectABC.Core
                 
                 // put cards from defender field to infirmary
                 ownSide.Infirmary.PutCard(cardToMove, out var infirmaryLocation);
-
-                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
-
-                var sentCard = new CardReference(cardToMove, buffArgs);
-                var activatedCard = new CardReference(CallCard, buffArgs);
-                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(sentCard, activatedCard);
-                CardLocation prevLocation = new DeckLocation(ownSide.Player, ownSide.Deck.Count);
-                CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, infirmaryLocation);
+                
+                CardLocation prevAppliedCardLocation = new DeckLocation(ownSide.Player, ownSide.Deck.Count);
+                CallCard.TryGetCardLocation(ownSide, out CardLocation activatedCardLocation);
+                
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, infirmaryLocation);
                 
                 SendToInfirmaryFromDeckEvent sendToInfirmaryFromDeckEvent = new SendToInfirmaryFromDeckEvent(appliedInfo, movementInfo);
                 sendToInfirmaryFromDeckEvent.RegisterEvent(matchContextEvent);

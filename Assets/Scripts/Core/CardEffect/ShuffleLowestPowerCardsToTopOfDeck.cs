@@ -71,17 +71,17 @@ namespace ProjectABC.Core
                 }
 
                 Card cardToShuffle = ownSide.Deck[i];
+                cardToShuffle.TryGetCardLocation(ownSide, out var prevAppliedCardLocation);
 
                 ownSide.Deck.Remove(cardToShuffle);
                 ownSide.Deck.AddToTop(cardToShuffle);
-
-                CardBuffArgs buffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
-
-                var appliedCard = new CardReference(cardToShuffle, buffArgs);
-                var activatedCard = new CardReference(CallCard, buffArgs);
-
-                CardEffectAppliedInfo info = new CardEffectAppliedInfo(appliedCard, activatedCard);
-                ShuffleDeckEvent shuffleDeckEvent = new ShuffleDeckEvent(info);
+                
+                cardToShuffle.TryGetCardLocation(ownSide, out var curAppliedCardLocation);
+                CallCard.TryGetCardLocation(ownSide, out var activatedCardLocation);
+                
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, curAppliedCardLocation);
+                ShuffleDeckEvent shuffleDeckEvent = new ShuffleDeckEvent(appliedInfo, movementInfo);
                 shuffleDeckEvent.RegisterEvent(matchContextEvent);
                 
                 // string moveCardToTopOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 위로 보냄\n{cardToShuffle}";
