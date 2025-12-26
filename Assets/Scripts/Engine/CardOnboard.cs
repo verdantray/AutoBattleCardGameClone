@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DG.Tweening;
 using ProjectABC.Core;
 using ProjectABC.Data;
 using TMPro;
@@ -66,7 +67,7 @@ namespace ProjectABC.Engine
             mat.SetTexture(MAIN_TEX_PROPERTY, sprite.texture);
         }
 
-        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, ScaledTime duration, ScaledTime delay, CancellationToken token = default)
+        public async Task MoveFollowingSplineAsync(SplineContainer splineContainer, ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
             await delay.WaitScaledTimeAsync(token);
             
@@ -96,7 +97,6 @@ namespace ProjectABC.Engine
                     await Task.Yield();
                     
                     float timescale = MatchSimulationTimeScaler.Timescale;
-
                     if (timescale <= 0.0f)
                     {
                         continue;
@@ -146,10 +146,46 @@ namespace ProjectABC.Engine
             };
         }
 
-        public void MoveToTransform(Transform targetTransform)
+        public Task MoveToTargetAsync(Transform targetTransform, ScaledTime duration, CancellationToken token)
         {
-            transform.position = targetTransform.position;
-            transform.rotation = targetTransform.rotation;
+            return MoveToTargetAsync(targetTransform.position, targetTransform.eulerAngles, duration, token);
+        }
+
+        public async Task MoveToTargetAsync(Vector3 position, Vector3 eulerAngles, ScaledTime duration, CancellationToken token)
+        {
+            var posTween = DOTween
+                .To(
+                    () => transform.position,
+                    pos => transform.position = pos,
+                    position,
+                    duration
+                );
+
+            var rotTween = DOTween
+                .To(
+                    () => transform.eulerAngles,
+                    angle => transform.eulerAngles = angle,
+                    eulerAngles,
+                    duration
+                );
+
+            var moveTask = Task.WhenAll(
+                MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(posTween, token),
+                MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(rotTween, token)
+            );
+            
+            await moveTask;
+        }
+
+        public void MoveToTarget(Transform targetTransform)
+        {
+            MoveToTarget(targetTransform.position, targetTransform.eulerAngles);
+        }
+
+        public void MoveToTarget(Vector3 position, Vector3 eulerAngles)
+        {
+            transform.position = position;
+            transform.eulerAngles = eulerAngles;
         }
     }
 }

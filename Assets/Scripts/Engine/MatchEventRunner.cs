@@ -19,6 +19,8 @@ namespace ProjectABC.Engine
         {
             { typeof(MatchStartEvent), new MatchStartProcessor() },
             { typeof(DrawCardToFieldEvent), new DrawCardToFieldProcessor() },
+            { typeof(SuccessAttackEvent), new SuccessAttackProcessor() },
+            { typeof(SendToInfirmaryEvent), new SendToInfirmaryProcessor() },
         };
 
         private CancellationTokenSource _cts;
@@ -51,6 +53,8 @@ namespace ProjectABC.Engine
                 while (!_cts.IsCancellationRequested && _eventIndex < _matchEvents.Count)
                 {
                     var matchEvent = _matchEvents[_eventIndex];
+                    _eventIndex++;
+                    
                     if (!_matchEventProcessors.TryGetValue(matchEvent.GetType(), out var matchEventProcessor))
                     {
                         throw new KeyNotFoundException($"No IMatchEventProcessor for type {matchEvent.GetType()}");
@@ -59,7 +63,6 @@ namespace ProjectABC.Engine
                     }
 
                     await matchEventProcessor.ProcessEventAsync(matchEvent, _cts.Token);
-                    _eventIndex++;
                 }
 
                 IsWaitConfirm = false;

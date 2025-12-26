@@ -6,11 +6,27 @@ namespace ProjectABC.Engine
 {
     public sealed class DrawCardToFieldProcessor : MatchEventProcessor<DrawCardToFieldEvent>
     {
-        private readonly ScaledTime _drawDuration = 0.5f;
+        private readonly ScaledTime _revealDuration = 0.25f;
+        private readonly ScaledTime _remainDelay = 0.5f;
+        private readonly ScaledTime _alignDuration = 0.25f;
         
-        public override Task ProcessEventAsync(DrawCardToFieldEvent matchEvent, CancellationToken token = default)
+        public override Task ProcessEventAsync(DrawCardToFieldEvent matchEvent, CancellationToken token)
         {
-            return Task.CompletedTask;
+            bool isOwnPlayer = ReferenceEquals(matchEvent.Owner, Simulator.Model.player);
+            OnboardController.OnboardSide onboardSide = isOwnPlayer
+                ? OnboardController.OnboardSide.Own
+                : OnboardController.OnboardSide.Other;
+
+
+
+            return Simulator.Model.onboardController.DrawCardToFieldAsync(
+                onboardSide,
+                matchEvent.MovementInfo,
+                _revealDuration,
+                _remainDelay,
+                _alignDuration,
+                token
+            );
         }
     }
 }

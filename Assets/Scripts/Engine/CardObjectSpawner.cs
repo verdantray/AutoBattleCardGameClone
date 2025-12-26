@@ -14,7 +14,7 @@ namespace ProjectABC.Engine
 
         public CardSpawnArgs(Transform target, CardReference card)
         {
-            Position =  target.position;
+            Position = target.position;
             Rotation = target.rotation;
             CardReference = card;
         }

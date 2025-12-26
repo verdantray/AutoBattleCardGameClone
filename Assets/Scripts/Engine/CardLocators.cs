@@ -6,15 +6,15 @@ using UnityEngine;
 
 namespace ProjectABC.Engine
 {
-    public sealed class CardObjectLocator : ICardLocator<CardObject>
+    public sealed class CardOnboardLocator : ICardLocator<CardOnboard>
     {
-        public ICardHolder<CardObject> Deck => _deck;
-        public ICardHolder<CardObject> Field => _field;
-        public ICardHolder<string, CardObject> Infirmary =>  _infirmary;
+        public ICardHolder<CardOnboard> Deck => _deck;
+        public ICardHolder<CardOnboard> Field => _field;
+        public ICardHolder<string, CardOnboard> Infirmary =>  _infirmary;
 
-        private readonly CardHolder<CardObject> _deck = new CardHolder<CardObject>();
-        private readonly CardHolder<CardObject> _field = new CardHolder<CardObject>();
-        private readonly CardHolder<string, CardObject> _infirmary = new CardHolder<string, CardObject>();
+        private readonly CardHolder<CardOnboard> _deck = new CardHolder<CardOnboard>();
+        private readonly CardHolder<CardOnboard> _field = new CardHolder<CardOnboard>();
+        private readonly CardHolder<string, CardOnboard> _infirmary = new CardHolder<string, CardOnboard>();
     }
 
     public sealed class CardReferenceLocator : ICardLocator<CardReference>
@@ -85,8 +85,15 @@ namespace ProjectABC.Engine
         private readonly List<TKey> _keyList = new List<TKey>();
         private readonly Dictionary<TKey, CardHolder<T>> _cardObjects = new Dictionary<TKey, CardHolder<T>>();
 
-        public CardHolder<T> this[int index] => _cardObjects[_keyList[index]];
-        
+        ICardHolder<T> ICardHolder<TKey, T>.this[int index] => _cardObjects[_keyList[index]];
+
+        ICardHolder<T> ICardHolder<TKey, T>.this[TKey key] => _cardObjects[key];
+
+        public int IndexOfKey(TKey key)
+        {
+            return _keyList.IndexOf(key);
+        }
+
         public T Pop(TKey key, int index)
         {
             if (!_cardObjects.ContainsKey(key))
@@ -128,6 +135,7 @@ namespace ProjectABC.Engine
             }
             
             _cardObjects.Clear();
+            _keyList.Clear();
         }
 
         #region inherit of IReadonlyDictionary

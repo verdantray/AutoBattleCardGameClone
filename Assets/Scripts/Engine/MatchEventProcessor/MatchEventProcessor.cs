@@ -7,14 +7,14 @@ namespace ProjectABC.Engine
 {
     public interface IMatchEventProcessor
     {
-        public Task ProcessEventAsync(IMatchEvent matchEvent, CancellationToken token = default);
+        public Task ProcessEventAsync(IMatchEvent matchEvent, CancellationToken token);
     }
     
     public abstract class MatchEventProcessor<T> : IMatchEventProcessor where T : IMatchEvent
     {
-        public abstract Task ProcessEventAsync(T matchEvent, CancellationToken token = default);
+        public abstract Task ProcessEventAsync(T matchEvent, CancellationToken token);
 
-        public async Task ProcessEventAsync(IMatchEvent matchEvent, CancellationToken token = default)
+        public async Task ProcessEventAsync(IMatchEvent matchEvent, CancellationToken token)
         {
             await ProcessEventAsync((T)matchEvent, token);
         }

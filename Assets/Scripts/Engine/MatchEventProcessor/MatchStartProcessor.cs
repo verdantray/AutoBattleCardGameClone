@@ -12,7 +12,7 @@ namespace ProjectABC.Engine
         private readonly ScaledTime _deckSetDelay = 0.5f;
         private readonly ScaledTime _deckSetDuration = 1.0f;
         
-        public override async Task ProcessEventAsync(MatchStartEvent matchEvent, CancellationToken token = default)
+        public override async Task ProcessEventAsync(MatchStartEvent matchEvent, CancellationToken token)
         {
             IPlayer[] players = { matchEvent.Attacker, matchEvent.Defender };
 

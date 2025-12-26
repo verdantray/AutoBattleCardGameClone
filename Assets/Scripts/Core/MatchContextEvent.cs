@@ -257,7 +257,7 @@ namespace ProjectABC.Core
         private static void RegisterDrawCardEvent(MatchSide drawnSide, MatchContextEvent matchContextEvent)
         {
             CardLocation prevLocation = new DeckLocation(drawnSide.Player, drawnSide.Deck.Count - 1);
-            CardLocation curLocation = new FieldLocation(drawnSide.Player, drawnSide.Field.Count);
+            CardLocation curLocation = new FieldLocation(drawnSide.Player, drawnSide.Field.Count - 1);
 
             CardMovementInfo cardMovementInfo = new CardMovementInfo(prevLocation, curLocation);
             

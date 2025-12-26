@@ -39,7 +39,7 @@ namespace ProjectABC.Engine
             }
         }
 
-        public static async Task WaitScaledTimeAsync(float simulationTime, CancellationToken token = default)
+        public static async Task WaitScaledTimeAsync(float simulationTime, CancellationToken token)
         {
             if (simulationTime <= 0.0f)
             {
@@ -62,7 +62,7 @@ namespace ProjectABC.Engine
             }
         }
 
-        public static async Task PlayTweenWhileScaledTimeAsync(Tween tween, CancellationToken token = default)
+        public static async Task PlayTweenWhileScaledTimeAsync(Tween tween, CancellationToken token)
         {
             try
             {
