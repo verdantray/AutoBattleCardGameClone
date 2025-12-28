@@ -1134,7 +1134,7 @@ MonoBehaviour:
     - {fileID: 199658646}
     comeToDeckSpline: {fileID: 456044450}
     horizontalAlignDirection: {x: 0, y: 0, z: 0.75}
-    verticalAlignDirection: {x: 0.3, y: 0.02, z: 0}
+    verticalAlignDirection: {x: 0.3, y: 0, z: 0}
   otherSide:
     deckPoint: {fileID: 537446129}
     revealCardPoint: {fileID: 1948250771}
@@ -1148,7 +1148,8 @@ MonoBehaviour:
     - {fileID: 105105068}
     comeToDeckSpline: {fileID: 1751678795}
     horizontalAlignDirection: {x: 0, y: 0, z: -0.75}
-    verticalAlignDirection: {x: -0.3, y: 0.02, z: 0}
+    verticalAlignDirection: {x: -0.3, y: 0, z: 0}
+  cardOverlapDirection: {x: 0, y: 0.02, z: 0}
 --- !u!1 &1035601374
 GameObject:
   m_ObjectHideFlags: 0

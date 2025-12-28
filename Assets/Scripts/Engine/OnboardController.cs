@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
@@ -27,6 +26,7 @@ namespace ProjectABC.Engine
 
         [SerializeField] private OnboardPoints ownSide;
         [SerializeField] private OnboardPoints otherSide;
+        [SerializeField] private Vector3 cardOverlapDirection;
 
         private readonly CardLocator<CardReference> _cardReferenceLocator = new CardLocator<CardReference>();
         private readonly CardLocator<CardOnboard> _cardOnboardLocator = new CardLocator<CardOnboard>();
@@ -57,7 +57,7 @@ namespace ProjectABC.Engine
             
             try
             {
-                await Task.Delay(TimeSpan.FromSeconds(delay), token);
+                await delay.WaitScaledTimeAsync(token);
 
                 int deckCount = deckCards.Count;
                 ScaledTime interval = duration / deckCount;
@@ -88,9 +88,10 @@ namespace ProjectABC.Engine
             }
             finally
             {
-                for (int i = cardOnboardDeck.Count - 1; i >= 0; i--)
+                int despawnCount = cardOnboardDeck.Count - 1;
+                for (int i = 0; i < despawnCount; i++)
                 {
-                    var cardOnboard = cardOnboardDeck.Pop(i);
+                    var cardOnboard = cardOnboardDeck.Pop(0);
                     DespawnCardObject(cardOnboard);
                 }
                 
@@ -122,7 +123,7 @@ namespace ProjectABC.Engine
                     _cardObjectsOnDeck[onboardSide] = null;
                 }
 
-                await drawnCardOnboard.MoveToTargetAsync(onboardPoints.revealCardPoint, revealDuration, token);
+                await drawnCardOnboard.MoveToTargetAsync(onboardPoints.revealCardPoint, 0.0f, revealDuration, token);
                 await remainDelay.WaitScaledTimeAsync(token);
 
                 var tasks = new List<Task>();
@@ -138,7 +139,7 @@ namespace ProjectABC.Engine
                         onboardPoints.horizontalAlignDirection
                     );
 
-                    var task = cardOnField.MoveToTargetAsync(alignedPosition, onboardPoints.fieldPoint.eulerAngles, alignDuration, token);
+                    var task = cardOnField.MoveToTargetAsync(alignedPosition, onboardPoints.fieldPoint.eulerAngles, 0.0f, alignDuration, token);
                     tasks.Add(task);
                 }
 
@@ -165,27 +166,94 @@ namespace ProjectABC.Engine
                 }
             }
         }
-
-        private static Vector3 GetHorizontalAlignedPosition(int totalCount, int index, Vector3 origin, Vector3 direction)
+        
+        public async Task SetOverlapFieldCardsAsync(IPlayer owner, ScaledTime overlapDuration, ScaledTime alignDuration, CancellationToken token)
         {
-            int centerIndex = totalCount / 2;
-            Vector3 alignedPosition = centerIndex == index
-                ? origin
-                : origin + (direction * (index - centerIndex));
+            OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
+            OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
+            
+            int fieldCount = _cardReferenceLocator[owner].Field.Count;
+            CardOnboard lastCardOfField = _cardOnboardLocator[owner].Field.Peek(fieldCount - 1);
+                
+            Vector3 lastCardPosition = lastCardOfField.transform.position;
+            Vector3 lastCardAngles = lastCardOfField.transform.eulerAngles;
+            
+            lastCardOfField.MoveToTarget(lastCardPosition + cardOverlapDirection, lastCardAngles);
+            
+            try
+            {
+                int overlapCount = _cardReferenceLocator[owner].Field.Count - 1;
+                ScaledTime interval = overlapDuration /  overlapCount;
+                
+                var tasks =  new List<Task>();
+                
+                for (int i = overlapCount - 1; i >= 0; i--)
+                {
+                    var cardOnField = _cardOnboardLocator[owner].Field.Peek(i);
+                    float delayPerCard = interval * (i - overlapCount - 1);
+                    ScaledTime scaledDelay = delayPerCard;
 
-            return alignedPosition;
+                    var task = cardOnField.MoveToTargetAsync(lastCardPosition, lastCardAngles, scaledDelay, interval, token);
+                    tasks.Add(task);
+                }
+
+                await Task.WhenAll(tasks);
+                
+                int despawnCount = _cardOnboardLocator[owner].Field.Count - 1;
+                for (int i = 0; i < despawnCount; i++)
+                {
+                    CardOnboard cardOnField = _cardOnboardLocator[owner].Field.Pop(0);
+                    DespawnCardObject(cardOnField);
+                }
+                
+                lastCardOfField.MoveToTarget(lastCardPosition, lastCardAngles);
+                await lastCardOfField.MoveToTargetAsync(onboardPoints.fieldPoint, 0.0f, alignDuration, token);
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                // pass
+            }
+            finally
+            {
+                int despawnCount = _cardOnboardLocator[owner].Field.Count - 1;
+                for (int i = 0; i < despawnCount; i++)
+                {
+                    CardOnboard cardOnField = _cardOnboardLocator[owner].Field.Pop(0);
+                    DespawnCardObject(cardOnField);
+                }
+                
+                lastCardOfField.MoveToTarget(onboardPoints.fieldPoint);
+            }
         }
 
-        public async Task SendCardToInfirmaryAsync(IPlayer owner, CardMovementInfo moveInfo, ScaledTime moveDuration, CancellationToken token = default)
+        public async Task SendFieldCardToInfirmaryAsync(IPlayer owner, CardMovementInfo moveInfo, ScaledTime moveDuration, CancellationToken token)
         {
             OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
             OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
             
             CardReference targetCardRef = moveInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
-            CardOnboard cardToInfirmary = moveInfo.PreviousLocation.PopFromLocation(_cardOnboardLocator);
+            bool isLastCardOfField = _cardReferenceLocator[owner].Field.Count == 0;
+            
+            CardOnboard cardToInfirmary = _cardReferenceLocator[owner].Field.Count == 0
+                ? moveInfo.PreviousLocation.PopFromLocation(_cardOnboardLocator)
+                : SpawnCardOnboard(new CardSpawnArgs(onboardPoints.fieldPoint, targetCardRef));
+            
+            if (isLastCardOfField)
+            {
+                cardToInfirmary.MoveToTarget(onboardPoints.fieldPoint);
+            }
+            else
+            {
+                Vector3 overlapPosition = onboardPoints.fieldPoint.position + cardOverlapDirection;
+                Vector3 overlapAngles = onboardPoints.fieldPoint.eulerAngles;
+                
+                int lastIndex = _cardOnboardLocator[owner].Field.Count - 1;
+                _cardOnboardLocator[owner].Field.Peek(lastIndex).MoveToTarget(overlapPosition, overlapAngles);
+            }
             
             moveInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
             moveInfo.CurrentLocation.InsertToLocation(_cardOnboardLocator, cardToInfirmary);
+            
             try
             {
                 var tasks =  new List<Task>();
@@ -199,9 +267,10 @@ namespace ProjectABC.Engine
                 for (int i = 0; i < infirmarySlotCount; i++)
                 {
                     var cardOnInfirmary = cardOnInfirmaryHolder.Peek(i);
-                    Vector3 alignedPosition = GetVerticalAlignedPosition(i, target.position, onboardPoints.verticalAlignDirection);
+                    Vector3 alignDirection = onboardPoints.verticalAlignDirection + cardOverlapDirection;
+                    Vector3 alignedPosition = GetVerticalAlignedPosition(i, target.position, alignDirection);
 
-                    var task = cardOnInfirmary.MoveToTargetAsync(alignedPosition, target.eulerAngles, moveDuration, token);
+                    var task = cardOnInfirmary.MoveToTargetAsync(alignedPosition, target.eulerAngles, 0.0f, moveDuration, token);
                     tasks.Add(task);
                 }
 
@@ -226,6 +295,14 @@ namespace ProjectABC.Engine
                     cardOnInfirmary.MoveToTarget(alignedPosition, target.eulerAngles);
                 }
             }
+        }
+        
+        private static Vector3 GetHorizontalAlignedPosition(int totalCount, int index, Vector3 origin, Vector3 direction)
+        {
+            float centerIndex = (totalCount - 1) * 0.5f;
+            float offset = index - centerIndex;
+
+            return origin + (direction * offset);
         }
 
         private static Vector3 GetVerticalAlignedPosition(int index, Vector3 origin, Vector3 direction)

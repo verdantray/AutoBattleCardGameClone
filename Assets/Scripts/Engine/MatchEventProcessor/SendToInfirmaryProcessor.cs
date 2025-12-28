@@ -10,7 +10,7 @@ namespace ProjectABC.Engine
         
         public override Task ProcessEventAsync(SendToInfirmaryEvent matchEvent, CancellationToken token)
         {
-            return Simulator.Model.onboardController.SendCardToInfirmaryAsync(
+            return Simulator.Model.onboardController.SendFieldCardToInfirmaryAsync(
                 matchEvent.Owner,
                 matchEvent.MovementInfo,
                 _moveDuration,

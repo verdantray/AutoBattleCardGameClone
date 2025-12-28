@@ -21,6 +21,7 @@ namespace ProjectABC.Engine
             { typeof(DrawCardToFieldEvent), new DrawCardToFieldProcessor() },
             { typeof(SuccessAttackEvent), new SuccessAttackProcessor() },
             { typeof(SendToInfirmaryEvent), new SendToInfirmaryProcessor() },
+            { typeof(SwitchPositionEvent), new SwitchPositionProcessor() }
         };
 
         private CancellationTokenSource _cts;

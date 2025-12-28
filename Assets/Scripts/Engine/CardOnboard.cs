@@ -146,13 +146,15 @@ namespace ProjectABC.Engine
             };
         }
 
-        public Task MoveToTargetAsync(Transform targetTransform, ScaledTime duration, CancellationToken token)
+        public Task MoveToTargetAsync(Transform targetTransform, ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
-            return MoveToTargetAsync(targetTransform.position, targetTransform.eulerAngles, duration, token);
+            return MoveToTargetAsync(targetTransform.position, targetTransform.eulerAngles, delay, duration, token);
         }
 
-        public async Task MoveToTargetAsync(Vector3 position, Vector3 eulerAngles, ScaledTime duration, CancellationToken token)
+        public async Task MoveToTargetAsync(Vector3 position, Vector3 eulerAngles, ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
+            await delay.WaitScaledTimeAsync(token);
+            
             var posTween = DOTween
                 .To(
                     () => transform.position,
