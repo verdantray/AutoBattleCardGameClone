@@ -39,12 +39,6 @@ namespace ProjectABC.Engine
             this.StopListening();
         }
 
-        public void RunMatch()
-        {
-            _currentRunningMatchTask = RunMatchAsync();
-            _currentRunningMatchTask.Forget();
-        }
-
         private async Task RunMatchAsync()
         {
             try
@@ -116,7 +110,8 @@ namespace ProjectABC.Engine
             
             IsWaitConfirm = true;
             
-            RunMatch();
+            _currentRunningMatchTask = RunMatchAsync();
+            _currentRunningMatchTask.Forget();
         }
     }
 }

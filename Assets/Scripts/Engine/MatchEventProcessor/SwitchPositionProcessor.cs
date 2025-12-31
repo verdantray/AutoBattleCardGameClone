@@ -13,8 +13,10 @@ namespace ProjectABC.Engine
         public override async Task ProcessEventAsync(SwitchPositionEvent matchEvent, CancellationToken token)
         {
             // TODO : refresh onboard simulation according to match snapshot
+            var onboardController = Simulator.Model.onboardController;
 
-            await Simulator.Model.onboardController.SetOverlapFieldCardsAsync(matchEvent.Defender, _overlapDuration, _alignDuration, token);
+            onboardController.SwitchPosition();
+            await onboardController.SetOverlapFieldCardsAsync(matchEvent.Defender, _overlapDuration, _alignDuration, token);
             
             MatchPosition startingPosition = ReferenceEquals(matchEvent.Attacker, Simulator.Model.player)
                 ? MatchPosition.Attacking

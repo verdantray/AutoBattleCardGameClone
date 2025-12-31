@@ -1,18 +1,9 @@
 
-
 namespace ProjectABC.Core
 {
     public interface IMatchEvent
     {
-        public void RegisterEvent(IMatchContextEvent matchContextEvent)
-        {
-            if (matchContextEvent.MatchFinished)
-            {
-                return;
-            }
-            
-            matchContextEvent.MatchEvents.Add(this);
-        }
+        public void RegisterEvent(IMatchContextEvent matchContextEvent);
     }
 
     public abstract class MatchEvent : IMatchEvent
@@ -143,6 +134,18 @@ namespace ProjectABC.Core
         {
             ActivatedCardLocation = activatedCardLocation;
             DrawnCard = drawnCard;
+            MovementInfo = movementInfo;
+        }
+    }
+
+    public class MoveCardByEffectEvent : MatchEvent
+    {
+        public readonly CardEffectAppliedInfo AppliedInfo;
+        public readonly CardMovementInfo MovementInfo;
+
+        public MoveCardByEffectEvent(CardEffectAppliedInfo appliedInfo, CardMovementInfo movementInfo)
+        {
+            AppliedInfo = appliedInfo;
             MovementInfo = movementInfo;
         }
     }

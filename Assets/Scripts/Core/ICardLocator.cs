@@ -9,15 +9,17 @@ namespace ProjectABC.Core
         
         public bool Contains(IPlayer player);
         public ISideLocator<T> GetSideLocator(IPlayer player);
-        public void RegisterSideLocator(IPlayer player, IEnumerable<T> deckCards);
+        public void RegisterSideLocator(IPlayer player, MatchPosition position, IEnumerable<T> deckCards);
         public void Clear();
     }
 
     public interface ISideLocator<T> where T : class
     {
+        public MatchPosition Position { get; }
         public ICardHolder<T> Deck { get; }
         public ICardHolder<T> Field { get; }
         public ICardHolder<string, T> Infirmary { get; }
+        public void SetPosition(MatchPosition position);
         public void Clear();
     }
 

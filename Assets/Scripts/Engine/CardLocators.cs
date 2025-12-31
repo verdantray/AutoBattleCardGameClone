@@ -12,6 +12,8 @@ namespace ProjectABC.Engine
         
         public ISideLocator<T> this[IPlayer player] => GetSideLocator(player);
 
+        public IEnumerable<IPlayer> Participants => _sideLocators.Keys;
+        
         public bool Contains(IPlayer player)
         {
             return  _sideLocators.ContainsKey(player);
@@ -22,9 +24,13 @@ namespace ProjectABC.Engine
             return _sideLocators[player];
         }
 
-        public void RegisterSideLocator(IPlayer player, IEnumerable<T> deckCards = null)
+        public void RegisterSideLocator(IPlayer player, MatchPosition position, IEnumerable<T> deckCards = null)
         {
-            _sideLocators.Add(player, deckCards == null ? new SideLocator<T>() : new SideLocator<T>(deckCards));
+            var sideLocator = deckCards == null
+                ? new SideLocator<T>(position)
+                : new SideLocator<T>(position, deckCards);
+            
+            _sideLocators.Add(player, sideLocator);
         }
 
         public void Clear()
@@ -40,18 +46,26 @@ namespace ProjectABC.Engine
 
     public sealed class SideLocator<T> : ISideLocator<T> where T : class
     {
+        public MatchPosition Position { get; private set; }
         public ICardHolder<T> Deck { get; }
         public ICardHolder<T> Field { get; } = new CardHolder<T>();
         public ICardHolder<string, T> Infirmary { get; } = new CardHolder<string, T>();
 
-        public SideLocator()
+        public SideLocator(MatchPosition position)
         {
+            Position = position;
             Deck = new CardHolder<T>();
         }
 
-        public SideLocator(IEnumerable<T> deckCards)
+        public SideLocator(MatchPosition position, IEnumerable<T> deck)
         {
-            Deck = new CardHolder<T>(deckCards);
+            Position = position;
+            Deck = new CardHolder<T>(deck);
+        }
+
+        public void SetPosition(MatchPosition position)
+        {
+            Position = position;
         }
 
         public void Clear()

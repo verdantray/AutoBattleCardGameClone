@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
@@ -28,25 +27,14 @@ namespace ProjectABC.Engine
                 : MatchPosition.Defending;
             
             await MatchPositionAnnounceUI.ShowMatchPositionAsync(startingPosition, token);
-            
-            // onboard animations
             var onboardController = Simulator.Model.onboardController;
-            List<Task> deckTasks = new List<Task>();
             
             foreach (var (player, matchSideSnapshot) in matchEvent.MatchMatchSnapshot.MatchSideSnapShots)
             {
-                var task = onboardController.SetCardsToDeckPileAsync(
-                    player,
-                    matchSideSnapshot.Deck,
-                    _deckSetDelay,
-                    _deckSetDuration,
-                    token
-                );
-                
-                deckTasks.Add(task);
+                onboardController.RegisterOnboard(player, matchSideSnapshot.Position, matchSideSnapshot.Deck);
             }
-            
-            await Task.WhenAll(deckTasks);
+
+            await onboardController.InitializeOnboardAsync(_deckSetDelay, _deckSetDuration, token);
         }
     }
 }
