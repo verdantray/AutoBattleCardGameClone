@@ -102,7 +102,7 @@ namespace ProjectABC.Engine
                     var cardReferenceDeck = _cardReferenceLocator[owner].Deck;
                     var cardOnboardDeck = _cardOnboardLocator[owner].Deck;
                     
-                    int despawnCount = cardOnboardDeck.Count - 1;
+                    int despawnCount = cardOnboardDeck.Count;
                     for (int i = 0; i < despawnCount; i++)
                     {
                         var cardToDespawn = cardOnboardDeck.Pop(0);
@@ -219,6 +219,13 @@ namespace ProjectABC.Engine
                 }
                 case CardZone.Deck:
                 {
+                    // hide cardOnboard of deck pile
+                    if (_cardReferenceLocator[prevLocationOwner].Deck.Count == 0 && _cardObjectsOnDeck[prevOnboardSide] != null)
+                    {
+                        DespawnCardObject(_cardObjectsOnDeck[prevOnboardSide]);
+                        _cardObjectsOnDeck[prevOnboardSide] = null;
+                    }
+                    
                     cardOnboard = SpawnCardOnboard(new CardSpawnArgs(prevOnboardPoints.deckPoint, targetCardRef));
                     break;
                 }
@@ -255,13 +262,6 @@ namespace ProjectABC.Engine
             {
                 if (movementInfo.PreviousLocation.CardZone == CardZone.Deck)
                 {
-                    // hide cardOnboard of deck pile
-                    if (_cardReferenceLocator[prevLocationOwner].Deck.Count == 0 && _cardObjectsOnDeck[prevOnboardSide] != null)
-                    {
-                        DespawnCardObject(_cardObjectsOnDeck[prevOnboardSide]);
-                        _cardObjectsOnDeck[prevOnboardSide] = null;
-                    }
-                    
                     ScaledTime revealDuration = delay * 0.5f;
                     await RevealDeckCardAsync(cardOnboard, prevOnboardPoints.revealCardPoint, revealDuration, revealDuration, token);
                 }
@@ -467,8 +467,7 @@ namespace ProjectABC.Engine
 
         private static OnboardSide GetOnboardSideOfPlayer(IPlayer player)
         {
-            bool isOwnPlayer = ReferenceEquals(player, Simulator.Model.player);
-            return isOwnPlayer ? OnboardSide.Own : OnboardSide.Other;
+            return player.IsLocalPlayer ? OnboardSide.Own : OnboardSide.Other;
         }
         
         private OnboardPoints GetOnboardPointsOfSide(OnboardSide side)

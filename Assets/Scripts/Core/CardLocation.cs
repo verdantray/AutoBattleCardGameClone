@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace ProjectABC.Core
@@ -136,38 +137,44 @@ namespace ProjectABC.Core
     {
         public static CardLocation GetCardLocation(this Card card, params MatchSide[] matchSides)
         {
-            CardLocation cardLocation = null;
             foreach (var matchSide in matchSides)
             {
-                if (card.TryGetCardLocation(matchSide, out cardLocation))
+                if (card.TryGetCardLocation(matchSide, out CardLocation cardLocation))
                 {
-                    break;
+                    return cardLocation;
                 }
             }
 
-            return cardLocation;
+            throw new InvalidOperationException($"{card.Id} not found given matchSides... owner : {card.Owner.Name} / given sides : {string.Join(",", matchSides.Select(side => side.Player.Name))}");
         }
         
         public static bool TryGetCardLocation(this Card card, MatchSide matchSide, out CardLocation cardLocation)
         {
-            if (card.Owner == matchSide.Player)
+            if (ReferenceEquals(card.Owner, matchSide.Player))
             {
                 if (matchSide.Deck.Contains(card))
                 {
                     int indexOfDeck = matchSide.Deck.IndexOf(card);
                     cardLocation = new DeckLocation(matchSide.Player, indexOfDeck);
+                    return true;
                 }
-                else if (matchSide.Field.Contains(card))
+                
+                if (matchSide.Field.Contains(card))
                 {
                     int indexOfField = matchSide.Field.IndexOf(card);
                     cardLocation = new FieldLocation(matchSide.Player, indexOfField);
+                    return true;
                 }
-                else if (matchSide.Infirmary.TryGetValue(card.CardData.nameKey, out var cardPile) && cardPile.Contains(card))
+                
+                if (matchSide.Infirmary.TryGetValue(card.CardData.nameKey, out var cardPile) && cardPile.Contains(card))
                 {
                     string slotKey = card.CardData.nameKey;
                     int indexOfSlot = cardPile.IndexOf(card);
                     cardLocation = new InfirmaryLocation(matchSide.Player, slotKey, indexOfSlot);
+                    return true;
                 }
+
+                throw new InvalidOperationException($"{card.Id} is {card.Owner}'s card but cannot found location");
             }
 
             cardLocation = null;

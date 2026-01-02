@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -195,11 +194,13 @@ namespace ProjectABC.Core
 
     public class FailToActivateCardEffectEvent : MatchEvent
     {
+        public readonly string FailedCardId;
         public readonly CardLocation FailedCardLocation;
         public readonly FailToActivateEffectReason Reason;
 
-        public FailToActivateCardEffectEvent(CardLocation failedCardLocation, FailToActivateEffectReason reason)
+        public FailToActivateCardEffectEvent(string failedCardId, CardLocation failedCardLocation, FailToActivateEffectReason reason)
         {
+            FailedCardId = failedCardId;
             FailedCardLocation = failedCardLocation;
             Reason = reason;
         }

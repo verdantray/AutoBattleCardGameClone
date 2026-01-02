@@ -61,6 +61,7 @@ namespace ProjectABC.Core
             if (clubsInInfirmary < _necessaryClubAmount)
             {
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    CallCard.Id,
                     currentLocation,
                     FailToActivateEffectReason.NoMeetCondition
                 );

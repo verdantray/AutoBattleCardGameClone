@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using DG.Tweening;
 using ProjectABC.Core;
 using TMPro;
 using UnityEngine;
@@ -12,21 +15,14 @@ namespace ProjectABC.Engine.UI
         [SerializeField] private TextMeshProUGUI txtOtherPlayerName;
         [SerializeField] private TextMeshProUGUI txtOwnPlayerScore;
         [SerializeField] private TextMeshProUGUI txtOtherPlayerScore;
+        [Header("Tween Values")]
+        [SerializeField] private ScaledTime scoreChangeDuration = 0.25f;
 
         public void ShowMatchPlayers(IEnumerable<MatchSideSnapshot> matchSideSnapshots)
         {
             foreach (var matchSideSnapshot in matchSideSnapshots)
             {
-                if (ReferenceEquals(matchSideSnapshot.Player, Simulator.Model.player))
-                {
-                    txtOwnPlayerName.text = matchSideSnapshot.Player.Name;
-                    txtOwnPlayerScore.text = $"{matchSideSnapshot.Score:D}";
-                }
-                else
-                {
-                    txtOtherPlayerName.text = matchSideSnapshot.Player.Name;
-                    txtOtherPlayerScore.text = $"{matchSideSnapshot.Score:D}";
-                }
+                SetPlayerNameAndScore(matchSideSnapshot.Player, matchSideSnapshot.Score);
             }
         }
         
@@ -35,9 +31,29 @@ namespace ProjectABC.Engine.UI
             
         }
 
-        public void ShowChangingScore()
+        public Task GetShowChangingScoreTask(IPlayer player, int gainPoints, int totalPoints, CancellationToken token)
         {
-            
+            var scoreTween = DOTween.To(
+                () => totalPoints - gainPoints,
+                score => SetPlayerNameAndScore(player, score),
+                totalPoints,
+                scoreChangeDuration
+            );
+
+            return MatchSimulationTimeScaler.PlayTweenWhileScaledTimeAsync(scoreTween, token);
+        }
+
+        private void SetPlayerNameAndScore(IPlayer player, int score)
+        {
+            var nameText = player.IsLocalPlayer
+                ? txtOwnPlayerName
+                : txtOtherPlayerName;
+            var scoreText = player.IsLocalPlayer
+                ? txtOwnPlayerScore
+                : txtOtherPlayerScore;
+
+            nameText.text = player.Name;
+            scoreText.text = $"{score:D}";
         }
 
         public override void OnClose()

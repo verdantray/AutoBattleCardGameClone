@@ -66,8 +66,8 @@ namespace ProjectABC.Engine.UI
                 return;
             }
             
-            IPlayer ownPlayer = _participants.FirstOrDefault(player => ReferenceEquals(player, Simulator.Model.player));
-            IPlayer otherPlayer = _participants.FirstOrDefault(player => !ReferenceEquals(player, Simulator.Model.player));
+            IPlayer ownPlayer = _participants.FirstOrDefault(player => player.IsLocalPlayer);
+            IPlayer otherPlayer = _participants.FirstOrDefault(player => !player.IsLocalPlayer);
 
             if (ownPlayer == null || otherPlayer == null)
             {

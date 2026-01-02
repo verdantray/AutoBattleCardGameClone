@@ -22,7 +22,7 @@ namespace ProjectABC.Engine
             var matchUI = UIManager.Instance.OpenUI<MatchPlayersUI>();
             matchUI.ShowMatchPlayers(matchEvent.MatchMatchSnapshot.MatchSideSnapShots.Values);
 
-            MatchPosition startingPosition = ReferenceEquals(matchEvent.Attacker, Simulator.Model.player)
+            MatchPosition startingPosition = matchEvent.Attacker.IsLocalPlayer
                 ? MatchPosition.Attacking
                 : MatchPosition.Defending;
             

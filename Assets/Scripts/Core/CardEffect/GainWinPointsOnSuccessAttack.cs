@@ -34,6 +34,7 @@ namespace ProjectABC.Core
             if (ownSide.Field[^1] != CallCard)
             {
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    CallCard.Id,
                     currentLocation,
                     FailToActivateEffectReason.NoMeetCondition
                 );

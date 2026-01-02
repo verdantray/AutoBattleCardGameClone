@@ -42,6 +42,7 @@ namespace ProjectABC.Core
                 CallCard.TryGetCardLocation(ownSide, out var currentLocation);
 
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    CallCard.Id,
                     currentLocation,
                     FailToActivateEffectReason.NoInfirmaryRemains
                 );

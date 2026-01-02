@@ -560,6 +560,8 @@ MonoBehaviour:
   txtOtherPlayerName: {fileID: 3640600975513090856}
   txtOwnPlayerScore: {fileID: 5373020340072477975}
   txtOtherPlayerScore: {fileID: 2416613248163727037}
+  scoreChangeDuration:
+    time: 0.25
 --- !u!1 &1791670902793433902
 GameObject:
   m_ObjectHideFlags: 0

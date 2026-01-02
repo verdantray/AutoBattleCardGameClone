@@ -52,6 +52,7 @@ namespace ProjectABC.Core
             if (!isEnableResultLastMatch)
             {
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
+                    CallCard.Id,
                     currentLocation,
                     FailToActivateEffectReason.NoMeetCondition
                 );

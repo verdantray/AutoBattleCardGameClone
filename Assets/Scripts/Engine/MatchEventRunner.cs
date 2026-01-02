@@ -24,6 +24,10 @@ namespace ProjectABC.Engine
             { typeof(SwitchPositionEvent), new SwitchPositionProcessor() },
             { typeof(MoveCardByEffectEvent), new MoveCardByEffectProcessor() },
             { typeof(ShuffleDeckEvent), new ShuffleDeckProcessor() },
+            { typeof(GainWinPointsByCardEffectEvent), new GainWinPointsByEffectProcessor() },
+            { typeof(FailToActivateCardEffectEvent), new FailToActivateCardEffectProcessor() },
+            { typeof(ActiveBuffEvent), new ActiveBuffProcessor() },
+            { typeof(InactiveBuffEvent), new InactiveBuffProcessor() },
         };
 
         private CancellationTokenSource _cts;
