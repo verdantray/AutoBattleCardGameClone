@@ -44,17 +44,10 @@ namespace ProjectABC.Engine
             _cardOnboardLocator.RegisterSideLocator(player, position);
         }
 
-        public void SwitchPosition()
+        public void SwitchPosition(IPlayer attacker, IPlayer defender)
         {
-            foreach (var player in _cardReferenceLocator.Participants)
-            {
-                MatchPosition position = _cardOnboardLocator[player].Position == MatchPosition.Attacking
-                    ? MatchPosition.Defending
-                    : MatchPosition.Attacking;
-                
-                _cardReferenceLocator[player].SetPosition(position);
-                _cardOnboardLocator[player].SetPosition(position);
-            }
+            _cardReferenceLocator[attacker].SetPosition(MatchPosition.Attacking);
+            _cardOnboardLocator[defender].SetPosition(MatchPosition.Defending);
         }
 
         public void RefreshOnboard(MatchSnapshot matchSnapshot)
@@ -180,10 +173,40 @@ namespace ProjectABC.Engine
             }
         }
 
-        public async Task MoveCardAsync(IPlayer owner, CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
+        public async Task ShuffleDeckAsync(CardMovementInfo movementInfo, ScaledTime remainDelay, ScaledTime inoutDuration, CancellationToken token)
         {
-            OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
+            var targetCardRef = movementInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
+            movementInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
+            
+            OnboardSide onboardSide = GetOnboardSideOfPlayer(movementInfo.PreviousLocation.Owner);
             OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
+            CardOnboard overturnedFromDeck = SpawnCardOnboard(new CardSpawnArgs(onboardPoints.deckPoint, null));
+            
+            try
+            {
+                Vector3 targetPosition = onboardPoints.deckPoint.position + onboardPoints.horizontalAlignDirection;
+                Vector3 targetAngles = onboardPoints.deckPoint.transform.eulerAngles;
+
+                await overturnedFromDeck.MoveToTargetAsync(targetPosition, targetAngles, inoutDuration, token);
+                await remainDelay.WaitScaledTimeAsync(token);
+                await overturnedFromDeck.MoveToTargetAsync(onboardPoints.deckPoint, inoutDuration, token);
+            }
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
+            {
+                // pass
+            }
+            finally
+            {
+                DespawnCardObject(overturnedFromDeck);
+            }
+        }
+
+        public async Task MoveCardAsync(CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
+        {
+            IPlayer prevLocationOwner = movementInfo.PreviousLocation.Owner;
+            OnboardSide prevOnboardSide = GetOnboardSideOfPlayer(prevLocationOwner);
+            OnboardPoints prevOnboardPoints = GetOnboardPointsOfSide(prevOnboardSide);
+            
             CardReference targetCardRef = movementInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
 
             CardOnboard cardOnboard = null;
@@ -191,20 +214,20 @@ namespace ProjectABC.Engine
             {
                 case CardZone.CardPile:
                 {
-                    cardOnboard = SpawnCardOnboard(new CardSpawnArgs(onboardPoints.spawnByEffectPoint, targetCardRef));
+                    cardOnboard = SpawnCardOnboard(new CardSpawnArgs(prevOnboardPoints.spawnByEffectPoint, targetCardRef));
                     break;
                 }
                 case CardZone.Deck:
                 {
-                    cardOnboard = SpawnCardOnboard(new CardSpawnArgs(onboardPoints.deckPoint, targetCardRef));
+                    cardOnboard = SpawnCardOnboard(new CardSpawnArgs(prevOnboardPoints.deckPoint, targetCardRef));
                     break;
                 }
                 case CardZone.Field:
                 {
-                    bool isLastCardOfField = _cardReferenceLocator[owner].Field.Count == 0;
+                    bool isLastCardOfField = _cardReferenceLocator[prevLocationOwner].Field.Count == 0;
                     cardOnboard = isLastCardOfField
                         ? movementInfo.PreviousLocation.PopFromLocation(_cardOnboardLocator)
-                        : SpawnCardOnboard(new CardSpawnArgs(onboardPoints.fieldPoint, targetCardRef));
+                        : SpawnCardOnboard(new CardSpawnArgs(prevOnboardPoints.fieldPoint, targetCardRef));
                     break;
                 }
                 case CardZone.Infirmary:
@@ -215,6 +238,10 @@ namespace ProjectABC.Engine
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            IPlayer curLocationOwner = movementInfo.CurrentLocation.Owner;
+            OnboardSide curOnboardSide = GetOnboardSideOfPlayer(curLocationOwner);
+            OnboardPoints curOnboardPoints = GetOnboardPointsOfSide(curOnboardSide);
             
             movementInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
 
@@ -229,14 +256,14 @@ namespace ProjectABC.Engine
                 if (movementInfo.PreviousLocation.CardZone == CardZone.Deck)
                 {
                     // hide cardOnboard of deck pile
-                    if (_cardReferenceLocator[owner].Deck.Count == 0 && _cardObjectsOnDeck[onboardSide] != null)
+                    if (_cardReferenceLocator[prevLocationOwner].Deck.Count == 0 && _cardObjectsOnDeck[prevOnboardSide] != null)
                     {
-                        DespawnCardObject(_cardObjectsOnDeck[onboardSide]);
-                        _cardObjectsOnDeck[onboardSide] = null;
+                        DespawnCardObject(_cardObjectsOnDeck[prevOnboardSide]);
+                        _cardObjectsOnDeck[prevOnboardSide] = null;
                     }
                     
                     ScaledTime revealDuration = delay * 0.5f;
-                    await RevealDeckCardAsync(cardOnboard, onboardPoints.revealCardPoint, revealDuration, revealDuration, token);
+                    await RevealDeckCardAsync(cardOnboard, prevOnboardPoints.revealCardPoint, revealDuration, revealDuration, token);
                 }
                 else
                 {
@@ -246,10 +273,10 @@ namespace ProjectABC.Engine
                 string infirmarySlotKey = targetCardRef.CardData.nameKey;
                 var task = movementInfo.CurrentLocation.CardZone switch
                 {
-                    CardZone.CardPile => cardOnboard.MoveToTargetAsync(onboardPoints.spawnByEffectPoint, duration, token),
-                    CardZone.Deck => cardOnboard.MoveToTargetAsync(onboardPoints.deckPoint, duration, token),
-                    CardZone.Field => AlignCardsOfFieldAfterAddedTask(owner, duration, token),
-                    CardZone.Infirmary => AlignCardsOfInfirmarySlotTask(owner, infirmarySlotKey, duration, token),
+                    CardZone.CardPile => cardOnboard.MoveToTargetAsync(curOnboardPoints.spawnByEffectPoint, duration, token),
+                    CardZone.Deck => cardOnboard.MoveToTargetAsync(curOnboardPoints.deckPoint, duration, token),
+                    CardZone.Field => AlignCardsOfFieldAfterAddedTask(curLocationOwner, duration, token),
+                    CardZone.Infirmary => AlignCardsOfInfirmarySlotTask(curLocationOwner, infirmarySlotKey, duration, token),
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
@@ -272,22 +299,22 @@ namespace ProjectABC.Engine
                     {
                         DespawnCardObject(cardOnboard);
                         
-                        if (_cardReferenceLocator[owner].Deck.Count > 0 && _cardObjectsOnDeck[onboardSide] == null)
+                        if (_cardReferenceLocator[curLocationOwner].Deck.Count > 0 && _cardObjectsOnDeck[curOnboardSide] == null)
                         {
-                            CardSpawnArgs args = new CardSpawnArgs(onboardPoints.deckPoint, null);
-                            _cardObjectsOnDeck[onboardSide] = SpawnCardOnboard(args);
+                            CardSpawnArgs args = new CardSpawnArgs(curOnboardPoints.deckPoint, null);
+                            _cardObjectsOnDeck[curOnboardSide] = SpawnCardOnboard(args);
                         }
                         break;
                     }
                     case CardZone.Field:
                     {
-                        AlignCardsOfField(owner);
+                        AlignCardsOfField(curLocationOwner);
                         break;
                     }
                     case CardZone.Infirmary:
                     {
                         string infirmarySlotKey = targetCardRef.CardData.nameKey;
-                        AlignCardsOfInfirmarySlot(owner, infirmarySlotKey);
+                        AlignCardsOfInfirmarySlot(curLocationOwner, infirmarySlotKey);
                         break;
                     }
                     default:
@@ -296,7 +323,7 @@ namespace ProjectABC.Engine
             }
         }
 
-        private async Task RevealDeckCardAsync(CardOnboard cardOnboard, Transform revealPoint, ScaledTime revealDuration, ScaledTime remainDelay, CancellationToken token)
+        private static async Task RevealDeckCardAsync(CardOnboard cardOnboard, Transform revealPoint, ScaledTime revealDuration, ScaledTime remainDelay, CancellationToken token)
         {
             await cardOnboard.MoveToTargetAsync(revealPoint, revealDuration, token);
             await remainDelay.WaitScaledTimeAsync(token);

@@ -28,13 +28,13 @@ namespace ProjectABC.Core
             {
                 return;
             }
-
-            var reference = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+            
+            CallCard.TryGetCardLocation(ownSide, out var currentLocation);
             
             if (ownSide.Field[^1] != CallCard)
             {
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
-                    reference,
+                    currentLocation,
                     FailToActivateEffectReason.NoMeetCondition
                 );
                 
@@ -51,7 +51,8 @@ namespace ProjectABC.Core
             int totalWinPoints = gameState.ScoreBoard.GetTotalWinPoints(ownSide.Player);
             GainWinPointsByCardEffectEvent gainWinPointsEvent = new GainWinPointsByCardEffectEvent(
                 ownSide.Player,
-                reference,
+                CallCard.Id,
+                currentLocation,
                 _gainWinPoints,
                 totalWinPoints
             );

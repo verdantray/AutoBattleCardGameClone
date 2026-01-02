@@ -18,7 +18,6 @@ namespace ProjectABC.Core
         public readonly Infirmary Infirmary = new Infirmary();
         
         public readonly IPlayer Player;
-        public readonly PlayerState PlayerState;
         
         public readonly List<CardBuffHandleEntry> CardBuffHandlers = new List<CardBuffHandleEntry>();
         
@@ -29,12 +28,12 @@ namespace ProjectABC.Core
         public MatchSide(PlayerState playerState)
         {
             Player = playerState.Player;
-            PlayerState = playerState;
 
             foreach (var card in playerState.Deck)
             {
                 Deck.Add(card);
             }
+            
             Deck.Shuffle();
         }
 
@@ -51,13 +50,26 @@ namespace ProjectABC.Core
             return isSuccessToDraw;
         }
 
-        public void CheckApplyCardBuffs(MatchSide otherSide, GameState gameState)
+        public void CheckApplyCardBuffs(MatchSide otherSide, GameState gameState, out List<IMatchEvent> buffEvents)
         {
             CardBuffArgs cardBuffArgs = new CardBuffArgs(this, otherSide, gameState);
+            buffEvents = new List<IMatchEvent>();
             
             foreach (var handler in CardBuffHandlers)
             {
-                handler.CheckApplyCardBuff(cardBuffArgs);
+                var result = handler.CheckApplyCardBuff(cardBuffArgs);
+                
+                if (result.ApplyCards.Count > 0)
+                {
+                    ActiveBuffEvent activeBuffEvent = new ActiveBuffEvent(handler.CallCard, result.ApplyCards, cardBuffArgs);
+                    buffEvents.Add(activeBuffEvent);
+                }
+
+                if (result.CanceledCards.Count > 0)
+                {
+                    InactiveBuffEvent inactiveBuffEvent =  new InactiveBuffEvent(handler.CallCard, result.CanceledCards, cardBuffArgs);
+                    buffEvents.Add(inactiveBuffEvent);
+                }
             }
         }
 
@@ -98,29 +110,34 @@ namespace ProjectABC.Core
             _cardBuff = cardBuff;
         }
 
-        public void CheckApplyCardBuff(CardBuffArgs args)
+        public CardBuffApplyResult CheckApplyCardBuff(CardBuffArgs args)
         {
-            var buffTargets = _cardBuff.GetBuffTargets(args);
-            var exhaustedTargets = _appliedCards
-                .Where(applied => !buffTargets.Contains(applied))
+            var newlyApplyCards = _cardBuff
+                .GetBuffTargets(args)
+                .Where(applied => !_appliedCards.Contains(applied))
+                .ToList();
+            var canceledCards = _appliedCards
+                .Where(applied => !newlyApplyCards.Contains(applied))
                 .ToList();
 
-            foreach (var exhausted in exhaustedTargets)
+            foreach (var canceled in canceledCards)
             {
-                exhausted.RemoveCardBuff(_cardBuff);
-                _appliedCards.Remove(exhausted);
+                canceled.RemoveCardBuff(_cardBuff);
+                _appliedCards.Remove(canceled);
             }
 
-            foreach (var newlyApply in buffTargets)
+            foreach (var applied in newlyApplyCards)
             {
-                if (_appliedCards.Contains(newlyApply))
+                if (_appliedCards.Contains(applied))
                 {
                     continue;
                 }
                 
-                newlyApply.ApplyCardBuff(_cardBuff);
-                _appliedCards.Add(newlyApply);
+                applied.ApplyCardBuff(_cardBuff);
+                _appliedCards.Add(applied);
             }
+            
+            return new CardBuffApplyResult(newlyApplyCards, canceledCards);
         }
 
         public void Release()
@@ -131,6 +148,18 @@ namespace ProjectABC.Core
             }
             
             _appliedCards.Clear();
+        }
+    }
+
+    public class CardBuffApplyResult
+    {
+        public readonly IReadOnlyList<Card> ApplyCards;
+        public readonly IReadOnlyList<Card> CanceledCards;
+
+        public CardBuffApplyResult(IReadOnlyList<Card> applyCards, IReadOnlyList<Card> canceledCards)
+        {
+            ApplyCards = applyCards;
+            CanceledCards = canceledCards;
         }
     }
 }

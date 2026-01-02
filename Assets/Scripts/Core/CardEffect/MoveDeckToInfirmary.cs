@@ -72,8 +72,8 @@ namespace ProjectABC.Core
                 CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
                 CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, infirmaryLocation);
                 
-                SendToInfirmaryFromDeckEvent sendToInfirmaryFromDeckEvent = new SendToInfirmaryFromDeckEvent(appliedInfo, movementInfo);
-                sendToInfirmaryFromDeckEvent.RegisterEvent(matchContextEvent);
+                MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);
+                moveCardEvent.RegisterEvent(matchContextEvent);
                 
                 // string putCardToInfirmaryMessage = $"{ownSide.Player.Name}가 카드를 양호실에 넣음. \n{cardToMove}";
                 // CommonMatchMessageEvent putCardToInfirmaryEvent = new CommonMatchMessageEvent(putCardToInfirmaryMessage);

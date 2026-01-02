@@ -134,6 +134,20 @@ namespace ProjectABC.Core
 
     public static class CardLocationExtensions
     {
+        public static CardLocation GetCardLocation(this Card card, params MatchSide[] matchSides)
+        {
+            CardLocation cardLocation = null;
+            foreach (var matchSide in matchSides)
+            {
+                if (card.TryGetCardLocation(matchSide, out cardLocation))
+                {
+                    break;
+                }
+            }
+
+            return cardLocation;
+        }
+        
         public static bool TryGetCardLocation(this Card card, MatchSide matchSide, out CardLocation cardLocation)
         {
             if (card.Owner == matchSide.Player)

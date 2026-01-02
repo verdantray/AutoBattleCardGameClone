@@ -46,10 +46,10 @@ namespace ProjectABC.Core
             {
                 if (!gradeCardPiles[_targetGrade].TryDraw(out Card drawnCard))
                 {
-                    var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+                    CallCard.TryGetCardLocation(ownSide, out var currentLocation);
 
                     FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
-                        failedCard,
+                        currentLocation,
                         FailToActivateEffectReason.NoCardPileRemains
                     );
                 

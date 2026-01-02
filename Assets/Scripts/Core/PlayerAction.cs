@@ -103,15 +103,10 @@ namespace ProjectABC.Core
                 _recruitContextEvents.Add(recruitEvent);
             }
         }
-        
-        public RecruitConsoleEvent GetContextEvent()
-        {
-            return new RecruitConsoleEvent(Player, _selectedGrade, _drawnCards);
-        }
 
         public void ApplyContextEvent(SimulationContextEvents events)
         {
-            var contextEvent = GetContextEvent();
+            var contextEvent = new RecruitCardsEvent(Player, _selectedGrade, _drawnCards);
             contextEvent.Publish();
             
             events.AddEvent(contextEvent);

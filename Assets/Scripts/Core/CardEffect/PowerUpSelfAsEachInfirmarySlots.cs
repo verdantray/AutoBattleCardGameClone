@@ -55,13 +55,6 @@ namespace ProjectABC.Core
                     handler.Release();
                     ownSide.CardBuffHandlers.Remove(handler);
                 }
-                
-                CardReference inactiveBuffCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
-                InactiveBuffEvent inactiveBuffEvent = new InactiveBuffEvent(inactiveBuffCard);
-                inactiveBuffEvent.RegisterEvent(matchContextEvent);
-
-                // var inactiveBuffEvent = new CommonMatchMessageEvent($"{CallCard.Title} {CallCard.Name}의 효과가 취소됩니다. / {CallCard.CardEffect.Description}");
-                // inactiveBuffEvent.RegisterEvent(matchContextEvent);
 
                 return;
             }
@@ -73,13 +66,6 @@ namespace ProjectABC.Core
                 var handler = new CardBuffHandleEntry(CallCard, cardBuff);
                 
                 ownSide.CardBuffHandlers.Add(handler);
-                
-                CardReference activeBuffCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
-                ActiveBuffEvent activeBuffEvent = new ActiveBuffEvent(activeBuffCard);
-                activeBuffEvent.RegisterEvent(matchContextEvent);
-                
-                // var activeBuffEvent = new CommonMatchMessageEvent($"{CallCard.Title} {CallCard.Name}의 효과가 발동됩니다. / {CallCard.CardEffect.Description}");
-                // activeBuffEvent.RegisterEvent(matchContextEvent);
             }
         }
 

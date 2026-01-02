@@ -39,10 +39,10 @@ namespace ProjectABC.Core
 
             if (cardsInInfirmary.Length == 0)
             {
-                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+                CallCard.TryGetCardLocation(ownSide, out var currentLocation);
 
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
-                    failedCard,
+                    currentLocation,
                     FailToActivateEffectReason.NoInfirmaryRemains
                 );
                 

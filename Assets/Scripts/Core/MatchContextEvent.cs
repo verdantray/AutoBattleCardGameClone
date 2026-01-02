@@ -50,10 +50,18 @@ namespace ProjectABC.Core
 
         public static void CheckApplyBuffs(GameState gameState, IMatchContextEvent matchContextEvent, params MatchSide[] matchSide)
         {
-            matchSide[0].CheckApplyCardBuffs(matchSide[1], gameState);
-            matchSide[1].CheckApplyCardBuffs(matchSide[0], gameState);
-            
-            // TODO: register match event if need to announce applying buffs
+            matchSide[0].CheckApplyCardBuffs(matchSide[1], gameState, out var oneSideBuffEvents);
+            matchSide[1].CheckApplyCardBuffs(matchSide[0], gameState, out var otherSideBuffEvents);
+
+            foreach (var oneSideBuffEvent in oneSideBuffEvents)
+            {
+                oneSideBuffEvent.RegisterEvent(matchContextEvent);
+            }
+
+            foreach (var otherSideBuffEvent in otherSideBuffEvents)
+            {
+                otherSideBuffEvent.RegisterEvent(matchContextEvent);
+            }
         }
     }
     

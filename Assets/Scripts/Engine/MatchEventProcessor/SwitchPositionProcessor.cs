@@ -15,7 +15,7 @@ namespace ProjectABC.Engine
             // TODO : refresh onboard simulation according to match snapshot
             var onboardController = Simulator.Model.onboardController;
 
-            onboardController.SwitchPosition();
+            onboardController.SwitchPosition(matchEvent.Attacker, matchEvent.Defender);
             await onboardController.SetOverlapFieldCardsAsync(matchEvent.Defender, _overlapDuration, _alignDuration, token);
             
             MatchPosition startingPosition = ReferenceEquals(matchEvent.Attacker, Simulator.Model.player)

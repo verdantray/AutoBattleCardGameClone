@@ -55,10 +55,10 @@ namespace ProjectABC.Core
 
             if (cardsBelongClubsInInfirmary.Length == 0)
             {
-                var failedCard = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+                CallCard.TryGetCardLocation(ownSide, out var currentLocation);
 
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
-                    failedCard,
+                    currentLocation,
                     FailToActivateEffectReason.NoMeetCondition
                 );
                 
@@ -102,8 +102,8 @@ namespace ProjectABC.Core
                 CardLocation curLocation = new DeckLocation(ownSide.Player, ownSide.Deck.Count - 1);
                 CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, curLocation);
                 
-                SendToDeckFromInfirmaryEvent sendCardEvent = new SendToDeckFromInfirmaryEvent(appliedInfo, movementInfo);
-                sendCardEvent.RegisterEvent(matchContextEvent);
+                MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);
+                moveCardEvent.RegisterEvent(matchContextEvent);
                     
                 // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{cardToMove}";
                 // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);

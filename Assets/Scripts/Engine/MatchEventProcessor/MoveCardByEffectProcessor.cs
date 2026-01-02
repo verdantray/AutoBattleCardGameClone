@@ -4,12 +4,12 @@ using ProjectABC.Core;
 
 namespace ProjectABC.Engine
 {
-    public sealed class DrawCardToFieldProcessor : MatchEventProcessor<DrawCardToFieldEvent>
+    public class MoveCardByEffectProcessor : MatchEventProcessor<MoveCardByEffectEvent>
     {
-        private readonly ScaledTime _delay = 0.75f;
+        private readonly ScaledTime _delay = 0.25f;
         private readonly ScaledTime _duration = 0.25f;
         
-        public override Task ProcessEventAsync(DrawCardToFieldEvent matchEvent, CancellationToken token)
+        public override Task ProcessEventAsync(MoveCardByEffectEvent matchEvent, CancellationToken token)
         {
             return Simulator.Model.onboardController.MoveCardAsync(matchEvent.MovementInfo, _delay, _duration, token);
         }

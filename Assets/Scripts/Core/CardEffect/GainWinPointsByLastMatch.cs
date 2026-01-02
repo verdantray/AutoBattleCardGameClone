@@ -46,13 +46,13 @@ namespace ProjectABC.Core
             bool isEnableResultLastMatch = _enableLastResult == LastRoundResult.Win
                 ? lastMatchResult.Winner == ownPlayer
                 : lastMatchResult.Loser == ownPlayer;
-
-            CardReference reference = new CardReference(CallCard, new CardBuffArgs(ownSide, otherSide, gameState));
+            
+            CallCard.TryGetCardLocation(ownSide, out var currentLocation);
             
             if (!isEnableResultLastMatch)
             {
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
-                    reference,
+                    currentLocation,
                     FailToActivateEffectReason.NoMeetCondition
                 );
                 
@@ -69,7 +69,8 @@ namespace ProjectABC.Core
             int totalWinPoints = gameState.ScoreBoard.GetTotalWinPoints(ownPlayer);
             GainWinPointsByCardEffectEvent gainWinPointsEvent = new GainWinPointsByCardEffectEvent(
                 ownPlayer,
-                reference,
+                CallCard.Id,
+                currentLocation,
                 _gainWinPoints,
                 totalWinPoints
             );

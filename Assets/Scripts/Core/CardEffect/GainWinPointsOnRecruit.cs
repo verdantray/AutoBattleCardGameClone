@@ -32,9 +32,9 @@ namespace ProjectABC.Core
         {
             ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(recruiter, scoreEntry);
-
-            // TODO: implements ContextEvent for show score
-            contextEvent = new CommonConsoleEvent($"{recruiter.Name} gain win points {_gainWinPoints}");
+            
+            int totalPoints = gameState.ScoreBoard.GetTotalWinPoints(recruiter);
+            contextEvent = new GainWinPointsOnRecruitEvent(recruiter, CallCard.Id, _gainWinPoints, totalPoints);
             return true;
         }
 

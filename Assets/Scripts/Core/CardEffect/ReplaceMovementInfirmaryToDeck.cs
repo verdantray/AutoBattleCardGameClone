@@ -34,8 +34,8 @@ namespace ProjectABC.Core
             CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevLocation);
             CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
             
-            SendToDeckInsteadOfInfirmaryEvent cardSendEvent = new SendToDeckInsteadOfInfirmaryEvent(appliedInfo, movementInfo);
-            cardSendEvent.RegisterEvent(matchContextEvent);
+            MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);
+            moveCardEvent.RegisterEvent(matchContextEvent);
 
             // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{CallCard}";
             // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);

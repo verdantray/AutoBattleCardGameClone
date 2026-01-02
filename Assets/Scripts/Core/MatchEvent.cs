@@ -1,4 +1,7 @@
 
+using System.Collections.Generic;
+using System.Linq;
+
 namespace ProjectABC.Core
 {
     public interface IMatchEvent
@@ -150,42 +153,6 @@ namespace ProjectABC.Core
         }
     }
 
-    public class SendToInfirmaryFromDeckEvent : MatchEvent
-    {
-        public readonly CardEffectAppliedInfo AppliedInfo;
-        public readonly CardMovementInfo MovementInfo;
-        
-        public SendToInfirmaryFromDeckEvent(CardEffectAppliedInfo appliedInfo, CardMovementInfo movementInfo)
-        {
-            AppliedInfo = appliedInfo;
-            MovementInfo = movementInfo;
-        }
-    }
-
-    public class SendToDeckFromInfirmaryEvent : MatchEvent
-    {
-        public readonly CardEffectAppliedInfo AppliedInfo;
-        public readonly CardMovementInfo MovementInfo;
-        
-        public SendToDeckFromInfirmaryEvent(CardEffectAppliedInfo appliedInfo, CardMovementInfo movementInfo)
-        {
-            AppliedInfo = appliedInfo;
-            MovementInfo = movementInfo;
-        }
-    }
-
-    public class SendToDeckInsteadOfInfirmaryEvent : MatchEvent
-    {
-        public readonly CardEffectAppliedInfo AppliedInfo;
-        public readonly CardMovementInfo MovementInfo;
-        
-        public SendToDeckInsteadOfInfirmaryEvent(CardEffectAppliedInfo appliedInfo, CardMovementInfo movementInfo)
-        {
-            AppliedInfo = appliedInfo;
-            MovementInfo = movementInfo;
-        }
-    }
-
     public class ShuffleDeckEvent : MatchEvent
     {
         public readonly CardEffectAppliedInfo AppliedInfo;
@@ -201,14 +168,16 @@ namespace ProjectABC.Core
     public class GainWinPointsByCardEffectEvent : MatchEvent
     {
         public readonly IPlayer Player;
-        public readonly CardReference ActivateCard;
+        public readonly string ActivatedCardId;
+        public readonly CardLocation ActivatedCardLocation;
         public readonly int GainPoints;
         public readonly int TotalPoints;
 
-        public GainWinPointsByCardEffectEvent(IPlayer player, CardReference card, int gainPoints, int totalPoints)
+        public GainWinPointsByCardEffectEvent(IPlayer player, string activatedCardId, CardLocation currentLocation, int gainPoints, int totalPoints)
         {
             Player = player;
-            ActivateCard = card;
+            ActivatedCardId = activatedCardId;
+            ActivatedCardLocation = currentLocation;
             GainPoints = gainPoints;
             TotalPoints = totalPoints;
         }
@@ -226,12 +195,12 @@ namespace ProjectABC.Core
 
     public class FailToActivateCardEffectEvent : MatchEvent
     {
-        public readonly CardReference FailedCard;
+        public readonly CardLocation FailedCardLocation;
         public readonly FailToActivateEffectReason Reason;
 
-        public FailToActivateCardEffectEvent(CardReference failedCard, FailToActivateEffectReason reason)
+        public FailToActivateCardEffectEvent(CardLocation failedCardLocation, FailToActivateEffectReason reason)
         {
-            FailedCard = failedCard;
+            FailedCardLocation = failedCardLocation;
             Reason = reason;
         }
     }
@@ -250,23 +219,61 @@ namespace ProjectABC.Core
         }
     }
 
+    public class BuffTarget
+    {
+        public readonly CardReference TargetReference;
+        public readonly CardLocation TargetLocation;
+
+        public BuffTarget(CardReference targetReference, CardLocation targetLocation)
+        {
+            TargetReference = targetReference;
+            TargetLocation = targetLocation;
+        }
+    }
+
     public class ActiveBuffEvent : MatchEvent
     {
-        public readonly CardReference Card;
+        public readonly string ActiveCardId;
+        public readonly CardLocation ActivatedCardLocation;
+        public readonly IReadOnlyList<BuffTarget> BuffTargets;
         
-        public ActiveBuffEvent(CardReference card)
+        public ActiveBuffEvent(Card activeCard, IEnumerable<Card> appliedCards, CardBuffArgs args)
         {
-            Card = card;
+            ActiveCardId = activeCard.Id;
+            ActivatedCardLocation = activeCard.GetCardLocation(args.OwnSide, args.OtherSide);
+            BuffTargets = appliedCards.Select(GetBuffTarget).ToList();
+            return;
+
+            BuffTarget GetBuffTarget(Card appliedCard)
+            {
+                CardReference appliedReference = new CardReference(appliedCard, args);
+                appliedCard.TryGetCardLocation(args.OwnSide, out var appliedLocation);
+                
+                return new BuffTarget(appliedReference, appliedLocation);
+            }
         }
     }
 
     public class InactiveBuffEvent : MatchEvent
     {
-        public readonly CardReference Card;
+        public readonly string InactiveCardId;
+        public readonly CardLocation InactivatedCardLocation;
+        public readonly IReadOnlyList<BuffTarget> BuffTargets;
         
-        public InactiveBuffEvent(CardReference card)
+        public InactiveBuffEvent(Card inactiveCard, IEnumerable<Card> canceledCards, CardBuffArgs args)
         {
-            Card = card;
+            InactiveCardId = inactiveCard.Id;
+            InactivatedCardLocation = inactiveCard.GetCardLocation(args.OwnSide, args.OtherSide);
+            BuffTargets = canceledCards.Select(GetBuffTarget).ToList();
+            return;
+
+            BuffTarget GetBuffTarget(Card appliedCard)
+            {
+                CardReference appliedReference = new CardReference(appliedCard, args);
+                appliedCard.TryGetCardLocation(args.OwnSide, out var appliedLocation);
+                
+                return new BuffTarget(appliedReference, appliedLocation);
+            }
         }
     }
 }

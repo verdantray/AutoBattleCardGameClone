@@ -52,6 +52,36 @@ namespace ProjectABC.Core
         }
     }
 
+    public class RecruitCardsEvent : IContextEvent
+    {
+        public readonly IPlayer Player;
+        public readonly GradeType  SelectedGrade;
+        public readonly List<Card> DrawnCards;
+        
+        public RecruitCardsEvent(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
+        {
+            Player = player;
+            SelectedGrade = selectedGrade;
+            DrawnCards = drawnCards;
+        }
+    }
+
+    public class GainWinPointsOnRecruitEvent : IContextEvent
+    {
+        public readonly IPlayer Player;
+        public readonly string ActivatedCardId;
+        public readonly int GainPoints;
+        public readonly int TotalPoints;
+
+        public GainWinPointsOnRecruitEvent(IPlayer player, string activatedCardId, int gainPoints, int totalPoints)
+        {
+            Player = player;
+            ActivatedCardId = activatedCardId;
+            GainPoints = gainPoints;
+            TotalPoints = totalPoints;
+        }
+    }
+
     public class RecruitConsoleEvent : ConsoleContextEventBase
     {
         public RecruitConsoleEvent(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
