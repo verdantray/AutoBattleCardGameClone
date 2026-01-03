@@ -1,6 +1,5 @@
 {
   "card_effect_id": "effect_move_specific_grade_cards_from_piles_to_deck",
-  "desc_key": "desc_effect_move_specific_grade_cards_from_piles_to_deck",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

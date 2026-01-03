@@ -9,13 +9,16 @@ namespace ProjectABC.Engine
 {
     public class ActiveBuffProcessor : MatchEventProcessor<ActiveBuffEvent>
     {
-        private const float PROCESS_DELAY = 0.1f;
+        private const float PROCESS_DELAY = 0.2f;
         
         public override async Task ProcessEventAsync(ActiveBuffEvent matchEvent, CancellationToken token)
         {
             // TODO : show some effect to show active buff at each locations
-            
-            string message = $"{matchEvent.ActivatedCardLocation.Owner.Name} : {matchEvent.ActiveCardId}의 효과 다음 대상에게 적용\n{string.Join(", ", matchEvent.BuffTargets.Select(target => target.TargetLocation))}";
+
+            var cardData = Storage.Instance.GetCardData(matchEvent.ActiveCardId);
+            string cardName = LocalizationHelper.Instance.Localize(cardData.nameKey);
+            string cardDesc = LocalizationHelper.Instance.Localize(cardData.descKey);
+            string message = $"{matchEvent.ActivatedCardLocation.Owner.Name}의 카드 {cardName} 효과 적용\n{cardDesc}\n적용 대상 : {string.Join(", ", matchEvent.BuffTargets.Select(target => target.TargetLocation))}";
             MatchLogUI.SendLog(message);
             Debug.Log(message);
             

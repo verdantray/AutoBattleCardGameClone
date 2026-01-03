@@ -74,11 +74,6 @@ namespace ProjectABC.Core
                 ownSide.CardBuffHandlers.Add(handler);
             }
         }
-
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey, _powerCriteria, _powerUpBonus);
-        }
         
         private sealed class ExclusiveCardBuff : CardBuff
         {

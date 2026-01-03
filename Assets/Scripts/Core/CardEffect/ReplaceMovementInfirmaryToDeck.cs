@@ -43,10 +43,5 @@ namespace ProjectABC.Core
             
             return true;
         }
-
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey);
-        }
     }
 }

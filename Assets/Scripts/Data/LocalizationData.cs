@@ -34,6 +34,7 @@ namespace ProjectABC.Data
         };
 
 #if UNITY_EDITOR
+        public bool IsValid => !string.IsNullOrEmpty(key);
         public void UpdateFields(List<GSTU_Cell> cells)
         {
             foreach (var cell in cells)

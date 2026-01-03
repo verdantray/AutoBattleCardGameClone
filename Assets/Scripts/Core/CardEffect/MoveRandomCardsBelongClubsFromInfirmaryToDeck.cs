@@ -118,14 +118,5 @@ namespace ProjectABC.Core
                 }
             }
         }
-
-        protected override string GetDescription()
-        {
-            var clubs = ((ClubType[])Enum.GetValues(typeof(ClubType)))
-                .Where(club => _includedClubFlag.HasFlag(club))
-                .Select(club => LocalizationHelper.Instance.Localize(club.GetLocalizationKey()));
-
-            return LocalizationHelper.Instance.Localize(DescriptionKey, string.Join(", ", clubs), _cardsAmount);
-        }
     }
 }

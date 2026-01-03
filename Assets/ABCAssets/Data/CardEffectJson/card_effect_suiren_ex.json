@@ -1,6 +1,5 @@
 {
   "card_effect_id": "effect_power_up_self_as_each_grade_of_opponent_field_last",
-  "desc_key": "desc_effect_power_up_self_as_each_grade_of_opponent_field_last",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

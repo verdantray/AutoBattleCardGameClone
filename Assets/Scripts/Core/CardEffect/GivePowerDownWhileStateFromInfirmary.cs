@@ -81,11 +81,6 @@ namespace ProjectABC.Core
             }
         }
 
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey, Math.Abs(_powerDownPenalty));
-        }
-
         private sealed class ExclusiveCardBuff : CardBuff
         {
             public override BuffType Type => BuffType.Negative;

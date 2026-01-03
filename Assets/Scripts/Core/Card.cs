@@ -197,7 +197,11 @@ namespace ProjectABC.Core
 
         public override string ToString()
         {
-            return $"{CardData.titleKey} {CardData.nameKey} ({Id} / {BasePower} / {CardEffect.Description})";
+            string title = LocalizationHelper.Instance.Localize(CardData.titleKey);
+            string name = LocalizationHelper.Instance.Localize(CardData.nameKey);
+            string desc = LocalizationHelper.Instance.Localize(CardData.descKey);
+            
+            return $"{title} {name} ({Id} / {BasePower} / {desc})";
         }
     }
 }

@@ -19,6 +19,7 @@ namespace ProjectABC.Data
         public int amount;
         
 #if UNITY_EDITOR
+        public bool IsValid => round > 0 && amount > 0;
         
         public void UpdateFields(List<GSTU_Cell> cells)
         {
@@ -50,6 +51,8 @@ namespace ProjectABC.Data
         public int weight;
         
 #if UNITY_EDITOR
+        public bool IsValid => round > 0 && winPoint > 0;
+        
         public void UpdateFields(List<GSTU_Cell> cells)
         {
             foreach (var cell in cells)

@@ -9,20 +9,20 @@ namespace ProjectABC.Engine
     public class CardSpawnArgs
     {
         public readonly Vector3 Position;
-        public readonly Quaternion Rotation;
+        public readonly Vector3 Angles;
         public readonly CardReference CardReference;
 
         public CardSpawnArgs(Transform target, CardReference card)
         {
             Position = target.position;
-            Rotation = target.rotation;
+            Angles = target.eulerAngles;
             CardReference = card;
         }
 
-        public CardSpawnArgs(Vector3 position, Quaternion rotation, CardReference card)
+        public CardSpawnArgs(Vector3 position, Vector3 eulerAngles, CardReference card)
         {
             Position = position;
-            Rotation = rotation;
+            Angles = eulerAngles;
             CardReference = card;
         }
     }
@@ -37,7 +37,7 @@ namespace ProjectABC.Engine
 
         public abstract void OnDespawned();
         
-        protected abstract void ApplyArgs(CardSpawnArgs args);
+        public abstract void ApplyReference(CardReference reference);
     }
     
     public sealed class CardObjectSpawner : MonoBehaviour, IObjectSpawner<CardSpawnArgs>

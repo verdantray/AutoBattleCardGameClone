@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Linq;
 using ProjectABC.Core;
 using ProjectABC.Data;
@@ -15,14 +14,14 @@ namespace ProjectABC.Engine
         [SerializeField] private TMP_Text powerText;
         [SerializeField] private TMP_Text rollText;
         [SerializeField] private TMP_Text nameText;
-        
-        private CardSpawnArgs _spawnArgs;
+
+        private CardReference _reference;
         
         public override void OnSpawned(CardSpawnArgs args)
         {
-            ApplyArgs(args);
+            ApplyReference(args.CardReference);
             transform.position = args.Position;
-            transform.rotation = args.Rotation;
+            transform.eulerAngles = args.Angles;
         }
 
         public override void OnDespawned()
@@ -30,24 +29,24 @@ namespace ProjectABC.Engine
             
         }
 
-        protected override void ApplyArgs(CardSpawnArgs args)
+        public override void ApplyReference(CardReference reference)
         {
-            _spawnArgs = args;
-            if (_spawnArgs == null)
+            _reference = reference;
+            if (_reference == null)
             {
                 return;
             }
 
-            CardData cardData = _spawnArgs.CardReference.CardData;
+            CardData cardData = _reference.CardData;
             
             string gradeSpriteName = $"grade_{cardData.gradeType.GradeTypeToOrdinalString()}";
             
             gradeRenderer.sprite = GlobalAssetBinder.Instance.AtlasBinder.GetCardSprite(gradeSpriteName);
 
             int totalPower = cardData.basePower;
-            totalPower += args.CardReference.Buffs.Sum(buff => buff.AdditivePower);
-            
-            powerText.text = totalPower.ToString(CultureInfo.InvariantCulture);
+            totalPower += _reference.Buffs.Sum(buff => buff.AdditivePower);
+
+            powerText.text = $"{totalPower:D}";
             rollText.text = LocalizationHelper.Instance.Localize(cardData.titleKey);
             nameText.text = LocalizationHelper.Instance.Localize(cardData.nameKey);
         }

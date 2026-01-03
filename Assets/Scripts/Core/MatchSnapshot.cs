@@ -101,7 +101,7 @@ namespace ProjectABC.Core
         public readonly BuffType Type;
         public readonly BuffState State;
         public readonly int AdditivePower;
-        public readonly string Description;
+        public readonly string CallCardId;
         public readonly CardLocation CallCardLocation;
 
         public BuffSnapshot(CardBuff buff, Card target, CardBuffArgs args, bool isDisabled)
@@ -118,11 +118,9 @@ namespace ProjectABC.Core
             AdditivePower = isBuffActive
                 ? buff.CalculateAdditivePower(target, args)
                 : 0;
-            
-            Description = buff.CallCard.CardEffect.Description;
 
-            bool isOwnSide = args.OwnSide.Player == buff.CallCard.Owner;
-            buff.CallCard.TryGetCardLocation(isOwnSide ? args.OwnSide : args.OtherSide, out CallCardLocation);
+            CallCardId = buff.CallCard.Id;
+            CallCardLocation = buff.CallCard.GetCardLocation(args.OwnSide, args.OtherSide);
         }
     }
 

@@ -1,6 +1,5 @@
 {
   "card_effect_id": "effect_power_up_self_as_each_cards_from_infirmary",
-  "desc_key": "desc_effect_power_up_self_as_each_cards_from_infirmary",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

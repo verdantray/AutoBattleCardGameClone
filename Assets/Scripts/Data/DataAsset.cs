@@ -15,6 +15,7 @@ namespace ProjectABC.Data.Editor
     public interface IFieldUpdatable
     {
 #if UNITY_EDITOR
+        public bool IsValid { get; }
         public void UpdateFields(List<GSTU_Cell> cells);
 #endif
     }

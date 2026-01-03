@@ -90,19 +90,5 @@ namespace ProjectABC.Core
             // var gainWinPointsEventEffect = new GainWinPointsByCardEffectMessageEvent(ownSide.Player, _gainWinPoints);
             // gainWinPointsEventEffect.RegisterEvent(matchContextEvent);
         }
-
-        protected override string GetDescription()
-        {
-            var excludeClubs = ((ClubType[])Enum.GetValues(typeof(ClubType)))
-                .Where(club => _excludedClubFlag.HasFlag(club))
-                .Select(club => LocalizationHelper.Instance.Localize(club.GetLocalizationKey()));
-
-            return LocalizationHelper.Instance.Localize(
-                DescriptionKey,
-                string.Join(", ", excludeClubs),
-                _necessaryClubAmount,
-                _gainWinPoints
-            );
-        }
     }
 }

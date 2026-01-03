@@ -19,10 +19,8 @@ namespace ProjectABC.Core
     public abstract class CardEffect
     {
         public Card CallCard { get; }
-        public string Description => GetDescription();
 
         protected readonly string EffectId;
-        protected readonly string DescriptionKey;
         protected readonly EffectTriggerEvent ApplyTriggerFlag;
         
         protected CardEffect(Card card, JsonObject json)
@@ -40,9 +38,6 @@ namespace ProjectABC.Core
                 {
                     case GameConst.CardEffect.EFFECT_ID:
                         EffectId = field.value.strValue;
-                        break;
-                    case GameConst.CardEffect.EFFECT_DESC_KEY:
-                        DescriptionKey = field.value.strValue;
                         break;
                     case GameConst.CardEffect.EFFECT_APPLY_TRIGGERS_KEY:
 
@@ -72,8 +67,6 @@ namespace ProjectABC.Core
             contextEvent = null;
             return false;
         }
-        
-        protected abstract string GetDescription();
     }
 
     public class CardEffectArgs

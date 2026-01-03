@@ -1,6 +1,5 @@
 {
   "card_effect_id": "effect_move_deck_to_infirmary",
-  "desc_key": "desc_effect_move_deck_to_infirmary",
   "apply_triggers": [
     "OnEnterFieldAsAttacker",
     "OnEnterFieldAsDefender"

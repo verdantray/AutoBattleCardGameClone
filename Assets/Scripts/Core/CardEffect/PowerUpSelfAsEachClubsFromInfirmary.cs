@@ -81,15 +81,6 @@ namespace ProjectABC.Core
                 ownSide.CardBuffHandlers.Add(handler);
             }
         }
-
-        protected override string GetDescription()
-        {
-            var excludeClubs = ((ClubType[])Enum.GetValues(typeof(ClubType)))
-                .Where(club => _excludedClubFlag.HasFlag(club))
-                .Select(club => LocalizationHelper.Instance.Localize(club.GetLocalizationKey()));
-
-            return LocalizationHelper.Instance.Localize(DescriptionKey, string.Join(", ", excludeClubs), _powerUpRatio);
-        }
         
         private sealed class ExclusiveCardBuff : CardBuff
         {

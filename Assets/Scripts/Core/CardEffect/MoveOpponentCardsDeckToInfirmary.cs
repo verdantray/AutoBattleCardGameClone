@@ -91,10 +91,5 @@ namespace ProjectABC.Core
                 }
             }
         }
-
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey, _cardsAmount);
-        }
     } 
 }

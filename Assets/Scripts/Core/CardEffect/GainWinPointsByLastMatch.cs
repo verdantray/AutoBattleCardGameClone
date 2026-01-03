@@ -81,10 +81,5 @@ namespace ProjectABC.Core
             // GainWinPointsByCardEffectMessageEvent gainWinPointEvent = new GainWinPointsByCardEffectMessageEvent(ownPlayer, _gainWinPoints);
             // gainWinPointEvent.RegisterEvent(matchContextEvent);
         }
-
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey, _gainWinPoints);
-        }
     }
 }

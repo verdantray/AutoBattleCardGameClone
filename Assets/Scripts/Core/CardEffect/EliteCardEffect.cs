@@ -13,11 +13,6 @@ namespace ProjectABC.Core
         {
             // Do nothing
         }
-
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey);
-        }
     }
     
     public sealed class EmptyCardEffect : CardEffect
@@ -30,11 +25,6 @@ namespace ProjectABC.Core
         public override void CheckApplyEffect(CardEffectArgs args, IMatchContextEvent matchContextEvent)
         {
             // Do nothing
-        }
-
-        protected override string GetDescription()
-        {
-            return string.Empty;
         }
     }
 }

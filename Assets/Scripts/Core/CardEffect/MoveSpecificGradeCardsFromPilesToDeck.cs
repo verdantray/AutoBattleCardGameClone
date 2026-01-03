@@ -85,12 +85,5 @@ namespace ProjectABC.Core
                 // moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
-
-        protected override string GetDescription()
-        {
-            string gradeText = LocalizationHelper.Instance.Localize(_targetGrade.GetLocalizationKey());
-            
-            return LocalizationHelper.Instance.Localize(DescriptionKey, gradeText, _cardsAmount);
-        }
     }
 }

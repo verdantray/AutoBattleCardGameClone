@@ -23,22 +23,48 @@ namespace ProjectABC.Core
         
         public string Localize(string key)
         {
-            string localeText = _localizationMap.TryGetValue(key, out var localized)
-                ? localized[_localeType]
-                : key;
-
-            return _localizationPattern.Replace(localeText, MatchEvaluator);
+            string localeText = GetLocaleTextOrKey(key);
+            return ResolveLocalizationInText(localeText);
         }
-
+        
         public string Localize(string key, params object[] args)
         {
             return string.Format(Localize(key), args);
         }
 
+        private string GetLocaleTextOrKey(string key)
+        {
+            return _localizationMap.TryGetValue(key, out var localizationData)
+                ? localizationData[_localeType]
+                : key;
+        }
+
+        private string ResolveLocalizationInText(string text, int maxIterations = 8)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
+
+            for (int i = 0; i < maxIterations; i++)
+            {
+                string replaced = _localizationPattern.Replace(text, MatchEvaluator);
+
+                if (replaced == text)
+                {
+                    return text;
+                }
+
+                text = replaced;
+            }
+
+            return text;
+        }
+
         private string MatchEvaluator(Match match)
         {
             string innerLocalizationKey = match.Groups[GameConst.Localization.MATCHING_KEY].Value;
-            return Localize(innerLocalizationKey);
+            return GetLocaleTextOrKey(innerLocalizationKey);
         }
 
         private void Initialize(LocalizationDataAsset localizationDataAsset)

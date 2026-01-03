@@ -41,10 +41,13 @@ namespace ProjectABC.Data
         public int amount;
         public string titleKey;
         public string nameKey;
+        public string descKey;
         public string cardEffectId;
         public string imagePath;
 
 #if UNITY_EDITOR
+        public bool IsValid => !string.IsNullOrEmpty(id);
+        
         public void UpdateFields(List<GSTU_Cell> cells)
         {
             foreach (GSTU_Cell cell in cells)
@@ -71,6 +74,9 @@ namespace ProjectABC.Data
                         break;
                     case "name_key":
                         nameKey = cell.value;
+                        break;
+                    case "desc_key":
+                        descKey = cell.value;
                         break;
                     case "card_effect_id":
                         cardEffectId = cell.value;

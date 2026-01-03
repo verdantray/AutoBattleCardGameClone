@@ -69,6 +69,11 @@ namespace ProjectABC.Data.Editor
                     
                     var element = new T();
                     element.UpdateFields(rowCells);
+
+                    if (!element.IsValid)
+                    {
+                        continue;
+                    }
                     
                     collection.Add(element);
                 }

@@ -37,10 +37,5 @@ namespace ProjectABC.Core
             contextEvent = new GainWinPointsOnRecruitEvent(recruiter, CallCard.Id, _gainWinPoints, totalPoints);
             return true;
         }
-
-        protected override string GetDescription()
-        {
-            return LocalizationHelper.Instance.Localize(DescriptionKey, _gainWinPoints);
-        }
     }
 }
