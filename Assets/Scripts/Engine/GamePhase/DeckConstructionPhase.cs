@@ -23,6 +23,8 @@ namespace ProjectABC.Engine
                 .ToList();
 
             await Task.WhenAll(tasks);
+            
+            PersistentWorldCameraPoints.Instance.SwapPoint("Noticeboard");
 
             foreach (var playerAction in tasks.Select(task => task.Result))
             {

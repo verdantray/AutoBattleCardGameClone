@@ -179,10 +179,11 @@ namespace ProjectABC.Core
 
                 while (defender.Field.Count > 0)
                 {
-                    Card cardToMove = defender.Field[^1];
-                    int indexOfField = defender.Field.Count - 1;
+                    // send card to infirmary in order according to designer's request
+                    int indexOfField = 0;
+                    Card cardToMove = defender.Field[indexOfField];
                     
-                    defender.Field.Remove(cardToMove);
+                    defender.Field.RemoveAt(indexOfField);
 
                     bool isMovementReplaced = cardToMove.CardEffect.TryReplaceMovement(leaveFieldEffectArgs, matchContextEvent);
                     

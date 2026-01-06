@@ -5,9 +5,7 @@ using ProjectABC.Engine.UI;
 namespace ProjectABC.Engine
 {
     public sealed class PrepareRoundConfirmHandler : IConfirmHandler<PrepareRoundEvent>
-    { 
-        public bool IsWaitConfirm { get; private set; }
-
+    {
         public PrepareRoundConfirmHandler()
         {
             this.StartListening();
@@ -17,16 +15,12 @@ namespace ProjectABC.Engine
         {
             var roundAnnounceUI = UIManager.Instance.GetUI<RoundAnnounceUI>();
             await roundAnnounceUI.WaitUntilCloseAsync();
-
-            IsWaitConfirm = false;
         }
 
         public void OnEvent(PrepareRoundEvent contextEvent)
         {
             var roundAnnounceUI = UIManager.Instance.OpenUI<RoundAnnounceUI>();
             roundAnnounceUI.AnnounceRound(contextEvent.Round);
-            
-            IsWaitConfirm = true;
         }
         
         public void Dispose()

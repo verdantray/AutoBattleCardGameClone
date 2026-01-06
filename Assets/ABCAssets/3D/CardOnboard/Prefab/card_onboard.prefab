@@ -1064,7 +1064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5470031810222350078
 Transform:
   m_ObjectHideFlags: 0
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   studentRender: {fileID: 8153601979856481807}
   sleeveRenderer: {fileID: 7221626679752555697}
   gradeRenderer: {fileID: 142463516681959984}
-  powerText: {fileID: 4700805438184635285}
+  powerText: {fileID: 3229336044581489861}
   rollText: {fileID: 7975530927502531408}
   nameText: {fileID: 2169026987102158166}
   splineAnimate: {fileID: 7971011585890304185}

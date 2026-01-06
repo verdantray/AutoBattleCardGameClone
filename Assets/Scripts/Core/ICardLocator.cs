@@ -29,6 +29,7 @@ namespace ProjectABC.Core
         public T Peek(int index);
         public T Pop(int index);
         public void Insert(int index, T element);
+        public void Change(int index, T element);
         public void Clear();
     }
 
@@ -38,8 +39,10 @@ namespace ProjectABC.Core
         public ICardHolder<T> this[int keyIndex] { get; }
         public ICardHolder<T> this[TKey key] { get; }
         public int IndexOfKey(TKey key);
+        public T Peek(TKey key, int index);
         public T Pop(TKey key, int index);
         public void Insert(TKey key, int index, T element);
+        public void Change(TKey key, int index, T element);
         public void Clear();
     }
 }

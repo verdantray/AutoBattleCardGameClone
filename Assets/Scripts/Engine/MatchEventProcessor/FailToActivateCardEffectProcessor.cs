@@ -9,7 +9,7 @@ namespace ProjectABC.Engine
 {
     public class FailToActivateCardEffectProcessor : MatchEventProcessor<FailToActivateCardEffectEvent>
     {
-        private const float PROCESS_DELAY = 0.2f;
+        private const float PROCESS_DELAY = 0.5f;
 
         public override async Task ProcessEventAsync(FailToActivateCardEffectEvent matchEvent, CancellationToken token)
         {

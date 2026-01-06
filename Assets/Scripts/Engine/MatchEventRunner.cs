@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
+using ProjectABC.Engine.UI;
 using ProjectABC.Utils;
 using UnityEngine;
 
@@ -11,8 +12,6 @@ namespace ProjectABC.Engine
 {
     public sealed class MatchEventRunner : MonoBehaviour, IConfirmHandler<MatchContextEvent>
     {
-        public bool IsWaitConfirm { get; private set; }
-        
         private readonly List<IMatchEvent> _matchEvents = new List<IMatchEvent>();
 
         private readonly Dictionary<Type, IMatchEventProcessor> _matchEventProcessors = new()
@@ -28,11 +27,10 @@ namespace ProjectABC.Engine
             { typeof(FailToActivateCardEffectEvent), new FailToActivateCardEffectProcessor() },
             { typeof(ActiveBuffEvent), new ActiveBuffProcessor() },
             { typeof(InactiveBuffEvent), new InactiveBuffProcessor() },
+            { typeof(MatchFinishEvent), new MatchFinishProcessor() },
         };
 
         private CancellationTokenSource _cts;
-        private Task _currentRunningMatchTask;
-        
         private int _eventIndex = 0;
 
         private void Awake()
@@ -65,8 +63,6 @@ namespace ProjectABC.Engine
 
                     await matchEventProcessor.ProcessEventAsync(matchEvent, _cts.Token);
                 }
-
-                IsWaitConfirm = false;
             }
             catch (OperationCanceledException) when (_cts.IsCancellationRequested)
             {
@@ -77,18 +73,24 @@ namespace ProjectABC.Engine
                 Debug.LogError($"{nameof(MatchEventRunner)} has thrown an exception: {e}");
                 throw;
             }
-            finally
-            {
-                _currentRunningMatchTask = null;
-            }
         }
 
         public async Task WaitUntilConfirmAsync()
         {
-            while (IsWaitConfirm)
+            UIElement matchResultUI = null;
+            
+            while (true)
             {
+                if (matchResultUI != null)
+                {
+                    break;
+                }
+
+                matchResultUI = UIManager.Instance.GetUI<UIElement>();
                 await Task.Yield();
             }
+
+            await matchResultUI.WaitUntilCloseAsync();
         }
 
         public void Stop()
@@ -114,10 +116,7 @@ namespace ProjectABC.Engine
             _matchEvents.AddRange(contextEvent.MatchEvents);
             _eventIndex = 0;
             
-            IsWaitConfirm = true;
-            
-            _currentRunningMatchTask = RunMatchAsync();
-            _currentRunningMatchTask.Forget();
+            RunMatchAsync().Forget();
         }
     }
 }

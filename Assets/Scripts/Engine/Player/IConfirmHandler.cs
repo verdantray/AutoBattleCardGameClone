@@ -5,8 +5,6 @@ namespace ProjectABC.Engine
 {
     public interface IConfirmHandler
     {
-        public bool IsWaitConfirm { get; }
-
         public Task WaitUntilConfirmAsync();
     }
 

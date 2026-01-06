@@ -8,7 +8,7 @@ namespace ProjectABC.Engine
 {
     public sealed class CardLocator<T> : ICardLocator<T> where T : class
     {
-        private readonly Dictionary<IPlayer, SideLocator<T>> _sideLocators = new Dictionary<IPlayer, SideLocator<T>>();
+        private readonly Dictionary<IPlayer, ISideLocator<T>> _sideLocators = new Dictionary<IPlayer, ISideLocator<T>>();
         
         public ISideLocator<T> this[IPlayer player] => GetSideLocator(player);
 
@@ -120,6 +120,11 @@ namespace ProjectABC.Engine
             _cardObjects.Insert(index, element);
         }
 
+        public void Change(int index, T element)
+        {
+            _cardObjects[index] = element;
+        }
+
         public void Clear()
         {
             _cardObjects.Clear();
@@ -152,6 +157,21 @@ namespace ProjectABC.Engine
             return _keyList.IndexOf(key);
         }
 
+        public T Peek(TKey key, int index)
+        {
+            if (!_cardObjects.ContainsKey(key))
+            {
+                Debug.LogWarning($"{nameof(CardHolder<TKey, T>)} : can't find key '{key}'");
+            }
+
+            if (!_cardObjects.TryGetValue(key, out var cardHolder))
+            {
+                throw new KeyNotFoundException($"Key '{key}' not found");
+            }
+
+            return cardHolder.Peek(index);
+        }
+
         public T Pop(TKey key, int index)
         {
             if (!_cardObjects.ContainsKey(key))
@@ -161,7 +181,7 @@ namespace ProjectABC.Engine
 
             if (!_cardObjects.TryGetValue(key, out var cardHolder))
             {
-                return null;
+                throw new KeyNotFoundException($"Key '{key}' not found");
             }
 
             T popped = cardHolder.Pop(index);
@@ -193,6 +213,16 @@ namespace ProjectABC.Engine
                 _cardObjects.Add(key, innerHolder);
                 _keyList.Add(key);
             }
+        }
+
+        public void Change(TKey key, int index, T element)
+        {
+            if (!_cardObjects.TryGetValue(key, out var innerHolder))
+            {
+                throw new KeyNotFoundException($"Key '{key}' not found");
+            }
+            
+            innerHolder.Change(index, element);
         }
 
         public void Clear()

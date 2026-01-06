@@ -7,8 +7,6 @@ namespace ProjectABC.Engine
 {
     public class DeckConstructionConfirmHandler : IConfirmHandler<DeckConstructionEvent>
     {
-        public bool IsWaitConfirm { get; private set; }
-        
         private readonly List<DeckConstructionEvent> _deckConstructionEvents = new List<DeckConstructionEvent>();
 
         public DeckConstructionConfirmHandler()
@@ -20,8 +18,6 @@ namespace ProjectABC.Engine
         {
             var resultUI = UIManager.Instance.GetUI<DeckConstructionResultUI>();
             await resultUI.WaitUntilCloseAsync();
-            
-            IsWaitConfirm = false;
         }
 
         public void OnEvent(DeckConstructionEvent contextEvent)
@@ -35,8 +31,6 @@ namespace ProjectABC.Engine
             
             var resultUI = UIManager.Instance.OpenUI<DeckConstructionResultUI>();
             resultUI.SetResults(_deckConstructionEvents);
-
-            IsWaitConfirm = true;
         }
         
         public void Dispose()

@@ -9,7 +9,7 @@ namespace ProjectABC.Engine
     {
         public override async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
-            PersistentWorldCameraPoints.Instance.SwapPoint("Default");
+            PersistentWorldCameraPoints.Instance.SwapPoint("Noticeboard");
 
             int prevRound = simulationContext.CurrentState.Round;
             int currentRound = prevRound += 1;

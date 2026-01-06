@@ -21,8 +21,10 @@ namespace ProjectABC.Core
             Owner = owner;
         }
 
+        public abstract T PeekFromLocation<T>(ICardLocator<T> locator) where T : class;
         public abstract T PopFromLocation<T>(ICardLocator<T> locator) where T : class;
         public abstract void InsertToLocation<T>(ICardLocator<T> locator, T element) where T : class;
+        public abstract void ChangeCardToLocation<T>(ICardLocator<T> locator, T element) where T : class;
         public override string ToString()
         {
             return $"Zone : {CardZone} / Owner : {Owner.Name}";
@@ -37,7 +39,13 @@ namespace ProjectABC.Core
         {
             
         }
-        
+
+        public override T PeekFromLocation<T>(ICardLocator<T> locator)
+        {
+            // not use on this class
+            return null;
+        }
+
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
             // not use on this class
@@ -45,6 +53,11 @@ namespace ProjectABC.Core
         }
 
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            // do nothing
+        }
+
+        public override void ChangeCardToLocation<T>(ICardLocator<T> locator, T element)
         {
             // do nothing
         }
@@ -60,7 +73,12 @@ namespace ProjectABC.Core
         {
             IndexOfDeck = indexOfDeck;
         }
-        
+
+        public override T PeekFromLocation<T>(ICardLocator<T> locator)
+        {
+            return locator[Owner].Deck.Peek(IndexOfDeck);
+        }
+
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
             return locator[Owner].Deck.Pop(IndexOfDeck);
@@ -69,6 +87,11 @@ namespace ProjectABC.Core
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
             locator[Owner].Deck.Insert(IndexOfDeck, element);
+        }
+
+        public override void ChangeCardToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            locator[Owner].Deck.Change(IndexOfDeck, element);
         }
 
         public override string ToString()
@@ -87,7 +110,12 @@ namespace ProjectABC.Core
         {
             IndexOfField = indexOfField;
         }
-        
+
+        public override T PeekFromLocation<T>(ICardLocator<T> locator)
+        {
+            return locator[Owner].Field.Peek(IndexOfField);
+        }
+
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
             return locator[Owner].Field.Pop(IndexOfField);
@@ -96,6 +124,11 @@ namespace ProjectABC.Core
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
             locator[Owner].Field.Insert(IndexOfField, element);
+        }
+
+        public override void ChangeCardToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            locator[Owner].Field.Change(IndexOfField, element);
         }
 
         public override string ToString()
@@ -116,7 +149,12 @@ namespace ProjectABC.Core
             SlotKey = slotKey;
             IndexOfInfirmarySlot = indexOfInfirmarySlot;
         }
-        
+
+        public override T PeekFromLocation<T>(ICardLocator<T> locator)
+        {
+            return locator[Owner].Infirmary.Peek(SlotKey, IndexOfInfirmarySlot);
+        }
+
         public override T PopFromLocation<T>(ICardLocator<T> locator)
         {
             return locator[Owner].Infirmary.Pop(SlotKey, IndexOfInfirmarySlot);
@@ -125,6 +163,11 @@ namespace ProjectABC.Core
         public override void InsertToLocation<T>(ICardLocator<T> locator, T element)
         {
             locator[Owner].Infirmary.Insert(SlotKey, IndexOfInfirmarySlot, element);
+        }
+
+        public override void ChangeCardToLocation<T>(ICardLocator<T> locator, T element)
+        {
+            locator[Owner].Infirmary.Change(SlotKey, IndexOfInfirmarySlot, element);
         }
 
         public override string ToString()

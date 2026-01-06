@@ -11,8 +11,6 @@ namespace ProjectABC.Engine
     {
         public override async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
-            PersistentWorldCameraPoints.Instance.SwapPoint("Default");
-            
             GameState currentState = simulationContext.CurrentState;
             RecruitOnRound recruitOnRound = new RecruitOnRound(currentState.Round);
 

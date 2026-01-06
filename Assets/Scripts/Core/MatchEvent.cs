@@ -230,19 +230,25 @@ namespace ProjectABC.Core
             TargetReference = targetReference;
             TargetLocation = targetLocation;
         }
+
+        public void Deconstruct(out CardReference targetReference, out CardLocation targetLocation)
+        {
+            targetReference = TargetReference;
+            targetLocation = TargetLocation;
+        }
     }
 
     public class ActiveBuffEvent : MatchEvent
     {
         public readonly string ActiveCardId;
         public readonly CardLocation ActivatedCardLocation;
-        public readonly IReadOnlyList<BuffTarget> BuffTargets;
+        public readonly IReadOnlyList<BuffTarget> BuffApplyTargets;
         
         public ActiveBuffEvent(Card activeCard, IEnumerable<Card> appliedCards, CardBuffArgs args)
         {
             ActiveCardId = activeCard.Id;
             ActivatedCardLocation = activeCard.GetCardLocation(args.OwnSide, args.OtherSide);
-            BuffTargets = appliedCards.Select(GetBuffTarget).ToList();
+            BuffApplyTargets = appliedCards.Select(GetBuffTarget).ToList();
             return;
 
             BuffTarget GetBuffTarget(Card appliedCard)
@@ -259,13 +265,13 @@ namespace ProjectABC.Core
     {
         public readonly string InactiveCardId;
         public readonly CardLocation InactivatedCardLocation;
-        public readonly IReadOnlyList<BuffTarget> BuffTargets;
+        public readonly IReadOnlyList<BuffTarget> BuffCancelTargets;
         
         public InactiveBuffEvent(Card inactiveCard, IEnumerable<Card> canceledCards, CardBuffArgs args)
         {
             InactiveCardId = inactiveCard.Id;
             InactivatedCardLocation = inactiveCard.GetCardLocation(args.OwnSide, args.OtherSide);
-            BuffTargets = canceledCards.Select(GetBuffTarget).ToList();
+            BuffCancelTargets = canceledCards.Select(GetBuffTarget).ToList();
             return;
 
             BuffTarget GetBuffTarget(Card appliedCard)

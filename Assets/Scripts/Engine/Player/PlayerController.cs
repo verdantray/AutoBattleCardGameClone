@@ -87,7 +87,6 @@ namespace ProjectABC.Engine
             }
             
             var waitTasks = handlers
-                .Where(handler => handler.IsWaitConfirm)
                 .Select(handler => handler.WaitUntilConfirmAsync());
             
             return Task.WhenAll(waitTasks);

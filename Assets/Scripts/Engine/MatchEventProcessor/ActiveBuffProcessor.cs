@@ -9,7 +9,7 @@ namespace ProjectABC.Engine
 {
     public class ActiveBuffProcessor : MatchEventProcessor<ActiveBuffEvent>
     {
-        private const float PROCESS_DELAY = 0.2f;
+        private const float PROCESS_DELAY = 0.5f;
         
         public override async Task ProcessEventAsync(ActiveBuffEvent matchEvent, CancellationToken token)
         {
@@ -18,9 +18,14 @@ namespace ProjectABC.Engine
             var cardData = Storage.Instance.GetCardData(matchEvent.ActiveCardId);
             string cardName = LocalizationHelper.Instance.Localize(cardData.nameKey);
             string cardDesc = LocalizationHelper.Instance.Localize(cardData.descKey);
-            string message = $"{matchEvent.ActivatedCardLocation.Owner.Name}의 카드 {cardName} 효과 적용\n{cardDesc}\n적용 대상 : {string.Join(", ", matchEvent.BuffTargets.Select(target => target.TargetLocation))}";
+            string message = $"{matchEvent.ActivatedCardLocation.Owner.Name}의 카드 {cardName} 효과 적용\n{cardDesc}\n적용 대상 : {string.Join(", ", matchEvent.BuffApplyTargets.Select(target => target.TargetLocation))}";
             MatchLogUI.SendLog(message);
             Debug.Log(message);
+
+            foreach (var (cardRef, location) in matchEvent.BuffApplyTargets)
+            {
+                Simulator.Model.onboardController.ApplyChangeCard(cardRef, location);
+            }
             
             ScaledTime scaledDelay = PROCESS_DELAY;
             await scaledDelay.WaitScaledTimeAsync(token);

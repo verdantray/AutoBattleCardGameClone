@@ -69,7 +69,7 @@ namespace ProjectABC.Engine.UI
         {
             if (!_uiElements.ContainsKey(typeof(T)))
             {
-                Debug.LogWarning($"{nameof(UIManager)} : can't open {nameof(T)}");
+                // Debug.LogWarning($"{nameof(UIManager)} : can't open {nameof(T)}");
                 return null;
             }
             

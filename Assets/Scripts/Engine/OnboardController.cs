@@ -55,6 +55,20 @@ namespace ProjectABC.Engine
             // TODO : implements
         }
 
+        public void ApplyChangeCard(CardReference cardReference, CardLocation location)
+        {
+            location.ChangeCardToLocation(_cardReferenceLocator, cardReference);
+            
+            var targetCardOnboard = location.PeekFromLocation(_cardOnboardLocator);
+            targetCardOnboard.ApplyReference(cardReference);
+        }
+
+        /// <summary>
+        /// show setting cards on deck pile animation to each sides
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <param name="duration"></param>
+        /// <param name="token"></param>
         public async Task InitializeOnboardAsync(ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
             try
@@ -120,41 +134,50 @@ namespace ProjectABC.Engine
             }
         }
         
+        /// <summary>
+        /// set overlap cards on field of defending side
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="overlapDuration"></param>
+        /// <param name="alignDuration"></param>
+        /// <param name="token"></param>
         public async Task SetOverlapFieldCardsAsync(IPlayer owner, ScaledTime overlapDuration, ScaledTime alignDuration, CancellationToken token)
         {
             OnboardSide onboardSide = GetOnboardSideOfPlayer(owner);
             OnboardPoints onboardPoints = GetOnboardPointsOfSide(onboardSide);
-            
-            // last card will place at first index
-            CardOnboard lastCardOfField = _cardOnboardLocator[owner].Field.Peek(0);
+            var fieldHolder = _cardOnboardLocator[owner].Field;
+
+            int rightEndIndex = fieldHolder.Count - 1;
+            var rightEndCard = fieldHolder.Peek(rightEndIndex);
                 
-            Vector3 lastCardPosition = lastCardOfField.transform.position;
-            Vector3 lastCardAngles = lastCardOfField.transform.eulerAngles;
-            
-            lastCardOfField.MoveToTarget(lastCardPosition + cardOverlapDirection, lastCardAngles);
+            Vector3 targetPosition = rightEndCard.transform.position;
+            Vector3 targetAngles = rightEndCard.transform.eulerAngles;
             
             try
             {
-                int overlapCount = _cardOnboardLocator[owner].Field.Count - 1;
-                ScaledTime interval = overlapDuration /  overlapCount;
+                rightEndCard.MoveToTarget(targetPosition + cardOverlapDirection, targetAngles);
                 
-                for (int i = overlapCount; i > 0; i--)
-                {
-                    var cardOnField = _cardOnboardLocator[owner].Field.Peek(i);
-                    // ScaledTime scaledDelay = (interval * (i - overlapCount - 1));
+                int overlapCount = fieldHolder.Count - 1;
+                ScaledTime interval = overlapDuration /  overlapCount;
 
-                    await cardOnField.MoveToTargetAsync(lastCardPosition, lastCardAngles, interval, token);
+                // skip index of rightEndCard
+                for (int i = overlapCount - 1; i >= 0; i--)
+                {
+                    var cardOnField = fieldHolder.Peek(i);
+                    await cardOnField.MoveToTargetAsync(targetPosition, targetAngles, interval, token);
+                    cardOnField.gameObject.SetActive(false);
                 }
                 
-                int despawnCount = _cardOnboardLocator[owner].Field.Count - 1;
-                for (int i = 1; i <= despawnCount; i++)
+                int despawnCount = fieldHolder.Count - 1;
+                // skip index of rightEndCard
+                for (int i = despawnCount - 1; i >= 0; i--)
                 {
-                    CardOnboard cardOnField = _cardOnboardLocator[owner].Field.Pop(1);
+                    CardOnboard cardOnField = _cardOnboardLocator[owner].Field.Pop(i);
                     DespawnCardObject(cardOnField);
                 }
                 
-                lastCardOfField.MoveToTarget(lastCardPosition, lastCardAngles);
-                await lastCardOfField.MoveToTargetAsync(onboardPoints.fieldPoint, alignDuration, token);
+                rightEndCard.MoveToTarget(targetPosition, targetAngles);
+                await rightEndCard.MoveToTargetAsync(onboardPoints.fieldPoint, alignDuration, token);
             }
             catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
@@ -162,17 +185,25 @@ namespace ProjectABC.Engine
             }
             finally
             {
-                int despawnCount = _cardOnboardLocator[owner].Field.Count - 1;
-                for (int i = 1; i <= despawnCount; i++)
+                int despawnCount = fieldHolder.Count - 1;
+                // skip index of rightEndCard
+                for (int i = despawnCount - 1; i >= 0; i--)
                 {
-                    CardOnboard cardOnField = _cardOnboardLocator[owner].Field.Pop(1);
+                    CardOnboard cardOnField = fieldHolder.Pop(i);
                     DespawnCardObject(cardOnField);
                 }
                 
-                lastCardOfField.MoveToTarget(onboardPoints.fieldPoint);
+                rightEndCard.MoveToTarget(onboardPoints.fieldPoint);
             }
         }
 
+        /// <summary>
+        /// show shuffling cards on deck 
+        /// </summary>
+        /// <param name="movementInfo"></param>
+        /// <param name="remainDelay"></param>
+        /// <param name="inoutDuration"></param>
+        /// <param name="token"></param>
         public async Task ShuffleDeckAsync(CardMovementInfo movementInfo, ScaledTime remainDelay, ScaledTime inoutDuration, CancellationToken token)
         {
             var targetCardRef = movementInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
@@ -201,6 +232,14 @@ namespace ProjectABC.Engine
             }
         }
 
+        /// <summary>
+        /// show moving a card asynchronously
+        /// </summary>
+        /// <param name="movementInfo"></param>
+        /// <param name="delay"></param>
+        /// <param name="duration"></param>
+        /// <param name="token"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public async Task MoveCardAsync(CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
             IPlayer prevLocationOwner = movementInfo.PreviousLocation.Owner;
@@ -208,7 +247,6 @@ namespace ProjectABC.Engine
             OnboardPoints prevOnboardPoints = GetOnboardPointsOfSide(prevOnboardSide);
             
             CardReference targetCardRef = movementInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
-
             CardOnboard cardOnboard = null;
             switch (movementInfo.PreviousLocation.CardZone)
             {
@@ -275,7 +313,7 @@ namespace ProjectABC.Engine
                 {
                     CardZone.CardPile => cardOnboard.MoveToTargetAsync(curOnboardPoints.spawnByEffectPoint, duration, token),
                     CardZone.Deck => cardOnboard.MoveToTargetAsync(curOnboardPoints.deckPoint, duration, token),
-                    CardZone.Field => AlignCardsOfFieldAfterAddedTask(curLocationOwner, duration, token),
+                    CardZone.Field => AlignCardsOfFieldTask(curLocationOwner, duration, token),
                     CardZone.Infirmary => AlignCardsOfInfirmarySlotTask(curLocationOwner, infirmarySlotKey, duration, token),
                     _ => throw new ArgumentOutOfRangeException()
                 };
@@ -323,14 +361,28 @@ namespace ProjectABC.Engine
             }
         }
 
+        /// <summary>
+        /// reveal drawn card from deck
+        /// </summary>
+        /// <param name="cardOnboard"></param>
+        /// <param name="revealPoint"></param>
+        /// <param name="revealDuration"></param>
+        /// <param name="remainDelay"></param>
+        /// <param name="token"></param>
         private static async Task RevealDeckCardAsync(CardOnboard cardOnboard, Transform revealPoint, ScaledTime revealDuration, ScaledTime remainDelay, CancellationToken token)
         {
             await cardOnboard.MoveToTargetAsync(revealPoint, revealDuration, token);
             await remainDelay.WaitScaledTimeAsync(token);
         }
 
-        // align cards after newly added to field
-        private Task AlignCardsOfFieldAfterAddedTask(IPlayer owner, ScaledTime duration, CancellationToken token)
+        /// <summary>
+        /// align cards of field according to order
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="duration"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        private Task AlignCardsOfFieldTask(IPlayer owner, ScaledTime duration, CancellationToken token)
         {
             OnboardPoints onboardPoints = GetOnboardPointsOfSide(GetOnboardSideOfPlayer(owner));
             var cardReferenceField = _cardReferenceLocator[owner].Field;
@@ -362,13 +414,23 @@ namespace ProjectABC.Engine
             // defending
             else
             {
-                Vector3 targetPosition = onboardPoints.fieldPoint.position + cardOverlapDirection;
-                Vector3 targetAngles = onboardPoints.fieldPoint.eulerAngles;
+                Vector3 centerPosition = onboardPoints.fieldPoint.position;
+                Vector3 centerAngles = onboardPoints.fieldPoint.eulerAngles;
+                
+                var tasks = new List<Task>();
+                
+                int fieldCount = cardReferenceField.Count;
+                for (int i = 0; i < fieldCount; i++)
+                {
+                    bool isFarRightOnboard = i == 0;
+                    Vector3 targetPosition = centerPosition + (isFarRightOnboard ? cardOverlapDirection : Vector3.zero);
 
-                int lastFieldIndex = cardOnboardField.Count - 1;
-                var lastCardOfField = cardOnboardField.Peek(lastFieldIndex);
+                    var fieldCard = cardOnboardField.Peek(i);
+                    var task = fieldCard.MoveToTargetAsync(targetPosition, centerAngles, duration, token);
+                    tasks.Add(task);
+                }
 
-                return lastCardOfField.MoveToTargetAsync(targetPosition, targetAngles, duration, token);
+                return Task.WhenAll(tasks);
             }
         }
 
@@ -398,9 +460,9 @@ namespace ProjectABC.Engine
             else
             {
                 int despawnCount = cardOnboardField.Count - 1;
-                for (int i = 0; i < despawnCount; i++)
+                for (int i = despawnCount; i > 0; i--)
                 {
-                    var cardOnboard =  cardOnboardField.Peek(0);
+                    var cardOnboard =  cardOnboardField.Pop(i);
                     DespawnCardObject(cardOnboard);
                 }
 
@@ -409,6 +471,14 @@ namespace ProjectABC.Engine
             }
         }
 
+        /// <summary>
+        /// align cards in a slot of infirmary
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <param name="slotKey"></param>
+        /// <param name="moveDuration"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private Task AlignCardsOfInfirmarySlotTask(IPlayer owner, string slotKey, ScaledTime moveDuration, CancellationToken token)
         {
             int indexOfSlot = _cardOnboardLocator[owner].Infirmary.IndexOfKey(slotKey);

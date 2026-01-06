@@ -55,6 +55,20 @@ namespace ProjectABC.Engine
             totalPower += _cardReference.Buffs.Sum(buff => buff.AdditivePower);
 
             powerText.text = $"{totalPower:D}";
+
+            if (totalPower > cardData.basePower)
+            {
+                powerText.color = Color.green;
+            }
+            else if (totalPower < cardData.basePower)
+            {
+                powerText.color = Color.red;
+            }
+            else
+            {
+                powerText.color = Color.black;
+            }
+            
             rollText.text = LocalizationHelper.Instance.Localize(cardData.titleKey);
             nameText.text = LocalizationHelper.Instance.Localize(cardData.nameKey);
         }
