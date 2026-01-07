@@ -16,15 +16,7 @@ namespace ProjectABC.Core
             
             foreach (PlayerState playerState in currentState.PlayerStates)
             {
-                ClubType fixedClubFlag = ClubType.Council;
-                ClubType selectableClubFlag = ClubType.Coastline
-                                           | ClubType.Band
-                                           | ClubType.GameDevelopment
-                                           | ClubType.HauteCuisine
-                                           | ClubType.Unregistered
-                                           | ClubType.TraditionExperience;
-                
-                var playerActionTask = playerState.Player.DeckConstructAsync(fixedClubFlag, selectableClubFlag);
+                var playerActionTask = playerState.Player.DeckConstructAsync();
                 tasks.Add(playerActionTask);
             }
 

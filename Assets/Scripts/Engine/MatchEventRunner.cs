@@ -13,22 +13,8 @@ namespace ProjectABC.Engine
     public sealed class MatchEventRunner : MonoBehaviour, IConfirmHandler<MatchContextEvent>
     {
         private readonly List<IMatchEvent> _matchEvents = new List<IMatchEvent>();
-
-        private readonly Dictionary<Type, IMatchEventProcessor> _matchEventProcessors = new()
-        {
-            { typeof(MatchStartEvent), new MatchStartProcessor() },
-            { typeof(DrawCardToFieldEvent), new DrawCardToFieldProcessor() },
-            { typeof(SuccessAttackEvent), new SuccessAttackProcessor() },
-            { typeof(SendToInfirmaryEvent), new SendToInfirmaryProcessor() },
-            { typeof(SwitchPositionEvent), new SwitchPositionProcessor() },
-            { typeof(MoveCardByEffectEvent), new MoveCardByEffectProcessor() },
-            { typeof(ShuffleDeckEvent), new ShuffleDeckProcessor() },
-            { typeof(GainWinPointsByCardEffectEvent), new GainWinPointsByEffectProcessor() },
-            { typeof(FailToActivateCardEffectEvent), new FailToActivateCardEffectProcessor() },
-            { typeof(ActiveBuffEvent), new ActiveBuffProcessor() },
-            { typeof(InactiveBuffEvent), new InactiveBuffProcessor() },
-            { typeof(MatchFinishEvent), new MatchFinishProcessor() },
-        };
+        private readonly Dictionary<Type, IMatchEventProcessor> _matchEventProcessors =
+            new Dictionary<Type, IMatchEventProcessor>();
 
         private CancellationTokenSource _cts;
         private int _eventIndex = 0;
@@ -36,11 +22,34 @@ namespace ProjectABC.Engine
         private void Awake()
         {
             this.StartListening();
+            RegisterMatchEventProcessors();
         }
 
         private void OnDestroy()
         {
             this.StopListening();
+            UnregisterMatchEventProcessors();
+        }
+
+        private void RegisterMatchEventProcessors()
+        {
+            _matchEventProcessors.Add(typeof(MatchStartEvent), new MatchStartProcessor(this));
+            _matchEventProcessors.Add(typeof(DrawCardToFieldEvent), new DrawCardToFieldProcessor());
+            _matchEventProcessors.Add(typeof(SuccessAttackEvent), new SuccessAttackProcessor());
+            _matchEventProcessors.Add(typeof(SendToInfirmaryEvent), new SendToInfirmaryProcessor());
+            _matchEventProcessors.Add(typeof(SwitchPositionEvent), new SwitchPositionProcessor());
+            _matchEventProcessors.Add(typeof(MoveCardByEffectEvent), new MoveCardByEffectProcessor());
+            _matchEventProcessors.Add(typeof(ShuffleDeckEvent), new ShuffleDeckProcessor());
+            _matchEventProcessors.Add(typeof(GainWinPointsByCardEffectEvent), new GainWinPointsByEffectProcessor());
+            _matchEventProcessors.Add(typeof(FailToActivateCardEffectEvent), new FailToActivateCardEffectProcessor());
+            _matchEventProcessors.Add(typeof(ActiveBuffEvent), new ActiveBuffProcessor());
+            _matchEventProcessors.Add(typeof(InactiveBuffEvent), new InactiveBuffProcessor());
+            _matchEventProcessors.Add(typeof(MatchFinishEvent), new MatchFinishProcessor());
+        }
+
+        private void UnregisterMatchEventProcessors()
+        {
+            _matchEventProcessors.Clear();
         }
 
         private async Task RunMatchAsync()
@@ -48,12 +57,12 @@ namespace ProjectABC.Engine
             try
             {
                 _cts ??= new CancellationTokenSource();
-                
+
                 while (!_cts.IsCancellationRequested && _eventIndex < _matchEvents.Count)
                 {
                     var matchEvent = _matchEvents[_eventIndex];
                     _eventIndex++;
-                    
+
                     if (!_matchEventProcessors.TryGetValue(matchEvent.GetType(), out var matchEventProcessor))
                     {
                         throw new KeyNotFoundException($"No IMatchEventProcessor for type {matchEvent.GetType()}");
@@ -73,27 +82,35 @@ namespace ProjectABC.Engine
                 Debug.LogError($"{nameof(MatchEventRunner)} has thrown an exception: {e}");
                 throw;
             }
+            finally
+            {
+                _matchEvents.Clear();
+                _eventIndex = 0;
+                
+                _cts.Dispose();
+                _cts = null;
+            }
         }
 
         public async Task WaitUntilConfirmAsync()
         {
-            UIElement matchResultUI = null;
+            MatchResultUI matchResultUI = UIManager.Instance.GetUI<MatchResultUI>();
             
             while (true)
             {
-                if (matchResultUI != null)
+                if (matchResultUI.gameObject.activeInHierarchy)
                 {
                     break;
                 }
 
-                matchResultUI = UIManager.Instance.GetUI<UIElement>();
+                
                 await Task.Yield();
             }
 
             await matchResultUI.WaitUntilCloseAsync();
         }
 
-        public void Stop()
+        public void SkipToLastMatchEvent()
         {
             RequestCancel();
         }

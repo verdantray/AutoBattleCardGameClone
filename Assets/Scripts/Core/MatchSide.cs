@@ -67,7 +67,7 @@ namespace ProjectABC.Core
 
                 if (result.CanceledCards.Count > 0)
                 {
-                    InactiveBuffEvent inactiveBuffEvent =  new InactiveBuffEvent(handler.CallCard, result.CanceledCards, cardBuffArgs);
+                    InactiveBuffEvent inactiveBuffEvent = new InactiveBuffEvent(handler.CallCard, result.CanceledCards, cardBuffArgs);
                     buffEvents.Add(inactiveBuffEvent);
                 }
             }
@@ -91,9 +91,12 @@ namespace ProjectABC.Core
 
         public bool IsEffectiveStandOnField(Card card)
         {
-            return IsAttacking
-                ? Field.Contains(card)
-                : Field[^1] == card;
+            if (!Field.Contains(card))
+            {
+                return false;
+            }
+            
+            return IsAttacking || Field[^1] == card;
         }
     }
 
@@ -112,12 +115,14 @@ namespace ProjectABC.Core
 
         public CardBuffApplyResult CheckApplyCardBuff(CardBuffArgs args)
         {
-            var newlyApplyCards = _cardBuff
-                .GetBuffTargets(args)
+            var currentAllApplied = _cardBuff.GetBuffTargets(args).ToList();
+            
+            var newlyApplyCards = currentAllApplied
                 .Where(applied => !_appliedCards.Contains(applied))
                 .ToList();
+            
             var canceledCards = _appliedCards
-                .Where(applied => !newlyApplyCards.Contains(applied))
+                .Where(applied => !currentAllApplied.Contains(applied))
                 .ToList();
 
             foreach (var canceled in canceledCards)
@@ -128,11 +133,6 @@ namespace ProjectABC.Core
 
             foreach (var applied in newlyApplyCards)
             {
-                if (_appliedCards.Contains(applied))
-                {
-                    continue;
-                }
-                
                 applied.ApplyCardBuff(_cardBuff);
                 _appliedCards.Add(applied);
             }

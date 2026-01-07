@@ -23,6 +23,7 @@ namespace ProjectABC.Engine
         
         [SerializeField] private ABCModel model;
         [SerializeField] private RoundPhase[] roundPhases;
+        [SerializeField] private ScriptedPlayerEntry enemyEntry;
 
         public static ABCModel Model => Instance.model;
         
@@ -38,15 +39,7 @@ namespace ProjectABC.Engine
 
         public void Initialize()
         {
-            string[] tempPlayerNames = new string[GameConst.GameOption.MAX_MATCHING_PLAYERS - 1];
-
-            for (int i = 0; i < (GameConst.GameOption.MAX_MATCHING_PLAYERS - 1); i++)
-            {
-                tempPlayerNames[i] = $"Player {(char)('A' + i)}";
-                // Debug.Log(tempPlayerNames[i]);
-            }
-            
-            _simulation ??= new Simulation(Model.player, tempPlayerNames);
+            _simulation ??= new Simulation(new LocalPlayerEntry(), enemyEntry);
             _simulation.ClearGamePhases();
             
             foreach (var roundPhase in roundPhases.OrderBy(roundPhase => roundPhase.targetRound))

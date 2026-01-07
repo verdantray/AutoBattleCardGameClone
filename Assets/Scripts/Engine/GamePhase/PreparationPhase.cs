@@ -16,12 +16,12 @@ namespace ProjectABC.Engine
             
             simulationContext.CurrentState.SetRound(currentRound);
             
-            IContextEvent contextEvent = new PrepareRoundEvent(currentRound);
+            PrepareRoundEvent contextEvent = new PrepareRoundEvent(currentRound);
             
             contextEvent.Publish();
             simulationContext.CollectedEvents.AddEvent(contextEvent);
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(typeof(PrepareRoundEvent)));
         }
     }
 }

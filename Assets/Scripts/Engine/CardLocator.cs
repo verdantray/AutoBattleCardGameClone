@@ -24,11 +24,11 @@ namespace ProjectABC.Engine
             return _sideLocators[player];
         }
 
-        public void RegisterSideLocator(IPlayer player, MatchPosition position, IEnumerable<T> deckCards = null)
+        public void RegisterSideLocator(IPlayer player, MatchPosition position, IEnumerable<T> deckCards = null, Action<T> clearCallback = null)
         {
             var sideLocator = deckCards == null
-                ? new SideLocator<T>(position)
-                : new SideLocator<T>(position, deckCards);
+                ? new SideLocator<T>(position, clearCallback)
+                : new SideLocator<T>(position, deckCards, clearCallback);
             
             _sideLocators.Add(player, sideLocator);
         }
@@ -48,19 +48,23 @@ namespace ProjectABC.Engine
     {
         public MatchPosition Position { get; private set; }
         public ICardHolder<T> Deck { get; }
-        public ICardHolder<T> Field { get; } = new CardHolder<T>();
-        public ICardHolder<string, T> Infirmary { get; } = new CardHolder<string, T>();
+        public ICardHolder<T> Field { get; }
+        public ICardHolder<string, T> Infirmary { get; }
 
-        public SideLocator(MatchPosition position)
+        public SideLocator(MatchPosition position, Action<T> clearCallback = null)
         {
             Position = position;
-            Deck = new CardHolder<T>();
+            Deck = new CardHolder<T>(clearCallback);
+            Field = new CardHolder<T>(clearCallback);
+            Infirmary = new CardHolder<string, T>(clearCallback);
         }
 
-        public SideLocator(MatchPosition position, IEnumerable<T> deck)
+        public SideLocator(MatchPosition position, IEnumerable<T> deck, Action<T> clearCallback = null)
         {
             Position = position;
-            Deck = new CardHolder<T>(deck);
+            Deck = new CardHolder<T>(deck, clearCallback);
+            Field = new CardHolder<T>(clearCallback);
+            Infirmary = new CardHolder<string, T>(clearCallback);
         }
 
         public void SetPosition(MatchPosition position)
@@ -79,17 +83,19 @@ namespace ProjectABC.Engine
     public sealed class CardHolder<T> : ICardHolder<T>, IEnumerable<T> where T : class
     {
         private readonly List<T> _cardObjects = new List<T>();
+        private readonly Action<T> _onClearAction;
         
         public int Count => _cardObjects.Count;
         
-        public CardHolder()
+        public CardHolder(Action<T> clearCallback = null)
         {
-            
+            _onClearAction = clearCallback;
         }
 
-        public CardHolder(IEnumerable<T> initialCards)
+        public CardHolder(IEnumerable<T> initialCards, Action<T> clearCallback = null)
         {
             _cardObjects.AddRange(initialCards);
+            _onClearAction = clearCallback;
         }
         
         public T Peek(int index)
@@ -127,6 +133,11 @@ namespace ProjectABC.Engine
 
         public void Clear()
         {
+            foreach (var cardObject in _cardObjects)
+            {
+                _onClearAction?.Invoke(cardObject);
+            }
+            
             _cardObjects.Clear();
         }
 
@@ -141,16 +152,20 @@ namespace ProjectABC.Engine
         }
     }
 
-    public sealed class CardHolder<TKey, T> : ICardHolder<TKey, T>, IReadOnlyDictionary<TKey, CardHolder<T>>
+    public sealed class CardHolder<TKey, T> : ICardHolder<TKey, T>
         where TKey : IComparable
         where T : class
     {
         private readonly List<TKey> _keyList = new List<TKey>();
-        private readonly Dictionary<TKey, CardHolder<T>> _cardObjects = new Dictionary<TKey, CardHolder<T>>();
+        private readonly Dictionary<TKey, ICardHolder<T>> _cardObjects = new Dictionary<TKey, ICardHolder<T>>();
+        private readonly Action<T> _onClearAction;
 
-        ICardHolder<T> ICardHolder<TKey, T>.this[int index] => _cardObjects[_keyList[index]];
+        public ICardHolder<T> this[int index] => _cardObjects[_keyList[index]];
 
-        ICardHolder<T> ICardHolder<TKey, T>.this[TKey key] => _cardObjects[key];
+        public CardHolder(Action<T> clearCallback = null)
+        {
+            _onClearAction = clearCallback;
+        }
 
         public int IndexOfKey(TKey key)
         {
@@ -207,7 +222,7 @@ namespace ProjectABC.Engine
                     Debug.LogWarning($"{nameof(CardHolder<TKey, T>)} : key '{key}' not contains yet, but index is not 0 '{index}'");
                 }
 
-                var innerHolder = new CardHolder<T>();
+                var innerHolder = new CardHolder<T>(_onClearAction);
                 innerHolder.Insert(index, element);
                 
                 _cardObjects.Add(key, innerHolder);
@@ -238,19 +253,20 @@ namespace ProjectABC.Engine
 
         #region inherit of IReadonlyDictionary
 
-        public IEnumerator<KeyValuePair<TKey, CardHolder<T>>> GetEnumerator() => _cardObjects.GetEnumerator();
+        IEnumerator<KeyValuePair<TKey, ICardHolder<T>>> IEnumerable<KeyValuePair<TKey, ICardHolder<T>>>.GetEnumerator() => _cardObjects.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => _cardObjects.GetEnumerator();
 
         public int Count => _cardObjects.Count;
         public bool ContainsKey(TKey key) => _cardObjects.ContainsKey(key);
+        
+        public bool TryGetValue(TKey key, out ICardHolder<T> value) => _cardObjects.TryGetValue(key, out value);
 
-        public bool TryGetValue(TKey key, out CardHolder<T> value) => _cardObjects.TryGetValue(key, out value);
-
-        public CardHolder<T> this[TKey key] => _cardObjects[key];
+        public ICardHolder<T> this[TKey key] => _cardObjects[key];
 
         public IEnumerable<TKey> Keys => _keyList;
-        public IEnumerable<CardHolder<T>> Values => _cardObjects.Values;
+
+        public IEnumerable<ICardHolder<T>> Values => _cardObjects.Values;
 
         #endregion
     }

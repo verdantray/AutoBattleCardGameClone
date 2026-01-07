@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,25 +19,10 @@ namespace ProjectABC.Core
             CurrentState = new GameState(players);
         }
         
-        public IEnumerable<Task> GetTasksOfAllPlayersConfirmToProceed(GamePhase phase)
+        public IEnumerable<Task> GetTasksOfAllPlayersConfirmToProceed(Type eventType)
         {
-            return Participants.Select(player => player.WaitUntilConfirmToProceed(phase));
+            return Participants.Select(player => player.WaitUntilConfirmToProceed(eventType));
         }
-
-        // private static class InstanceRegister<T> where T : class, new()
-        // {
-        //     public static T Instance = new T();
-        // }
-        //
-        // public T GetModel<T>() where T : class, new()
-        // {
-        //     return InstanceRegister<T>.Instance;
-        // }
-        //
-        // public void SetModel<T>(T model) where T : class, new()
-        // {
-        //     InstanceRegister<T>.Instance = model;
-        // }
     }
 
     public class SimulationContextEvents : IReadOnlyList<IContextEvent>

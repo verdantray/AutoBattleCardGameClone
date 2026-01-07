@@ -34,7 +34,7 @@ namespace ProjectABC.Core
                 // TODO: publish ContextEvent here for announce win points what winner gained on round and total win points
             }
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(typeof(MatchContextConsoleEvent)));
         }
     }
     

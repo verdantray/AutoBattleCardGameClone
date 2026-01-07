@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ProjectABC.Core;
@@ -40,8 +41,8 @@ namespace ProjectABC.Engine
 
         public void RegisterOnboard(IPlayer player, MatchPosition position, IReadOnlyList<CardReference> deckCards)
         {
-            _cardReferenceLocator.RegisterSideLocator(player, position, deckCards);
-            _cardOnboardLocator.RegisterSideLocator(player, position);
+            _cardReferenceLocator.RegisterSideLocator(player, position, deckCards: deckCards);
+            _cardOnboardLocator.RegisterSideLocator(player, position, clearCallback: DespawnCardObject);
         }
 
         public void SwitchPosition(IPlayer attacker, IPlayer defender)
@@ -55,12 +56,32 @@ namespace ProjectABC.Engine
             // TODO : implements
         }
 
+        public void ClearOnboard()
+        {
+            _cardReferenceLocator.Clear();
+            _cardOnboardLocator.Clear();
+
+            if (_cardObjectsOnDeck[OnboardSide.Own] != null)
+            {
+                DespawnCardObject(_cardObjectsOnDeck[OnboardSide.Own]);
+                _cardObjectsOnDeck[OnboardSide.Own] = null;
+            }
+            
+            if (_cardObjectsOnDeck[OnboardSide.Other] != null)
+            {
+                DespawnCardObject(_cardObjectsOnDeck[OnboardSide.Other]);
+                _cardObjectsOnDeck[OnboardSide.Other] = null;
+            }
+        }
+
         public void ApplyChangeCard(CardReference cardReference, CardLocation location)
         {
             location.ChangeCardToLocation(_cardReferenceLocator, cardReference);
             
             var targetCardOnboard = location.PeekFromLocation(_cardOnboardLocator);
             targetCardOnboard.ApplyReference(cardReference);
+            
+            Debug.Log($"{cardReference.CardId}에 적용된 버프 : {string.Join(", ", cardReference.Buffs.Select(buff => $"(버프 준 카드 : {buff.CallCardId} / 파워 : {buff.AdditivePower})"))}");
         }
 
         /// <summary>

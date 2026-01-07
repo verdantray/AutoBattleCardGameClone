@@ -75,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f48239c11bdb3ca4c85b098b0e8d3940
+    m_Address: MatchResultUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f79021a03e2478b4292002c2a8773239
     m_Address: RoundAnnounceUI
     m_ReadOnly: 0

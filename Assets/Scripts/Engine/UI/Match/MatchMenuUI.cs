@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,13 +16,26 @@ namespace ProjectABC.Engine.UI
         
         [Header("Time Scales")]
         [SerializeField] private float[] targetTimeScales;
-        
+
+        private Action _onSkipCallback = null;
         private int _timeScaleIndex = 0;
 
         private void Awake()
         {
             btnTimeScale.onClick.AddListener(OnChangeTimeScale);
             btnPause.onClick.AddListener(OnPause);
+        }
+
+        private void OnDestroy()
+        {
+            btnSkip.onClick.RemoveAllListeners();
+            btnPause.onClick.RemoveAllListeners();
+        }
+
+        public static void OpenMenu(Action skipCallback = null)
+        {
+            var matchMenuUI = UIManager.Instance.OpenUI<MatchMenuUI>();
+            matchMenuUI._onSkipCallback = skipCallback;
         }
 
         public override void OnOpen()
@@ -40,8 +54,11 @@ namespace ProjectABC.Engine.UI
 
         public override void OnClose()
         {
-            btnSkip.onClick.RemoveAllListeners();
-            btnPause.onClick.RemoveAllListeners();
+            _onSkipCallback = null;
+            _timeScaleIndex = 0;
+            
+            ApplyTimeScale(targetTimeScales[_timeScaleIndex]);
+            ApplyPause(false);
         }
 
         private void OnChangeTimeScale()
@@ -74,7 +91,7 @@ namespace ProjectABC.Engine.UI
 
         private void OnSkip()
         {
-            
+            _onSkipCallback?.Invoke();
         }
 
         private void OnPause()

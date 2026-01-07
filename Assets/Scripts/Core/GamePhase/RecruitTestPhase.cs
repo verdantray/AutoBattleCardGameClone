@@ -38,10 +38,13 @@ namespace ProjectABC.Core
 
     public class RecruitOnRound
     {
+        // TODO : remove Round member
+        public readonly int Round;
         private readonly List<Tuple<GradeType, int>> _recruitLevelAndAmounts;
         
         public RecruitOnRound(int round)
         {
+            Round = round;
             _recruitLevelAndAmounts = Storage.Instance.RecruitData
                 .Where(data => data.round == round)
                 .Select(ElementSelector)

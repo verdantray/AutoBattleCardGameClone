@@ -9,7 +9,7 @@ namespace ProjectABC.Core
         
         public bool Contains(IPlayer player);
         public ISideLocator<T> GetSideLocator(IPlayer player);
-        public void RegisterSideLocator(IPlayer player, MatchPosition position, IEnumerable<T> deckCards);
+        public void RegisterSideLocator(IPlayer player, MatchPosition position, IEnumerable<T> deckCards = null, Action<T> clearCallback = null);
         public void Clear();
     }
 
@@ -33,11 +33,9 @@ namespace ProjectABC.Core
         public void Clear();
     }
 
-    public interface ICardHolder<in TKey, T> where TKey : IComparable where T : class
+    public interface ICardHolder<TKey, T> : IReadOnlyDictionary<TKey, ICardHolder<T>> where TKey : IComparable where T : class
     {
-        public int Count { get; }
         public ICardHolder<T> this[int keyIndex] { get; }
-        public ICardHolder<T> this[TKey key] { get; }
         public int IndexOfKey(TKey key);
         public T Peek(TKey key, int index);
         public T Pop(TKey key, int index);

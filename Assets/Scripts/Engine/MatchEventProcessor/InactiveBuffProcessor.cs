@@ -9,7 +9,7 @@ namespace ProjectABC.Engine
 {
     public class InactiveBuffProcessor : MatchEventProcessor<InactiveBuffEvent>
     {
-        private const float PROCESS_DELAY = 0.5f;
+        private const float PROCESS_DELAY = 2.0f;
         
         public override async Task ProcessEventAsync(InactiveBuffEvent matchEvent, CancellationToken token)
         {

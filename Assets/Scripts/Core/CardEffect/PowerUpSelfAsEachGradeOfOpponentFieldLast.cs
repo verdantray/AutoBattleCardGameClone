@@ -95,6 +95,11 @@ namespace ProjectABC.Core
 
             public override int CalculateAdditivePower(Card target, CardBuffArgs args)
             {
+                if (args.OtherSide.Field.Count == 0)
+                {
+                    return 0;
+                }
+                
                 GradeType gradeOfOpponentFieldLast = args.OtherSide.Field[^1].GradeType;
                 int powerFromGrade = gradeOfOpponentFieldLast switch
                 {

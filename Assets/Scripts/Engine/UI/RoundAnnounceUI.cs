@@ -1,4 +1,6 @@
-using System.Collections;
+using System;
+using System.Threading.Tasks;
+using ProjectABC.Utils;
 using TMPro;
 using UnityEngine;
 
@@ -12,20 +14,11 @@ namespace ProjectABC.Engine.UI
 
         private readonly int _playAnimHash = Animator.StringToHash("Appear");
 
-        private Coroutine _delayCloseRoutine;
-
-        private void OnDisable()
+        public static void AnnounceRound(int round)
         {
-            StopRoutine();
-        }
-
-        public void AnnounceRound(int round)
-        {
-            txtRound.text = $"Round\n{round}";
-            animator.Play(_playAnimHash);
-            
-            StopRoutine();
-            _delayCloseRoutine = StartCoroutine(DelayClose(duration));
+            var roundAnnounceUI = UIManager.Instance.OpenUI<RoundAnnounceUI>();
+            roundAnnounceUI.txtRound.text = $"Round\n{round}";
+            roundAnnounceUI.DelayClose().Forget();
         }
 
         public override void Refresh()
@@ -33,22 +26,12 @@ namespace ProjectABC.Engine.UI
             // do nothing
         }
 
-        private void StopRoutine()
+        private async Task DelayClose()
         {
-            if (_delayCloseRoutine != null)
-            {
-                StopCoroutine(_delayCloseRoutine);
-            }
+            animator.Play(_playAnimHash);
+            await Task.Delay(TimeSpan.FromSeconds(duration));
             
-            _delayCloseRoutine = null;
-        }
-
-        private IEnumerator DelayClose(float closeDelay)
-        {
-            yield return new WaitForSeconds(closeDelay);
-
             UIManager.Instance.CloseUI<RoundAnnounceUI>();
-            _delayCloseRoutine = null;
         }
     }
 }

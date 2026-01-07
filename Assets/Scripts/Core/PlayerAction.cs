@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ProjectABC.Data;
 
 namespace ProjectABC.Core
@@ -53,6 +55,11 @@ namespace ProjectABC.Core
             
             consoleEvent.Publish();
             events.AddEvent(consoleEvent);
+        }
+
+        public Task GetWaitConfirmTask()
+        {
+            return Player.WaitUntilConfirmToProceed(typeof(DeckConstructionEvent));
         }
 
         private bool ClubFilter(CardData cardData)
@@ -122,6 +129,17 @@ namespace ProjectABC.Core
                 events.AddEvent(recruitEvent);
             }
         }
+
+        public Task GetWaitConfirmTask()
+        {
+            HashSet<Type> eventTypes = new HashSet<Type> { typeof(RecruitCardsEvent) };
+            foreach (var recruitEvent in _recruitContextEvents)
+            {
+                eventTypes.Add(recruitEvent.GetType());
+            }
+
+            return Task.WhenAll(eventTypes.Select(eventType => Player.WaitUntilConfirmToProceed(eventType)));
+        }
     }
     
     public class DeleteCardsAction : IPlayerAction
@@ -154,6 +172,11 @@ namespace ProjectABC.Core
             
             consoleEvent.Publish();
             events.AddEvent(consoleEvent);
+        }
+
+        public Task GetWaitConfirmTask()
+        {
+            return Task.CompletedTask;
         }
     }
 }

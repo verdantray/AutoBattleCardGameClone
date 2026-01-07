@@ -11,35 +11,15 @@ namespace ProjectABC.Core
         private readonly Queue<IGamePhase> _gamePhases = new Queue<IGamePhase>();
 
         private CancellationTokenSource _stopSimulationTokenSource;
-
-        public Simulation(IPlayer player, params string[] otherPlayerNames)
-        {
-            if ((otherPlayerNames.Length + 1) is > GameConst.GameOption.MAX_MATCHING_PLAYERS or 0)
-            {
-                var exceptionMsg = "Players must have at least one, "
-                                   + $"same or less than {GameConst.GameOption.MAX_MATCHING_PLAYERS}";
-                
-                throw new ArgumentException(exceptionMsg);
-            }
-            
-            List<IPlayer> players = new List<IPlayer> { player };
-            
-            foreach (string otherPlayerName in otherPlayerNames)
-            {
-                players.Add(new ScriptedPlayer(otherPlayerName));
-            }
-            
-            if (players.Count % 2 != 0)
-            {
-                players.Add(new ScriptedPlayer("Unknown Brawler"));
-            }
-
-            _simulationContext = new SimulationContext(players);
-        }
         
-        public Simulation(params IPlayer[] players)
+        public Simulation(params IPlayerEntry[] entries)
         {
-            if (players.Length is > GameConst.GameOption.MAX_MATCHING_PLAYERS or 0)
+            if (entries.Length % 2 != 0)
+            {
+                throw new ArgumentException("Players must be an even number of players");
+            }
+            
+            if (entries.Length is > GameConst.GameOption.MAX_MATCHING_PLAYERS or 0)
             {
                 var exceptionMsg = "Players must have at least one, "
                                    + $"same or less than {GameConst.GameOption.MAX_MATCHING_PLAYERS}";
@@ -47,20 +27,16 @@ namespace ProjectABC.Core
                 throw new ArgumentException(exceptionMsg);
             }
 
-            List<IPlayer> playerList = new List<IPlayer>(players);
-            
-            if (playerList.Count % 2 != 0)
-            {
-                playerList.Add(new ScriptedPlayer("Scripted Player"));
-            }
+            List<IPlayer> playerList = new List<IPlayer>();
 
+            foreach (var playerEntry in entries)
+            {
+                var player = playerEntry.GetPlayer();
+                playerList.Add(player);
+            }
+            
             _simulationContext = new SimulationContext(playerList);
         }
-
-        // public void SetModel<T>(T model) where T : class, new()
-        // {
-        //     _simulationContext.SetModel(model);
-        // }
 
         public void EnqueueGamePhase(IGamePhase gamePhase)
         {

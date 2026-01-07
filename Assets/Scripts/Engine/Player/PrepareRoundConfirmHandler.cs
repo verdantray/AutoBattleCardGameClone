@@ -19,8 +19,7 @@ namespace ProjectABC.Engine
 
         public void OnEvent(PrepareRoundEvent contextEvent)
         {
-            var roundAnnounceUI = UIManager.Instance.OpenUI<RoundAnnounceUI>();
-            roundAnnounceUI.AnnounceRound(contextEvent.Round);
+            RoundAnnounceUI.AnnounceRound(contextEvent.Round);
         }
         
         public void Dispose()

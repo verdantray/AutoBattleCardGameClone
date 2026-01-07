@@ -10,14 +10,20 @@ namespace ProjectABC.Engine
     {
         private readonly ScaledTime _deckSetDelay = 0.5f;
         private readonly ScaledTime _deckSetDuration = 1.0f;
+        private readonly MatchEventRunner _runner;
+
+        public MatchStartProcessor(MatchEventRunner runner)
+        {
+            _runner = runner;
+        }
         
         public override async Task ProcessEventAsync(MatchStartEvent matchEvent, CancellationToken token)
         {
             IPlayer[] players = { matchEvent.Attacker, matchEvent.Defender };
 
             await MatchPlayersAnnounceUI.ShowMatchPlayersAsync(players, token);
-
-            UIManager.Instance.OpenUI<MatchMenuUI>();
+            
+            MatchMenuUI.OpenMenu(_runner.SkipToLastMatchEvent);
             
             var matchUI = UIManager.Instance.OpenUI<MatchPlayersUI>();
             matchUI.ShowMatchPlayers(matchEvent.MatchMatchSnapshot.MatchSideSnapShots.Values);

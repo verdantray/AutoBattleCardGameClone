@@ -9,15 +9,29 @@ using UnityEngine;
 
 namespace ProjectABC.Engine
 {
+    public class LocalPlayerEntry : IPlayerEntry
+    {
+        // TODO : get player name from userData
+        private const string LOCAL_PLAYER_NAME = "Chococornets";
+        
+        public IPlayer GetPlayer()
+        {
+            var player = Simulator.Model.player;
+            player.SetName(LOCAL_PLAYER_NAME);
+
+            return player;
+        }
+    }
+    
     public sealed class PlayerController : MonoBehaviour, IPlayer
     {
-        [SerializeField] private string temporaryName;
         [SerializeField] private MatchEventRunner matchEventRunner;
 
-        public string Name => temporaryName;
+        public string Name { get; private set; }
+        
         public bool IsLocalPlayer => true;
 
-        private readonly Dictionary<GamePhase, List<IConfirmHandler>> _confirmHandlers = new();
+        private readonly Dictionary<Type, IConfirmHandler> _confirmHandlers = new Dictionary<Type, IConfirmHandler>();
 
         private void Awake()
         {
@@ -31,9 +45,9 @@ namespace ProjectABC.Engine
 
         private void RegisterConfirmHandlers()
         {
-            _confirmHandlers.Add(GamePhase.DeckConstruction, new List<IConfirmHandler> { new DeckConstructionConfirmHandler() });
-            _confirmHandlers.Add(GamePhase.Preparation, new List<IConfirmHandler> { new PrepareRoundConfirmHandler() });
-            _confirmHandlers.Add(GamePhase.Match, new List<IConfirmHandler> { matchEventRunner });
+            _confirmHandlers.Add(typeof(DeckConstructionEvent), new DeckConstructionConfirmHandler());
+            _confirmHandlers.Add(typeof(PrepareRoundEvent), new PrepareRoundConfirmHandler());
+            _confirmHandlers.Add(typeof(MatchContextEvent), matchEventRunner);
         }
 
         private void UnregisterConfirmHandlers()
@@ -41,8 +55,22 @@ namespace ProjectABC.Engine
             _confirmHandlers.Clear();
         }
 
-        public async Task<IPlayerAction> DeckConstructAsync(ClubType fixedClubFlag, ClubType selectableClubFlag)
+        public void SetName(string playerName)
         {
+            Name = playerName;
+        }
+
+        public async Task<IPlayerAction> DeckConstructAsync()
+        {
+            // TODO : get fixedClub / selectable club flags from Storage or others
+            ClubType fixedClubFlag = ClubType.Council;
+            ClubType selectableClubFlag = ClubType.Coastline
+                                          | ClubType.Band
+                                          | ClubType.GameDevelopment
+                                          | ClubType.HauteCuisine
+                                          | ClubType.Unregistered
+                                          | ClubType.TraditionExperience;
+            
             var selectClubsUI = UIManager.Instance.OpenUI<SelectClubsUI>();
             selectClubsUI.SelectClubsForDeckConstruction(fixedClubFlag, selectableClubFlag);
 
@@ -78,18 +106,15 @@ namespace ProjectABC.Engine
             throw new System.NotImplementedException();
         }
 
-        public Task WaitUntilConfirmToProceed(GamePhase phase)
+        public Task WaitUntilConfirmToProceed(Type eventType)
         {
-            if (!_confirmHandlers.TryGetValue(phase, out List<IConfirmHandler> handlers))
+            if (!_confirmHandlers.TryGetValue(eventType, out IConfirmHandler handler))
             {
-                Debug.LogWarning($"{nameof(PlayerController)} : No confirm handlers for {phase}");
+                // Debug.LogWarning($"{nameof(PlayerController)} : No confirm handlers for {eventType}");
                 return Task.CompletedTask;
             }
-            
-            var waitTasks = handlers
-                .Select(handler => handler.WaitUntilConfirmAsync());
-            
-            return Task.WhenAll(waitTasks);
+
+            return handler.WaitUntilConfirmAsync();
         }
     }
 }

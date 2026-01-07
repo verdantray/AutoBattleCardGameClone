@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
-using ProjectABC.Data;
 using UnityEngine;
 
 namespace ProjectABC.Engine
@@ -10,29 +9,30 @@ namespace ProjectABC.Engine
     [CreateAssetMenu(fileName = nameof(DeckConstructionPhase), menuName = "Scripting/ScriptableObject Script Menu/GamePhaseAsset/DeckConstructionPhase")]
     public sealed class DeckConstructionPhase : GamePhaseAsset
     {
-        [SerializeField] private ClubType fixedClubFlag;
-        [SerializeField] private ClubType selectableClubFlag;
-        
         public override async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             PersistentWorldCameraPoints.Instance.SwapPoint("Default");
             
             GameState currentState = simulationContext.CurrentState;
-            List<Task<IPlayerAction>> tasks = simulationContext.Participants
-                .Select(player => player.DeckConstructAsync(fixedClubFlag, selectableClubFlag))
+            List<Task<IPlayerAction>> playerActionTasks = simulationContext.Participants
+                .Select(player => player.DeckConstructAsync())
                 .ToList();
 
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(playerActionTasks);
             
             PersistentWorldCameraPoints.Instance.SwapPoint("Noticeboard");
 
-            foreach (var playerAction in tasks.Select(task => task.Result))
+            List<Task> waitConfirmTasks = new List<Task>();
+            foreach (var playerAction in playerActionTasks.Select(task => task.Result))
             {
                 playerAction.ApplyState(currentState);
                 playerAction.ApplyContextEvent(simulationContext.CollectedEvents);
+
+                var waitConfirmTask = playerAction.GetWaitConfirmTask();
+                waitConfirmTasks.Add(waitConfirmTask);
             }
 
-            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(Phase));
+            await Task.WhenAll(waitConfirmTasks);
         }
     }
 }

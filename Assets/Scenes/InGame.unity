@@ -294,7 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc87aab02b5a514db0e5b16311434aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  temporaryName: Chococornets
   matchEventRunner: {fileID: 121413781}
 --- !u!114 &121413781
 MonoBehaviour:
@@ -1525,6 +1524,47 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
     - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
     - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 2
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 3
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 4
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 5
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 6
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 7
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  - targetRound: 8
+    phases:
+    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
+    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
+  enemyEntry:
+    name: "\uC5D0\uD154\uB77C"
+    deckConstructClubFlag: 256
+    cardDeletionRange:
+      min: 0
+      max: 0
 --- !u!4 &1394566059
 Transform:
   m_ObjectHideFlags: 0

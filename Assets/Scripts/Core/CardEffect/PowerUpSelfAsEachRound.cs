@@ -56,8 +56,6 @@ namespace ProjectABC.Core
                     handler.Release();
                     ownSide.CardBuffHandlers.Remove(handler);
                 }
-                
-                return;
             }
             
             // case : buff not active yet, and effect triggered
