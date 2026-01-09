@@ -8,7 +8,7 @@ namespace ProjectABC.Core
 {
     public class DeckConstructAction : IPlayerAction
     {
-        public IPlayer Player { get; private set; }
+        public IPlayer Player { get; }
         
         private readonly ClubType _selectedClubsFlag;
         private readonly List<CardData> _cardDataForStarting;
@@ -54,7 +54,7 @@ namespace ProjectABC.Core
 
         public Task GetWaitConfirmTask()
         {
-            return Player.WaitUntilConfirmToProceed(typeof(DeckConstructionEvent));
+            return Task.CompletedTask;
         }
 
         private bool ClubFilter(CardData cardData)
@@ -65,7 +65,7 @@ namespace ProjectABC.Core
     
     public class RecruitCardsAction : IPlayerAction
     {
-        public IPlayer Player { get; private set; }
+        public IPlayer Player { get; }
 
         private readonly GradeType _selectedGrade;
         private readonly List<string> _drawnCardIds;
@@ -130,7 +130,7 @@ namespace ProjectABC.Core
     
     public class DeleteCardsAction : IPlayerAction
     {
-        public IPlayer Player { get; private set; }
+        public IPlayer Player { get; }
 
         private readonly List<string> _deleteCardIds;
         

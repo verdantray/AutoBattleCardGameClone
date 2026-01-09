@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
@@ -45,13 +44,24 @@ namespace ProjectABC.Engine
 
         private void RegisterConfirmHandlers()
         {
-            _confirmHandlers.Add(typeof(DeckConstructionEvent), new DeckConstructionConfirmHandler());
-            _confirmHandlers.Add(typeof(PrepareRoundEvent), new PrepareRoundConfirmHandler());
+            _confirmHandlers.Add(typeof(DeckConstructionEvent), new DeckConstructionHandler());
+            _confirmHandlers.Add(typeof(DeckConstructionOverviewEvent), new DeckConstructionOverviewHandler());
+            _confirmHandlers.Add(typeof(PrepareRoundEvent), new PrepareRoundHandler());
             _confirmHandlers.Add(typeof(MatchContextEvent), matchEventRunner);
+
+            foreach (var confirmHandler in _confirmHandlers.Values)
+            {
+                confirmHandler.StartListening();
+            }
         }
 
         private void UnregisterConfirmHandlers()
         {
+            foreach (var confirmHandler in _confirmHandlers.Values)
+            {
+                confirmHandler.StopListening();
+            }
+            
             _confirmHandlers.Clear();
         }
 

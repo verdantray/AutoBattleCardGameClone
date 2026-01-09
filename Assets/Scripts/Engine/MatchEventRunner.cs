@@ -21,13 +21,11 @@ namespace ProjectABC.Engine
 
         private void Awake()
         {
-            this.StartListening();
             RegisterMatchEventProcessors();
         }
 
         private void OnDestroy()
         {
-            this.StopListening();
             UnregisterMatchEventProcessors();
         }
 
@@ -90,6 +88,16 @@ namespace ProjectABC.Engine
                 _cts.Dispose();
                 _cts = null;
             }
+        }
+
+        public void StartListening()
+        {
+            this.StartListening<MatchContextEvent>();
+        }
+
+        public void StopListening()
+        {
+            this.StopListening<MatchContextEvent>();
         }
 
         public async Task WaitUntilConfirmAsync()

@@ -27,6 +27,13 @@ namespace ProjectABC.Core
                 action.ApplyState(currentState);
                 action.ApplyContextEvent(simulationContext.CollectedEvents);
             }
+            
+            DeckConstructionOverviewEvent overviewEvent = new DeckConstructionOverviewEvent();
+            
+            overviewEvent.Publish();
+            simulationContext.CollectedEvents.AddEvent(overviewEvent);
+
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(typeof(DeckConstructionOverviewEvent)));
         }
     }
 }

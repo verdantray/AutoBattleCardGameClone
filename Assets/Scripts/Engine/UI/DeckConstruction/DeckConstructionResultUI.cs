@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 namespace ProjectABC.Engine.UI
 {
@@ -40,6 +40,18 @@ namespace ProjectABC.Engine.UI
         {
             btnPrev.onClick.RemoveAllListeners();
             btnNext.onClick.RemoveAllListeners();
+        }
+
+        public void AddDeckConstructionResult(DeckConstructionEvent result)
+        {
+            playerSelectedClubListViewer.AddData(result);
+            
+            if (!result.Player.IsLocalPlayer)
+            {
+                return;
+            }
+            
+            deckConfigureCardsPage.SetSelectedClubs(result.SelectedClubFlag);
         }
 
         private void OnClickPrev()
@@ -82,20 +94,6 @@ namespace ProjectABC.Engine.UI
         {
             _pageIndex = 0;
             SetPage(_pageIndex);
-        }
-
-        public void SetResults(IReadOnlyCollection<DeckConstructionEvent> results)
-        {
-            playerSelectedClubListViewer.FetchData(results);
-            
-            var myResult = results.FirstOrDefault(result => result.Player.IsLocalPlayer);
-            if (myResult == null)
-            {
-                Debug.LogWarning($"{nameof(DeckConstructionResultUI)} : Can't find local players DeckConstructionEvent");
-                return;
-            }
-            
-            deckConfigureCardsPage.SetSelectedClubs(myResult.SelectedClubFlag);
         }
 
         public override void Refresh()

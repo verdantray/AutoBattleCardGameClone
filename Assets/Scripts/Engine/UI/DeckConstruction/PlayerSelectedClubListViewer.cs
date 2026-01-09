@@ -6,9 +6,25 @@ namespace ProjectABC.Engine.UI
     public sealed class PlayerSelectedClubListViewer : GridVerticalListViewer<DeckConstructionEvent>, IDeckConstructionResultPage
     {
         public bool IsOpen => gameObject.activeInHierarchy;
+        
         public void SetActive(bool active)
         {
             gameObject.SetActive(active);
+            
+            if (!active)
+            {
+                return;
+            }
+
+            if (!Initialized)
+            {
+                Initialize();
+            }
+            else
+            {
+                CalculateContents();
+                OnMoveScroll(Vector2.zero);
+            }
         }
 
         public void Refresh()
@@ -19,6 +35,11 @@ namespace ProjectABC.Engine.UI
             }
             
             OnMoveScroll(Vector2.zero);
+        }
+
+        public void AddData(DeckConstructionEvent data)
+        {
+            Data.Add(data);
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using ProjectABC.Data;
 
 namespace ProjectABC.Core
@@ -7,27 +6,6 @@ namespace ProjectABC.Core
     public interface IContextEvent
     {
         
-    }
-    
-    /// <summary>
-    /// base ContextEvent class for testing simulation
-    /// </summary>
-    public abstract class ConsoleContextEventBase : IContextEvent
-    {
-        protected string Message;
-
-        public override string ToString()
-        {
-            return Message;
-        }
-    }
-
-    public class CommonConsoleEvent : ConsoleContextEventBase
-    {
-        public CommonConsoleEvent(string message)
-        {
-            Message = message;
-        }
     }
 
     public class DeckConstructionEvent : IContextEvent
@@ -40,6 +18,11 @@ namespace ProjectABC.Core
             Player = player;
             SelectedClubFlag = selectedClubFlag;
         }
+    }
+
+    public class DeckConstructionOverviewEvent : IContextEvent
+    {
+        
     }
 
     public class PrepareRoundEvent : IContextEvent
@@ -91,32 +74,6 @@ namespace ProjectABC.Core
             ActivatedCardId = activatedCardId;
             GainPoints = gainPoints;
             TotalPoints = totalPoints;
-        }
-    }
-
-    public class RecruitConsoleEvent : ConsoleContextEventBase
-    {
-        public RecruitConsoleEvent(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            
-            stringBuilder.AppendLine($"{selectedGrade} 학년의 부원 {drawnCards.Count}명을 영입합니다.");
-            stringBuilder.AppendLine($"영입한 챌린저들:\n{string.Join('\n', drawnCards)}");
-
-            Message = $"플레이어 {player.Name} : {stringBuilder}";
-        }
-    }
-
-    public class DeleteCardsConsoleEvent : ConsoleContextEventBase
-    {
-        public DeleteCardsConsoleEvent(IPlayer player, List<Card> deletedCards)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            stringBuilder.AppendLine($"덱으로부터 {deletedCards.Count} 장의 카드를 게임에서 제거합니다.");
-            stringBuilder.AppendLine($"제거한 카드들:\n{string.Join('\n', deletedCards)}");
-
-            Message = $"플레이어 {player.Name} : {stringBuilder}";
         }
     }
 }

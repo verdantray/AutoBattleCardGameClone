@@ -4,13 +4,18 @@ using ProjectABC.Engine.UI;
 
 namespace ProjectABC.Engine
 {
-    public sealed class PrepareRoundConfirmHandler : IConfirmHandler<PrepareRoundEvent>
+    public sealed class PrepareRoundHandler : IConfirmHandler<PrepareRoundEvent>
     {
-        public PrepareRoundConfirmHandler()
+        public void StartListening()
         {
-            this.StartListening();
+            this.StartListening<PrepareRoundEvent>();
         }
-        
+
+        public void StopListening()
+        {
+            this.StopListening<PrepareRoundEvent>();
+        }
+
         public async Task WaitUntilConfirmAsync()
         {
             var roundAnnounceUI = UIManager.Instance.GetUI<RoundAnnounceUI>();
@@ -20,11 +25,6 @@ namespace ProjectABC.Engine
         public void OnEvent(PrepareRoundEvent contextEvent)
         {
             RoundAnnounceUI.AnnounceRound(contextEvent.Round);
-        }
-        
-        public void Dispose()
-        {
-            this.StopListening();
         }
     }
 }

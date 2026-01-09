@@ -21,18 +21,19 @@ namespace ProjectABC.Engine
             await Task.WhenAll(playerActionTasks);
             
             PersistentWorldCameraPoints.Instance.SwapPoint("Noticeboard");
-
-            List<Task> waitConfirmTasks = new List<Task>();
+            
             foreach (var playerAction in playerActionTasks.Select(task => task.Result))
             {
                 playerAction.ApplyState(currentState);
                 playerAction.ApplyContextEvent(simulationContext.CollectedEvents);
-
-                var waitConfirmTask = playerAction.GetWaitConfirmTask();
-                waitConfirmTasks.Add(waitConfirmTask);
             }
 
-            await Task.WhenAll(waitConfirmTasks);
+            DeckConstructionOverviewEvent overviewEvent = new DeckConstructionOverviewEvent();
+            
+            overviewEvent.Publish();
+            simulationContext.CollectedEvents.AddEvent(overviewEvent);
+
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(typeof(DeckConstructionOverviewEvent)));
         }
     }
 }
