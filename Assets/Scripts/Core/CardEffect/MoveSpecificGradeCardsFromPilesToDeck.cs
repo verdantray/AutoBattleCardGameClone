@@ -37,14 +37,14 @@ namespace ProjectABC.Core
 
             IPlayer ownPlayer = ownSide.Player;
             PlayerState ownPlayerState = gameState.GetPlayerState(ownPlayer);
-            GradeCardPiles gradeCardPiles = ownPlayerState.GradeCardPiles;
+            GradeCardIdQueue gradeCardPiles = ownPlayerState.GradeCardPiles;
 
             // TODO : use PCG32
             Random random = new Random();
             
             for (int i = 0; i < _cardsAmount; i++)
             {
-                if (!gradeCardPiles[_targetGrade].TryDraw(out Card drawnCard))
+                if (!gradeCardPiles[_targetGrade].TryDraw(ownPlayer, out Card drawnCard))
                 {
                     CallCard.TryGetCardLocation(ownSide, out var currentLocation);
 
@@ -55,13 +55,10 @@ namespace ProjectABC.Core
                     );
                 
                     failToActivateEvent.RegisterEvent(matchContextEvent);
-                    
-                    // FailToApplyCardEffectEvent failEffectEvent = new FailToApplyCardEffectEvent(FailToApplyCardEffectEvent.FailReason.NoCardPileRemains);
-                    // failEffectEvent.RegisterEvent(matchContextEvent);
                     break;
                 }
                 
-                ownPlayerState.Deck.Add(drawnCard);
+                ownPlayerState.IncludeCardIds.EnqueueCardId(drawnCard.Id);
 
                 // if deck is empty then return default value of int (= 0)
                 int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).FirstOrDefault();
@@ -79,10 +76,6 @@ namespace ProjectABC.Core
                 
                 DrawCardFromPileEvent drawCardEvent = new DrawCardFromPileEvent(activatedCardLocation, appliedCard, movementInfo);
                 drawCardEvent.RegisterEvent(matchContextEvent);
-
-                // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱의 {randomIndex}번째 위치로 보냄\n{drawnCard}";
-                // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
-                // moveCardEffectEvent.RegisterEvent(matchContextEvent);
             }
         }
     }

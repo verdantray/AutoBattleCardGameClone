@@ -11,8 +11,8 @@ namespace ProjectABC.Core
         public IPlayer Player { get; private set; }
         
         private readonly ClubType _selectedClubsFlag;
-        private readonly List<Card> _cardDataForStarting;
-        private readonly List<Card> _cardDataForPiles;
+        private readonly List<CardData> _cardDataForStarting;
+        private readonly List<CardData> _cardDataForPiles;
 
         public DeckConstructAction(IPlayer player, ClubType selectedClubsFlag)
         {
@@ -21,12 +21,10 @@ namespace ProjectABC.Core
 
             _cardDataForStarting = Storage.Instance.CardDataForStarting
                 .Where(ClubFilter)
-                .SelectMany(CreateCardsFromData)
                 .ToList();
             
             _cardDataForPiles = Storage.Instance.CardDataForPiles
                 .Where(ClubFilter)
-                .SelectMany(CreateCardsFromData)
                 .ToList();
         }
         
@@ -34,18 +32,15 @@ namespace ProjectABC.Core
         {
             PlayerState playerState = state.GetPlayerState(Player);
             
-            playerState.Deck.AddRange(_cardDataForStarting);
+            playerState.IncludeCardIds.Initialize(_cardDataForStarting);
+            playerState.GradeCardPiles.Initialize(_cardDataForPiles);
             
-            foreach (var gradeGroup in _cardDataForPiles.GroupBy(card => card.GradeType))
+            playerState.IncludeCardIds.Shuffle();
+            
+            foreach (var idQueueForGrade in playerState.GradeCardPiles.Values)
             {
-                GradeType gradeType = gradeGroup.Key;
-
-                foreach (var card in gradeGroup)
-                {
-                    playerState.GradeCardPiles[gradeType].Add(card);
-                }
-                
-                playerState.GradeCardPiles[gradeType].Shuffle();
+                // TODO : use PCG32
+                idQueueForGrade.Shuffle();
             }
         }
 
@@ -66,18 +61,6 @@ namespace ProjectABC.Core
         {
             return _selectedClubsFlag.HasFlag(cardData.clubType);
         }
-
-        private IEnumerable<Card> CreateCardsFromData(CardData cardData)
-        {
-            List<Card> cards = new List<Card>();
-            
-            for (int i = 0; i < cardData.amount; i++)
-            {
-                cards.Add(new Card(Player, cardData));
-            }
-
-            return cards;
-        }
     }
     
     public class RecruitCardsAction : IPlayerAction
@@ -85,23 +68,26 @@ namespace ProjectABC.Core
         public IPlayer Player { get; private set; }
 
         private readonly GradeType _selectedGrade;
-        private readonly List<Card> _drawnCards;
+        private readonly List<string> _drawnCardIds;
         private readonly List<IContextEvent> _recruitContextEvents = new List<IContextEvent>();
 
-        public RecruitCardsAction(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
+        public RecruitCardsAction(IPlayer player, GradeType selectedGrade, List<string> drawnCardIds)
         {
             Player = player;
             _selectedGrade = selectedGrade;
-            _drawnCards = drawnCards;
+            _drawnCardIds = drawnCardIds;
         }
         
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
-            playerState.Deck.AddRange(_drawnCards);
+            playerState.IncludeCardIds.EnqueueCardIds(_drawnCardIds);
 
-            foreach (var card in _drawnCards)
+            foreach (var cardId in _drawnCardIds)
             {
+                var cardData = Storage.Instance.GetCardData(cardId);
+                var card = new Card(Player, cardData);
+                
                 if (!card.CardEffect.TryApplyEffectOnRecruit(Player, state, out var recruitEvent))
                 {
                     continue;
@@ -113,7 +99,7 @@ namespace ProjectABC.Core
 
         public void ApplyContextEvent(SimulationContextEvents events)
         {
-            var contextEvent = new RecruitCardsEvent(Player, _selectedGrade, _drawnCards);
+            var contextEvent = new RecruitCardsEvent(Player, _selectedGrade, _drawnCardIds);
             contextEvent.Publish();
             
             events.AddEvent(contextEvent);
@@ -146,29 +132,25 @@ namespace ProjectABC.Core
     {
         public IPlayer Player { get; private set; }
 
-        private readonly List<Card> _deleteCards;
+        private readonly List<string> _deleteCardIds;
         
-        public DeleteCardsAction(IPlayer player, List<Card> deleteCards)
+        public DeleteCardsAction(IPlayer player, List<string> deleteCardIds)
         {
             Player = player;
-            _deleteCards = deleteCards;
+            _deleteCardIds = deleteCardIds;
         }
         
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
-
-            foreach (var card in _deleteCards)
-            {
-                playerState.Deck.Remove(card);
-            }
             
-            playerState.Deleted.AddRange(_deleteCards);
+            playerState.IncludeCardIds.RemoveCardIds(_deleteCardIds);
+            playerState.ExcludeCardIds.EnqueueCardIds(_deleteCardIds);
         }
 
         public void ApplyContextEvent(SimulationContextEvents events)
         {
-            DeleteCardsConsoleEvent consoleEvent = new DeleteCardsConsoleEvent(Player, _deleteCards);
+            DeleteCardsEvent consoleEvent = new DeleteCardsEvent(Player, _deleteCardIds);
             
             consoleEvent.Publish();
             events.AddEvent(consoleEvent);
@@ -176,7 +158,7 @@ namespace ProjectABC.Core
 
         public Task GetWaitConfirmTask()
         {
-            return Task.CompletedTask;
+            return Player.WaitUntilConfirmToProceed(typeof(DeleteCardsEvent));
         }
     }
 }

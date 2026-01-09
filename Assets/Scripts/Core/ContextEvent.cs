@@ -56,13 +56,25 @@ namespace ProjectABC.Core
     {
         public readonly IPlayer Player;
         public readonly GradeType  SelectedGrade;
-        public readonly List<Card> DrawnCards;
+        public readonly List<string> DrawnCardIds;
         
-        public RecruitCardsEvent(IPlayer player, GradeType selectedGrade, List<Card> drawnCards)
+        public RecruitCardsEvent(IPlayer player, GradeType selectedGrade, List<string> drawnCardIds)
         {
             Player = player;
             SelectedGrade = selectedGrade;
-            DrawnCards = drawnCards;
+            DrawnCardIds = drawnCardIds;
+        }
+    }
+
+    public class DeleteCardsEvent : IContextEvent
+    {
+        public readonly IPlayer Player;
+        public readonly List<string> DeleteCardIds;
+        
+        public DeleteCardsEvent(IPlayer player, List<string> deleteCardIds)
+        {
+            Player = player;
+            DeleteCardIds = deleteCardIds;
         }
     }
 

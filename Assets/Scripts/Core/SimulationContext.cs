@@ -89,9 +89,9 @@ namespace ProjectABC.Core
         public readonly IPlayer Player;
 
         public readonly RerollChance RerollChance =  new RerollChance();
-        public readonly GradeCardPiles GradeCardPiles = new GradeCardPiles();
-        public readonly List<Card> Deck = new List<Card>();
-        public readonly List<Card> Deleted = new List<Card>();
+        public readonly GradeCardIdQueue GradeCardPiles = new GradeCardIdQueue();
+        public readonly CardIdQueue IncludeCardIds = new CardIdQueue();
+        public readonly CardIdQueue ExcludeCardIds = new CardIdQueue();
 
         public PlayerState(IPlayer player)
         {

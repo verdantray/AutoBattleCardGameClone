@@ -29,8 +29,11 @@ namespace ProjectABC.Core
         {
             Player = playerState.Player;
 
-            foreach (var card in playerState.Deck)
+            foreach (var cardId in playerState.IncludeCardIds)
             {
+                var cardData = Storage.Instance.GetCardData(cardId);
+                var card = new Card(Player, cardData);
+                
                 Deck.Add(card);
             }
             

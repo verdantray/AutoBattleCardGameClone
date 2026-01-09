@@ -19,9 +19,9 @@ namespace ProjectABC.Engine.UI
         [SerializeField] private TextMeshProUGUI txtReroll;
         [SerializeField] private TextMeshProUGUI txtRecruit;
 
-        private readonly List<Card> _drawnCards = new List<Card>();
-        private readonly List<Card> _recruitCards = new List<Card>();
-        private readonly List<Card> _rejectedCards = new List<Card>();
+        private readonly List<string> _drawnCardIds = new List<string>();
+        private readonly List<string> _recruitCardIds = new List<string>();
+        private readonly List<string> _rejectedCardIds = new List<string>();
         
         private Vector2 _referenceResolution;
         private RecruitCardParam _param;
@@ -54,9 +54,9 @@ namespace ProjectABC.Engine.UI
         private void OnRecruit()
         {
             float pickedCardDestY = (_referenceResolution.y + (toggles[0].Size.y * 2.0f)) * -0.5f;
-            PickCards(_recruitCards, pickedCardDestY);
+            PickCards(_recruitCardIds, pickedCardDestY);
 
-            if (_recruitCards.Count == _param.RecruitCardAmount)
+            if (_recruitCardIds.Count == _param.RecruitCardAmount)
             {
                 UIManager.Instance.CloseUI<RecruitCardUI>();
             }
@@ -70,21 +70,21 @@ namespace ProjectABC.Engine.UI
         private void OnReroll()
         {
             float pickedCardDestY = (_referenceResolution.y + (toggles[0].Size.y * 2.0f)) * 0.5f;
-            PickCards(_rejectedCards, pickedCardDestY);
+            PickCards(_rejectedCardIds, pickedCardDestY);
             
             StopRoutine();
             _refreshRoutine = StartCoroutine(DelayedRefresh(0.15f));
         }
 
-        private void PickCards(ICollection<Card> pickedCards, float togglePosY)
+        private void PickCards(ICollection<string> pickedCards, float togglePosY)
         {
             var toggledIndexes = GetToggledIndexes();
 
             for (int i = toggledIndexes.Length - 1; i >= 0; i--)
             {
                 int index = toggledIndexes[i];
-                var card = _drawnCards[index];
-                _drawnCards.RemoveAt(index);
+                var card = _drawnCardIds[index];
+                _drawnCardIds.RemoveAt(index);
                 pickedCards.Add(card);
             }
             
@@ -93,7 +93,7 @@ namespace ProjectABC.Engine.UI
                 toggle.IsOn = false;
             }
             
-            int cardsCount = _drawnCards.Count + _rejectedCards.Count;
+            int cardsCount = _drawnCardIds.Count + _rejectedCardIds.Count;
             bool isOdd = cardsCount % 2 != 0;
             float left = (toggleInterval * Mathf.FloorToInt(cardsCount / 2.0f) * -1.0f)
                          + (isOdd ? 0.0f : toggleInterval * 0.5f);
@@ -150,22 +150,22 @@ namespace ProjectABC.Engine.UI
         
         public override void Refresh()
         {
-            var (amount, cardPile, rerollChance) = _param;
+            var (amount, cardIdQueue, rerollChance) = _param;
             
             btnRecruit.interactable = false;
             btnReroll.interactable = false;
 
-            int prevExistsCount = _drawnCards.Count;
+            int prevExistsCount = _drawnCardIds.Count;
 
-            if (_drawnCards.Count < GameConst.GameOption.RECRUIT_HAND_AMOUNT)
+            if (_drawnCardIds.Count < GameConst.GameOption.RECRUIT_HAND_AMOUNT)
             {
-                int drawSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - _drawnCards.Count;
-                var cards = rerollChance.GetRerollCards(cardPile, drawSize);
+                int drawSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - _drawnCardIds.Count;
+                var drawnCardIds = rerollChance.GetRerollCardIds(cardIdQueue, drawSize);
                 
-                _drawnCards.AddRange(cards);
+                _drawnCardIds.AddRange(drawnCardIds);
             }
 
-            int cardsCount = _drawnCards.Count;
+            int cardsCount = _drawnCardIds.Count;
             bool isOdd = cardsCount % 2 != 0;
             float left = (toggleInterval * Mathf.FloorToInt(cardsCount / 2.0f) * -1.0f)
                          + (isOdd ? 0.0f : toggleInterval * 0.5f);
@@ -188,7 +188,7 @@ namespace ProjectABC.Engine.UI
                 bool isLast =  i == cardsCount - 1;
                 Action callback = isLast ? RefreshRerollButton : null;
                 
-                toggles[i].SetCard(_drawnCards[i]);
+                toggles[i].SetCard(_drawnCardIds[i]);
                 toggles[i].MoveToPosition(from, target, delay, duration, callback);
             }
         }
@@ -196,11 +196,11 @@ namespace ProjectABC.Engine.UI
         private void RefreshRecruitButton(bool _)
         {
             var toggledIndexes = GetToggledIndexes();
-            btnRecruit.interactable = _recruitCards.Count + toggledIndexes.Length <= _param.RecruitCardAmount;
+            btnRecruit.interactable = _recruitCardIds.Count + toggledIndexes.Length <= _param.RecruitCardAmount;
             
             txtRecruit.text = LocalizationHelper.Instance.Localize(
                 "ui_recruit_card_recruit_students",
-                toggledIndexes.Length + _recruitCards.Count,
+                toggledIndexes.Length + _recruitCardIds.Count,
                 _param.RecruitCardAmount
             );
         }
@@ -215,23 +215,17 @@ namespace ProjectABC.Engine.UI
             btnReroll.interactable = _param.RerollChance.RemainRerollChance > 0;
         }
 
-        public async Task<List<Card>> GetRecruitCardsAsync()
+        public async Task<List<string>> GetRecruitCardsAsync()
         {
             await WaitUntilCloseAsync();
 
-            foreach (var card in _rejectedCards)
-            {
-                _param.CardPile.Add(card);
-            }
+            _param.CardIdQueue.EnqueueCardIds(_recruitCardIds);
+            _param.CardIdQueue.EnqueueCardIds(_drawnCardIds);
 
-            foreach (var card in _drawnCards)
-            {
-                _param.CardPile.Add(card);
-            }
+            List<string> cards = new List<string>(_recruitCardIds);
+            _recruitCardIds.Clear();
 
-            List<Card> cards = new List<Card>(_recruitCards);
-            _recruitCards.Clear();
-
+            _param.RerollChance.Reset();
             _param = null;
 
             return cards;
@@ -252,20 +246,20 @@ namespace ProjectABC.Engine.UI
         public class RecruitCardParam
         {
             public readonly int RecruitCardAmount;
-            public readonly CardPile CardPile;
+            public readonly CardIdQueue CardIdQueue;
             public readonly RerollChance RerollChance;
 
-            public RecruitCardParam(int amount, CardPile cardPile, RerollChance rerollChance)
+            public RecruitCardParam(int amount, CardIdQueue cardIdQueue, RerollChance rerollChance)
             {
                 RecruitCardAmount = amount;
-                CardPile = cardPile;
+                CardIdQueue = cardIdQueue;
                 RerollChance = rerollChance;
             }
 
-            public void Deconstruct(out int amount, out CardPile cardPile, out RerollChance rerollChance)
+            public void Deconstruct(out int amount, out CardIdQueue cardIdQueue, out RerollChance rerollChance)
             {
                 amount = RecruitCardAmount;
-                cardPile = CardPile;
+                cardIdQueue = CardIdQueue;
                 rerollChance = RerollChance;
             }
         }

@@ -1,120 +1,139 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using ProjectABC.Data;
+using ProjectABC.Utils;
+
 
 namespace ProjectABC.Core
 {
-    public class GradeCardPiles : IReadOnlyDictionary<GradeType, CardPile>
+    public sealed class GradeCardIdQueue : IReadOnlyDictionary<GradeType, CardIdQueue>
     {
-        private readonly Dictionary<GradeType, CardPile> _levelCardPiles = new Dictionary<GradeType, CardPile>
+        private readonly Dictionary<GradeType, CardIdQueue> _cardIdQueues = new Dictionary<GradeType, CardIdQueue>
         {
-            { GradeType.First, new CardPile() },
-            { GradeType.Second, new CardPile() },
-            { GradeType.Third, new CardPile() },
+            { GradeType.First, new CardIdQueue() },
+            { GradeType.Second, new CardIdQueue() },
+            { GradeType.Third, new CardIdQueue() },
         };
 
-        #region inheritances of IDictionary
+        public void Initialize(IEnumerable<CardData> cardData)
+        {
+            foreach (var groupedData in cardData.GroupBy(card => card.gradeType))
+            {
+                GradeType grade = groupedData.Key;
+                _cardIdQueues[grade].Initialize(groupedData);
+            }
+        }
+        
+        #region inherits of IReadOnlyDictionary
 
-        public IEnumerator<KeyValuePair<GradeType, CardPile>> GetEnumerator() => _levelCardPiles.GetEnumerator();
+        public CardIdQueue this[GradeType key] => _cardIdQueues[key];
 
-        IEnumerator IEnumerable.GetEnumerator() => _levelCardPiles.GetEnumerator();
+        public int Count => _cardIdQueues.Count;
 
-        public int Count => _levelCardPiles.Count;
-        public bool ContainsKey(GradeType key) => _levelCardPiles.ContainsKey(key);
+        public IEnumerable<GradeType> Keys => _cardIdQueues.Keys;
+        
+        public IEnumerable<CardIdQueue> Values =>  _cardIdQueues.Values;
+        
+        public IEnumerator<KeyValuePair<GradeType, CardIdQueue>> GetEnumerator()
+        {
+            return _cardIdQueues.GetEnumerator();
+        }
 
-        public bool TryGetValue(GradeType key, out CardPile value) => _levelCardPiles.TryGetValue(key, out value);
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _cardIdQueues.GetEnumerator();
+        }
+        
+        public bool ContainsKey(GradeType key) => _cardIdQueues.ContainsKey(key);
 
-        public CardPile this[GradeType key] => _levelCardPiles[key];
-
-        public IEnumerable<GradeType> Keys => _levelCardPiles.Keys;
-        public IEnumerable<CardPile> Values => _levelCardPiles.Values;
+        public bool TryGetValue(GradeType key, out CardIdQueue value) => _cardIdQueues.TryGetValue(key, out value);
 
         #endregion
     }
 
-    [Obsolete("Not use anymore thread safe version of CardPile... Use CardPile instead.")]
-    public class ConcurrentCardPile
+    public sealed class CardIdQueue : IReadOnlyList<string>
     {
-        private readonly List<Card> _cardList = new List<Card>();
-        private readonly SemaphoreSlim _gate = new SemaphoreSlim(1, 1);
+        private readonly List<string> _idList = new List<string>();
 
-        public async Task AddRangeAsync(IEnumerable<Card> cards, CancellationToken token = default)
+        public void Initialize(IEnumerable<CardData> cardData)
         {
-            await _gate.WaitAsync(token);
-
-            try
-            {
-                _cardList.AddRange(cards);
-            }
-            finally
-            {
-                _gate.Release();
-            }
-        }
-
-        public async Task<List<Card>> DrawCardsAsync(int count, CancellationToken token = default)
-        {
-            await _gate.WaitAsync(token);
+            _idList.Clear();
             
-            try
+            foreach (var data in cardData)
             {
-                List<Card> drawCards = new List<Card>();
-                
-                if (count < 0)
+                for (int i = 0; i < data.amount; i++)
                 {
-                    return drawCards;
+                    EnqueueCardId(data.id);
                 }
-
-                if (_cardList.Count < count)
-                {
-                    throw new InvalidOperationException($"Trying to draw {count} cards, but remains {_cardList.Count} only...");
-                }
-
-                drawCards.AddRange(_cardList.GetRange(0, count));
-                _cardList.RemoveRange(0, count);
-                
-                return drawCards;
-            }
-            finally
-            {
-                _gate.Release();
             }
         }
-
-        public async Task ShuffleAsync(int seed = 0, CancellationToken token = default)
+        
+        public List<string> DequeueCardIds(int amount)
         {
-            await _gate.WaitAsync(token);
-
-            try
-            {
-                System.Random random = seed != 0 ?  new System.Random(seed) : new System.Random();
-                List<Card> randomized = _cardList.OrderBy(_ => random.Next()).ToList();
-                
-                _cardList.Clear();
-                _cardList.AddRange(randomized);
-            }
-            finally
-            {
-                _gate.Release();
-            }
+            int index = _idList.Count - amount;
+            
+            List<string> toPop = _idList.GetRange(index, amount);
+            _idList.RemoveRange(index, amount);
+            
+            return toPop;
         }
 
-        public async Task<int> CountAsync(CancellationToken token = default)
+        public bool TryDraw(IPlayer player, out Card drawnCard)
         {
-            await _gate.WaitAsync(token);
+            bool isDrawable = _idList.Count > 0;
 
-            try
+            if (isDrawable)
             {
-                return _cardList.Count;
+                string cardId = DequeueCardIds(1)[0];
+                var cardData = Storage.Instance.GetCardData(cardId);
+
+                drawnCard = new Card(player, cardData);
             }
-            finally
+            else
             {
-                _gate.Release();
+                drawnCard = null;
+            }
+            
+            return isDrawable;
+        }
+
+        public void EnqueueCardIds(IEnumerable<string> cardIds)
+        {
+            foreach (var cardId in cardIds)
+            {
+                EnqueueCardId(cardId);
             }
         }
+        
+        public void EnqueueCardId(string cardId)
+        {
+            _idList.Add(cardId);
+        }
+
+        public void RemoveCardIds(IEnumerable<string> cardIds)
+        {
+            foreach (var cardId in cardIds)
+            {
+                _idList.Remove(cardId);
+            }
+        }
+
+        public void Shuffle(int? seed = null)
+        {
+            _idList.Shuffle(seed);
+        }
+
+        #region inherits of IReadOnlyList
+
+        public int Count => _idList.Count;
+
+        public string this[int index] => _idList[index];
+
+        public IEnumerator<string> GetEnumerator() => _idList.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => _idList.GetEnumerator();
+
+        #endregion
     }
 }

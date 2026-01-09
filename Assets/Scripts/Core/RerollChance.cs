@@ -30,10 +30,10 @@ namespace ProjectABC.Core
             Reset();
         }
 
-        public List<Card> GetRerollCards(CardPile cardPile, int drawSize)
+        public List<string> GetRerollCardIds(CardIdQueue idQueue, int drawSize)
         {
             RemainRerollChance--;
-            return cardPile.DrawCards(drawSize);
+            return idQueue.DequeueCardIds(drawSize);
         }
 
         public void AddRerollBonus(RerollBonus bonus)

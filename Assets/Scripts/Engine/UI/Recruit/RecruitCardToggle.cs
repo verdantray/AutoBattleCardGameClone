@@ -51,9 +51,10 @@ namespace ProjectABC.Engine.UI
             MoveToPosition(position);
         }
 
-        public void SetCard(Card card)
+        public void SetCard(string cardId)
         {
-            cardUIItem.ApplyData(new CardReference(card.Id));
+            var cardData = Storage.Instance.GetCardData(cardId);
+            cardUIItem.ApplyData(cardData);
         }
 
         public void MoveToPosition(Vector2 from, Vector2 target, float delay = 0.0f, float duration = 0.05f, Action callback = null)

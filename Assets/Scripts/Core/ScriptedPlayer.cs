@@ -64,12 +64,12 @@ namespace ProjectABC.Core
         public Task<IPlayerAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound)
         {
             // temporary method
-            var cardPile = myState.GradeCardPiles[GradeType.Third];
+            var cardIdQueue = myState.GradeCardPiles[GradeType.Third];
             bool isDrawableRound = recruitOnRound.Round is 3 or 6 or 8;
             
-            List<Card> cardsToDraw = cardPile.DrawCards(isDrawableRound ? 1 : 0);
-
-            IPlayerAction action = new RecruitCardsAction(this, GradeType.Third, cardsToDraw);
+            List<string> drawnCardIds = cardIdQueue.DequeueCardIds(isDrawableRound ? 1 : 0);
+            
+            IPlayerAction action = new RecruitCardsAction(this, GradeType.Third, drawnCardIds);
             Task<IPlayerAction> task = Task.FromResult(action);
             return task;
 
@@ -79,18 +79,18 @@ namespace ProjectABC.Core
             //     .OrderBy(_ => random.Next())
             //     .First();
             //
-            // List<Card> cardsToDraw = new List<Card>();
+            // List<string> cardIdsToDraw = new List<string>();
             //     
             // RerollChance rerollChance = myState.RerollChance;
             //
-            // while (cardsToDraw.Count < amount)
+            // while (cardIdsToDraw.Count < amount)
             // {
-            //     var cardPile = myState.GradeCardPiles[level];
-            //     int drawSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - cardsToDraw.Count;
-            //     List<Card> cardPool = rerollChance.GetRerollCards(cardPile, drawSize);
+            //     var cardIdQueue = myState.GradeCardPiles[level];
+            //     int drawSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - cardIdsToDraw.Count;
+            //     List<string> cardIdPool = rerollChance.GetRerollCardIds(cardIdQueue, drawSize);
             //
             //     bool isLastChance = rerollChance.RemainRerollChance == 0;
-            //     int remainAmount = amount - cardsToDraw.Count;
+            //     int remainAmount = amount - cardIdsToDraw.Count;
             //         
             //     int drawAmount = isLastChance
             //         ? remainAmount
@@ -98,16 +98,15 @@ namespace ProjectABC.Core
             //             .OrderBy(_ => random.Next())
             //             .First();
             //
-            //     cardsToDraw.AddRange(cardPool.Take(drawAmount));
-            //     cardPool.RemoveRange(0, drawAmount);
+            //     cardIdsToDraw.AddRange(cardIdPool.Take(drawAmount));
+            //     cardIdPool.RemoveRange(0, drawAmount);
             //
-            //     foreach (var card in cardPool)
-            //     {
-            //         cardPile.Add(card);
-            //     }
+            //     cardIdQueue.EnqueueCardIds(cardIdPool);
             // }
             //
-            // IPlayerAction action = new RecruitCardsAction(this, level, cardsToDraw);
+            // rerollChance.Reset();
+            //
+            // IPlayerAction action = new RecruitCardsAction(this, level, cardIdsToDraw);
             // Task<IPlayerAction> task = Task.FromResult(action);
             //
             // return task;
@@ -115,13 +114,13 @@ namespace ProjectABC.Core
 
         public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState)
         {
-            int deleteAmount = _cardDeletionRange.GetDeletionAmount(myState.Deck.Count);
+            int deleteAmount = _cardDeletionRange.GetDeletionAmount(myState.IncludeCardIds.Count);
             
             // TODO : use PCG32
             Random random = new Random();
-            List<Card> cardsToDelete = myState.Deck.OrderBy(_ => random.Next()).Take(deleteAmount).ToList();
+            List<string> cardIdsToDelete = myState.IncludeCardIds.OrderBy(_ => random.Next()).Take(deleteAmount).ToList();
 
-            IPlayerAction action = new DeleteCardsAction(this, cardsToDelete);
+            IPlayerAction action = new DeleteCardsAction(this, cardIdsToDelete);
             Task<IPlayerAction> task = Task.FromResult(action);
             
             return task;
