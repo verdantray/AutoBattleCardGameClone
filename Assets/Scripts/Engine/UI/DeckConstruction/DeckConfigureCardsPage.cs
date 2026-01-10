@@ -14,7 +14,7 @@ namespace ProjectABC.Engine.UI
         [SerializeField] private Toggle[] cardListToggles;
         [SerializeField] private CardUIGridViewer cardGridViewer;
 
-        private CardSnapshotProviderByOption _provider = null;
+        private CardDataProviderByOption _provider = null;
 
         public bool IsOpen => gameObject.activeInHierarchy;
         public bool Initialized => cardGridViewer.Initialized;
@@ -79,13 +79,13 @@ namespace ProjectABC.Engine.UI
 
         public void SetSelectedClubs(ClubType selectedClubFlag)
         {
-            _provider = new CardSnapshotProviderByOption(selectedClubFlag);
+            _provider = new CardDataProviderByOption(selectedClubFlag);
         }
 
         private void ShowCardList()
         {
             int index = Array.FindIndex(cardListToggles, toggle => toggle.isOn);
-            cardGridViewer.FetchData(_provider.GetCardSnapshots((CardListOption)index));
+            cardGridViewer.FetchData(_provider.GetCardData((CardListOption)index));
         }
 
         #region class for providing item data
@@ -96,26 +96,25 @@ namespace ProjectABC.Engine.UI
             RecruitableMembers = 1,
         }
         
-        private class CardSnapshotProviderByOption
+        private class CardDataProviderByOption
         {
-            private readonly List<CardReference> _startingMembers = new List<CardReference>();
-            private readonly List<CardReference> _recruitableMembers = new List<CardReference>();
+            private readonly List<CardData> _startingMembers;
+            private readonly List<CardData> _recruitableMembers;
             
-            public CardSnapshotProviderByOption(ClubType selectedClubFlag)
+            public CardDataProviderByOption(ClubType selectedClubFlag)
             {
-                var startingMembers = Storage.Instance.CardDataForStarting
+                _startingMembers = Storage.Instance.CardDataForStarting
                     .Where(data => selectedClubFlag.HasFlag(data.clubType))
-                    .SelectMany(GetCardSnapshotsFromData);
+                    .SelectMany(SelectAsAmount)
+                    .ToList();
 
-                var recruitableMembers = Storage.Instance.CardDataForPiles
+                _recruitableMembers = Storage.Instance.CardDataForPiles
                     .Where(data => selectedClubFlag.HasFlag(data.clubType))
-                    .SelectMany(GetCardSnapshotsFromData);
-                
-                _startingMembers.AddRange(startingMembers);
-                _recruitableMembers.AddRange(recruitableMembers);
+                    .SelectMany(SelectAsAmount)
+                    .ToList();
             }
 
-            public IReadOnlyCollection<CardReference> GetCardSnapshots(CardListOption option)
+            public IEnumerable<CardData> GetCardData(CardListOption option)
             {
                 return option switch
                 {
@@ -125,16 +124,15 @@ namespace ProjectABC.Engine.UI
                 };
             }
 
-            private static IEnumerable<CardReference> GetCardSnapshotsFromData(CardData data)
+            private static IEnumerable<CardData> SelectAsAmount(CardData cardData)
             {
-                List<CardReference> result = new List<CardReference>();
-
-                for (int i = 0; i < data.amount; i++)
+                var cardDataList = new List<CardData>();
+                for (int i = 0; i < cardData.amount; i++)
                 {
-                    result.Add(new CardReference(data.id));
+                    cardDataList.Add(cardData);
                 }
-
-                return result;
+                
+                return cardDataList;
             }
         }
 

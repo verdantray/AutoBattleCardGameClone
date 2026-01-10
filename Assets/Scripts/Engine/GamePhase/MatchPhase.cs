@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using UnityEngine;
@@ -16,12 +17,10 @@ namespace ProjectABC.Engine
             GameState currentState = simulationContext.CurrentState;
 
             List<Task> matchSimulationWaitTasks = new List<Task>();
-            List<ScoreEntry> scoreEntries = new List<ScoreEntry>();
+            List<GainWinPointsEvent> gainWinPointEvents = new List<GainWinPointsEvent>();
             
             foreach (var (playerAState, playerBState) in matchingPairs)
             {
-                Debug.Log($"{playerAState.Player.Name} vs {playerBState.Player.Name}");
-                
                 MatchContextEvent matchContextEvent = MatchContextEvent.RunMatch(currentState, playerAState, playerBState);
                 matchContextEvent.Publish();
                 simulationContext.CollectedEvents.AddEvent(matchContextEvent);
@@ -31,23 +30,30 @@ namespace ProjectABC.Engine
                 WinPointOnRound winPointOnRound = new WinPointOnRound(matchContextEvent.Round);
                 int roundWinPoints = winPointOnRound.GetWinPoint();
 
-                ScoreEntry winnerEntry = new ScoreEntry(roundWinPoints, ScoreEntry.ScoreReason.ScoreByMatchWin);
-                currentState.ScoreBoard.RegisterScoreEntry(matchContextEvent.Result.Winner, winnerEntry);
+                IPlayer winner = matchContextEvent.Result.Winner;
+                ScoreEntry winnerEntry = new ScoreEntry(roundWinPoints, ScoreReason.ScoreByMatchWin);
+                currentState.ScoreBoard.RegisterScoreEntry(winner, winnerEntry);
                 
                 matchSimulationWaitTasks.Add(playerAState.Player.WaitUntilConfirmToProceed(typeof(MatchContextEvent)));
                 matchSimulationWaitTasks.Add(playerBState.Player.WaitUntilConfirmToProceed(typeof(MatchContextEvent)));
-                
-                scoreEntries.Add(winnerEntry);
+
+                int totalPoints = currentState.ScoreBoard.GetTotalWinPoints(winner);
+                var gainWInPointEvent = new GainWinPointsEvent(winner, roundWinPoints, totalPoints, ScoreReason.ScoreByMatchWin);
+                gainWinPointEvents.Add(gainWInPointEvent);
             }
 
             await Task.WhenAll(matchSimulationWaitTasks);
 
-            foreach (var scoreEntry in scoreEntries)
+            foreach (var gainWinPointEvent in gainWinPointEvents)
             {
-                // publish context event
+                gainWinPointEvent.Publish();
+                simulationContext.CollectedEvents.AddEvent(gainWinPointEvent);
             }
+
+            var waitConfirmTasks = gainWinPointEvents
+                .Select(contextEvent => contextEvent.Player.WaitUntilConfirmToProceed(typeof(GainWinPointsEvent)));
             
-            // open white board and show all players info
+            await Task.WhenAll(waitConfirmTasks);
         }
     }
 }

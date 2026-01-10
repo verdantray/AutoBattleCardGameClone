@@ -47,6 +47,7 @@ namespace ProjectABC.Engine
             _confirmHandlers.Add(typeof(DeckConstructionEvent), new DeckConstructionHandler());
             _confirmHandlers.Add(typeof(DeckConstructionOverviewEvent), new DeckConstructionOverviewHandler());
             _confirmHandlers.Add(typeof(PrepareRoundEvent), new PrepareRoundHandler());
+            _confirmHandlers.Add(typeof(GainWinPointsEvent), new GainWinPointsHandler());
             _confirmHandlers.Add(typeof(MatchContextEvent), matchEventRunner);
 
             foreach (var confirmHandler in _confirmHandlers.Values)

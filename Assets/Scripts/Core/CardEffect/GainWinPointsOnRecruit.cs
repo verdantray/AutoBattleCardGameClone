@@ -30,11 +30,11 @@ namespace ProjectABC.Core
 
         public override bool TryApplyEffectOnRecruit(IPlayer recruiter, GameState gameState, out IContextEvent contextEvent)
         {
-            ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
+            ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(recruiter, scoreEntry);
             
             int totalPoints = gameState.ScoreBoard.GetTotalWinPoints(recruiter);
-            contextEvent = new GainWinPointsOnRecruitEvent(recruiter, CallCard.Id, _gainWinPoints, totalPoints);
+            contextEvent = new GainWinPointsEvent(recruiter, _gainWinPoints, totalPoints, ScoreReason.ScoreByCardEffect);
             return true;
         }
     }

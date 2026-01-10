@@ -66,15 +66,15 @@ namespace ProjectABC.Core
         #endregion
     }
     
+    public enum ScoreReason
+    {
+        ScoreByMatchWin,
+        ScoreByCardEffect,
+        ScoreByArguments,
+    }
+    
     public readonly struct ScoreEntry
     {
-        public enum ScoreReason
-        {
-            ScoreByMatchWin,
-            ScoreByCardEffect,
-            ScoreByArguments,
-        }
-        
         public readonly int GainedWinPoints;
         public readonly ScoreReason Reason;
 

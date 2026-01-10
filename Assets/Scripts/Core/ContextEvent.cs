@@ -38,7 +38,7 @@ namespace ProjectABC.Core
     public class RecruitCardsEvent : IContextEvent
     {
         public readonly IPlayer Player;
-        public readonly GradeType  SelectedGrade;
+        public readonly GradeType SelectedGrade;
         public readonly List<string> DrawnCardIds;
         
         public RecruitCardsEvent(IPlayer player, GradeType selectedGrade, List<string> drawnCardIds)
@@ -61,19 +61,19 @@ namespace ProjectABC.Core
         }
     }
 
-    public class GainWinPointsOnRecruitEvent : IContextEvent
+    public class GainWinPointsEvent : IContextEvent
     {
         public readonly IPlayer Player;
-        public readonly string ActivatedCardId;
         public readonly int GainPoints;
         public readonly int TotalPoints;
+        public readonly ScoreReason Reason;
 
-        public GainWinPointsOnRecruitEvent(IPlayer player, string activatedCardId, int gainPoints, int totalPoints)
+        public GainWinPointsEvent(IPlayer player, int gainPoints, int totalPoints, ScoreReason reason)
         {
             Player = player;
-            ActivatedCardId = activatedCardId;
             GainPoints = gainPoints;
             TotalPoints = totalPoints;
+            Reason = reason;
         }
     }
 }

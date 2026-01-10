@@ -51,7 +51,7 @@ namespace ProjectABC.Engine.UI
 
         public bool Initialized { get; protected set; } = false;
 
-        public void FetchData(IReadOnlyCollection<T> data)
+        public void FetchData(IEnumerable<T> data)
         {
             Data.Clear();
             Data.AddRange(data);

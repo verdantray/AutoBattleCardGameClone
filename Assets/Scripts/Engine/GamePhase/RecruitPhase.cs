@@ -14,23 +14,27 @@ namespace ProjectABC.Engine
             GameState currentState = simulationContext.CurrentState;
             RecruitOnRound recruitOnRound = new RecruitOnRound(currentState.Round);
 
-            List <Task<IPlayerAction>> tasks = new List<Task<IPlayerAction>>();
-
+            List<Task<IPlayerAction>> playerActionTasks = new List<Task<IPlayerAction>>();
             foreach (var player in simulationContext.Participants)
             {
                 PlayerState playerState = currentState.GetPlayerState(player);
                 var task = player.RecruitCardsAsync(playerState, recruitOnRound);
                 
-                tasks.Add(task);
+                playerActionTasks.Add(task);
             }
             
-            await Task.WhenAll(tasks);
+            await Task.WhenAll(playerActionTasks);
 
-            foreach (var action in tasks.Select(task => task.Result))
+            List<Task> waitConfirmTasks = new List<Task>();
+            foreach (var action in playerActionTasks.Select(task => task.Result))
             {
                 action.ApplyState(currentState);
                 action.ApplyContextEvent(simulationContext.CollectedEvents);
+                
+                waitConfirmTasks.Add(action.GetWaitConfirmTask());
             }
+            
+            await Task.WhenAll(waitConfirmTasks);
         }
     }
 }

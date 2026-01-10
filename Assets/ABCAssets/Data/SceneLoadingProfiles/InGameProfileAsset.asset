@@ -64,6 +64,12 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
   - uiReference:
+      m_AssetGUID: de01ff253109d21418aef22450985e7f
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+  - uiReference:
       m_AssetGUID: 5f8fe5a774638a147b9512ee92a07045
       m_SubObjectName: 
       m_SubObjectType: 

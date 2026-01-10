@@ -46,7 +46,7 @@ namespace ProjectABC.Core
                 return;
             }
 
-            ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreEntry.ScoreReason.ScoreByCardEffect);
+            ScoreEntry scoreEntry = new ScoreEntry(_gainWinPoints, ScoreReason.ScoreByCardEffect);
             gameState.ScoreBoard.RegisterScoreEntry(ownSide.Player, scoreEntry);
 
             int totalWinPoints = gameState.ScoreBoard.GetTotalWinPoints(ownSide.Player);

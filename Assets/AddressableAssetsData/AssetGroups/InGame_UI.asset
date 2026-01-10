@@ -75,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de01ff253109d21418aef22450985e7f
+    m_Address: GainWinPointsAnnounceUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f48239c11bdb3ca4c85b098b0e8d3940
     m_Address: MatchResultUI
     m_ReadOnly: 0

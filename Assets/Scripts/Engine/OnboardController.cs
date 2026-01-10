@@ -324,6 +324,18 @@ namespace ProjectABC.Engine
                     ScaledTime revealDuration = delay * 0.5f;
                     await RevealDeckCardAsync(cardOnboard, prevOnboardPoints.revealCardPoint, revealDuration, revealDuration, token);
                 }
+                else if (movementInfo.PreviousLocation.CardZone == CardZone.Infirmary)
+                {
+                    var infirmary = _cardReferenceLocator[prevLocationOwner].Infirmary;
+                    var alignTasks = new List<Task>();
+                    
+                    foreach (var slotKey in infirmary.Keys)
+                    {
+                        alignTasks.Add(AlignCardsOfInfirmarySlotTask(prevLocationOwner, slotKey, delay, token));
+                    }
+
+                    await Task.WhenAll(alignTasks);
+                }
                 else
                 {
                     await delay.WaitScaledTimeAsync(token);
@@ -347,6 +359,15 @@ namespace ProjectABC.Engine
             }
             finally
             {
+                if (movementInfo.PreviousLocation.CardZone == CardZone.Infirmary)
+                {
+                    var infirmary = _cardReferenceLocator[prevLocationOwner].Infirmary;
+                    foreach (var slotKey in infirmary.Keys)
+                    {
+                        AlignCardsOfInfirmarySlot(prevLocationOwner, slotKey);
+                    }
+                }
+                
                 switch (movementInfo.CurrentLocation.CardZone)
                 {
                     case CardZone.CardPile:
