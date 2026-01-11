@@ -10,6 +10,7 @@ namespace ProjectABC.Core
         public IReadOnlyList<CardData> CardDataForStarting;
         public IReadOnlyList<CardData> CardDataForPiles;
         public IReadOnlyList<RecruitData> RecruitData;
+        public IReadOnlyList<DismissData> DismissData;
         public IReadOnlyList<WinPointData> WinPointData;
         public IReadOnlyDictionary<string, CardEffectData> CardEffectData;
 
@@ -20,6 +21,7 @@ namespace ProjectABC.Core
             CardDataForStarting = new List<CardData>(gameDataAsset.CardDataForStarting);
             CardDataForPiles = new List<CardData>(gameDataAsset.CardDataForPiles);
             RecruitData = new List<RecruitData>(gameDataAsset.RecruitData);
+            DismissData = new List<DismissData>(gameDataAsset.DismissData);
             WinPointData = new List<WinPointData>(gameDataAsset.WinPointData);
             CardEffectData = gameDataAsset.CardEffectData.ToDictionary(data => data.id);
 

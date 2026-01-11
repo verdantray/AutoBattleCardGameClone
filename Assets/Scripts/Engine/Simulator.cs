@@ -80,7 +80,6 @@ namespace ProjectABC.Engine
             {
                 GetDataAssetsLoadingTask(),
                 SceneLoader.Instance.GetPostSceneLoadingTask(),
-                GlobalAssetBinder.Instance.GetAssetBindingTask(),
                 Model.cardObjectSpawner.GetInitializingTask(),
             };
             

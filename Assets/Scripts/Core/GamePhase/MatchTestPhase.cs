@@ -8,8 +8,6 @@ namespace ProjectABC.Core
 {
     public class MatchTestPhase : IGamePhase
     {
-        public GamePhase Phase => GamePhase.Match;
-
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             var matchingPairs = simulationContext.CurrentState.GetMatchingPairs();

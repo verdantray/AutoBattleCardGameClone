@@ -102,19 +102,32 @@ namespace ProjectABC.Engine
             int selectedPoolIndex = selectCardPoolUI.FocusIndex;
             var (grade, amount) = gradeAmountPairs[selectedPoolIndex];
             
-            var recruitCardUI = UIManager.Instance.OpenUI<RecruitCardUI>();
-            var param = new RecruitCardUI.RecruitCardParam(amount, myState.GradeCardPiles[grade], myState.RerollChance);
+            var selectCardsUI = UIManager.Instance.OpenUI<SelectCardsUI>();
+            var param = new SelectCardsUI.SelectCardsParam(amount, myState.GradeCardPiles[grade], myState.RecruitRerollChance);
             
-            recruitCardUI.SetRecruit(param);
-            var cards = await recruitCardUI.GetRecruitCardsAsync();
+            selectCardsUI.SetSelectParam(param);
+            var selectCardIds = await selectCardsUI.GetSelectCardIdsAsync();
             
-            IPlayerAction action = new RecruitCardsAction(this, grade, cards);
+            IPlayerAction action = new RecruitCardsAction(this, grade, selectCardIds);
             return action;
         }
 
-        public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState)
+        public async Task<IPlayerAction> DismissCardsAsync(PlayerState myState, DismissOnRound dismissOnRound)
         {
-            throw new System.NotImplementedException();
+            int dismissAmount = dismissOnRound.GetDismissAmount();
+            List<string> selectedCardIds = new List<string>();
+            
+            if (dismissAmount > 0)
+            {
+                var selectCardsUI = UIManager.Instance.OpenUI<SelectCardsUI>();
+                var param = new SelectCardsUI.SelectCardsParam(dismissAmount, myState.RecruitedCardIds, myState.DismissRerollChance);
+                
+                selectCardsUI.SetSelectParam(param);
+                selectedCardIds = await selectCardsUI.GetSelectCardIdsAsync();
+            }
+            
+            IPlayerAction action = new DeleteCardsAction(this, selectedCardIds);
+            return action;
         }
 
         public Task WaitUntilConfirmToProceed(Type eventType)

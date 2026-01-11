@@ -5,18 +5,19 @@ using System.Threading.Tasks;
 
 namespace ProjectABC.Core
 {
-    public class DeletionTestPhase : IGamePhase
+    public class DismissTestPhase : IGamePhase
     {
-        public GamePhase Phase => GamePhase.Deletion;
-        
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
+            GameState currentState = simulationContext.CurrentState;
+            DismissOnRound dismissOnRound = new DismissOnRound(currentState.Round);
+            
             List<PlayerState> playerStates = simulationContext.CurrentState.PlayerStates;
             List<Task<IPlayerAction>> tasks = new List<Task<IPlayerAction>>();
             
             foreach (var playerState in playerStates)
             {
-                var task = playerState.Player.DeleteCardsAsync(playerState);
+                var task = playerState.Player.DismissCardsAsync(playerState, dismissOnRound);
                 tasks.Add(task);
             }
 

@@ -18,12 +18,7 @@ MonoBehaviour:
     m_SubObjectType: 
     m_SubObjectGUID: 
     m_EditorAssetChanged: 0
-  assetRefsForPreload:
-  - m_AssetGUID: fb21346315ead5f4ebb0166c6f37452e
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_SubObjectGUID: 
-    m_EditorAssetChanged: 0
+  assetRefsForPreload: []
   assetRefsForPostLoad: []
   cardAtlasEntry:
     atlasCommonName: atlas_card

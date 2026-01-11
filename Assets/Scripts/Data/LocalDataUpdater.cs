@@ -7,15 +7,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ProjectABC.Data.Editor
+namespace ProjectABC.Data
 {
-    public interface ILocalFieldUpdatable
-    {
-#if UNITY_EDITOR
-        public void UpdateFields(TextAsset textAsset);
-#endif
-    }
-    
     [Serializable]
     public class LocalDataUpdater
     {

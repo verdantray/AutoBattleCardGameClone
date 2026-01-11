@@ -10,31 +10,31 @@ using UnityEngine.UI;
 
 namespace ProjectABC.Engine.UI
 {
-    public sealed class RecruitCardUI : UIElement
+    public sealed class SelectCardsUI : UIElement
     {
-        [SerializeField] private RecruitCardToggle[] toggles;
+        [SerializeField] private SelectCardToggle[] toggles;
         [SerializeField] private float toggleInterval;
         [SerializeField] private Button btnReroll;
-        [SerializeField] private Button btnRecruit;
+        [SerializeField] private Button btnSelect;
         [SerializeField] private TextMeshProUGUI txtReroll;
-        [SerializeField] private TextMeshProUGUI txtRecruit;
+        [SerializeField] private TextMeshProUGUI txtSelect;
 
         private readonly List<string> _drawnCardIds = new List<string>();
-        private readonly List<string> _recruitCardIds = new List<string>();
+        private readonly List<string> _selectedCardIds = new List<string>();
         private readonly List<string> _rejectedCardIds = new List<string>();
         
         private Vector2 _referenceResolution;
-        private RecruitCardParam _param;
+        private SelectCardsParam _param;
         private Coroutine _refreshRoutine;
 
         private void Awake()
         {
             foreach (var toggle in toggles)
             {
-                toggle.AddListener(RefreshRecruitButton);
+                toggle.AddListener(RefreshSelectButton);
             }
             
-            btnRecruit.onClick.AddListener(OnRecruit);
+            btnSelect.onClick.AddListener(OnSelect);
             btnReroll.onClick.AddListener(OnReroll);
         }
 
@@ -47,18 +47,18 @@ namespace ProjectABC.Engine.UI
         {
             StopRoutine();
             
-            btnRecruit.onClick.RemoveAllListeners();
+            btnSelect.onClick.RemoveAllListeners();
             btnReroll.onClick.RemoveAllListeners();
         }
 
-        private void OnRecruit()
+        private void OnSelect()
         {
             float pickedCardDestY = (_referenceResolution.y + (toggles[0].Size.y * 2.0f)) * -0.5f;
-            PickCards(_recruitCardIds, pickedCardDestY);
+            PickCards(_selectedCardIds, pickedCardDestY);
 
-            if (_recruitCardIds.Count == _param.RecruitCardAmount)
+            if (_selectedCardIds.Count == _param.SelectCardAmount)
             {
-                UIManager.Instance.CloseUI<RecruitCardUI>();
+                UIManager.Instance.CloseUI<SelectCardsUI>();
             }
             else
             {
@@ -142,24 +142,27 @@ namespace ProjectABC.Engine.UI
             _referenceResolution = canvasScaler.referenceResolution;
         }
 
-        public void SetRecruit(RecruitCardParam param)
+        public void SetSelectParam(SelectCardsParam param)
         {
             _param = param;
             Refresh();
+            
+            RefreshSelectButton(false);
+            RefreshRerollButton();
         }
         
         public override void Refresh()
         {
             var (amount, cardIdQueue, rerollChance) = _param;
             
-            btnRecruit.interactable = false;
+            btnSelect.interactable = false;
             btnReroll.interactable = false;
 
             int prevExistsCount = _drawnCardIds.Count;
 
-            if (_drawnCardIds.Count < GameConst.GameOption.RECRUIT_HAND_AMOUNT)
+            if (_drawnCardIds.Count < GameConst.GameOption.DEFAULT_CARD_SELECT_AMOUNT)
             {
-                int drawSize = GameConst.GameOption.RECRUIT_HAND_AMOUNT - _drawnCardIds.Count;
+                int drawSize = GameConst.GameOption.DEFAULT_CARD_SELECT_AMOUNT - _drawnCardIds.Count;
                 var drawnCardIds = rerollChance.GetRerollCardIds(cardIdQueue, drawSize);
                 
                 _drawnCardIds.AddRange(drawnCardIds);
@@ -193,37 +196,37 @@ namespace ProjectABC.Engine.UI
             }
         }
 
-        private void RefreshRecruitButton(bool _)
+        private void RefreshSelectButton(bool _)
         {
             var toggledIndexes = GetToggledIndexes();
-            btnRecruit.interactable = _recruitCardIds.Count + toggledIndexes.Length <= _param.RecruitCardAmount;
+            btnSelect.interactable = _selectedCardIds.Count + toggledIndexes.Length <= _param.SelectCardAmount;
             
-            txtRecruit.text = LocalizationHelper.Instance.Localize(
-                "ui_recruit_card_recruit_students",
-                toggledIndexes.Length + _recruitCardIds.Count,
-                _param.RecruitCardAmount
+            txtSelect.text = LocalizationHelper.Instance.Localize(
+                "ui_select_cards_select",
+                toggledIndexes.Length + _selectedCardIds.Count,
+                _param.SelectCardAmount
             );
         }
 
         private void RefreshRerollButton()
         {
             txtReroll.text = LocalizationHelper.Instance.Localize(
-                "ui_recruit_card_reroll",
+                "ui_select_cards_reroll",
                 _param.RerollChance.RemainRerollChance
             );
             
             btnReroll.interactable = _param.RerollChance.RemainRerollChance > 0;
         }
 
-        public async Task<List<string>> GetRecruitCardsAsync()
+        public async Task<List<string>> GetSelectCardIdsAsync()
         {
             await WaitUntilCloseAsync();
 
-            _param.CardIdQueue.EnqueueCardIds(_recruitCardIds);
+            _param.CardIdQueue.EnqueueCardIds(_selectedCardIds);
             _param.CardIdQueue.EnqueueCardIds(_drawnCardIds);
 
-            List<string> cards = new List<string>(_recruitCardIds);
-            _recruitCardIds.Clear();
+            List<string> cards = new List<string>(_selectedCardIds);
+            _selectedCardIds.Clear();
 
             _param.RerollChance.Reset();
             _param = null;
@@ -243,22 +246,22 @@ namespace ProjectABC.Engine.UI
 
         #region inner parameter class for functionality
 
-        public class RecruitCardParam
+        public class SelectCardsParam
         {
-            public readonly int RecruitCardAmount;
+            public readonly int SelectCardAmount;
             public readonly CardIdQueue CardIdQueue;
             public readonly RerollChance RerollChance;
 
-            public RecruitCardParam(int amount, CardIdQueue cardIdQueue, RerollChance rerollChance)
+            public SelectCardsParam(int amount, CardIdQueue cardIdQueue, RerollChance rerollChance)
             {
-                RecruitCardAmount = amount;
+                SelectCardAmount = amount;
                 CardIdQueue = cardIdQueue;
                 RerollChance = rerollChance;
             }
 
             public void Deconstruct(out int amount, out CardIdQueue cardIdQueue, out RerollChance rerollChance)
             {
-                amount = RecruitCardAmount;
+                amount = SelectCardAmount;
                 cardIdQueue = CardIdQueue;
                 rerollChance = RerollChance;
             }

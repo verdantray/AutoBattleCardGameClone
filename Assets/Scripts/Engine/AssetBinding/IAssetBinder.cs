@@ -8,7 +8,6 @@ namespace ProjectABC.Engine
 {
     public interface IAssetBinder
     {
-        public Task GetAssetLoadingTask();
         public bool IsAllBindingHandlesLoaded();
 
         public static bool CheckHandleLoaded(AsyncOperationHandle handle)

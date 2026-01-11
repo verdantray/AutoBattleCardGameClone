@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
 using ProjectABC.Data;
+using ProjectABC.Engine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -33,16 +34,6 @@ namespace ProjectABC.Engine
 
         // TODO : get locale from user setting
         private LocaleType CurrentLocaleSetting { get; } = LocaleType.Ko;
-
-        private void Awake()
-        {
-            SceneManager.sceneLoaded += SwapFontOnSceneLoaded;
-        }
-
-        private void OnDestroy()
-        {
-            SceneManager.sceneLoaded -= SwapFontOnSceneLoaded;
-        }
 
         private void Start()
         {
@@ -80,6 +71,11 @@ namespace ProjectABC.Engine
             if (!validSceneNames.Contains(scene.name))
             {
                 return;
+            }
+
+            foreach (Transform child in UIManager.Instance.Canvas.transform)
+            {
+                Debug.Log(child);
             }
 
             var all = FindObjectsByType<TMP_Text>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -136,30 +132,6 @@ namespace ProjectABC.Engine
             
             var schedule = _schedules.Dequeue();
             schedule.Run(this);
-        }
-        
-        public Task GetAssetLoadingTask()
-        {
-            List<Task> tasks = new List<Task>();
-            
-            var basicFontLoadingTask = _basicFontHandles.Values
-                .Where(FindNotCompleteHandlesYet)
-                .Select(handle => handle.Task);
-            
-            tasks.AddRange(basicFontLoadingTask);
-
-            var additiveFontLoadingTask = _additiveFontHandles.Values
-                .Where(FindNotCompleteHandlesYet)
-                .Select(handle => handle.Task);
-            
-            tasks.AddRange(additiveFontLoadingTask);
-
-            return Task.WhenAll(tasks);
-            
-            bool FindNotCompleteHandlesYet(AsyncOperationHandle<TMP_FontAsset> handle)
-            {
-                return handle.IsValid() && !handle.IsDone;
-            }
         }
 
         public bool IsAllBindingHandlesLoaded()

@@ -32,10 +32,10 @@ namespace ProjectABC.Core
         {
             PlayerState playerState = state.GetPlayerState(Player);
             
-            playerState.IncludeCardIds.Initialize(_cardDataForStarting);
+            playerState.RecruitedCardIds.Initialize(_cardDataForStarting);
             playerState.GradeCardPiles.Initialize(_cardDataForPiles);
             
-            playerState.IncludeCardIds.Shuffle();
+            playerState.RecruitedCardIds.Shuffle();
             
             foreach (var idQueueForGrade in playerState.GradeCardPiles.Values)
             {
@@ -81,7 +81,7 @@ namespace ProjectABC.Core
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
-            playerState.IncludeCardIds.EnqueueCardIds(_drawnCardIds);
+            playerState.RecruitedCardIds.EnqueueCardIds(_drawnCardIds);
 
             foreach (var cardId in _drawnCardIds)
             {
@@ -143,9 +143,7 @@ namespace ProjectABC.Core
         public void ApplyState(GameState state)
         {
             PlayerState playerState = state.GetPlayerState(Player);
-            
-            playerState.IncludeCardIds.RemoveCardIds(_deleteCardIds);
-            playerState.ExcludeCardIds.EnqueueCardIds(_deleteCardIds);
+            playerState.DismissedCardIds.EnqueueCardIds(_deleteCardIds);
         }
 
         public void ApplyContextEvent(SimulationContextEvents events)

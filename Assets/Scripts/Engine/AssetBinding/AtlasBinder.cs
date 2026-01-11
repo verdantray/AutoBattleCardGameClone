@@ -72,15 +72,6 @@ namespace ProjectABC.Engine
             return targetSprite;
         }
 
-        public Task GetAssetLoadingTask()
-        {
-            var tasks = _atlasHandles.Values
-                .Where(handle => handle.IsValid() && !handle.IsDone)
-                .Select(handle => handle.Task);
-            
-            return Task.WhenAll(tasks);
-        }
-
         public bool IsAllBindingHandlesLoaded()
         {
             return _atlasHandles.Values.All(handle => IAssetBinder.CheckHandleLoaded(handle));

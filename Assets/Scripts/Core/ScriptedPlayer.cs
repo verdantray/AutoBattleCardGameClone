@@ -11,30 +11,10 @@ namespace ProjectABC.Core
     {
         public string name;
         public ClubType deckConstructClubFlag;
-        public CardDeletionRange cardDeletionRange;
 
         public IPlayer GetPlayer()
         {
-            return new ScriptedPlayer(name, deckConstructClubFlag, cardDeletionRange);
-        }
-    }
-
-    [Serializable]
-    public record CardDeletionRange
-    {
-        public ushort min;
-        public ushort max;
-
-        public ushort GetDeletionAmount(int totalCardsAmount)
-        {
-            // TODO: use PCG32
-            Random random = new Random();
-            ushort rangeCount = (ushort)(Math.Min(max, totalCardsAmount) - min);
-
-            return (ushort)Enumerable
-                .Range(min, rangeCount)
-                .OrderBy(_ => random.Next())
-                .First();
+            return new ScriptedPlayer(name, deckConstructClubFlag);
         }
     }
     
@@ -44,13 +24,11 @@ namespace ProjectABC.Core
         public bool IsLocalPlayer => false;
 
         private readonly ClubType _selectedClubFlag;
-        private readonly CardDeletionRange _cardDeletionRange;
 
-        public ScriptedPlayer(string name, ClubType selectedClubFlag, CardDeletionRange cardDeletionRange)
+        public ScriptedPlayer(string name, ClubType selectedClubFlag)
         {
             Name = name;
             _selectedClubFlag = selectedClubFlag;
-            _cardDeletionRange = cardDeletionRange;
         }
         
         public Task<IPlayerAction> DeckConstructAsync()
@@ -112,14 +90,10 @@ namespace ProjectABC.Core
             // return task;
         }
 
-        public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState)
+        public Task<IPlayerAction> DismissCardsAsync(PlayerState myState, DismissOnRound dismissOnRound)
         {
-            int deleteAmount = _cardDeletionRange.GetDeletionAmount(myState.IncludeCardIds.Count);
-            
-            // TODO : use PCG32
-            Random random = new Random();
-            List<string> cardIdsToDelete = myState.IncludeCardIds.OrderBy(_ => random.Next()).Take(deleteAmount).ToList();
-
+            // temporary
+            List<string> cardIdsToDelete = new List<string>();
             IPlayerAction action = new DeleteCardsAction(this, cardIdsToDelete);
             Task<IPlayerAction> task = Task.FromResult(action);
             

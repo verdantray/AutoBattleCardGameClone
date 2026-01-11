@@ -29,7 +29,7 @@ namespace ProjectABC.Core
         {
             Player = playerState.Player;
 
-            foreach (var cardId in playerState.IncludeCardIds)
+            foreach (var cardId in playerState.RecruitedCardIds)
             {
                 var cardData = Storage.Instance.GetCardData(cardId);
                 var card = new Card(Player, cardData);

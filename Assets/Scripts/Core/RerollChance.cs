@@ -5,34 +5,45 @@ namespace ProjectABC.Core
 {
     public record RerollBonus
     {
-        // TODO : flesh out after implement argument features
-        
         public readonly int BonusRerollChance;
+        public readonly bool UnlimitedBonusReroll;
 
         public RerollBonus(int bonusRerollChance)
         {
             BonusRerollChance = bonusRerollChance;
+            UnlimitedBonusReroll = false;
+        }
+
+        public RerollBonus(bool unlimitedBonusReroll)
+        {
+            BonusRerollChance = 0;
+            UnlimitedBonusReroll = unlimitedBonusReroll;
         }
     }
     
     public class RerollChance
     {
-        private readonly int _defaultMaxRerollChance;
-
-        private readonly List<RerollBonus> _bonuses =  new List<RerollBonus>();
+        private const int FREE_REROLL_CHANCES = 1;
         
-        public int MaxRerollChance => _defaultMaxRerollChance + _bonuses.Sum(bonus => bonus.BonusRerollChance);
         public int RemainRerollChance { get; private set; }
+        
+        private int MaxRerollChance => _maxRerollChances + _bonuses.Sum(bonus => bonus.BonusRerollChance);
+        private bool UnlimitedReroll => _bonuses.Any(bonus => bonus.UnlimitedBonusReroll);
+        
+        private readonly int _maxRerollChances;
+        private readonly List<RerollBonus> _bonuses =  new List<RerollBonus>();
 
-        public RerollChance(int defaultMaxRerollChance = GameConst.GameOption.MULLIGAN_DEFAULT_AMOUNT)
+        private int _remainFreeRerollChances;
+        
+        public RerollChance(int maxRerollChances)
         {
-            _defaultMaxRerollChance = defaultMaxRerollChance;
+            _maxRerollChances = maxRerollChances;
             Reset();
         }
 
         public List<string> GetRerollCardIds(CardIdQueue idQueue, int drawSize)
         {
-            RemainRerollChance--;
+            ConsumeRerollCost();
             return idQueue.DequeueCardIds(drawSize);
         }
 
@@ -41,8 +52,25 @@ namespace ProjectABC.Core
             _bonuses.Add(bonus);
         }
 
+        private void ConsumeRerollCost()
+        {
+            if (UnlimitedReroll)
+            {
+                return;
+            }
+            
+            if (_remainFreeRerollChances > 0)
+            {
+                _remainFreeRerollChances--;
+                return;
+            }
+
+            RemainRerollChance--;
+        }
+
         public void Reset()
         {
+            _remainFreeRerollChances = FREE_REROLL_CHANCES;
             RemainRerollChance = MaxRerollChance;
         }
     }

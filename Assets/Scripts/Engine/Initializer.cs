@@ -1,3 +1,4 @@
+using System;
 using ProjectABC.Core;
 using UnityEngine;
 using ProjectABC.Utils;
@@ -8,7 +9,17 @@ namespace ProjectABC.Engine
     {
         private void Start()
         {
-            SceneLoader.Instance.LoadSceneAsync(GameConst.SceneName.IN_GAME).Forget();
+            Application.targetFrameRate = 120;
+            
+            try
+            {
+                SceneLoader.Instance.GetLoadSceneTask(GameConst.SceneName.IN_GAME).Forget();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                throw;
+            }
         }
     }
 }

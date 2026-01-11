@@ -60,7 +60,7 @@ namespace ProjectABC.Core
                 // TODO: use schedule data
                 if (round is 3 or 7)
                 {
-                    EnqueueGamePhase(new DeletionTestPhase());
+                    EnqueueGamePhase(new DismissTestPhase());
                 }
                 
                 EnqueueGamePhase(new RecruitTestPhase());
@@ -93,20 +93,9 @@ namespace ProjectABC.Core
             _stopSimulationTokenSource = null;
         }
     }
-
-    public enum GamePhase
-    {
-        DeckConstruction,
-        Preparation,
-        Recruit,
-        Deletion,
-        Match,
-    }
     
     public interface IGamePhase
     {
-        public GamePhase Phase { get; }
-        
         public Task ExecutePhaseAsync(SimulationContext simulationContext);
         
         public async Task ExecutePhaseAsync(SimulationContext simulationContext, CancellationToken token)

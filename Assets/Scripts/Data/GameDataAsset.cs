@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ProjectABC.Data.Editor;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -13,18 +12,21 @@ namespace ProjectABC.Data
     [CreateAssetMenu(fileName = nameof(GameDataAsset), menuName = "Scripting/ScriptableObject Script Menu/DataAssets/GameDataAsset")]
     public class GameDataAsset : DataAsset
     {
+#if UNITY_EDITOR
         [SerializeField] private List<LocalDataUpdater> localDataUpdaters;
-        
+#endif
         [Header("Game Data")]
         [SerializeField] private List<CardData> cardDataForStarting;
         [SerializeField] private List<CardData> cardDataForPiles;
         [SerializeField] private List<RecruitData> recruitData;
+        [SerializeField] private List<DismissData> dismissData;
         [SerializeField] private List<WinPointData> winPointData;
         [SerializeField] private List<CardEffectData> cardEffectData;
 
         public IReadOnlyList<CardData> CardDataForStarting => cardDataForStarting;
         public IReadOnlyList<CardData> CardDataForPiles => cardDataForPiles;
         public IReadOnlyList<RecruitData> RecruitData => recruitData;
+        public IReadOnlyList<DismissData> DismissData => dismissData;
         public IReadOnlyList<WinPointData> WinPointData => winPointData;
         public IReadOnlyList<CardEffectData> CardEffectData => cardEffectData;
 
@@ -34,6 +36,7 @@ namespace ProjectABC.Data
             UpdateData(nameof(cardDataForStarting), cardDataForStarting);
             UpdateData(nameof(cardDataForPiles), cardDataForPiles);
             UpdateData(nameof(recruitData), recruitData);
+            UpdateData(nameof(dismissData), dismissData);
             UpdateData(nameof(winPointData), winPointData);
             
             EditorUtility.SetDirty(this);

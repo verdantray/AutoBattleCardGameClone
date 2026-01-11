@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace ProjectABC.Data
 {
@@ -42,7 +44,11 @@ namespace ProjectABC.Data
             
             await Task.WhenAll(loadingTasks);
             
-            // Debug.Log($"Loaded : {IsLoaded} / SceneLoaded : {IsSceneLoaded} / Preloaded : {IsAssetsPreLoaded}");
+            // Debug.Log($"{name} : SceneHandle Valid ? {SceneHandle.IsValid()} / Status ? {SceneHandle.Status}");
+            // foreach (var (key, value) in AssetHandles)
+            // {
+            //     Debug.Log($"{name} : Preload {key} / Status ? {value.Status}");
+            // }
             
             if (!activateOnLoad)
             {
@@ -52,15 +58,17 @@ namespace ProjectABC.Data
             await ActivateSceneAsync();
         }
 
-        public virtual AsyncOperation ActivateSceneAsync()
+        public async Task ActivateSceneAsync()
         {
-            if (!IsLoaded)
+            if (!SceneHandle.IsValid())
             {
-                Debug.LogError($"{nameof(SceneLoadingProfileAsset)} : scene or assets loading is not completed");
-                return new AsyncOperation();
+                throw new InvalidOperationException("Scene Handle is not valid");
             }
 
-            return SceneHandle.Result.ActivateAsync();
+            await SceneHandle.Task;
+
+            var op = SceneHandle.Result.ActivateAsync();
+            await op;
         }
 
         public Task GetPostLoadingTask()
@@ -79,6 +87,11 @@ namespace ProjectABC.Data
             {
                 handle =  Addressables.LoadAssetAsync<TObject>(assetReference);
                 AssetHandles.Add(assetReference.AssetGUID, handle);
+
+                // handle.Completed += h =>
+                // {
+                //     Debug.Log($"{name} preload done guid={assetReference.AssetGUID}, status={h.Status}, err={h.OperationException}");
+                // };
             }
 
             return handle.Task;

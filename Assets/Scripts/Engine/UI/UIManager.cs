@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -132,11 +133,6 @@ namespace ProjectABC.Engine.UI
             schedule.Run(this);
         }
 
-        public Task GetAssetLoadingTask()
-        {
-            return Task.WhenAll(_uiHandles.Values.Where(handle => handle.IsValid() && !handle.IsDone).Select(handle => handle.Task));
-        }
-
         public bool IsAllBindingHandlesLoaded()
         {
             return _uiHandles.Values.All(handle => IAssetBinder.CheckHandleLoaded(handle));
@@ -188,6 +184,8 @@ namespace ProjectABC.Engine.UI
         {
             UIElement uiElement = handle.Result.GetComponent<UIElement>();
             Type elementType = uiElement.GetType();
+            
+            TMPFontSwapTool.SwapFontToFallbackApplied(uiElement.GetComponentsInChildren<TMP_Text>(true));
             
             uiElement.gameObject.SetActive(false);
             _uiElements.Add(elementType, uiElement);

@@ -58,7 +58,7 @@ namespace ProjectABC.Core
                     break;
                 }
                 
-                ownPlayerState.IncludeCardIds.EnqueueCardId(drawnCard.Id);
+                ownPlayerState.RecruitedCardIds.EnqueueCardId(drawnCard.Id);
 
                 // if deck is empty then return default value of int (= 0)
                 int randomIndex = Enumerable.Range(0, ownSide.Deck.Count).OrderBy(_ => random.Next()).FirstOrDefault();

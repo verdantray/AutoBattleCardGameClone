@@ -67,6 +67,8 @@ namespace ProjectABC.Core
                     EnqueueCardId(data.id);
                 }
             }
+            
+            Shuffle();
         }
         
         public List<string> DequeueCardIds(int amount)

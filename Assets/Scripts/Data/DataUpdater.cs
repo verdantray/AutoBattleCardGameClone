@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using GoogleSheetsToUnity;
 
-namespace ProjectABC.Data.Editor
+namespace ProjectABC.Data
 {
     
     [Serializable]

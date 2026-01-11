@@ -29,9 +29,14 @@ MonoBehaviour:
       sheetName: 03. recruit_data
       startCell: A02
       endCell: C12
+  - updateFieldName: Dismiss Data
+    sheetReader:
+      sheetName: 04. dismiss_data
+      startCell: A02
+      endCell: B06
   - updateFieldName: Win Point Data
     sheetReader:
-      sheetName: 04. win_point_data
+      sheetName: 05. win_point_data
       startCell: A02
       endCell: C16
   localDataUpdaters:
@@ -856,6 +861,13 @@ MonoBehaviour:
   - round: 7
     recruitGradeType: 2
     amount: 2
+  dismissData:
+  - round: 3
+    amount: 2
+  - round: 5
+    amount: 2
+  - round: 7
+    amount: 3
   winPointData:
   - round: 1
     winPoint: 2

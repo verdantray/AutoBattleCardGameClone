@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace ProjectABC.Engine.UI
 {
-    public sealed class RecruitCardToggle : MonoBehaviour
+    public sealed class SelectCardToggle : MonoBehaviour
     {
         [SerializeField] private RectTransform rectTransform;
         [SerializeField] private Toggle toggle;

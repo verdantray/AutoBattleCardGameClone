@@ -87,11 +87,11 @@ namespace ProjectABC.Core
     public class PlayerState
     {
         public readonly IPlayer Player;
-
-        public readonly RerollChance RerollChance =  new RerollChance();
+        public readonly RerollChance RecruitRerollChance = new RerollChance(GameConst.GameOption.DEFAULT_RECRUIT_REROLL_CHANCES);
+        public readonly RerollChance DismissRerollChance = new RerollChance(GameConst.GameOption.DEFAULT_DISMISS_REROLL_CHANCES);
         public readonly GradeCardIdQueue GradeCardPiles = new GradeCardIdQueue();
-        public readonly CardIdQueue IncludeCardIds = new CardIdQueue();
-        public readonly CardIdQueue ExcludeCardIds = new CardIdQueue();
+        public readonly CardIdQueue RecruitedCardIds = new CardIdQueue();
+        public readonly CardIdQueue DismissedCardIds = new CardIdQueue();
 
         public PlayerState(IPlayer player)
         {

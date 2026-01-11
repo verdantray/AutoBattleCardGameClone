@@ -15,7 +15,7 @@ namespace ProjectABC.Core
         
         public Task<IPlayerAction> DeckConstructAsync();
         public Task<IPlayerAction> RecruitCardsAsync(PlayerState myState, RecruitOnRound recruitOnRound);
-        public Task<IPlayerAction> DeleteCardsAsync(PlayerState myState);
+        public Task<IPlayerAction> DismissCardsAsync(PlayerState myState, DismissOnRound dismissOnRound);
         public Task WaitUntilConfirmToProceed(Type eventType);
     }
 

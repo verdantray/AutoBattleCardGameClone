@@ -50,10 +50,7 @@ namespace ProjectABC.Engine
                 simulationContext.CollectedEvents.AddEvent(gainWinPointEvent);
             }
 
-            var waitConfirmTasks = gainWinPointEvents
-                .Select(contextEvent => contextEvent.Player.WaitUntilConfirmToProceed(typeof(GainWinPointsEvent)));
-            
-            await Task.WhenAll(waitConfirmTasks);
+            await Task.WhenAll(simulationContext.GetTasksOfAllPlayersConfirmToProceed(typeof(GainWinPointsEvent)));
         }
     }
 }

@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjectABC.Data;
+
 
 namespace ProjectABC.Core
 {
 	public class RecruitTestPhase : IGamePhase
     {
-        public GamePhase Phase => GamePhase.Recruit;
-        
         public async Task ExecutePhaseAsync(SimulationContext simulationContext)
         {
             GameState currentState = simulationContext.CurrentState;
@@ -33,32 +30,6 @@ namespace ProjectABC.Core
                 action.ApplyState(currentState);
                 action.ApplyContextEvent(simulationContext.CollectedEvents);
             }
-        }
-    }
-
-    public class RecruitOnRound
-    {
-        // TODO : remove Round member
-        public readonly int Round;
-        private readonly List<Tuple<GradeType, int>> _recruitLevelAndAmounts;
-        
-        public RecruitOnRound(int round)
-        {
-            Round = round;
-            _recruitLevelAndAmounts = Storage.Instance.RecruitData
-                .Where(data => data.round == round)
-                .Select(ElementSelector)
-                .ToList();
-        }
-
-        private static Tuple<GradeType, int> ElementSelector(RecruitData recruitData)
-        {
-            return new Tuple<GradeType, int>(recruitData.recruitGradeType, recruitData.amount);
-        }
-
-        public IReadOnlyList<Tuple<GradeType, int>> GetRecruitGradeAmountPairs()
-        {
-            return _recruitLevelAndAmounts;
         }
     }
 }

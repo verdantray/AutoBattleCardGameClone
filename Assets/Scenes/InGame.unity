@@ -1532,6 +1532,7 @@ MonoBehaviour:
   - targetRound: 3
     phases:
     - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: 1aa1c51c6613eb04c93a216679dc5f5c, type: 2}
     - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
     - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
   - targetRound: 4
@@ -1542,6 +1543,7 @@ MonoBehaviour:
   - targetRound: 5
     phases:
     - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: 1aa1c51c6613eb04c93a216679dc5f5c, type: 2}
     - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
     - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
   - targetRound: 6
@@ -1552,19 +1554,12 @@ MonoBehaviour:
   - targetRound: 7
     phases:
     - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
-    - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
-    - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
-  - targetRound: 8
-    phases:
-    - {fileID: 11400000, guid: a55f09ae699ce554ca8976f744a1dc01, type: 2}
+    - {fileID: 11400000, guid: 1aa1c51c6613eb04c93a216679dc5f5c, type: 2}
     - {fileID: 11400000, guid: bd3cd2784c0782e4fa4d589073251c20, type: 2}
     - {fileID: 11400000, guid: 4833266452643e4419ae748158c1ec77, type: 2}
   enemyEntry:
     name: "\uC5D0\uD154\uB77C"
     deckConstructClubFlag: 256
-    cardDeletionRange:
-      min: 0
-      max: 0
 --- !u!4 &1394566059
 Transform:
   m_ObjectHideFlags: 0

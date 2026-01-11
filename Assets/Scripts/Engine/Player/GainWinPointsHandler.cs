@@ -19,11 +19,6 @@ namespace ProjectABC.Engine
         public async Task WaitUntilConfirmAsync()
         {
             var announceUI = UIManager.Instance.GetUI<GainWinPointsAnnounceUI>();
-            while (!announceUI.gameObject.activeInHierarchy)
-            {
-                await Task.Yield();
-            }
-            
             await announceUI.WaitUntilCloseAsync();
         }
 

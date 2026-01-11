@@ -19,17 +19,29 @@ namespace ProjectABC.Engine
         protected override bool SetPersistent => true;
 
         private SceneLoadingProfileAsset _targetSceneProfileAsset = null;
+        private Task _loadingTask = null;
 
         private void Start()
         {
-            var currentScene = SceneManager.GetActiveScene();
-            if (currentScene.name != GameConst.SceneName.INITIALIZER)
-            {
-                SceneManager.LoadScene(GameConst.SceneName.INITIALIZER);
-            }
+            // var currentScene = SceneManager.GetActiveScene();
+            // if (currentScene.name != GameConst.SceneName.INITIALIZER)
+            // {
+            //     SceneManager.LoadScene(GameConst.SceneName.INITIALIZER);
+            // }
         }
 
-        public async Task LoadSceneAsync(string targetSceneName)
+        public Task GetLoadSceneTask(string targetSceneName)
+        {
+            if (_loadingTask is { IsCompleted: false })
+            {
+                return _loadingTask;
+            }
+
+            _loadingTask = LoadSceneAsync(targetSceneName);
+            return _loadingTask;
+        }
+
+        private async Task LoadSceneAsync(string targetSceneName)
         {
             if (!persistentWorldProfile.IsLoaded)
             {
@@ -57,20 +69,23 @@ namespace ProjectABC.Engine
                 
                 return;
             }
-
-            List<Task> tasks = new List<Task>
+            
+            List<Task> loadingSceneTasks = new List<Task>
             {
                 Task.Delay(TimeSpan.FromSeconds(0.25)),  // await for blur
                 _targetSceneProfileAsset.LoadSceneAndAssetsAsync(),
+                // GlobalAssetBinder.Instance.GetAssetBindingTask()
             };
+
+            // Debug.Log("Loading scene and assets");
+            await Task.WhenAll(loadingSceneTasks);
 
             var unloadPreloadedScenesTasks = sceneLoadingProfiles
                 .Where(profile => profile.IsLoaded && profile.ProfileName != targetSceneName)
                 .Select(profile => profile.UnloadSceneAndAssetsAsync());
-            
-            tasks.AddRange(unloadPreloadedScenesTasks);
 
-            await Task.WhenAll(tasks);
+            // Debug.Log("unload preloaded scenes");
+            await Task.WhenAll(unloadPreloadedScenesTasks);
             await _targetSceneProfileAsset.ActivateSceneAsync();
             
             _targetSceneProfileAsset.GetPostLoadingTask().Forget();

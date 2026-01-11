@@ -29,8 +29,10 @@ namespace ProjectABC.Core
             public const int MAX_ROUND = 7;
             public const int SELECT_CLUB_TYPES_AMOUNT = 7;
             public const string DEFAULT_CLUB_TYPE = "Council";
-            public const int MULLIGAN_DEFAULT_AMOUNT = 2;
-            public const int RECRUIT_HAND_AMOUNT = 5;
+            public const int DEFAULT_RECRUIT_REROLL_CHANCES = 1;
+            public const int DEFAULT_DISMISS_REROLL_CHANCES = 3;
+            public const int DEFAULT_CARD_SELECT_AMOUNT = 5;
+            
             public const int DEFAULT_INFIRMARY_SLOT_LIMIT = 6;
         }
 

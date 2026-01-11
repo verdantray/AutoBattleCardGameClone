@@ -896,16 +896,16 @@ MonoBehaviour:
       \uC120\uD0DD\uD574\uC8FC\uC138\uC694."
     en: Please select the grade and number of students you wish to recruit.
     ja: 
-  - key: ui_recruit_card_announce
-    ko: "\uD559\uC0DD\uC744 \uC120\uD0DD\uD574\uC11C \uC601\uC785\uD558\uAC70\uB098
-      \uBAA9\uB85D\uC73C\uB85C \uB2E4\uC2DC \uAC00\uC838\uC624\uC138\uC694."
-    en: Select students to recruit or reroll.
+  - key: ui_select_cards_announce
+    ko: "\uD559\uC0DD\uC744 \uC120\uD0DD\uD558\uAC70\uB098 \uBAA9\uB85D\uC744 \uB2E4\uC2DC
+      \uBD88\uB7EC\uC624\uC138\uC694."
+    en: Select students or reroll.
     ja: 
-  - key: ui_recruit_card_recruit_students
-    ko: "\uC601\uC785\uD558\uAE30 ({0}/{1})"
-    en: Recruit ({0}/{1})
+  - key: ui_select_cards_select
+    ko: "\uC120\uD0DD\uD558\uAE30 ({0}/{1})"
+    en: Select ({0}/{1})
     ja: 
-  - key: ui_recruit_card_reroll
+  - key: ui_select_cards_reroll
     ko: "\uB2E4\uC2DC \uAC00\uC838\uC624\uAE30 ({0})"
     en: Reroll ({0})
     ja: 

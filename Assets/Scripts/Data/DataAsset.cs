@@ -10,13 +10,20 @@ using UnityEditor;
 
 #endif
 
-namespace ProjectABC.Data.Editor
+namespace ProjectABC.Data
 {
     public interface IFieldUpdatable
     {
 #if UNITY_EDITOR
         public bool IsValid { get; }
         public void UpdateFields(List<GSTU_Cell> cells);
+#endif
+    }
+    
+    public interface ILocalFieldUpdatable
+    {
+#if UNITY_EDITOR
+        public void UpdateFields(TextAsset textAsset);
 #endif
     }
 

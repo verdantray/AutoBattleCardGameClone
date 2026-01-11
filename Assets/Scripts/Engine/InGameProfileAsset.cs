@@ -36,12 +36,12 @@ namespace ProjectABC.Engine
             
             // TODO : load while enter title or lobby instead of in game
             GlobalAssetBinder.Instance.AtlasBinder.AddAssetBindingEntry(cardAtlasEntry);
-            GlobalAssetBinder.Instance.FontBinder.AddAssetBindingEntry(additiveFontEntry);
-
             foreach (var inGameAtlasEntry in atlasEntries)
             {
                 GlobalAssetBinder.Instance.AtlasBinder.AddAssetBindingEntry(inGameAtlasEntry);
             }
+            
+            GlobalAssetBinder.Instance.FontBinder.AddAssetBindingEntry(additiveFontEntry);
 
             foreach (var inGameUIEntry in uIEntries)
             {

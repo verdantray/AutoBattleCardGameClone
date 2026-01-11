@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tmpText: {fileID: 5168148518508827906}
-  assignedLocalizationKey: ui_recruit_card_announce
+  assignedLocalizationKey: ui_recruit_card_pool_announce
 --- !u!114 &5168148518508827906
 MonoBehaviour:
   m_ObjectHideFlags: 0
