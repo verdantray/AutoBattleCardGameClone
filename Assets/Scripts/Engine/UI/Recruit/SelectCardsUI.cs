@@ -93,7 +93,7 @@ namespace ProjectABC.Engine.UI
                 toggle.IsOn = false;
             }
             
-            int cardsCount = _drawnCardIds.Count + _rejectedCardIds.Count;
+            int cardsCount = _drawnCardIds.Count;
             bool isOdd = cardsCount % 2 != 0;
             float left = (toggleInterval * Mathf.FloorToInt(cardsCount / 2.0f) * -1.0f)
                          + (isOdd ? 0.0f : toggleInterval * 0.5f);
@@ -104,7 +104,6 @@ namespace ProjectABC.Engine.UI
                 Vector2 target = from;
 
                 bool isReroll = toggledIndexes.Contains(i);
-                
                 if (isReroll)
                 {
                     target.y = togglePosY;
@@ -146,9 +145,6 @@ namespace ProjectABC.Engine.UI
         {
             _param = param;
             Refresh();
-            
-            RefreshSelectButton(false);
-            RefreshRerollButton();
         }
         
         public override void Refresh()
@@ -158,6 +154,9 @@ namespace ProjectABC.Engine.UI
             btnSelect.interactable = false;
             btnReroll.interactable = false;
 
+            cardIdQueue.EnqueueCardIds(_rejectedCardIds);
+            _rejectedCardIds.Clear();
+            
             int prevExistsCount = _drawnCardIds.Count;
 
             if (_drawnCardIds.Count < GameConst.GameOption.DEFAULT_CARD_SELECT_AMOUNT)
@@ -194,6 +193,9 @@ namespace ProjectABC.Engine.UI
                 toggles[i].SetCard(_drawnCardIds[i]);
                 toggles[i].MoveToPosition(from, target, delay, duration, callback);
             }
+            
+            RefreshSelectButton(false);
+            RefreshRerollButton();
         }
 
         private void RefreshSelectButton(bool _)
@@ -222,12 +224,12 @@ namespace ProjectABC.Engine.UI
         {
             await WaitUntilCloseAsync();
 
-            _param.CardIdQueue.EnqueueCardIds(_selectedCardIds);
-            _param.CardIdQueue.EnqueueCardIds(_drawnCardIds);
-
             List<string> cards = new List<string>(_selectedCardIds);
             _selectedCardIds.Clear();
 
+            _param.CardIdQueue.EnqueueCardIds(_drawnCardIds);
+            _drawnCardIds.Clear();
+            
             _param.RerollChance.Reset();
             _param = null;
 

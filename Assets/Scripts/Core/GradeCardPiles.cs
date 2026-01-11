@@ -18,7 +18,7 @@ namespace ProjectABC.Core
 
         public void Initialize(IEnumerable<CardData> cardData)
         {
-            foreach (var groupedData in cardData.GroupBy(card => card.gradeType))
+            foreach (var groupedData in cardData.GroupBy(data => data.gradeType))
             {
                 GradeType grade = groupedData.Key;
                 _cardIdQueues[grade].Initialize(groupedData);
