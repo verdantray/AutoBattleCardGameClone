@@ -104,7 +104,7 @@ namespace ProjectABC.Core
                 if (lastRound > 0)
                 {
                     IPlayer opponent = otherSide.Player;
-                    for (int i = 0; i < lastRound; i++)
+                    for (int i = 1; i <= lastRound; i++)
                     {
                         var previousMatchResult = gameState.MatchResults.GetMatchResult(i, opponent);
                         wonCount += previousMatchResult.Winner == opponent
