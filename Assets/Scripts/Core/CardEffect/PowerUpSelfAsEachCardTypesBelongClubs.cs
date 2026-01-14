@@ -96,7 +96,9 @@ namespace ProjectABC.Core
             
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                return args.OwnSide.Field;
+                return args.OwnSide.Field.Contains(CallCard)
+                    ? new[] { CallCard }
+                    : Array.Empty<Card>();
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)

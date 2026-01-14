@@ -1,9 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjectABC.Core;
+using ProjectABC.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +25,6 @@ namespace ProjectABC.Engine.UI
         
         private Vector2 _referenceResolution;
         private SelectCardsParam _param;
-        private Coroutine _refreshRoutine;
 
         private void Awake()
         {
@@ -38,15 +37,8 @@ namespace ProjectABC.Engine.UI
             btnReroll.onClick.AddListener(OnReroll);
         }
 
-        private void OnDisable()
-        {
-            StopRoutine();
-        }
-
         private void OnDestroy()
         {
-            StopRoutine();
-            
             btnSelect.onClick.RemoveAllListeners();
             btnReroll.onClick.RemoveAllListeners();
         }
@@ -62,18 +54,24 @@ namespace ProjectABC.Engine.UI
             }
             else
             {
-                StopRoutine();
-                _refreshRoutine = StartCoroutine(DelayedRefresh(0.15f));
+                ShowSelectableCards(false, 0.15f).Forget();
             }
         }
 
         private void OnReroll()
         {
-            float pickedCardDestY = (_referenceResolution.y + (toggles[0].Size.y * 2.0f)) * 0.5f;
-            PickCards(_rejectedCardIds, pickedCardDestY);
+            foreach (var toggle in toggles)
+            {
+                toggle.IsOn = false;
+            }
             
-            StopRoutine();
-            _refreshRoutine = StartCoroutine(DelayedRefresh(0.15f));
+            // float pickedCardDestY = (_referenceResolution.y + (toggles[0].Size.y * 2.0f)) * 0.5f;
+            // PickCards(_rejectedCardIds, pickedCardDestY);
+            //
+            _rejectedCardIds.AddRange(_drawnCardIds);
+            _drawnCardIds.Clear();
+            
+            ShowSelectableCards(true, 0.15f).Forget();
         }
 
         private void PickCards(ICollection<string> pickedCards, float togglePosY)
@@ -84,7 +82,7 @@ namespace ProjectABC.Engine.UI
             {
                 int index = toggledIndexes[i];
                 var card = _drawnCardIds[index];
-                _drawnCardIds.RemoveAt(index);
+                // _drawnCardIds.RemoveAt(index);
                 pickedCards.Add(card);
             }
             
@@ -119,22 +117,6 @@ namespace ProjectABC.Engine.UI
             }
         }
 
-        private void StopRoutine()
-        {
-            if (_refreshRoutine != null)
-            {
-                StopCoroutine(_refreshRoutine);
-            }
-
-            _refreshRoutine = null;
-        }
-
-        private IEnumerator DelayedRefresh(float delay)
-        {
-            yield return new WaitForSeconds(delay);
-            Refresh();
-        }
-
         public override void OnOpen()
         {
             CanvasScaler canvasScaler = UIManager.Instance.Canvas.GetComponent<CanvasScaler>();
@@ -144,17 +126,22 @@ namespace ProjectABC.Engine.UI
         public void SetSelectParam(SelectCardsParam param)
         {
             _param = param;
-            Refresh();
+            ShowSelectableCards(false).Forget();
         }
         
-        public override void Refresh()
+        private async Task ShowSelectableCards(bool consumeRerollChance, float showDelay = 0.0f)
         {
+            if (showDelay > 0.0f)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(showDelay));
+            }
+            
             var (amount, cardIdQueue, rerollChance) = _param;
             
             btnSelect.interactable = false;
             btnReroll.interactable = false;
-
-            cardIdQueue.EnqueueCardIds(_rejectedCardIds);
+            
+            _param.CardIdQueue.EnqueueCardIds(_rejectedCardIds);
             _rejectedCardIds.Clear();
             
             int prevExistsCount = _drawnCardIds.Count;
@@ -162,7 +149,7 @@ namespace ProjectABC.Engine.UI
             if (_drawnCardIds.Count < GameConst.GameOption.DEFAULT_CARD_SELECT_AMOUNT)
             {
                 int drawSize = GameConst.GameOption.DEFAULT_CARD_SELECT_AMOUNT - _drawnCardIds.Count;
-                var drawnCardIds = rerollChance.GetRerollCardIds(cardIdQueue, drawSize);
+                var drawnCardIds = rerollChance.GetRerollCardIds(consumeRerollChance, cardIdQueue, drawSize);
                 
                 _drawnCardIds.AddRange(drawnCardIds);
             }
@@ -194,6 +181,11 @@ namespace ProjectABC.Engine.UI
                 toggles[i].MoveToPosition(from, target, delay, duration, callback);
             }
             
+            Refresh();
+        }
+
+        public override void Refresh()
+        {
             RefreshSelectButton(false);
             RefreshRerollButton();
         }
@@ -201,11 +193,11 @@ namespace ProjectABC.Engine.UI
         private void RefreshSelectButton(bool _)
         {
             var toggledIndexes = GetToggledIndexes();
-            btnSelect.interactable = _selectedCardIds.Count + toggledIndexes.Length <= _param.SelectCardAmount;
+            btnSelect.interactable = toggledIndexes.Length == _param.SelectCardAmount;
             
             txtSelect.text = LocalizationHelper.Instance.Localize(
                 "ui_select_cards_select",
-                toggledIndexes.Length + _selectedCardIds.Count,
+                toggledIndexes.Length,
                 _param.SelectCardAmount
             );
         }

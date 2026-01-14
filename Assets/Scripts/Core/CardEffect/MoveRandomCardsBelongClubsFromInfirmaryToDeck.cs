@@ -95,12 +95,12 @@ namespace ProjectABC.Core
                     ownSide.Infirmary.Remove(slotKey);
                 }
                 
-                ownSide.Deck.Add(cardToMove);
-                
-                CallCard.TryGetCardLocation(ownSide,  out CardLocation activatedCardLocation);
+                ownSide.Deck.AddToBottom(cardToMove);
+
+                CallCard.TryGetCardLocation(ownSide, out CardLocation activatedCardLocation);
                 CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
 
-                CardLocation curLocation = new DeckLocation(ownSide.Player, ownSide.Deck.Count - 1);
+                CardLocation curLocation = new DeckLocation(ownSide.Player, 0);
                 CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, curLocation);
                 
                 MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);

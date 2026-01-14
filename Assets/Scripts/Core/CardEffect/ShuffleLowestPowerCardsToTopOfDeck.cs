@@ -75,7 +75,7 @@ namespace ProjectABC.Core
                 cardToShuffle.TryGetCardLocation(ownSide, out var prevAppliedCardLocation);
 
                 ownSide.Deck.Remove(cardToShuffle);
-                ownSide.Deck.AddToTop(cardToShuffle);
+                ownSide.Deck.Add(cardToShuffle);
                 
                 cardToShuffle.TryGetCardLocation(ownSide, out var curAppliedCardLocation);
                 CallCard.TryGetCardLocation(ownSide, out var activatedCardLocation);

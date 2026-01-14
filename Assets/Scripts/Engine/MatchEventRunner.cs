@@ -37,6 +37,7 @@ namespace ProjectABC.Engine
             _matchEventProcessors.Add(typeof(SendToInfirmaryEvent), new SendToInfirmaryProcessor());
             _matchEventProcessors.Add(typeof(SwitchPositionEvent), new SwitchPositionProcessor());
             _matchEventProcessors.Add(typeof(MoveCardByEffectEvent), new MoveCardByEffectProcessor());
+            _matchEventProcessors.Add(typeof(DrawCardFromPileEvent), new DrawCardFromPileProcessor());
             _matchEventProcessors.Add(typeof(ShuffleDeckEvent), new ShuffleDeckProcessor());
             _matchEventProcessors.Add(typeof(GainWinPointsByCardEffectEvent), new GainWinPointsByEffectProcessor());
             _matchEventProcessors.Add(typeof(FailToActivateCardEffectEvent), new FailToActivateCardEffectProcessor());

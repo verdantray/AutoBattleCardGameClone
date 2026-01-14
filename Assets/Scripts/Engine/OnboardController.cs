@@ -76,10 +76,32 @@ namespace ProjectABC.Engine
 
         public void ApplyChangeCard(CardReference cardReference, CardLocation location)
         {
-            location.ChangeCardToLocation(_cardReferenceLocator, cardReference);
+            bool isFieldCard = location is FieldLocation;
+            CardOnboard targetCardOnboard = null;
             
-            var targetCardOnboard = location.PeekFromLocation(_cardOnboardLocator);
-            targetCardOnboard.ApplyReference(cardReference);
+            if (isFieldCard)
+            {
+                var prevCardRef = location.PeekFromLocation(_cardReferenceLocator);
+                var fieldHolder = _cardOnboardLocator[location.Owner].Field;
+                targetCardOnboard = Enumerable
+                    .Range(0, fieldHolder.Count)
+                    .Select(index => fieldHolder.Peek(index))
+                    .FirstOrDefault(card => card.AppliedCardReference == prevCardRef);
+            }
+            else
+            {
+                targetCardOnboard = location.PeekFromLocation(_cardOnboardLocator);
+            }
+            
+            location.ChangeCardToLocation(_cardReferenceLocator, cardReference);
+            if (!isFieldCard || targetCardOnboard != null)
+            {
+                targetCardOnboard.ApplyReference(cardReference);
+            }
+            else
+            {
+                Debug.Log($"change CardRef Only... {cardReference.CardId}");
+            }
             
             Debug.Log($"{cardReference.CardId}에 적용된 버프 : {string.Join(", ", cardReference.Buffs.Select(buff => $"(버프 준 카드 : {buff.CallCardId} / 파워 : {buff.AdditivePower})"))}");
         }
@@ -253,6 +275,15 @@ namespace ProjectABC.Engine
             }
         }
 
+        public Task MoveCardFromPileAsync(CardReference cardReference, CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
+        {
+            OnboardPoints prevOnboardPoints = GetOnboardPointsOfSide(GetOnboardSideOfPlayer(movementInfo.PreviousLocation.Owner));
+            CardSpawnArgs args = new CardSpawnArgs(prevOnboardPoints.spawnByEffectPoint, cardReference);
+            CardOnboard cardOnboard = SpawnCardOnboard(args);
+
+            return MoveCardAsync(cardOnboard, movementInfo, delay, duration, token);
+        }
+
         /// <summary>
         /// show moving a card asynchronously
         /// </summary>
@@ -261,7 +292,7 @@ namespace ProjectABC.Engine
         /// <param name="duration"></param>
         /// <param name="token"></param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task MoveCardAsync(CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
+        public Task MoveCardAsync(CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
         {
             IPlayer prevLocationOwner = movementInfo.PreviousLocation.Owner;
             OnboardSide prevOnboardSide = GetOnboardSideOfPlayer(prevLocationOwner);
@@ -269,13 +300,11 @@ namespace ProjectABC.Engine
             
             CardReference targetCardRef = movementInfo.PreviousLocation.PopFromLocation(_cardReferenceLocator);
             CardOnboard cardOnboard = null;
+            
+            Debug.Log($"target : {targetCardRef.CardId} / move : {movementInfo.PreviousLocation} -> {movementInfo.CurrentLocation}");
+            
             switch (movementInfo.PreviousLocation.CardZone)
             {
-                case CardZone.CardPile:
-                {
-                    cardOnboard = SpawnCardOnboard(new CardSpawnArgs(prevOnboardPoints.spawnByEffectPoint, targetCardRef));
-                    break;
-                }
                 case CardZone.Deck:
                 {
                     // hide cardOnboard of deck pile
@@ -305,20 +334,28 @@ namespace ProjectABC.Engine
                     throw new ArgumentOutOfRangeException();
             }
 
-            IPlayer curLocationOwner = movementInfo.CurrentLocation.Owner;
-            OnboardSide curOnboardSide = GetOnboardSideOfPlayer(curLocationOwner);
-            OnboardPoints curOnboardPoints = GetOnboardPointsOfSide(curOnboardSide);
+            return MoveCardAsync(cardOnboard, movementInfo, delay, duration, token);
+        }
+
+        private async Task MoveCardAsync(CardOnboard cardOnboard, CardMovementInfo movementInfo, ScaledTime delay, ScaledTime duration, CancellationToken token)
+        {
+            var prevLocationOwner = movementInfo.PreviousLocation.Owner;
+            var prevOnboardPoints = GetOnboardPointsOfSide(GetOnboardSideOfPlayer(prevLocationOwner));
             
-            movementInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, targetCardRef);
-
-            bool isMoveToFieldOrInfirmary = movementInfo.CurrentLocation.CardZone is CardZone.Field or CardZone.Infirmary;
-            if (isMoveToFieldOrInfirmary)
-            {
-                movementInfo.CurrentLocation.InsertToLocation(_cardOnboardLocator, cardOnboard);
-            }
-
+            var curLocationOwner =  movementInfo.CurrentLocation.Owner;
+            var curOnboardSide = GetOnboardSideOfPlayer(curLocationOwner);
+            var curOnboardPoints = GetOnboardPointsOfSide(curOnboardSide);
+            
             try
             {
+                movementInfo.CurrentLocation.InsertToLocation(_cardReferenceLocator, cardOnboard.AppliedCardReference);
+
+                bool isMoveToFieldOrInfirmary = movementInfo.CurrentLocation.CardZone is CardZone.Field or CardZone.Infirmary;
+                if (isMoveToFieldOrInfirmary)
+                {
+                    movementInfo.CurrentLocation.InsertToLocation(_cardOnboardLocator, cardOnboard);
+                }
+                
                 if (movementInfo.PreviousLocation.CardZone == CardZone.Deck)
                 {
                     ScaledTime revealDuration = delay * 0.5f;
@@ -341,7 +378,7 @@ namespace ProjectABC.Engine
                     await delay.WaitScaledTimeAsync(token);
                 }
 
-                string infirmarySlotKey = targetCardRef.CardData.nameKey;
+                string infirmarySlotKey = cardOnboard.AppliedCardReference.CardData.nameKey;
                 var task = movementInfo.CurrentLocation.CardZone switch
                 {
                     CardZone.CardPile => cardOnboard.MoveToTargetAsync(curOnboardPoints.spawnByEffectPoint, duration, token),
@@ -393,7 +430,7 @@ namespace ProjectABC.Engine
                     }
                     case CardZone.Infirmary:
                     {
-                        string infirmarySlotKey = targetCardRef.CardData.nameKey;
+                        string infirmarySlotKey = cardOnboard.AppliedCardReference.CardData.nameKey;
                         AlignCardsOfInfirmarySlot(curLocationOwner, infirmarySlotKey);
                         break;
                     }

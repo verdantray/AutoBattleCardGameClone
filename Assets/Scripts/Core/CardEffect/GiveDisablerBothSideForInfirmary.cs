@@ -42,13 +42,18 @@ namespace ProjectABC.Core
             // case : already buff active, but effect canceled
             if (isBuffActive && isCancelTrigger)
             {
-                var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-                handlers.AddRange(otherSide.CardBuffHandlers.FindAll(entry =>entry.CallCard == CallCard));
+                var ownHandlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
+                var otherHandlers = otherSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
 
-                foreach (var handler in handlers)
+                foreach (var handler in ownHandlers)
                 {
                     handler.Release();
                     ownSide.CardBuffHandlers.Remove(handler);
+                }
+
+                foreach (var handler in otherHandlers)
+                {
+                    handler.Release();
                     otherSide.CardBuffHandlers.Remove(handler);
                 }
                 
@@ -73,7 +78,12 @@ namespace ProjectABC.Core
             public ExclusiveCardBuff(Card callCard) : base(callCard) { }
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                return args.OwnSide.Field;
+                var location = CallCard.GetCardLocation(args.OwnSide, args.OtherSide);
+                bool isCallCardRemainField = location.CardZone == CardZone.Field;
+
+                return isCallCardRemainField
+                    ? args.OwnSide.Field
+                    : Array.Empty<Card>();
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)

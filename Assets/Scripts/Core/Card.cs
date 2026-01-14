@@ -21,7 +21,7 @@ namespace ProjectABC.Core
 
         #endregion
         
-        public void AddToTop(Card card) => Insert(0, card);
+        public void AddToBottom(Card card) => Insert(0, card);
         public void Insert(int index, Card card) => _cardList.Insert(index, card);
         
         public void Add(Card card) => _cardList.Add(card);

@@ -86,7 +86,7 @@ namespace ProjectABC.Core
                     ownSide.Infirmary.RemoveByIndex(i);
                 }
 
-                ownSide.Deck.Add(cardToMove);
+                ownSide.Deck.AddToBottom(cardToMove);
                 cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
                 
                 moveCount++;
@@ -94,9 +94,8 @@ namespace ProjectABC.Core
                 CallCard.TryGetCardLocation(ownSide, out CardLocation activatedCardLocation);
                 CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevAppliedCardLocation, activatedCardLocation);
 
-                int indexOfDeck = ownSide.Deck.IndexOf(cardToMove);
-                CardLocation curLocation = new DeckLocation(ownSide.Player, indexOfDeck);
-
+                
+                CardLocation curLocation = new DeckLocation(ownSide.Player, 0);
                 CardMovementInfo movementInfo = new CardMovementInfo(prevAppliedCardLocation, curLocation);
 
                 MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);

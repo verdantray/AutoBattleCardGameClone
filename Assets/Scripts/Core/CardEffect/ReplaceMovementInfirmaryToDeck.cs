@@ -27,8 +27,8 @@ namespace ProjectABC.Core
             CardLocation prevLocation = new FieldLocation(ownSide.Player, indexOfField);
             ownSide.Field.Remove(CallCard);
             
-            ownSide.Deck.Add(CallCard);
-            int indexOfDeck = ownSide.Deck.Count - 1;
+            ownSide.Deck.AddToBottom(CallCard);
+            int indexOfDeck = 0;
             CardLocation curLocation = new DeckLocation(ownSide.Player, indexOfDeck);
             
             CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevLocation);

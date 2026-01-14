@@ -69,7 +69,7 @@ namespace ProjectABC.Core
                 otherSide,
                 gameState
             );
-
+            
             for (int i = 0; i < _cardsAmount; i++)
             {
                 if (cardsInInfirmary.Length <= i)
@@ -87,13 +87,11 @@ namespace ProjectABC.Core
                     }
 
                     ownSide.Infirmary[j].Remove(cardToMove);
-                    if (ownSide.Infirmary.Count == 0)
+                    if (ownSide.Infirmary[j].Count == 0)
                     {
                         ownSide.Infirmary.RemoveByIndex(j);
                     }
                 }
-                
-                cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
                 
                 // set trigger to last one of field if ownSide is defending
                 if (!ownSide.IsAttacking)
@@ -112,7 +110,9 @@ namespace ProjectABC.Core
                     }
                 }
                 
-                ownSide.Field.Add(cardToMove);
+                int targetFieldIndex = ownSide.Field.IndexOf(CallCard);
+                ownSide.Field.Insert(targetFieldIndex, cardToMove);
+                
                 cardToMove.CardEffect.CheckApplyEffect(onEnterFieldArgs, matchContextEvent);
                 if (matchContextEvent.MatchFinished)
                 {

@@ -108,18 +108,22 @@ namespace ProjectABC.Core
 
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                return args.OwnSide.Field.Where(card => _includedClubFlag.HasFlag(card.ClubType));
+                string nameKey = CallCard.CardData.nameKey;
+                bool isCallCardRemainInfirmary = args.OwnSide.Infirmary.TryGetValue(nameKey, out var cardPile)
+                                                 && cardPile.Contains(CallCard);
+                return isCallCardRemainInfirmary
+                    ? args.OwnSide.Field.Where(card => _includedClubFlag.HasFlag(card.ClubType))
+                    : Array.Empty<Card>();
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)
             {
-                var (ownSide, otherSide, gameState) = args;
-                HashSet<Card> infirmaryCardSet = new HashSet<Card>(ownSide.Infirmary.GetAllCards());
+                HashSet<Card> infirmaryCardSet = new HashSet<Card>(args.OwnSide.Infirmary.GetAllCards());
 
                 bool isCallerInInfirmary = infirmaryCardSet.Contains(CallCard);
-                bool isTargetEffectiveStand = ownSide.IsEffectiveStandOnField(target);
+                bool isTargetEffectiveStand = args.OwnSide.IsEffectiveStandOnField(target);
                 bool isTargetBelongingClub = _includedClubFlag.HasFlag(target.ClubType);
-                bool isEnableMatchState = _enablePositionFlag.HasFlag(ownSide.Position);
+                bool isEnableMatchState = _enablePositionFlag.HasFlag(args.OwnSide.Position);
                 
                 return isCallerInInfirmary && isTargetEffectiveStand && isTargetBelongingClub && isEnableMatchState;
             }

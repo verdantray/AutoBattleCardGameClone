@@ -254,7 +254,7 @@ namespace ProjectABC.Core
             BuffTarget GetBuffTarget(Card appliedCard)
             {
                 CardReference appliedReference = new CardReference(appliedCard, args);
-                appliedCard.TryGetCardLocation(args.OwnSide, out var appliedLocation);
+                CardLocation appliedLocation = appliedCard.GetCardLocation(args.OwnSide, args.OtherSide);
                 
                 return new BuffTarget(appliedReference, appliedLocation);
             }
@@ -277,7 +277,7 @@ namespace ProjectABC.Core
             BuffTarget GetBuffTarget(Card appliedCard)
             {
                 CardReference appliedReference = new CardReference(appliedCard, args);
-                appliedCard.TryGetCardLocation(args.OwnSide, out var appliedLocation);
+                CardLocation appliedLocation = appliedCard.GetCardLocation(args.OwnSide, args.OtherSide);
                 
                 return new BuffTarget(appliedReference, appliedLocation);
             }

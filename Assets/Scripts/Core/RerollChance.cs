@@ -23,8 +23,6 @@ namespace ProjectABC.Core
     
     public class RerollChance
     {
-        private const int FREE_REROLL_CHANCES = 1;
-        
         public int RemainRerollChance { get; private set; }
         
         private int MaxRerollChance => _maxRerollChances + _bonuses.Sum(bonus => bonus.BonusRerollChance);
@@ -32,8 +30,6 @@ namespace ProjectABC.Core
         
         private readonly int _maxRerollChances;
         private readonly List<RerollBonus> _bonuses =  new List<RerollBonus>();
-
-        private int _remainFreeRerollChances;
         
         public RerollChance(int maxRerollChances)
         {
@@ -41,9 +37,13 @@ namespace ProjectABC.Core
             Reset();
         }
 
-        public List<string> GetRerollCardIds(CardIdQueue idQueue, int drawSize)
+        public List<string> GetRerollCardIds(bool consumeChance, CardIdQueue idQueue, int drawSize)
         {
-            ConsumeRerollCost();
+            if (consumeChance)
+            {
+                ConsumeRerollCost();
+            }
+            
             return idQueue.DequeueCardIds(drawSize);
         }
 
@@ -58,19 +58,12 @@ namespace ProjectABC.Core
             {
                 return;
             }
-            
-            if (_remainFreeRerollChances > 0)
-            {
-                _remainFreeRerollChances--;
-                return;
-            }
 
             RemainRerollChance--;
         }
 
         public void Reset()
         {
-            _remainFreeRerollChances = FREE_REROLL_CHANCES;
             RemainRerollChance = MaxRerollChance;
         }
     }

@@ -24,7 +24,7 @@ namespace ProjectABC.Engine
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private SplineAnimate splineAnimate;
 
-        private CardReference _cardReference;
+        public CardReference AppliedCardReference { get; private set; }
         
         public override void OnSpawned(CardSpawnArgs args)
         {
@@ -39,20 +39,20 @@ namespace ProjectABC.Engine
 
         public override void ApplyReference(CardReference reference)
         {
-            _cardReference = reference;
-            if (_cardReference == null)
+            AppliedCardReference = reference;
+            if (AppliedCardReference == null)
             {
                 return;
             }
 
-            CardData cardData = _cardReference.CardData;
+            CardData cardData = AppliedCardReference.CardData;
             
             string gradeSpriteName = $"grade_{cardData.gradeType.GradeTypeToOrdinalString()}";
             
             // gradeRenderer.sprite = GlobalAssetBinder.Instance.AtlasBinder.GetCardSprite(gradeSpriteName);
 
             int totalPower = cardData.basePower;
-            totalPower += _cardReference.Buffs.Sum(buff => buff.AdditivePower);
+            totalPower += AppliedCardReference.Buffs.Sum(buff => buff.AdditivePower);
 
             powerText.text = $"{totalPower:D}";
 

@@ -73,7 +73,8 @@ namespace ProjectABC.Core
         
         public List<string> DequeueCardIds(int amount)
         {
-            int index = _idList.Count - amount;
+            // int index = _idList.Count - amount;
+            int index = 0;
             
             List<string> toPop = _idList.GetRange(index, amount);
             _idList.RemoveRange(index, amount);

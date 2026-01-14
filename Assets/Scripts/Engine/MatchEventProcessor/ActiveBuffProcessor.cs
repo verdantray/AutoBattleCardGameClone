@@ -24,6 +24,7 @@ namespace ProjectABC.Engine
 
             foreach (var (cardRef, location) in matchEvent.BuffApplyTargets)
             {
+                Debug.Log($"target : {cardRef.CardId} / location : {location}");
                 Simulator.Model.onboardController.ApplyChangeCard(cardRef, location);
             }
             
