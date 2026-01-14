@@ -67,7 +67,6 @@ namespace ProjectABC.Engine.UI
             
             // float pickedCardDestY = (_referenceResolution.y + (toggles[0].Size.y * 2.0f)) * 0.5f;
             // PickCards(_rejectedCardIds, pickedCardDestY);
-            //
             _rejectedCardIds.AddRange(_drawnCardIds);
             _drawnCardIds.Clear();
             
@@ -82,7 +81,7 @@ namespace ProjectABC.Engine.UI
             {
                 int index = toggledIndexes[i];
                 var card = _drawnCardIds[index];
-                // _drawnCardIds.RemoveAt(index);
+                _drawnCardIds.RemoveAt(index);
                 pickedCards.Add(card);
             }
             
