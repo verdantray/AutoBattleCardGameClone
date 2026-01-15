@@ -831,15 +831,15 @@ MonoBehaviour:
     en: 
     ja: 
   - key: card_desc_astra_ex
-    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300 \uC591\uD638\uC2E4\uC758
+    ko: "%localization_key:card_desc_condition_on_while_field% \uC0C1\uB300 \uC591\uD638\uC2E4\uC758
       \uB3D9\uC544\uB9AC \uC18C\uC18D \uC885\uB958 \uB9CC\uD07C \uB0B4 \uD30C\uC6CC\uAC00
       +1 \uC99D\uAC00\uD569\uB2C8\uB2E4."
     en: 
     ja: 
   - key: card_desc_sophine_ex
-    ko: "%localization_key:desc_effect_on_while_field% \uC0C1\uB300\uC758 \uB371\uC758
-      \uB0A8\uC740 \uCE74\uB4DC\uAC00 15\uC7A5 \uC774\uC0C1\uC778 \uACBD\uC6B0 \uC790\uC2E0\uC758
-      \uD30C\uC6CC\uAC00 +6 \uC99D\uAC00\uD569\uB2C8\uB2E4."
+    ko: "%localization_key:card_desc_condition_on_while_field% \uC0C1\uB300\uC758
+      \uB371\uC758 \uB0A8\uC740 \uCE74\uB4DC\uAC00 15\uC7A5 \uC774\uC0C1\uC778 \uACBD\uC6B0
+      \uC790\uC2E0\uC758 \uD30C\uC6CC\uAC00 +6 \uC99D\uAC00\uD569\uB2C8\uB2E4."
     en: 
     ja: 
   - key: desc_effect_fail_no_deck_remains
