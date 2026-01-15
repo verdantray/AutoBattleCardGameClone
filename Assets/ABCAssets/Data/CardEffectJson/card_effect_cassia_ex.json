@@ -4,6 +4,8 @@
     "OnEnterFieldAsAttacker"
   ],
   "cancel_triggers": [
+    "OnSwitchToDefend",
+    "OnRemainField",
     "OnLeaveField"
   ],
   "power_up_ratio": 1

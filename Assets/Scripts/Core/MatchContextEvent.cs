@@ -229,6 +229,10 @@ namespace ProjectABC.Core
                 (defender, attacker) = (attacker, defender);
                 defender.SetMatchState(MatchPosition.Defending);
                 attacker.SetMatchState(MatchPosition.Attacking);
+                
+                MatchSnapshot matchSnapshotOnSwitch = new MatchSnapshot(currentState, defender, attacker);
+                SwitchPositionEvent switchPositionEvent = new SwitchPositionEvent(defender.Player, attacker.Player, matchSnapshotOnSwitch);
+                switchPositionEvent.RegisterEvent(matchContextEvent);
 
                 #region Trigger defender's cards on field
 
@@ -256,10 +260,6 @@ namespace ProjectABC.Core
                 #endregion
                 
                 IMatchContextEvent.CheckApplyBuffs(currentState, matchContextEvent, defender, attacker);
-
-                MatchSnapshot matchSnapshotOnSwitch = new MatchSnapshot(currentState, defender, attacker);
-                SwitchPositionEvent switchPositionEvent = new SwitchPositionEvent(defender.Player, attacker.Player, matchSnapshotOnSwitch);
-                switchPositionEvent.RegisterEvent(matchContextEvent);
             }
         }
 

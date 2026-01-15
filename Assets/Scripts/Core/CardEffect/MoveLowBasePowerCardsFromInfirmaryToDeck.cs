@@ -100,10 +100,6 @@ namespace ProjectABC.Core
 
                 MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);
                 moveCardEvent.RegisterEvent(matchContextEvent);
-
-                // string moveCardToBottomOfDeckMessage = $"{ownSide.Player.Name}가 카드를 덱 맨 아래로 보냄\n{cardToMove}";
-                // var moveCardEffectEvent = new CommonMatchMessageEvent(moveCardToBottomOfDeckMessage);
-                // moveCardEffectEvent.RegisterEvent(matchContextEvent);
                 
                 if (matchContextEvent.MatchFinished)
                 {

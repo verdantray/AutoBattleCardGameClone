@@ -45,15 +45,27 @@ namespace ProjectABC.Core
                 var ownHandlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
                 var otherHandlers = otherSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
 
+                CardBuffArgs ownCardBuffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
                 foreach (var handler in ownHandlers)
                 {
-                    handler.Release();
+                    var ownBuffCancelResult = handler.Release();
+                    if (ownBuffCancelResult.TryGetInactiveBuffEvent(ownCardBuffArgs, out var inactiveBuffEvent))
+                    {
+                        inactiveBuffEvent.RegisterEvent(matchContextEvent);
+                    }
+                    
                     ownSide.CardBuffHandlers.Remove(handler);
                 }
-
+                
+                CardBuffArgs otherCardBuffArgs = new CardBuffArgs(otherSide, ownSide, gameState);
                 foreach (var handler in otherHandlers)
                 {
-                    handler.Release();
+                    var otherBuffCancelResult = handler.Release();
+                    if (otherBuffCancelResult.TryGetInactiveBuffEvent(otherCardBuffArgs, out var inactiveBuffEvent))
+                    {
+                        inactiveBuffEvent.RegisterEvent(matchContextEvent);
+                    }
+                    
                     otherSide.CardBuffHandlers.Remove(handler);
                 }
                 
@@ -78,12 +90,7 @@ namespace ProjectABC.Core
             public ExclusiveCardBuff(Card callCard) : base(callCard) { }
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                var location = CallCard.GetCardLocation(args.OwnSide, args.OtherSide);
-                bool isCallCardRemainField = location.CardZone == CardZone.Field;
-
-                return isCallCardRemainField
-                    ? args.OwnSide.Field
-                    : Array.Empty<Card>();
+                return args.OwnSide.Field;
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)

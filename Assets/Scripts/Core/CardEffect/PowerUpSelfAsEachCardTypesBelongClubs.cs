@@ -61,10 +61,16 @@ namespace ProjectABC.Core
             if (isBuffActive && isCancelTrigger)
             {
                 var handlers = ownSide.CardBuffHandlers.FindAll(entry => entry.CallCard == CallCard);
-
+                CardBuffArgs cardBuffArgs = new CardBuffArgs(ownSide, otherSide, gameState);
+                
                 foreach (var handler in handlers)
                 {
-                    handler.Release();
+                    var buffCancelResult = handler.Release();
+                    if (buffCancelResult.TryGetInactiveBuffEvent(cardBuffArgs, out var inactiveBuffEvent))
+                    {
+                        inactiveBuffEvent.RegisterEvent(matchContextEvent);
+                    }
+                    
                     ownSide.CardBuffHandlers.Remove(handler);
                 }
                 
@@ -96,9 +102,7 @@ namespace ProjectABC.Core
             
             public override IEnumerable<Card> GetBuffTargets(CardBuffArgs args)
             {
-                return args.OwnSide.Field.Contains(CallCard)
-                    ? new[] { CallCard }
-                    : Array.Empty<Card>();
+                return new[] { CallCard };
             }
 
             public override bool IsBuffActive(Card target, CardBuffArgs args)

@@ -62,15 +62,13 @@ namespace ProjectABC.Core
             {
                 var result = handler.CheckApplyCardBuff(cardBuffArgs);
                 
-                if (result.ApplyCards.Count > 0)
+                if (result.TryGetActiveBuffEvent(cardBuffArgs, out var activeBuffEvent))
                 {
-                    ActiveBuffEvent activeBuffEvent = new ActiveBuffEvent(handler.CallCard, result.ApplyCards, cardBuffArgs);
                     buffEvents.Add(activeBuffEvent);
                 }
 
-                if (result.CanceledCards.Count > 0)
+                if (result.TryGetInactiveBuffEvent(cardBuffArgs, out var inactiveBuffEvent))
                 {
-                    InactiveBuffEvent inactiveBuffEvent = new InactiveBuffEvent(handler.CallCard, result.CanceledCards, cardBuffArgs);
                     buffEvents.Add(inactiveBuffEvent);
                 }
             }
@@ -140,29 +138,54 @@ namespace ProjectABC.Core
                 _appliedCards.Add(applied);
             }
             
-            return new CardBuffApplyResult(newlyApplyCards, canceledCards);
+            return new CardBuffApplyResult(CallCard, newlyApplyCards, canceledCards);
         }
 
-        public void Release()
+        public CardBuffApplyResult Release()
         {
             foreach (var applied in _appliedCards)
             {
                 applied.RemoveCardBuff(_cardBuff);
             }
             
+            CardBuffApplyResult result = new CardBuffApplyResult(CallCard, Array.Empty<Card>(), _appliedCards);
             _appliedCards.Clear();
+            
+            return result;
         }
     }
 
     public class CardBuffApplyResult
     {
-        public readonly IReadOnlyList<Card> ApplyCards;
-        public readonly IReadOnlyList<Card> CanceledCards;
+        private readonly Card _activateCard;
+        private readonly List<Card> _applyCards = new List<Card>();
+        private readonly List<Card> _canceledCards = new List<Card>();
 
-        public CardBuffApplyResult(IReadOnlyList<Card> applyCards, IReadOnlyList<Card> canceledCards)
+        public CardBuffApplyResult(Card activateCard, IEnumerable<Card> applyCards, IEnumerable<Card> canceledCards)
         {
-            ApplyCards = applyCards;
-            CanceledCards = canceledCards;
+            _activateCard = activateCard;
+            _applyCards.AddRange(applyCards);
+            _canceledCards.AddRange(canceledCards);
+        }
+
+        public bool TryGetActiveBuffEvent(CardBuffArgs args, out IMatchEvent buffEvent)
+        {
+            bool isApplyCardsExist = _applyCards.Count > 0;
+            buffEvent = isApplyCardsExist
+                ? new ActiveBuffEvent(_activateCard, _applyCards, args)
+                : null;
+            
+            return isApplyCardsExist;
+        }
+
+        public bool TryGetInactiveBuffEvent(CardBuffArgs args, out IMatchEvent buffEvent)
+        {
+            bool isCanceledCardsExist = _canceledCards.Count > 0;
+            buffEvent = isCanceledCardsExist
+                ? new InactiveBuffEvent(_activateCard, _canceledCards, args)
+                : null;
+
+            return isCanceledCardsExist;
         }
     }
 }

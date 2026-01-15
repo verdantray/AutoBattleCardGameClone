@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ProjectABC.Data;
 
@@ -37,13 +38,13 @@ namespace ProjectABC.Core
                 .Take(_cardsAmount)
                 .ToArray();
 
+            CallCard.TryGetCardLocation(ownSide, out var activatedCardLocation);
+            
             if (cardsInInfirmary.Length == 0)
             {
-                CallCard.TryGetCardLocation(ownSide, out var currentLocation);
-
                 FailToActivateCardEffectEvent failToActivateEvent = new FailToActivateCardEffectEvent(
                     CallCard.Id,
-                    currentLocation,
+                    activatedCardLocation,
                     FailToActivateEffectReason.NoInfirmaryRemains
                 );
                 
@@ -64,7 +65,7 @@ namespace ProjectABC.Core
             CardEffectArgs onEnterFieldArgs = new CardEffectArgs(
                 ownSide.IsAttacking
                     ? EffectTriggerEvent.OnEnterFieldAsAttacker
-                    : EffectTriggerEvent.OnEnterFieldAsDefender,
+                    : EffectTriggerEvent.OnRemainField,
                 ownSide,
                 otherSide,
                 gameState
@@ -79,41 +80,37 @@ namespace ProjectABC.Core
                 
                 Card cardToMove = cardsInInfirmary[i];
 
-                for (int j = ownSide.Infirmary.Count - 1; j >= 0; j--)
+                string slotKey = cardToMove.CardData.nameKey;
+                if (!ownSide.Infirmary[slotKey].Contains(cardToMove))
                 {
-                    if (!ownSide.Infirmary[j].Contains(cardToMove))
-                    {
-                        continue;
-                    }
+                    throw new KeyNotFoundException($"Can't find slot {slotKey} from {ownSide.Player.Name}'s infirmary");
+                }
 
-                    ownSide.Infirmary[j].Remove(cardToMove);
-                    if (ownSide.Infirmary[j].Count == 0)
-                    {
-                        ownSide.Infirmary.RemoveByIndex(j);
-                    }
+                int indexOfInfirmarySlot = ownSide.Infirmary[slotKey].IndexOf(cardToMove);
+                
+                ownSide.Infirmary[slotKey].Remove(cardToMove);
+                if (ownSide.Infirmary[slotKey].Count == 0)
+                {
+                    ownSide.Infirmary.Remove(slotKey);
                 }
                 
-                // set trigger to last one of field if ownSide is defending
-                if (!ownSide.IsAttacking)
-                {
-                    CardEffectArgs remainFieldEffectArgs = new CardEffectArgs(
-                        EffectTriggerEvent.OnRemainField,
-                        ownSide,
-                        otherSide,
-                        gameState
-                    );
-                    
-                    ownSide.Field[^1].CardEffect.CheckApplyEffect(remainFieldEffectArgs, matchContextEvent);
-                    if (matchContextEvent.MatchFinished)
-                    {
-                        return;
-                    }
-                }
+                
+                cardToMove.CardEffect.CheckApplyEffect(onLeaveInfirmaryArgs, matchContextEvent);
                 
                 int targetFieldIndex = ownSide.Field.IndexOf(CallCard);
                 ownSide.Field.Insert(targetFieldIndex, cardToMove);
                 
+                CardLocation prevLocation = new InfirmaryLocation(ownSide.Player, slotKey, indexOfInfirmarySlot);
+                CardLocation curLocation = new FieldLocation(ownSide.Player, targetFieldIndex);
+
+                CardEffectAppliedInfo appliedInfo = new CardEffectAppliedInfo(prevLocation, activatedCardLocation);
+                CardMovementInfo movementInfo = new CardMovementInfo(prevLocation, curLocation);
+                
+                MoveCardByEffectEvent moveCardEvent = new MoveCardByEffectEvent(appliedInfo, movementInfo);
+                moveCardEvent.RegisterEvent(matchContextEvent);
+                
                 cardToMove.CardEffect.CheckApplyEffect(onEnterFieldArgs, matchContextEvent);
+                
                 if (matchContextEvent.MatchFinished)
                 {
                     return;
