@@ -36,14 +36,14 @@ namespace ProjectABC.Engine.UI
             txtGradeAmountPair.text = $"{localizedGrade} X {amount}";
             
             toggle.onValueChanged.AddListener(callback.Invoke);
-            toggle.isOn = false;
-            
             gameObject.SetActive(true);
         }
 
         public void ClearToggle()
         {
             toggle.onValueChanged.RemoveAllListeners();
+            toggle.isOn = false;
+            
             gameObject.SetActive(false);
         }
     }

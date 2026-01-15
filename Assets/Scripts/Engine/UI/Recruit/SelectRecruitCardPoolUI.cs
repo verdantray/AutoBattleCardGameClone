@@ -29,9 +29,9 @@ namespace ProjectABC.Engine.UI
         {
             for (int i = 0; i < toggles.Length; i++)
             {
+                toggles[i].ClearToggle();
                 if (gradeAmountPairs.Count <= i)
                 {
-                    toggles[i].ClearToggle();
                     continue;
                 }
                 
