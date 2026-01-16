@@ -73,3 +73,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 .idea/.idea.ProjectABC/.idea
+Assets/Plugins/Google Sheets to Unity/Resources/GSTU_Config.asset
