@@ -64,7 +64,7 @@ Google Cloud OAuth 클라이언트 ID를 로컬에 저장하도록 설계되어 
 ![04](ReadMeImages/04.png)
 
 또한 SpreadSheet를 직렬화한 정보를 저장하기 위해 ScriptableObject 기반 [DataAsset](Assets/Scripts/Data/DataAsset.cs) 클래스를 활용하며,  
-DataAsset 클래스의 상속체는 참조할 SpreadSheet의 이름, 범위등을 지정하기 쉽도록 커스텀 인스펙터를 제공하고 있습니다.  
+`DataAsset` 클래스의 상속체는 참조할 SpreadSheet의 이름, 범위등을 지정하기 쉽도록 커스텀 인스펙터를 제공하고 있습니다.  
 </details>
 
 <details>
@@ -175,13 +175,13 @@ public interface IPlayerAction
 }
 ```
 
-[Player.cs](Assets/Scripts/Core/Player.cs) 스크립트에 선언된 **IPlayer**와 **IPlayerAction** 인터페이스 입니다.  
+[Player.cs](Assets/Scripts/Core/Player.cs) 스크립트에 선언된 `IPlayer`와 `IPlayerAction` 인터페이스 입니다.  
 
-플레이어 입력은 **IPlayer** 인터페이스로 추상화되어 있어 입력 방식과 코어 로직이 완전히 분리될 수 있고,  
+플레이어 입력은 `IPlayer` 인터페이스로 추상화되어 있어 입력 방식과 코어 로직이 완전히 분리될 수 있고,  
 로컬 플레이어, AI, 테스트 플레이어 등 모두 동일 인터페이스로 처리할 수 있습니다.  
 또한 플레이어 입력에 대한 결과를 모두 비동기로 반환하기 때문에 네트워크 지연이나 사용자 입력 대기를 자연스럽게 처리하고 있습니다.  
 
-플레이어 입력에 대한 결과는 **IPlayerAction** 인터페이스를 사용하고 있으며 Command 패턴을 채용하여,  
+플레이어 입력에 대한 결과는 `IPlayerAction` 인터페이스를 사용하고 있으며 Command 패턴을 채용하여,  
 이 역시 결합도를 낮추어 유연성과 확장성있는 구조를 유지할 수 있게 했습니다.
 
 </details>
@@ -190,7 +190,7 @@ public interface IPlayerAction
 <summary>2-3. 스냅샷과 이벤트로 시뮬레이션 재현</summary>
 
 MatchPhase에서 자동 전투의 로직은 즉시 완료되지만, 프레젠테이션 측에서는 변경점 단위로 연출을 재생해야 합니다.
-이를 위해 시뮬레이션 실행과 프레젠테이션을 분리하고, **MatchSnapshot**과 **IMatchEvent**를 통해 전투 과정을 재구성할 수 있도록 설계했습니다.
+이를 위해 시뮬레이션 실행과 프레젠테이션을 분리하고, `MatchSnapshot`과 `IMatchEvent`를 통해 전투 과정을 재구성할 수 있도록 설계했습니다.
 
 #### 이벤트 로그
 
@@ -242,13 +242,354 @@ UI가 턴 단위로 전투 상태를 복원하는 기준점 역할을 합니다.
 
 [ProjectABC.Engine 네임스페이스](Assets/Scripts/Engine)는 Core에 대한 의존성을 가지며, 프레젠테이션을 위한 레이어를 구성합니다.
 
-3-1. 이벤트 소싱 기반 매치 시각화
-3-2. 시뮬레이션 타임스케일 시스템
+```
+Core                                   Engine
+─────────────                          ──────────────
+Simulation                             Simulator
+  └─ IGamePhase 큐 실행                    └─ Simulation 생성 및 실행 관리
+
+IPlayer (인터페이스)                     PlayerController : MonoBehaviour, IPlayer
+  └─ Task<IPlayerAction> 반환              └─ UI와 상호작용하여 IPlayerAction 생성
+
+ContextEventBroadcaster.Publish()  →   IContextEventListener<T>.OnEvent()
+  └─ 시뮬레이션 결과 이벤트 발행               └─ IConfirmHandler가 연출 트리거
+  
+MatchContextEvent : IContextEvent  →   MatchEventRunner : IConfirmHandler<MatchContextEvent>
+  └─ 시뮬레이션 이벤트 중 매치 내역 전달        └─ 매치 이벤트를 받고 IMatchEvent 리스트를 소비, 연출
+```
+
+<details>
+<summary>3-1. 이벤트 소싱 기반 매치 시각화</summary>
+
+매치 시뮬레이션의 결과는 `IMatchEvent` 리스트로 기록됩니다.   
+Engine 레이어에서는 이 리스트를 순차적으로 소비하며 시각화 연출을 수행합니다.   
+
+[MatchEventRunner](Assets/Scripts/Engine/MatchEventRunner.cs)는 `IConfirmHandler<MatchContextEvent>`를 구현하여 시뮬레이션 이벤트를 수신하고,  
+`Dictionary<Type, IMatchEventProcessor>` 타입 별 디스패치로 각 이벤트를 대응하는 프로세서에 위임합니다.
+
+```csharp
+// MatchEventRunner.cs — 이벤트 순차 소비 루프
+while (!_cts.IsCancellationRequested && _eventIndex < _matchEvents.Count)
+{
+    var matchEvent = _matchEvents[_eventIndex++];
+    if (!_matchEventProcessors.TryGetValue(matchEvent.GetType(), out var processor))
+    {
+        throw new KeyNotFoundException($"No processor for {matchEvent.GetType()}");
+    }
+
+    await processor.ProcessEventAsync(matchEvent, _cts.Token);
+}
+```
+
+[MatchEventProcessor<T>](Assets/Scripts/Engine/MatchEventProcessor/MatchEventProcessor.cs)는 제네릭 추상 클래스로, 타입 캐스팅을 내부에서 처리하며, 각 프로세서 구현체가 구체적인 이벤트 타입만 다루도록 하였습니다.  
+
+```csharp
+public abstract class MatchEventProcessor<T> : IMatchEventProcessor where T : IMatchEvent
+{
+    public abstract Task ProcessEventAsync(T matchEvent, CancellationToken token);
+
+    public async Task ProcessEventAsync(IMatchEvent matchEvent, CancellationToken token)
+    {
+        await ProcessEventAsync((T)matchEvent, token);
+    }
+}
+```
+
+새로운 이벤트 타입이 추가될 때 대응하는 프로세서만 구현하면 되기 때문에 확장이 용이합니다.
+
+</details>
+
+<details>
+<summary>3-2. 시뮬레이션 타임 스케일 시스템</summary>
+
+완료된 매치 로직을 프레젠테이션이 연출하는 본 게임의 특성상 편의 기능으로 배속 재생, 일시정지 등의 기획적 요구사항이 있었고  
+이에 대응하기 위해 프레젠테이션 레이어에만 영향을 주는 타임스케일 시스템을 별도로 구현하였습니다.  
+(Unity의 `Time.timeScale`은 전역에 영향을 주기 때문)  
+
+[MatchSimulationTimeScaler](Assets/Scripts/Engine/MatchSimulationTimeScaler.cs) 싱글턴 클래스는 시뮬레이션 배속과 일시정지 상태를 관리합니다.  
+`ScaledTime` 구조체는 기본 배속 (1.0배) 단위 기준 초 단위 시간을 나타내며,  
+`MatchSimulationTimeScaler`에 지정된 시뮬레이션 배속에 따라 시뮬레이션 시간을 `implicit operator float` 함수를 통해 실제 시간으로 변환하여 반환합니다.  
+
+```csharp
+[Serializable]
+public struct ScaledTime
+{
+    public float time;
+
+    public ScaledTime(float time)
+    {
+        this.time = time;
+    }
+    
+    public static ScaledTime Zero => new ScaledTime(0.0f);
+    
+    public static implicit operator ScaledTime(float time) => new ScaledTime(time);
+
+    public static implicit operator float(ScaledTime scaledTime)
+    {
+        MatchSimulationTimeScaler timeScaler = MatchSimulationTimeScaler.CreateInstance();
+        float value = timeScaler.GetScaledTime(scaledTime.time);
+
+        return value;
+    }
+
+    public Task WaitScaledTimeAsync(CancellationToken token = default)
+    {
+        return MatchSimulationTimeScaler.WaitScaledTimeAsync(time, token);
+    }
+}
+```
+
+</details>
 
 
 ### 4. 에셋 바인딩 구조 설계
 
+에셋 로딩은 전적으로 Addressables를 사용하지만, 게임 흐름에 따라 라이프 사이클을 관리할 수 있도록
+씬 단위 로딩이 이루어질 때 [SceneLoader](Assets/Scripts/Engine/SceneLoader.cs) 클래스가 멤버로 들고있는 [SceneLoadingProfileAsset](Assets/Scripts/Data/SceneLoadingProfileAsset.cs) 객체(abstract, ScriptableObject)를 이용하여 에셋의 라이프 사이클을 관리합니다.
 
+<details>
+<summary>4-1. 씬 단위 에셋 바인딩</summary>
+
+`SceneLoadingProfileAsset`은 인스펙터에 사용할 에셋 레퍼런스를 3가지로 등록하여 관리하므로, postload를 통해 백그라운드 로딩을 이용하여 체감 속도를 개선할 수 있습니다.
+- 씬 전환 전 로딩할 에셋 레퍼런스(preload) → `assetRefsForPreload`
+- 씬 레퍼런스 → `ActivateSceneAsync()`
+- 씬 활성화 후 백그라운드 로드할 에셋 레퍼런스(postload) → `assetRefsForPostLoad`
+
+`SceneLoadingProfileAsset`은 `LoadSceneAndAssetsAsync()`가 호출될 때 `AsyncOperationHandle`을 바인딩하고,  
+`UnloadSceneAndAssetsAsync()`가 호출 될 때 바인딩됐던 핸들을 `Release()`하여 명시적으로 관리하고 있습니다.
+
+씬을 SceneList에 등록하지 않고 Addressables를 통해 로드하기 때문에 씬을 변경해서 빌드를 배포하는 경우에도 Standalone 빌드가 아닐 경우 씬이 포함된 에셋번들만 재배포하는 형태로 빌드 수정이 가능하며,  
+같은 씬을 로드하더라도 다른 에셋 구성이 필요한 경우 (ex. 일반게임 ↔ 튜토리얼)에도 인스펙터에 다른 에셋 레퍼런스를 등록하는 방식으로 간단하게 대응이 가능합니다.
+
+또한 `SceneLoadingProfileAsset`은 추상 클래스이므로 주요 메소드를 오버라이드해서 씬 별 커스텀 로직으로 확장도 가능합니다.
+
+</details>
+
+<details>
+<summary>4-2. 전역 에셋 바인딩 및 특정 타입 에셋 관리</summary>
+
+SpriteAtlas를 품질 설정에 따라 적절한 화질의 Variant Atlas를 사용하도록 하기 위해, 언어 설정에 따라 TMP_Font의 fallback 테이블을 구성하기 위해 각 SpriteAtlas 및 TMP_Font 에셋은 전역 관리 클래스를 따로 채용하고 있습니다.  
+`AtlasBinder`와 `FontBinder`가 각각 SpriteAtlas와 TMP_Font 에셋을 전역으로 관리하고 있습니다.  
+
+해당 클래스들은 `IAssetBinder<T>` 인터페이스를 구현하여 동일한 바인딩 패턴을 공유합니다.  
+로딩 중인 에셋을 해제하는 등의 레이스 컨디션을 방지하기 위해 `AssetHandleSchedule` 객체를 큐로 관리하며 하나씩 순서대로 처리합니다.
+
+```csharp
+// IAssetBinder.cs
+
+public abstract class AssetHandleSchedule<T> where T : IAssetBindEntry, IEquatable<T>
+{
+    public virtual bool Precondition(IAssetBinder<T> assetBinder) => true;
+    public abstract void Run(IAssetBinder<T> assetBinder);
+}
+
+public sealed class AssetBindSchedule<T> : AssetHandleSchedule<T> where T : IAssetBindEntry, IEquatable<T>
+{
+    private readonly List<T> _entries = new List<T>();
+    
+    public AssetBindSchedule(T entry)
+    {
+        _entries.Add(entry);
+    }
+
+    public AssetBindSchedule(IList<T> entries)
+    {
+        _entries.AddRange(entries);
+    }
+    
+    public override void Run(IAssetBinder<T> assetBinder)
+    {
+        foreach (var entry in _entries)
+        {
+            assetBinder.BindAsset(entry);
+        }
+    }
+}
+
+public sealed class AssetReleaseSchedule<T> : AssetHandleSchedule<T> where T : IAssetBindEntry, IEquatable<T>
+{
+    private readonly List<T> _entries = new List<T>();
+    
+    public AssetReleaseSchedule(T entry)
+    {
+        _entries.Add(entry);
+    }
+
+    public AssetReleaseSchedule(IList<T> entries)
+    {
+        _entries.AddRange(entries);
+    }
+
+    public override bool Precondition(IAssetBinder<T> assetBinder)
+    {
+        return _entries.All(IsHandleLoaded);
+        
+        bool IsHandleLoaded(T entry)
+        {
+            return assetBinder.TryGetBindingHandle(entry, out var handle)
+                   && IAssetBinder.CheckHandleLoaded(handle);
+        }
+    }
+
+    public override void Run(IAssetBinder<T> assetBinder)
+    {
+        foreach (var entry in _entries)
+        {
+            assetBinder.ReleaseAsset(entry);
+        }
+    }
+}
+```
+
+`AtlasBinder`는 SpriteAtlas를 전역적으로 관리할 뿐만 아니라, 품질 설정 (`AtlasQuality`)에 따라 `AtlasIdentifier` 객체를 통해 사용할 에셋의 Addressable Name을 자동으로 계산하여 해당하는 Variant Atlas를 로드합니다.  
+또한, 바인딩 중인 Atlas의 핸들을 이용해 SpriteAtlasManager.atlasRequested 이벤트를 처리합니다. 즉 Atlas의 Late Binding을 지원합니다.
+
+```csharp
+public sealed class AtlasBinder : MonoBehaviour, IAssetBinder<AtlasBindingEntry>
+{
+    // ...
+    
+    private void OnEnable()
+    {
+        SpriteAtlasManager.atlasRequested += OnAtlasRequested;
+    }
+
+    private void OnDisable()
+    {
+        SpriteAtlasManager.atlasRequested -= OnAtlasRequested;
+    }
+    
+    // ...
+    
+    private void OnAtlasRequested(string addressableName, Action<SpriteAtlas> callback)
+    {
+        AtlasIdentifier requested = new AtlasIdentifier(addressableName);
+        if (requested.QualitySuffix != AtlasQuality.None && requested.QualitySuffix != CurrentQualitySetting)
+        {
+            Debug.Log($"{nameof(AtlasBinder)} : AtlasManager requested '{addressableName}', but ignored because of not matched with CurrentQualitySetting ({CurrentQualitySetting})");
+        }
+        
+        // Debug.Log($"{nameof(AtlasBinder)} : Atlas requested... '{addressableName}' / identifier  '{requested.AtlasName}' + suffix '{requested.QualitySuffix}'");
+        
+        if (_atlasHandles.TryGetValue(requested, out var atlasHandle) && atlasHandle.IsValid())
+        {
+            if (atlasHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                OnLoadHandleCompleted(atlasHandle);
+            }
+            else if (!atlasHandle.IsDone)
+            {
+                atlasHandle.Completed += OnLoadHandleCompleted;
+            }
+            
+            return;
+        }
+
+        var handle = Addressables.LoadAssetAsync<SpriteAtlas>(addressableName);
+        handle.Completed += ReleaseVariantOnCompleted;
+        handle.Completed += OnLoadHandleCompleted;
+        
+        _atlasHandles.Add(requested, handle);
+        return;
+        
+        void OnLoadHandleCompleted(AsyncOperationHandle<SpriteAtlas> completeHandle)
+        {
+            callback?.Invoke(completeHandle.Result);
+        }
+    }
+    
+    // ...
+}
+```
+
+`FontBinder`는 세 가지 언어(`KR`, `EN`, `JP`)를 지원하는 기획적 요구사항을 충족하기 위해, TMP_Font 에셋을 전역적으로 관리하는 동시에 다음 작업들을 수행합니다.  
+
+1. 기본 폰트 (`EN`)의 런타임 클론 생성   
+   - 영문 폰트는 모든 언어 설정에서 공용으로 사용하며 언어 설정에 따라 FallbackFontTable을 설정합니다.
+   - 이 때, `TMP_Font` 에셋은 ScriptableObject이며, 런타임에 가한 수정이 영구히 남기 때문에 문제가 발생할 수 있습니다.
+
+따라서 원본 폰트를 보호하기 위해 `Instantiate()`로 클론 폰트를 생성한 뒤 `FontBinder`내에서 명시적으로 관리합니다.
+
+```csharp
+// FontBinder.cs
+
+private void BindBasicFonts()
+{
+    foreach (string basicFontAddressableName in basicFontAddressableNames)
+    {
+        if (_basicFontHandles.ContainsKey(basicFontAddressableName))
+        {
+            Debug.LogWarning($"{nameof(FontBinder)} : {basicFontAddressableName} already bind..");
+            continue;
+        }
+        
+        var handle = Addressables.LoadAssetAsync<TMP_FontAsset>(basicFontAddressableName);
+        handle.Completed += CloneBasicFontsOnCompleted;
+        
+        _basicFontHandles.Add(basicFontAddressableName, handle);
+    }
+}
+
+private void CloneBasicFontsOnCompleted(AsyncOperationHandle<TMP_FontAsset> handle)
+{
+    TMP_FontAsset originFont = handle.Result;
+
+    if (_cloneMap.TryGetValue(originFont, out TMP_FontAsset clone) && clone != null)
+    {
+        Debug.Log($"{nameof(FontBinder)} : {originFont.name} has already been bind");
+        return;
+    }
+    
+    clone = Instantiate(originFont);
+    clone.name = originFont.name + " (Runtime)";
+    clone.hideFlags = HideFlags.DontSave | HideFlags.DontSaveInEditor;
+        
+    _cloneMap[originFont] = clone;
+}
+```
+
+2. 로케일 별 Additive 폰트 분리 관리
+   - 영문 이외 로케일이 대상인 폰트 (`KR`, `JP`)는 현재 로케일 설정과 같은 것만 바인딩, 로드합니다.
+   - TMP_Text 컴포넌트에서 로케일 텍스트를 정상적으로 표시하기 위해 클론된 기본 EN 폰트의 FallbackFontTable에 등록합니다.
+
+```csharp
+// FontBinder.cs
+
+public void BindAsset(AdditiveFontBindingEntry entry)
+{
+    if (_additiveFontHandles.ContainsKey(entry.fontAddressableName))
+    {
+        Debug.LogWarning($"{nameof(FontBinder)} : {entry.fontAddressableName} is already bind");
+        return;
+    }
+
+    var handle = Addressables.LoadAssetAsync<TMP_FontAsset>(entry.fontAddressableName);
+    handle.Completed += RegisterFallbackFontTableOnCompleted;
+    
+    _additiveFontHandles.Add(entry.fontAddressableName, handle);
+}
+
+private void RegisterFallbackFontTableOnCompleted(AsyncOperationHandle<TMP_FontAsset> handle)
+{
+    TMP_FontAsset fallbackFont = handle.Result;
+    fallbackFont.ReadFontAssetDefinition();
+    // Debug.Log($"{nameof(FontBinder)} : register fallback '{fallbackFont.name}'");
+
+    foreach (var clonedBaseFont in _cloneMap.Values)
+    {
+        if (clonedBaseFont.fallbackFontAssetTable.Contains(fallbackFont))
+        {
+            continue;
+        }
+        
+        clonedBaseFont.fallbackFontAssetTable.Add(fallbackFont);
+        clonedBaseFont.ReadFontAssetDefinition();
+    }
+}
+```
+
+</details>
 
 ---
 
