@@ -593,6 +593,35 @@ private void RegisterFallbackFontTableOnCompleted(AsyncOperationHandle<TMP_FontA
 
 ---
 
+## 🧠 추후 개선할 부분
+
+### 1. 결정론적 RNG 필요
+
+추후 시뮬레이션의 재현이 필요해질 여지가 있으나 C# System.Random은 내부 구현이 바뀐 적이 있고, UnityEngine.Random은 같은 시드에 대해 재현성이 보장되지 않습니다.
+따라서 시드 기반 RNG 라이브러리가 별도로 적용하여 동일 입력에 대한 재현을 보장할 필요가 있습니다.
+
+### 2. CardEffectFactory의 스위치문 확장성
+
+```csharp
+// CardEffectFactory.cs
+
+switch (effectId)
+{
+    case "effect_elite":
+        return new EliteCardEffect(card, data);
+    case "effect_move_specific_grade_cards_from_piles_to_deck":
+        return new MoveSpecificGradeCardsFromPilesToDeck(card, data);
+    case "effect_power_up_self_as_both_side_field_amount":
+        return new PowerUpSelfAsBothSideFieldAmount(card, data);
+    // ...
+```
+
+`CardEffectFactory`객체는 카드효과가 추가될 때 마다 팩토리 코드를 직접 수정해야 하는 구조를 가지고 있습니다.  
+팩토리가 모든 타입을 알고 있는게 아닌, `CardEffect` 객체 자신이 id와 생성방법을 팩토리에 등록하는 레지스트리 패턴을 채용하여 확장성을 확보할 수 있는 여지가 있습니다.
+
+---
+
+
 ## 📎 참고
 
 본 리포지토리는 학습 및 포트폴리오 목적의 **클론 프로젝트**이며, 모든 스크립트는 모두 본인 [verdantray](https://github.com/verdantray)가 작성하였습니다.  
